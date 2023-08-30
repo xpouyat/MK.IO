@@ -61,3 +61,28 @@ MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
 
 ```
 
+Async operations are also supported for operations.
+
+Example :
+
+```csharp
+// ******************************
+// Streaming endpoint operations
+// ******************************
+
+// get streaming endpoint
+var mkse = await MKIOClient.GetStreamingEndpointAsync("streamingendpoint1");
+
+// list streaming endpoints
+var mkses = await MKIOClient.ListStreamingEndpointsAsync();
+
+// create streaming endpoint
+var newSe = await MKIOClient.CreateStreamingEndpointAsync("streamingendpoint2", new MKIOStreamingEndpoint("francecentral", "my description", new MKIOStreamingEndpointSku("Standard", 600), 0, false), true);
+
+// start, stop, delete streaming endpoint
+await MKIOClient.StartStreamingEndpointAsync("streamingendpoint1");
+await MKIOClient.StopStreamingEndpointAsync("streamingendpoint1");
+await MKIOClient.DeleteStreamingEndpointAsync("streamingendpoint2");
+
+```
+
