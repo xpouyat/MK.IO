@@ -86,3 +86,12 @@ await MKIOClient.DeleteStreamingEndpointAsync("streamingendpoint2");
 
 ```
 
+### Supported operations
+
+Operations are supported for :
+- Assets
+- Streaming endpoints
+- 
+To come :
+- Storage accounts
+- Live events
