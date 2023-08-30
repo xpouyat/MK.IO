@@ -59,11 +59,19 @@ MKIOClient.StartStreamingEndpoint("streamingendpoint1");
 MKIOClient.StopStreamingEndpoint("streamingendpoint1");
 MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
 
+
+// ******************************
+// Streaming locator operations
+// ******************************
+
+var mklocators = MKIOClient.ListStreamingLocators();
+var mklocator1 = MKIOClient.GetStreamingLocator("locator-25452");
+var mklocator2 = MKIOClient.CreateStreamingLocator("locator23", new MKIOStreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
+var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
+
 ```
 
-Async operations are also supported for operations.
-
-Example :
+Async operations are also supported. For example :
 
 ```csharp
 // ******************************
@@ -88,10 +96,7 @@ await MKIOClient.DeleteStreamingEndpointAsync("streamingendpoint2");
 
 ### Supported operations
 
-Operations are supported for :
+In this version, operations are supported for :
 - Assets
 - Streaming endpoints
-
-To come soon :
-- Storage accounts
-- Live events
+- Streaming locators

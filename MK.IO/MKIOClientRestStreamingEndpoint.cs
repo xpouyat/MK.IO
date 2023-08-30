@@ -87,7 +87,7 @@ namespace MK.IO
             await StreamingEndpointOperationAsync(streamingEndpointName, null, HttpMethod.Delete);
         }
 
-        private async Task StreamingEndpointOperationAsync(string streamingEndpointName, string operation, HttpMethod httpMethod)
+        private async Task StreamingEndpointOperationAsync(string streamingEndpointName, string? operation, HttpMethod httpMethod)
         {
             string URL = GenerateApiUrl(streamingEndpointApiUrl + (operation != null ? "/" + operation : string.Empty), streamingEndpointName);
             await ObjectContentAsync(URL, httpMethod);
