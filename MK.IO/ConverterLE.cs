@@ -13,7 +13,7 @@ namespace MK.IO
         {
             MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore,
-            DateParseHandling = DateParseHandling.None,
+            //DateParseHandling = DateParseHandling.None,
             Converters =
             {
                 new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }

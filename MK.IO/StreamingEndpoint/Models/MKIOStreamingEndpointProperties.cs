@@ -8,10 +8,10 @@ namespace MK.IO
     public class MKIOStreamingEndpointProperties
     {
         [JsonProperty("created")]
-        public string Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("lastModified")]
-        public string LastModified { get; set; }
+        public DateTime? LastModified { get; set; }
 
         [JsonProperty("provisioningState")]
         public string ProvisioningState { get; set; }

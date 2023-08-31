@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MK.IO
 {
@@ -40,23 +42,7 @@ namespace MK.IO
 
         private async Task<string> GetObjectContentAsync(string url)
         {
-            var request = new HttpRequestMessage()
-            {
-                RequestUri = new Uri(url),
-                Method = HttpMethod.Get,
-            };
-            request.Headers.Add("x-mkio-token", _MKIOtoken);
-
-            HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request).ConfigureAwait(false);
-
-            string responseContent = await amsRequestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            if (!amsRequestResult.IsSuccessStatusCode)
-            {
-                var error = JsonConvert.DeserializeObject<dynamic>(responseContent);
-                throw new Exception((string)error.error.detail);
-            }
-            return responseContent;
+            return await ObjectContentAsync(url, HttpMethod.Get);
         }
 
         private async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod)
@@ -71,15 +57,10 @@ namespace MK.IO
             HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead).ConfigureAwait(false);
             string responseContent = await amsRequestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            if (!amsRequestResult.IsSuccessStatusCode)
-            {
-                var error = JsonConvert.DeserializeObject<dynamic>(responseContent);
-                throw new Exception((string)error.error.detail);
-            }
-
+            AnalyzeResponseAndThrowIfNeeded(amsRequestResult, responseContent);
             return responseContent;
         }
-
+              
 
         private async Task<string> CreateObjectAsync(string url, string amsJSONObject)
         {
@@ -93,11 +74,7 @@ namespace MK.IO
             HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request).ConfigureAwait(false);
             string responseContent = await amsRequestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            if (!amsRequestResult.IsSuccessStatusCode)
-            {
-                var error = JsonConvert.DeserializeObject<dynamic>(responseContent);
-                throw new Exception((string)error.error.detail);
-            }
+            AnalyzeResponseAndThrowIfNeeded(amsRequestResult, responseContent);
 
             if (amsRequestResult.StatusCode == System.Net.HttpStatusCode.Accepted)
             {
@@ -116,6 +93,36 @@ namespace MK.IO
                 while (notComplete);
             }
             return responseContent;
+        }
+
+
+        private static void AnalyzeResponseAndThrowIfNeeded(HttpResponseMessage amsRequestResult, string responseContent)
+        {
+            if (!amsRequestResult.IsSuccessStatusCode)
+            {
+                var error = JsonConvert.DeserializeObject<dynamic>(responseContent);
+                if (error.ContainsKey("error"))
+                {
+                    string? sDetail = null;
+                    try
+                    {
+                        sDetail = (string)error.error.detail;
+                    }
+                    catch
+                    {
+
+                    }
+
+                    if (!string.IsNullOrEmpty(sDetail))
+                    {
+                        throw new Exception(sDetail);
+                    }
+                    else
+                    {
+                        throw new Exception((string)error.error);
+                    }
+                }
+            }
         }
     }
 }

@@ -11,10 +11,10 @@ namespace MK.IO.Models
         public string AssetName { get; set; }
 
         [JsonProperty("created")]
-        public string? Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("streamingLocatorId")]
-        public string? StreamingLocatorId { get; set; }
+        public Guid? StreamingLocatorId { get; set; }
 
         [JsonProperty("streamingPolicyName")]
         public string? StreamingPolicyName { get; set; }
@@ -23,6 +23,6 @@ namespace MK.IO.Models
         public List<object>? ContentKeys { get; set; }
 
         [JsonProperty("endTime")]
-        public string? EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
     }
 }

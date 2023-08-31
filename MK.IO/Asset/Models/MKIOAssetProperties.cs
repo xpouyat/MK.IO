@@ -11,10 +11,10 @@ namespace MK.IO.Models
         public string AssetId { get; set; }
 
         [JsonProperty("created")]
-        public string Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("lastModified")]
-        public string LastModified { get; set; }
+        public DateTime? LastModified { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }

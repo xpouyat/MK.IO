@@ -18,7 +18,7 @@ namespace MK.IO.Models
             return JsonConvert.SerializeObject(this, ConverterLE.Settings);
         }
 
-        public MKIOStreamingLocator(string assetName, string streamingPolicyName, List<object>? contentKeys = null, string? endTime = null, string? streamingLocatorId = null)
+        public MKIOStreamingLocator(string assetName, string streamingPolicyName, List<object>? contentKeys = null, DateTime? endTime = null, Guid? streamingLocatorId = null)
         {
             Properties = new MKIOStreamingLocatorProperties { AssetName = assetName, StreamingPolicyName = streamingPolicyName, ContentKeys = contentKeys, EndTime = endTime, StreamingLocatorId = streamingLocatorId };
         }

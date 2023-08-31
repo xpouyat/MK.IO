@@ -77,7 +77,11 @@ namespace Sample
 
             var mklocators = MKIOClient.ListStreamingLocators();
             var mklocator1 = MKIOClient.GetStreamingLocator("locator-25452");
-            var mklocator2 = MKIOClient.CreateStreamingLocator("locator23", new MKIOStreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
+           
+            string uniqueness = Guid.NewGuid().ToString()[..13];
+            string locatorName = $"locator-{uniqueness}";
+            var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new MKIOStreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
+           
             var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
 
 
