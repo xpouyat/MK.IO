@@ -17,6 +17,7 @@ namespace MK.IO
         //
         private const string assetsApiUrl = "api/ams/{0}/assets";
         private const string assetApiUrl = assetsApiUrl + "/{1}";
+        private const string assetListStreamingLocatorsApiUrl = assetApiUrl + "/listStreamingLocators";
 
         public List<MKIOAsset> ListAssets()
         {
@@ -66,6 +67,19 @@ namespace MK.IO
         {
             string URL = GenerateApiUrl(assetApiUrl, assetName);
             await ObjectContentAsync(URL, HttpMethod.Delete);
+        }
+
+        public List<MKIOAssetStreamingLocator> ListStreamingLocatorsForAsset(string assetName)
+        {
+            Task<List<MKIOAssetStreamingLocator>> task = Task.Run<List<MKIOAssetStreamingLocator>>(async () => await ListStreamingLocatorsForAssetAsync(assetName));
+            return task.GetAwaiter().GetResult();
+        }
+
+        public async Task<List<MKIOAssetStreamingLocator>> ListStreamingLocatorsForAssetAsync(string assetName)
+        {
+            string URL = GenerateApiUrl(assetListStreamingLocatorsApiUrl, assetName);
+            string responseContent = await GetObjectContentAsync(URL);
+            return MKIOAssetListStreamingLocators.FromJson(responseContent).StreamingLocators;
         }
     }
 }

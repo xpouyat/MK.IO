@@ -42,6 +42,9 @@ namespace Sample
             // list assets
             var mkioAssets = MKIOClient.ListAssets();
 
+            // get streaming locators for asset
+            var locatorsAsset = MKIOClient.ListStreamingLocatorsForAsset("copy-1b510ee166-copy-d32391984a");
+
             // get asset
             var mkasset = MKIOClient.GetAsset("mmyassetname");
 
@@ -83,8 +86,6 @@ namespace Sample
             var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new MKIOStreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
            
             var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
-
-
         }
     }
 }
