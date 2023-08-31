@@ -1,5 +1,6 @@
 ﻿using MK.IO;
 using MK.IO.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Sample
 {
@@ -7,13 +8,22 @@ namespace Sample
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Sample that operates MK/IO");
+            Console.WriteLine("Sample that operates MK/IO.");
+
+            // Build a config object, using env vars and JSON providers.
+            IConfigurationRoot config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+
+            Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK/IO subscription.");
+
 
             // **********************
             // MK/IO Client creation
             // **********************
 
-            var MKIOClient = new MKIOClientRest("mkiosubscriptionname", "mkiotoken");
+            var MKIOClient = new MKIOClientRest(config["MKIOSubscriptionName"], config["MKIOToken"]);
 
 
             // *****************
