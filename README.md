@@ -21,7 +21,7 @@ using MK.IO.Models;
 // MK/IO Client creation
 // **********************
 
-var MKIOClient = new MKIOClientRest("mkiosubscriptionname", "mkiotoken");
+var MKIOClient = new MKIOClient("mkiosubscriptionname", "mkiotoken");
 
 
 // *****************

@@ -3,7 +3,7 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO.Models
+namespace MK.IO
 {
     public class MKIOStreamingEndpointSku
     {
@@ -23,6 +23,5 @@ namespace MK.IO.Models
 
         [JsonProperty("capacity")]
         public int Capacity { get; set; }
-
     }
 }

@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
-namespace MK.IO.Models
+namespace MK.IO
 {
 
     public class MKIOListStreamingEndpoint

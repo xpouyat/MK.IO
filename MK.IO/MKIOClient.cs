@@ -11,14 +11,14 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public partial class MKIOClientRest
+    public partial class MKIOClient
     {
         private string baseUrl = "https://api.io.mediakind.com/";
         private string _MKIOSubscriptionName;
         private string _MKIOtoken;
         private HttpClient _httpClient;
 
-        public MKIOClientRest(string MKIOSubscriptionName, string MKIOtoken)
+        public MKIOClient(string MKIOSubscriptionName, string MKIOtoken)
         {
             _MKIOSubscriptionName = MKIOSubscriptionName;
             _MKIOtoken = MKIOtoken;

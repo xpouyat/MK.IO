@@ -10,7 +10,7 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public partial class MKIOClientRest
+    public partial class MKIOClient
     {
         //
         // assets

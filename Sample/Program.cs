@@ -32,7 +32,7 @@ namespace Sample
             // MK/IO Client creation
             // **********************
 
-            var MKIOClient = new MKIOClientRest(config["MKIOSubscriptionName"], config["MKIOToken"]);
+            var MKIOClient = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
 
 
             // *****************

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using MK.IO.Models;
-
 namespace MK.IO
 {
     /// <summary>
@@ -10,7 +8,7 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public partial class MKIOClientRest
+    public partial class MKIOClient
     {
         //
         // streaming endpoints
