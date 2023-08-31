@@ -42,6 +42,8 @@ namespace Sample
             // list assets
             var mkioAssets = MKIOClient.ListAssets();
 
+            // var specc = MKIOClient.ListTracksAndDirListingForAsset("copy-1b510ee166-copy-d32391984a");
+
             // get streaming locators for asset
             var locatorsAsset = MKIOClient.ListStreamingLocatorsForAsset("copy-1b510ee166-copy-d32391984a");
 

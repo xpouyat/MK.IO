@@ -18,6 +18,7 @@ namespace MK.IO
         private const string assetsApiUrl = "api/ams/{0}/assets";
         private const string assetApiUrl = assetsApiUrl + "/{1}";
         private const string assetListStreamingLocatorsApiUrl = assetApiUrl + "/listStreamingLocators";
+        private const string assetListTracksAndDirectoryApiUrl = assetApiUrl + "/storage/";
 
         public List<MKIOAsset> ListAssets()
         {
@@ -81,5 +82,21 @@ namespace MK.IO
             string responseContent = await GetObjectContentAsync(URL);
             return MKIOAssetListStreamingLocators.FromJson(responseContent).StreamingLocators;
         }
+
+        // Removed as there is an error (same behavior in the portal too)
+        /*
+        public Spec ListTracksAndDirListingForAsset(string assetName)
+        {
+            Task<Spec> task = Task.Run<Spec>(async () => await ListTracksAndDirListingForAssetAsync(assetName));
+            return task.GetAwaiter().GetResult();
+        }
+
+        public async Task<Spec> ListTracksAndDirListingForAssetAsync(string assetName)
+        {
+            string URL = GenerateApiUrl(assetListTracksAndDirectoryApiUrl, assetName);
+            string responseContent = await GetObjectContentAsync(URL);
+            return MKIOAssetTracksAndDir.FromJson(responseContent).Spec;
+        }
+        */
     }
 }
