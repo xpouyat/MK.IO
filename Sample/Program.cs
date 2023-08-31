@@ -10,6 +10,15 @@ namespace Sample
         {
             Console.WriteLine("Sample that operates MK/IO.");
 
+
+            /* you need to add an appsettings.json file with the following content:
+             {
+                "MKIOSubscriptionName": "yourMKIOsubscriptionname",
+                "MKIOToken": "yourMKIOtoken"
+             }
+            */
+
+
             // Build a config object, using env vars and JSON providers.
             IConfigurationRoot config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
