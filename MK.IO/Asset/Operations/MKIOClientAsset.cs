@@ -20,43 +20,43 @@ namespace MK.IO
         private const string assetListStreamingLocatorsApiUrl = assetApiUrl + "/listStreamingLocators";
         private const string assetListTracksAndDirectoryApiUrl = assetApiUrl + "/storage/";
 
-        public List<MKIOAsset> ListAssets()
+        public List<Asset> ListAssets()
         {
-            Task<List<MKIOAsset>> task = Task.Run<List<MKIOAsset>>(async () => await ListAssetsAsync());
+            Task<List<Asset>> task = Task.Run<List<Asset>>(async () => await ListAssetsAsync());
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<List<MKIOAsset>> ListAssetsAsync()
+        public async Task<List<Asset>> ListAssetsAsync()
         {
             string URL = GenerateApiUrl(assetsApiUrl);
             string responseContent = await GetObjectContentAsync(URL);
-            return MKIOListAssets.FromJson(responseContent).Value;
+            return Models.ListAssets.FromJson(responseContent).Value;
         }
 
-        public MKIOAsset GetAsset(string assetName)
+        public Asset GetAsset(string assetName)
         {
-            Task<MKIOAsset> task = Task.Run<MKIOAsset>(async () => await GetAssetAsync(assetName));
+            Task<Asset> task = Task.Run<Asset>(async () => await GetAssetAsync(assetName));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<MKIOAsset> GetAssetAsync(string assetName)
+        public async Task<Asset> GetAssetAsync(string assetName)
         {
             string URL = GenerateApiUrl(assetApiUrl, assetName);
             string responseContent = await GetObjectContentAsync(URL);
-            return MKIOAsset.FromJson(responseContent);
+            return Asset.FromJson(responseContent);
         }
 
-        public MKIOAsset CreateOrUpdateAsset(string assetName, MKIOAsset content)
+        public Asset CreateOrUpdateAsset(string assetName, Asset content)
         {
-            Task<MKIOAsset> task = Task.Run<MKIOAsset>(async () => await CreateOrUpdateAssetAsync(assetName, content));
+            Task<Asset> task = Task.Run<Asset>(async () => await CreateOrUpdateAssetAsync(assetName, content));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<MKIOAsset> CreateOrUpdateAssetAsync(string assetName, MKIOAsset content)
+        public async Task<Asset> CreateOrUpdateAssetAsync(string assetName, Asset content)
         {
             string URL = GenerateApiUrl(assetApiUrl, assetName);
             string responseContent = await CreateObjectAsync(URL, content.ToJson());
-            return MKIOAsset.FromJson(responseContent);
+            return Asset.FromJson(responseContent);
         }
 
         public void DeleteAsset(string assetName)
@@ -70,17 +70,17 @@ namespace MK.IO
             await ObjectContentAsync(URL, HttpMethod.Delete);
         }
 
-        public List<MKIOAssetStreamingLocator> ListStreamingLocatorsForAsset(string assetName)
+        public List<AssetStreamingLocator> ListStreamingLocatorsForAsset(string assetName)
         {
-            Task<List<MKIOAssetStreamingLocator>> task = Task.Run<List<MKIOAssetStreamingLocator>>(async () => await ListStreamingLocatorsForAssetAsync(assetName));
+            Task<List<AssetStreamingLocator>> task = Task.Run<List<AssetStreamingLocator>>(async () => await ListStreamingLocatorsForAssetAsync(assetName));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<List<MKIOAssetStreamingLocator>> ListStreamingLocatorsForAssetAsync(string assetName)
+        public async Task<List<AssetStreamingLocator>> ListStreamingLocatorsForAssetAsync(string assetName)
         {
             string URL = GenerateApiUrl(assetListStreamingLocatorsApiUrl, assetName);
             string responseContent = await GetObjectContentAsync(URL);
-            return MKIOAssetListStreamingLocators.FromJson(responseContent).StreamingLocators;
+            return AssetListStreamingLocators.FromJson(responseContent).StreamingLocators;
         }
 
         // Removed as there is an error (same behavior in the portal too)

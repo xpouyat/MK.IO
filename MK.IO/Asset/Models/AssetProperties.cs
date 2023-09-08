@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace MK.IO.Models
 {
-    public class MKIOAssetProperties
+    public class AssetProperties
     {
         [JsonProperty("assetId")]
         public string AssetId { get; set; }

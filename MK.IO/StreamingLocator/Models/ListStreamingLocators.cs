@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 namespace MK.IO.Models
 {
 
-    public class MKIOListStreamingLocators
+    public class ListStreamingLocators
     {
-        public static MKIOListStreamingLocators FromJson(string json)
+        public static ListStreamingLocators FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<MKIOListStreamingLocators>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<ListStreamingLocators>(json, ConverterLE.Settings);
         }
 
         public string ToJson()
@@ -19,6 +19,6 @@ namespace MK.IO.Models
         }
 
         [JsonProperty("value")]
-        public List<MKIOStreamingLocator> Value { get; set; }
+        public List<StreamingLocator> Value { get; set; }
     }
 }

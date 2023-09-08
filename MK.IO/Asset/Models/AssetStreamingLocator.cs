@@ -5,8 +5,11 @@ using Newtonsoft.Json;
 
 namespace MK.IO.Models
 {
-    public class MKIOStreamingLocatorProperties
+    public class AssetStreamingLocator
     {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
         [JsonProperty("assetName")]
         public string AssetName { get; set; }
 

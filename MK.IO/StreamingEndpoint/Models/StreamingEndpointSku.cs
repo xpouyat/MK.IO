@@ -5,14 +5,14 @@ using Newtonsoft.Json;
 
 namespace MK.IO
 {
-    public class MKIOStreamingEndpointSku
+    public class StreamingEndpointSku
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="name">Standard or Premium</param>
         /// <param name="capacity">600</param>
-        public MKIOStreamingEndpointSku(string name, int capacity)
+        public StreamingEndpointSku(string name, int capacity)
         {
             Name = name;
             Capacity = capacity;

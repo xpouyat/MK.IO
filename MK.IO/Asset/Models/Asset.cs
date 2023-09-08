@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 namespace MK.IO.Models
 {
 
-    public class MKIOAsset
+    public class Asset
     {
-        public static MKIOAsset FromJson(string json)
+        public static Asset FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<MKIOAsset>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<Asset>(json, ConverterLE.Settings);
         }
 
         public string ToJson()
@@ -18,9 +18,9 @@ namespace MK.IO.Models
             return JsonConvert.SerializeObject(this, ConverterLE.Settings);
         }
 
-        public MKIOAsset(string container, string description, string storageAccountName)
+        public Asset(string container, string description, string storageAccountName)
         {
-            Properties = new MKIOAssetProperties { Description = description, Container = container, StorageAccountName = storageAccountName };
+            Properties = new AssetProperties { Description = description, Container = container, StorageAccountName = storageAccountName };
         }
 
         [JsonProperty("name")]
@@ -30,6 +30,6 @@ namespace MK.IO.Models
         public string Id { get; set; }
 
         [JsonProperty("properties")]
-        public MKIOAssetProperties Properties { get; set; }
+        public AssetProperties Properties { get; set; }
     }
 }

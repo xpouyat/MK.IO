@@ -8,11 +8,11 @@ using System.Collections.Generic;
 namespace MK.IO.Models
 {
 
-    public class MKIOListAssets
+    public class AssetListStreamingLocators
     {
-        public static MKIOListAssets FromJson(string json)
+        public static AssetListStreamingLocators FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<MKIOListAssets>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<AssetListStreamingLocators>(json, ConverterLE.Settings);
         }
 
         public string ToJson()
@@ -20,7 +20,7 @@ namespace MK.IO.Models
             return JsonConvert.SerializeObject(this, ConverterLE.Settings);
         }
 
-        [JsonProperty("value")]
-        public List<MKIOAsset> Value { get; set; }
+        [JsonProperty("streamingLocators")]
+        public List<AssetStreamingLocator> StreamingLocators { get; set; }
     }
 }

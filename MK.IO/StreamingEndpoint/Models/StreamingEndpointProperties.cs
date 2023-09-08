@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace MK.IO
 {
-    public class MKIOStreamingEndpointProperties
+    public class StreamingEndpointProperties
     {
         [JsonProperty("created")]
         public DateTime? Created { get; set; }
@@ -44,6 +44,6 @@ namespace MK.IO
         public object CrossSiteAccessPolicies { get; set; }
 
         [JsonProperty("sku")]
-        public MKIOStreamingEndpointSku Sku { get; set; }
+        public StreamingEndpointSku Sku { get; set; }
     }
 }

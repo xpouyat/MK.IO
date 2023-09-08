@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 namespace MK.IO
 {
 
-    public partial class MKIOStreamingEndpoint
+    public partial class StreamingEndpoint
     {
-        public static MKIOStreamingEndpoint FromJson(string json)
+        public static StreamingEndpoint FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<MKIOStreamingEndpoint>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<StreamingEndpoint>(json, ConverterLE.Settings);
         }
 
         public string ToJson()
@@ -18,10 +18,10 @@ namespace MK.IO
             return JsonConvert.SerializeObject(this, ConverterLE.Settings);
         }
 
-        public MKIOStreamingEndpoint(string location, string description, MKIOStreamingEndpointSku sku, int scaleUnits, bool cdnEnabled)
+        public StreamingEndpoint(string location, string description, StreamingEndpointSku sku, int scaleUnits, bool cdnEnabled)
         {
             Location = location;
-            Properties = new MKIOStreamingEndpointProperties { Description = description, Sku = sku, ScaleUnits = scaleUnits, CdnEnabled = cdnEnabled };
+            Properties = new StreamingEndpointProperties { Description = description, Sku = sku, ScaleUnits = scaleUnits, CdnEnabled = cdnEnabled };
             Tags = new Dictionary<string, string>();
         }
 
@@ -38,6 +38,6 @@ namespace MK.IO
         public Dictionary<string, string> Tags { get; set; }
 
         [JsonProperty("properties")]
-        public MKIOStreamingEndpointProperties Properties { get; set; }
+        public StreamingEndpointProperties Properties { get; set; }
     }
 }

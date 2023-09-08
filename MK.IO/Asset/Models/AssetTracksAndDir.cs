@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 namespace MK.IO.Models
 {
 
-    public class MKIOAssetTracksAndDir
+    public class AssetTracksAndDir
     {
-        public static MKIOAssetTracksAndDir FromJson(string json)
+        public static AssetTracksAndDir FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<MKIOAssetTracksAndDir>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<AssetTracksAndDir>(json, ConverterLE.Settings);
         }
 
         public string ToJson()

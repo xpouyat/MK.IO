@@ -16,43 +16,43 @@ namespace MK.IO
         private const string streamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
         private const string streamingEndpointApiUrl = streamingEndpointsApiUrl + "/{1}";
 
-        public List<MKIOStreamingEndpoint> ListStreamingEndpoints()
+        public List<StreamingEndpoint> ListStreamingEndpoints()
         {
-            Task<List<MKIOStreamingEndpoint>> task = Task.Run<List<MKIOStreamingEndpoint>>(async () => await ListStreamingEndpointsAsync());
+            Task<List<StreamingEndpoint>> task = Task.Run<List<StreamingEndpoint>>(async () => await ListStreamingEndpointsAsync());
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<List<MKIOStreamingEndpoint>> ListStreamingEndpointsAsync()
+        public async Task<List<StreamingEndpoint>> ListStreamingEndpointsAsync()
         {
             string URL = GenerateApiUrl(streamingEndpointsApiUrl);
             string responseContent = await GetObjectContentAsync(URL);
-            return MKIOListStreamingEndpoint.FromJson(responseContent).Value;
+            return ListStreamingEndpoint.FromJson(responseContent).Value;
         }
 
-        public MKIOStreamingEndpoint GetStreamingEndpoint(string streamingEndpointName)
+        public StreamingEndpoint GetStreamingEndpoint(string streamingEndpointName)
         {
-            Task<MKIOStreamingEndpoint> task = Task.Run<MKIOStreamingEndpoint>(async () => await GetStreamingEndpointAsync(streamingEndpointName));
+            Task<StreamingEndpoint> task = Task.Run<StreamingEndpoint>(async () => await GetStreamingEndpointAsync(streamingEndpointName));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<MKIOStreamingEndpoint> GetStreamingEndpointAsync(string streamingEndpointName)
+        public async Task<StreamingEndpoint> GetStreamingEndpointAsync(string streamingEndpointName)
         {
             string URL = GenerateApiUrl(streamingEndpointApiUrl, streamingEndpointName);
             string responseContent = await GetObjectContentAsync(URL);
-            return MKIOStreamingEndpoint.FromJson(responseContent);
+            return StreamingEndpoint.FromJson(responseContent);
         }
 
-        public MKIOStreamingEndpoint CreateStreamingEndpoint(string streamingEndpointName, MKIOStreamingEndpoint content, bool autoStart = true)
+        public StreamingEndpoint CreateStreamingEndpoint(string streamingEndpointName, StreamingEndpoint content, bool autoStart = true)
         {
-            Task<MKIOStreamingEndpoint> task = Task.Run<MKIOStreamingEndpoint>(async () => await CreateStreamingEndpointAsync(streamingEndpointName, content, autoStart));
+            Task<StreamingEndpoint> task = Task.Run<StreamingEndpoint>(async () => await CreateStreamingEndpointAsync(streamingEndpointName, content, autoStart));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<MKIOStreamingEndpoint> CreateStreamingEndpointAsync(string streamingEndpointName, MKIOStreamingEndpoint content, bool autoStart = true)
+        public async Task<StreamingEndpoint> CreateStreamingEndpointAsync(string streamingEndpointName, StreamingEndpoint content, bool autoStart = true)
         {
             string URL = GenerateApiUrl(streamingEndpointApiUrl + "?autoStart=" + autoStart.ToString(), streamingEndpointName);
             string responseContent = await CreateObjectAsync(URL, content.ToJson());
-            return MKIOStreamingEndpoint.FromJson(responseContent);
+            return StreamingEndpoint.FromJson(responseContent);
         }
 
         public void StopStreamingEndpoint(string streamingEndpointName)
