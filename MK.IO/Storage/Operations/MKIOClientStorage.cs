@@ -14,7 +14,7 @@ namespace MK.IO
         // storage
         //
         private const string storageApiUrl = "api/accounts/{0}/subscriptions/{1}/storage/";
-        private const string storageSelectionApiUrl = storageApiUrl + "{2}";
+        private const string storageSelectionApiUrl = storageApiUrl + "{2}/";
 
 
         public ObjectStorage CreateStorageAccount(StorageSpec storage)
@@ -55,6 +55,22 @@ namespace MK.IO
             string URL = GenerateStorageApiUrl(storageSelectionApiUrl, storageAccountId.ToString());
             string responseContent = await GetObjectContentAsync(URL);
             return ObjectStorage.FromJson(responseContent);
+        }
+
+        public void DeleteStorageAccount(Guid storageAccountId)
+        {
+            Task.Run(async () => await DeleteStorageAccountAsync(storageAccountId));
+        }
+
+        public async Task DeleteStorageAccountAsync(Guid storageAccountId)
+        {
+            await StorageAccountOperationAsync(storageAccountId, HttpMethod.Delete);
+        }
+
+        private async Task StorageAccountOperationAsync(Guid storageAccountId,  HttpMethod httpMethod)
+        {
+            string URL = GenerateStorageApiUrl(storageSelectionApiUrl, storageAccountId.ToString());
+            await ObjectContentAsync(URL, httpMethod);
         }
     }
 }

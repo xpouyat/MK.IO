@@ -42,18 +42,20 @@ namespace Sample
             // *******************
             // storage operations
             // *******************
-
-            
-            // List
-            var storages = MKIOClient.ListStorageAccounts();
+           
 
             // Creation
             var storage = MKIOClient.CreateStorageAccount(new StorageSpec(config["StorageName"], config["StorageRegion"], new Uri(config["StorageSAS"]), "my description"));
 
+            // List
+            var storages = MKIOClient.ListStorageAccounts();
+
             // Get
-            var storage2 = MKIOClient.GetStorageAccount(storage.Metadata.Id);
+            var storage2 = MKIOClient.GetStorageAccount(storages.First().Metadata.Id);
 
-
+            // Delete
+            MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
+            
 
             // *****************
             // asset operations
@@ -62,6 +64,7 @@ namespace Sample
             // list assets
             var mkioAssets = MKIOClient.ListAssets();
 
+            /*
             // var specc = MKIOClient.ListTracksAndDirListingForAsset("copy-1b510ee166-copy-d32391984a");
 
             // get streaming locators for asset
@@ -108,6 +111,8 @@ namespace Sample
             var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new StreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
            
             var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
+
+            */
         }
     }
 }
