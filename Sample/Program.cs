@@ -94,8 +94,7 @@ namespace Sample
             // start, stop, delete streaming endpoint
             // MKIOClient.StartStreamingEndpoint("streamingendpoint1");
             // MKIOClient.StopStreamingEndpoint("streamingendpoint1");
-            / /MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
-
+            // MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
 
 
             // ******************************
