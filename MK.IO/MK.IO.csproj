@@ -10,11 +10,11 @@
     <Description>A client library for MediaKind MK/IO.</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.0.0-alpha4</Version>
+    <Version>1.0.0-alpha5</Version>
     <RepositoryUrl>https://github.com/xpouyat/MK.IO</RepositoryUrl>
     <PackageProjectUrl>https://github.com/xpouyat/MK.IO/blob/master/README.md</PackageProjectUrl>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
+    <AssemblyVersion>1.0.0.3</AssemblyVersion>
+    <FileVersion>1.0.0.3</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

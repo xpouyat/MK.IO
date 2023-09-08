@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using MK.IO.Models;
 using Newtonsoft.Json;
 
 namespace MK.IO
@@ -34,10 +35,17 @@ namespace MK.IO
         [JsonProperty("id")]
         public string Id { get; set; }
 
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
         [JsonProperty("tags")]
         public Dictionary<string, string> Tags { get; set; }
 
         [JsonProperty("properties")]
         public StreamingEndpointProperties Properties { get; set; }
+
+        [JsonProperty("rel")]
+        public StreamingEndpointRel Rel { get; set; }
     }
 }
+

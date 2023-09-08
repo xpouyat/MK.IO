@@ -43,6 +43,15 @@ var stats = MKIOClient.GetStats();
 // Creation
 var storage = MKIOClient.CreateStorageAccount(new StorageSpec("amsxpfrstorage", "francecentral", new Uri("https://insertyoursasuri"), "my description"));
 
+// List
+var storages = MKIOClient.ListStorageAccounts();
+
+// Get
+var storage2 = MKIOClient.GetStorageAccount(storages.First().Metadata.Id);
+
+// Delete
+MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
+
 
 // *****************
 // asset operations
@@ -120,3 +129,4 @@ In this version, operations are supported for :
 - Assets
 - Streaming endpoints
 - Streaming locators
+- Storage accounts

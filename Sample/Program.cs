@@ -42,7 +42,6 @@ namespace Sample
             // *******************
             // storage operations
             // *******************
-           
 
             // Creation
             var storage = MKIOClient.CreateStorageAccount(new StorageSpec(config["StorageName"], config["StorageRegion"], new Uri(config["StorageSAS"]), "my description"));
@@ -55,7 +54,7 @@ namespace Sample
 
             // Delete
             MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
-            
+
 
             // *****************
             // asset operations
@@ -84,18 +83,19 @@ namespace Sample
             // ******************************
 
             // get streaming endpoint
-            var mkse = MKIOClient.GetStreamingEndpoint("streamingendpoint1");
+            var mkse = MKIOClient.GetStreamingEndpoint("xpouyatse1");
 
             // list streaming endpoints
             var mkses = MKIOClient.ListStreamingEndpoints();
 
             // create streaming endpoint
-            var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", new StreamingEndpoint("francecentral", "my description", new StreamingEndpointSku("Standard", 600), 0, false), true);
+            // var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", new StreamingEndpoint("francecentral", "my description", new StreamingEndpointSku("Standard", 600), 0, false), true);
 
             // start, stop, delete streaming endpoint
-            MKIOClient.StartStreamingEndpoint("streamingendpoint1");
-            MKIOClient.StopStreamingEndpoint("streamingendpoint1");
-            MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
+            // MKIOClient.StartStreamingEndpoint("streamingendpoint1");
+            // MKIOClient.StopStreamingEndpoint("streamingendpoint1");
+            / /MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
+
 
 
             // ******************************
@@ -103,12 +103,13 @@ namespace Sample
             // ******************************
 
             var mklocators = MKIOClient.ListStreamingLocators();
+
             var mklocator1 = MKIOClient.GetStreamingLocator("locator-25452");
-           
+
             string uniqueness = Guid.NewGuid().ToString()[..13];
             string locatorName = $"locator-{uniqueness}";
             var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new StreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
-           
+
             var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
 
         }
