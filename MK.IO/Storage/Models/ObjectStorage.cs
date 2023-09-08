@@ -31,6 +31,9 @@ namespace MK.IO
 
         [JsonProperty("metadata")]
         public StorageMetadata Metadata { get; set; }
+
+        [JsonProperty("rel")]
+        public StorageRel Rel { get; set; }
     }
 
 
@@ -72,7 +75,7 @@ namespace MK.IO
     public class StorageMetadata
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [JsonProperty("created")]
         public DateTime Created { get; set; }
@@ -81,12 +84,60 @@ namespace MK.IO
         public DateTime Updated { get; set; }
 
         [JsonProperty("createdById")]
-        public string CreatedById { get; set; }
+        public Guid CreatedById { get; set; }
 
         [JsonProperty("updatedById")]
-        public string UpdatedById { get; set; }
+        public Guid UpdatedById { get; set; }
 
         [JsonProperty("activeCredentialId")]
-        public string ActiveCredentialId { get; set; }
+        public Guid ActiveCredentialId { get; set; }
+    }
+
+    public class StorageRel
+    {
+        [JsonProperty("location")]
+        public StorageLocation Location { get; set; }
+
+        [JsonProperty("sasTokenCount")]
+        public int SasTokenCount { get; set; }
+
+        [JsonProperty("activeCredential")]
+        public StorageCredential ActiveCredential { get; set; }
+    }
+
+    public class StorageLocation
+    {
+        [JsonProperty("metadata")]
+        public Metadata Metadata { get; set; }
+    }
+
+    public class StorageCredential
+    {
+        [JsonProperty("metadata")]
+        public Metadata Metadata { get; set; }
+
+        [JsonProperty("spec")]
+        public Spec Spec { get; set; }
+
+        [JsonProperty("supplemental")]
+        public Supplemental Supplemental { get; set; }
+    }
+
+    public class Supplemental
+    {
+        [JsonProperty("signed_start")]
+        public DateTime SignedStart { get; set; }
+
+        [JsonProperty("signed_expiry")]
+        public DateTime SignedExpiry { get; set; }
+
+        [JsonProperty("test_result")]
+        public TestResult TestResult { get; set; }
+    }
+
+    public class TestResult
+    {
+        [JsonProperty("message")]
+        public string Message { get; set; }
     }
 }

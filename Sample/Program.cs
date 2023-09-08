@@ -43,11 +43,17 @@ namespace Sample
             // storage operations
             // *******************
 
-            // Creation
-            //var storage = MKIOClient.CreateStorageAccount(new StorageSpec("amsxpfrstorage", "francecentral", new Uri("https://insertyoursasuri"), "my description"));
-
+            
             // List
             var storages = MKIOClient.ListStorageAccounts();
+
+            // Creation
+            var storage = MKIOClient.CreateStorageAccount(new StorageSpec(config["StorageName"], config["StorageRegion"], new Uri(config["StorageSAS"]), "my description"));
+
+            // Get
+            var storage2 = MKIOClient.GetStorageAccount(storage.Metadata.Id);
+
+
 
             // *****************
             // asset operations
