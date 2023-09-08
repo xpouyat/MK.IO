@@ -1,12 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using MK.IO.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MK.IO
 {
@@ -36,12 +32,12 @@ namespace MK.IO
             _MKIOtoken = MKIOtoken;
 
             _httpClient = new HttpClient();
+
             // Request headers
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             _subscription_id = GetStats().Extra.SubscriptionId;
             _customer_id = GetUserInfo().CustomerId;
-
         }
 
         private string GenerateApiUrl(string urlPath, string objectName)
@@ -70,14 +66,14 @@ namespace MK.IO
 
         private async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod)
         {
-            var request = new HttpRequestMessage()
+            using HttpRequestMessage request = new HttpRequestMessage()
             {
                 RequestUri = new Uri(url),
                 Method = httpMethod,
             };
             request.Headers.Add("x-mkio-token", _MKIOtoken);
 
-            HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead).ConfigureAwait(false);
+            using HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead).ConfigureAwait(false);
             string responseContent = await amsRequestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             AnalyzeResponseAndThrowIfNeeded(amsRequestResult, responseContent);
@@ -94,9 +90,9 @@ namespace MK.IO
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Post);
         }
 
-        internal async Task<string> CreateObjectInternalAsync(string url, string amsJSONObject,  HttpMethod httpMethod)
+        internal async Task<string> CreateObjectInternalAsync(string url, string amsJSONObject, HttpMethod httpMethod)
         {
-            var request = new HttpRequestMessage()
+            using HttpRequestMessage request = new HttpRequestMessage()
             {
                 RequestUri = new Uri(url),
                 Method = httpMethod,
@@ -104,7 +100,7 @@ namespace MK.IO
             request.Headers.Add("x-mkio-token", _MKIOtoken);
             request.Content = new StringContent(amsJSONObject, System.Text.Encoding.UTF8, "application/json");
 
-            HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request).ConfigureAwait(false);
+            using HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
             string responseContent = await amsRequestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
@@ -128,8 +124,6 @@ namespace MK.IO
             }
             return responseContent;
         }
-
-      
 
 
         private static void AnalyzeResponseAndThrowIfNeeded(HttpResponseMessage amsRequestResult, string responseContent)

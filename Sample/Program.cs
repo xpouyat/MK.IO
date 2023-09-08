@@ -64,7 +64,6 @@ namespace Sample
             // list assets
             var mkioAssets = MKIOClient.ListAssets();
 
-            /*
             // var specc = MKIOClient.ListTracksAndDirListingForAsset("copy-1b510ee166-copy-d32391984a");
 
             // get streaming locators for asset
@@ -112,7 +111,6 @@ namespace Sample
            
             var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
 
-            */
         }
     }
 }
