@@ -25,19 +25,19 @@ namespace MK.IO
 
         public async Task<ObjectStorage> CreateStorageAccountAsync(StorageSpec storage)
         {
-            var content = new ObjectStorage(storage);
+            var content = new BaseObjectStorage(storage);
             string URL = GenerateStorageApiUrl(storageApiUrl);
             string responseContent = await CreateObjectPostAsync(URL, content.ToJson());
             return ObjectStorage.FromJson(responseContent);
         }
 
-        public List<ObjectStorage> ListStorageAccounts()
+        public List<BaseObjectStorage> ListStorageAccounts()
         {
-            Task<List<ObjectStorage>> task = Task.Run<List<ObjectStorage>>(async () => await ListStorageAccountAsync());
+            Task<List<BaseObjectStorage>> task = Task.Run<List<BaseObjectStorage>>(async () => await ListStorageAccountAsync());
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<List<ObjectStorage>> ListStorageAccountAsync()
+        public async Task<List<BaseObjectStorage>> ListStorageAccountAsync()
         {
             string URL = GenerateStorageApiUrl(storageApiUrl);
             string responseContent = await GetObjectContentAsync(URL);

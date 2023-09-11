@@ -19,7 +19,7 @@ namespace MK.IO
         }
 
         [JsonProperty("items")]
-        public List<ObjectStorage> Items { get; set; }
+        public List<BaseObjectStorage> Items { get; set; }
 
         [JsonProperty("kind")]
         public string Kind { get; set; }
