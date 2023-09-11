@@ -3,6 +3,9 @@
 
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Threading;
+using static System.Net.WebRequestMethods;
 
 namespace MK.IO
 {
@@ -125,36 +128,104 @@ namespace MK.IO
             return responseContent;
         }
 
+        public partial class ApiException : Exception
+        {
+            public int StatusCode { get; private set; }
+
+            public string? Response { get; private set; }
+
+            public ApiException(string message, int statusCode, string? response, Exception? innerException)
+                : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
+            // : base(message , innerException)
+            {
+                StatusCode = statusCode;
+                Response = response;
+            }
+
+            public override string ToString()
+            {
+                return string.Format("HTTP Response: \n\n{0}\n\n{1}", Response, base.ToString());
+            }
+        }
+
 
         private static void AnalyzeResponseAndThrowIfNeeded(HttpResponseMessage amsRequestResult, string responseContent)
         {
-            if (!amsRequestResult.IsSuccessStatusCode)
+            var status_ = (int)amsRequestResult.StatusCode;
+
+            var message = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+            if (amsRequestResult.IsSuccessStatusCode)
             {
-                var error = JsonConvert.DeserializeObject<dynamic>(responseContent);
-
-                if (error == null)
-                    throw new Exception("Error when calling MK/IO API. Code:" + amsRequestResult.StatusCode);
-
-                if (error.ContainsKey("error"))
+                if (message == null)
                 {
-                    string? sDetail = null;
+                    throw new ApiException("Response was null which was not expected.", status_, null, null);
+                }
+            }
+            else
+            {
+                string? errorDetail = null;
+                if (message.ContainsKey("error"))
+                {
                     try
                     {
-                        sDetail = (string)error.error.detail;
+                        errorDetail = (string)message.error.detail;
                     }
                     catch
                     {
 
                     }
 
-                    if (!string.IsNullOrEmpty(sDetail))
+                    if (string.IsNullOrEmpty(errorDetail))
                     {
-                        throw new Exception(sDetail);
+
+                        errorDetail = (string)message.error;
                     }
-                    else
+                }
+                if (errorDetail != null)
+                {
+                    errorDetail = " : " + errorDetail;
+                }
+
+                if (status_ == 400)
+                {
+                    if (message == null)
                     {
-                        throw new Exception((string)error.error);
+                        throw new ApiException("Response was null which was not expected.", status_, null, null);
                     }
+                    throw new ApiException("Bad Request" + errorDetail, status_, responseContent, null);
+                }
+                else
+               if (status_ == 403)
+                {
+                    if (message == null)
+                    {
+                        throw new ApiException("Response was null which was not expected.", status_, null, null);
+                    }
+                    throw new ApiException("Forbidden" + errorDetail, status_, responseContent, null);
+                }
+                else
+                if (status_ == 404)
+                {
+                    if (message == null)
+                    {
+                        throw new ApiException("Response was null which was not expected.", status_, null, null);
+                    }
+                    throw new ApiException("Not Found" + errorDetail, status_, responseContent, null);
+                }
+                else
+                if (status_ == 500)
+                {
+                    if (message == null)
+                    {
+                        throw new ApiException("Response was null which was not expected.", status_, null, null);
+                    }
+                    throw new ApiException("Internal Server Error" + errorDetail, status_, responseContent, null);
+
+                }
+                else
+                {
+                    throw new ApiException("The HTTP status code of the response was not expected(" + status_ + ").", status_, responseContent, null);
                 }
             }
         }
