@@ -61,6 +61,10 @@ namespace MK.IO
         {
             return baseUrl + string.Format(urlPath, _customer_id, _subscription_id, objectName);
         }
+        private string GenerateStorageApiUrl(string urlPath, string objectName, string objectName2)
+        {
+            return baseUrl + string.Format(urlPath, _customer_id, _subscription_id, objectName, objectName2);
+        }
 
         private async Task<string> GetObjectContentAsync(string url)
         {

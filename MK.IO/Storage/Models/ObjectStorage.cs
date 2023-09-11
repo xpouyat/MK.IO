@@ -48,14 +48,43 @@ namespace MK.IO
 
     public class StorageCredential
     {
+        public static StorageCredential FromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<StorageCredential>(json, ConverterLE.Settings);
+        }
+
         [JsonProperty("metadata")]
-        public Metadata Metadata { get; set; }
+        public StorageCredentialMetadata Metadata { get; set; }
 
         [JsonProperty("spec")]
-        public Spec Spec { get; set; }
+        public StorageCredentialSpec Spec { get; set; }
 
         [JsonProperty("supplemental")]
         public Supplemental Supplemental { get; set; }
+    }
+
+    public class StorageCredentialMetadata
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("created")]
+        public DateTime? Created { get; set; }
+
+        [JsonProperty("createdById")]
+        public string CreatedById { get; set; }
+    }
+
+    public class StorageCredentialSpec
+    {
+        [JsonProperty("azureCredential")]
+        public AzureCredential AzureCredential { get; set; }
+    }
+
+    public class AzureCredential
+    {
+        [JsonProperty("sasTokenSanitized")]
+        public string SasTokenSanitized { get; set; }
     }
 
     public class Supplemental

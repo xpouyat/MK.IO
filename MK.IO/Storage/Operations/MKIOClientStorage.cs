@@ -15,6 +15,8 @@ namespace MK.IO
         //
         private const string storageApiUrl = "api/accounts/{0}/subscriptions/{1}/storage/";
         private const string storageSelectionApiUrl = storageApiUrl + "{2}/";
+        private const string storageListCredentialsApiUrl = storageSelectionApiUrl + "credentials/";
+        private const string storageCredentialApiUrl = storageListCredentialsApiUrl + "{3}/";
 
 
         public ObjectStorage CreateStorageAccount(StorageSpec storage)
@@ -72,5 +74,32 @@ namespace MK.IO
             string URL = GenerateStorageApiUrl(storageSelectionApiUrl, storageAccountId.ToString());
             await ObjectContentAsync(URL, httpMethod);
         }
+
+        public List<StorageCredential> ListStorageAccountCredentials(Guid storageAccountId)
+        {
+            Task<List<StorageCredential>> task = Task.Run<List<StorageCredential>>(async () => await ListStorageAccountCredentialsAsync(storageAccountId));
+            return task.GetAwaiter().GetResult();
+        }
+
+        public async Task<List<StorageCredential>> ListStorageAccountCredentialsAsync(Guid storageAccountId)
+        {
+            string URL = GenerateStorageApiUrl(storageListCredentialsApiUrl, storageAccountId.ToString());
+            string responseContent = await GetObjectContentAsync(URL);
+            return StorageCredentialList.FromJson(responseContent).Items;
+        }
+
+        public StorageCredential GetStorageAccountCredential(Guid storageAccountId, Guid credentialId)
+        {
+            Task<StorageCredential> task = Task.Run<StorageCredential>(async () => await GetStorageAccountCredentialAsync(storageAccountId, credentialId));
+            return task.GetAwaiter().GetResult();
+        }
+
+        public async Task<StorageCredential> GetStorageAccountCredentialAsync(Guid storageAccountId, Guid credentialId)
+        {
+            string URL = GenerateStorageApiUrl(storageCredentialApiUrl, storageAccountId.ToString(), credentialId.ToString());
+            string responseContent = await GetObjectContentAsync(URL);
+            return StorageCredential.FromJson(responseContent);
+        }
+
     }
 }
