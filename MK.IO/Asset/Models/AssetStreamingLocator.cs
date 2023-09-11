@@ -13,9 +13,6 @@ namespace MK.IO.Models
         [JsonProperty("assetName")]
         public string AssetName { get; set; }
 
-        [JsonProperty("created")]
-        public DateTime? Created { get; set; }
-
         [JsonProperty("streamingLocatorId")]
         public Guid? StreamingLocatorId { get; set; }
 
@@ -25,8 +22,8 @@ namespace MK.IO.Models
         [JsonProperty("defaultContentKeyPolicyName")]
         public string? DefaultContentKeyPolicyName { get; set; }
 
-        [JsonProperty("contentKeys")]
-        public List<object>? ContentKeys { get; set; }
+        [JsonProperty("created")]
+        public DateTime? Created { get; set; }
 
         [JsonProperty("endTime")]
         public DateTime? EndTime { get; set; }
