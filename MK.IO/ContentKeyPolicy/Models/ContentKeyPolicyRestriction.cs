@@ -12,7 +12,12 @@ namespace MK.IO
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyTokenRestriction), "#Microsoft.Media.ContentKeyPolicyTokenRestriction")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyOpenRestriction), "#Microsoft.Media.ContentKeyPolicyOpenRestriction")]
 
-    public class ContentKeyPolicyRestrictionBase
+
+    //
+    // Summary:
+    //     Base class for Content Key Policy restrictions. A derived class must be used
+    //     to create a restriction.
+    public class ContentKeyPolicyRestriction
     {
 
         [JsonProperty("@odata.type")]

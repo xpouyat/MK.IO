@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MK.IO
 {
-    public class ContentKeyPolicyTokenRestriction : ContentKeyPolicyRestrictionBase
+    public class ContentKeyPolicyTokenRestriction : ContentKeyPolicyRestriction
     {
         [JsonProperty("issuer")]
         public string Issuer { get; set; }

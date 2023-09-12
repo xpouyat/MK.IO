@@ -10,11 +10,12 @@ namespace MK.IO
     [JsonConverter(typeof(JsonSubtypes), "@odata.type")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyConfigurationPlayReady), "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyConfigurationWidevine), "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration")]
+    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyConfigurationFairPlay), "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyClearKeyConfiguration), "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration")]
 
     public class ContentKeyPolicyConfigurationBase
     {
         [JsonProperty("@odata.type")]
-        public virtual string OdataType { get; set; }
+        internal virtual string OdataType { get; set; }
     }
 }

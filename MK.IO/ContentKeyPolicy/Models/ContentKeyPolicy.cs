@@ -35,16 +35,4 @@ namespace MK.IO
         [JsonProperty("description")]
         public string Description { get; set; }
     }
-
-    public class ContentKeyPolicyOption
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("restriction")]
-        public ContentKeyPolicyRestrictionBase Restriction { get; set; }
-
-        [JsonProperty("configuration")]
-        public ContentKeyPolicyConfigurationBase Configuration { get; set; }
-    }
 }

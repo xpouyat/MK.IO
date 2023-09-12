@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MK.IO
 {
-    public class ContentKeyPolicyOpenRestriction : ContentKeyPolicyRestrictionBase
+    public class ContentKeyPolicyOpenRestriction : ContentKeyPolicyRestriction
     {
 
     }

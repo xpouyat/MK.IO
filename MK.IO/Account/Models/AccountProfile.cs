@@ -6,7 +6,6 @@ using Newtonsoft.Json.Linq;
 
 namespace MK.IO
 {
-
     public partial class AccountProfile
     {
         public static AccountProfile FromJson(string json)
@@ -39,7 +38,7 @@ namespace MK.IO
         [JsonProperty("admin")]
         public List<string> Admin { get; set; }
     }
-      
+
 
     public class Metadata
     {
@@ -56,7 +55,7 @@ namespace MK.IO
         public ByPermission ByPermission { get; set; }
     }
 
-  
+
 
     public class UserInfo
     {
