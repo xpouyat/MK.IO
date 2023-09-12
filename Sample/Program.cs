@@ -47,6 +47,8 @@ namespace Sample
 
             var cks = MKIOClient.ListContentKeyPoliciesLocators();
 
+            MKIOClient.DeleteContentKeyPolicy("ckpol1");
+
             // *******************
             // storage operations
             // *******************

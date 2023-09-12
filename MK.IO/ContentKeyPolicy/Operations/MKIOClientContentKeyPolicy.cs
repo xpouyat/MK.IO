@@ -44,6 +44,15 @@ namespace MK.IO
             return ContentKeyPolicy.FromJson(responseContent);
         }
 
-      
+        public void DeleteContentKeyPolicy(string contentKeyPolicyName)
+        {
+            Task.Run(async () => await DeleteContentKeyPolicyAsync(contentKeyPolicyName));
+        }
+
+        public async Task DeleteContentKeyPolicyAsync(string contentKeyPolicyName)
+        {
+            string URL = GenerateApiUrl(contentKeyPolicyApiUrl, contentKeyPolicyName);
+            await ObjectContentAsync(URL, HttpMethod.Delete);
+        }
     }
 }
