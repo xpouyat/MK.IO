@@ -39,6 +39,9 @@ namespace Sample
             // Get subscription stats
             var stats = MKIOClient.GetStats();
 
+
+            var ck=  MKIOClient.GetContentKeyPolicy("ckpol1");
+
             // *******************
             // storage operations
             // *******************
