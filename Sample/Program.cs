@@ -39,6 +39,14 @@ namespace Sample
             // Get subscription stats
             var stats = MKIOClient.GetStats();
 
+            // ******************************
+            // Content policy operations
+            // ******************************
+
+            var ck = MKIOClient.GetContentKeyPolicy("ckpol1");
+
+            var cks = MKIOClient.ListContentKeyPoliciesLocators();
+
             // *******************
             // storage operations
             // *******************
@@ -111,11 +119,7 @@ namespace Sample
 
             var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
 
-            // ******************************
-            // Content policy operations
-            // ******************************
-
-            var ck = MKIOClient.GetContentKeyPolicy("ckpol1");
+         
         }
     }
 }
