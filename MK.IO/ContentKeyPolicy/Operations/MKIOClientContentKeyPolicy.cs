@@ -18,17 +18,17 @@ namespace MK.IO
         private const string contentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
         private const string contentKeyPolicyApiUrl = contentKeyPoliciesApiUrl + "/{1}";
 
-        public List<ContentKeyPolicy> ListContentKeyPoliciesLocators()
+        public List<ContentKeyPolicy> ListContentKeyPolicies()
         {
-            Task<List<ContentKeyPolicy>> task = Task.Run<List<ContentKeyPolicy>>(async () => await ListContentKeyPoliciesLocatorsAsync());
+            Task<List<ContentKeyPolicy>> task = Task.Run<List<ContentKeyPolicy>>(async () => await ListContentKeyPoliciesAsync());
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<List<ContentKeyPolicy>> ListContentKeyPoliciesLocatorsAsync()
+        public async Task<List<ContentKeyPolicy>> ListContentKeyPoliciesAsync()
         {
             string URL = GenerateApiUrl(contentKeyPoliciesApiUrl);
             string responseContent = await GetObjectContentAsync(URL);
-            return ListContentKeyPolicies.FromJson(responseContent).Value;
+            return Models.ListContentKeyPolicies.FromJson(responseContent).Value;
         }
 
         public ContentKeyPolicy GetContentKeyPolicy(string contentKeyPolicyName)
@@ -53,6 +53,20 @@ namespace MK.IO
         {
             string URL = GenerateApiUrl(contentKeyPolicyApiUrl, contentKeyPolicyName);
             await ObjectContentAsync(URL, HttpMethod.Delete);
+        }
+
+        public ContentKeyPolicy CreateContentKeyPolicy(string contentKeyPolicyName, ContentKeyPolicy content)
+        {
+            Task<ContentKeyPolicy> task = Task.Run<ContentKeyPolicy>(async () => await CreateContentKeyPolicyAsync(contentKeyPolicyName, content));
+            return task.GetAwaiter().GetResult();
+        }
+
+        public async Task<ContentKeyPolicy> CreateContentKeyPolicyAsync(string contentKeyPolicyName, ContentKeyPolicy content)
+        {
+            string URL = GenerateApiUrl(contentKeyPolicyApiUrl, contentKeyPolicyName);
+            string responseContent = await CreateObjectAsync(URL, content.ToJson());
+            var t = content.ToJson();
+            return ContentKeyPolicy.FromJson(responseContent);
         }
     }
 }

@@ -1,12 +1,22 @@
 ﻿using MK.IO;
 using MK.IO.Models;
 using Microsoft.Extensions.Configuration;
+using System.Linq.Expressions;
+using System.Security.Cryptography;
 
 namespace Sample
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
+        {
+            // MainAsync().Wait();
+            // or, if you want to avoid exceptions being wrapped into AggregateException:
+            MainAsync().GetAwaiter().GetResult();
+        }
+
+
+        static async Task MainAsync()
         {
             Console.WriteLine("Sample that operates MK/IO.");
 
@@ -43,11 +53,48 @@ namespace Sample
             // Content policy operations
             // ******************************
 
-            var ck = MKIOClient.GetContentKeyPolicy("ckpol1");
+            ContentKeyPolicy ck;
+            try
+            {
+                // ck = await MKIOClient.GetContentKeyPolicyAsync("testpolcreate");
+            }
 
-            var cks = MKIOClient.ListContentKeyPoliciesLocators();
+            catch
+            {
 
-            MKIOClient.DeleteContentKeyPolicy("ckpol1");
+            }
+
+            // var cks = MKIOClient.ListContentKeyPolicies();
+
+            try
+            {
+                await MKIOClient.DeleteContentKeyPolicyAsync("testpolcreate");
+            }
+
+            catch
+            {
+
+            }
+
+            var key = GenerateSymKeyAsBase64();
+
+            var newpol = MKIOClient.CreateContentKeyPolicy(
+                "testpolcreate",
+                new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
+                {
+                    new ContentKeyPolicyOption(
+                        "option1",
+                        new ContentKeyPolicyConfigurationWidevine("{}"),
+                        new ContentKeyPolicyTokenRestriction(
+                            "issuer",
+                            "audience",
+                            "Jwt",
+                            new ContentKeyPolicySymmetricTokenKey(key)
+                            )
+                        )
+                })
+                );
+
 
             // *******************
             // storage operations
@@ -121,7 +168,16 @@ namespace Sample
 
             var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
 
-         
+
+        }
+
+
+        private static string GenerateSymKeyAsBase64()
+        {
+            byte[] TokenSigningKey = new byte[40];
+            var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(TokenSigningKey);
+            return Convert.ToBase64String(TokenSigningKey);
         }
     }
 }

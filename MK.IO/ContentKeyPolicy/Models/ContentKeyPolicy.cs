@@ -9,6 +9,12 @@ namespace MK.IO
 
     public partial class ContentKeyPolicy
     {
+
+        public ContentKeyPolicy(string description, List<ContentKeyPolicyOption> contentKeyPolicyOptions)
+        {
+            Properties = new ContentKeyPolicyProperties { Description = description, Options = contentKeyPolicyOptions };
+        }
+
         public static ContentKeyPolicy FromJson(string json)
         {
             return JsonConvert.DeserializeObject<ContentKeyPolicy>(json, ConverterLE.Settings);

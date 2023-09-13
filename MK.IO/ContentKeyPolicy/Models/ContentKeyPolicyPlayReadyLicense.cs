@@ -5,8 +5,20 @@ using Newtonsoft.Json;
 
 namespace MK.IO
 {
+
     public class ContentKeyPolicyPlayReadyLicense
     {
+        public ContentKeyPolicyPlayReadyLicense(string contentType, string licenseType, string playReadySecurityLevel, bool allowTestDevices, ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader contentKeyLocation, PlayReadyPlayRight playRight)
+        {
+            ContentType = contentType;
+            LicenseType = licenseType;
+            PlayReadySecurityLevel = playReadySecurityLevel;
+            AllowTestDevices = allowTestDevices;
+            ContentKeyLocation = contentKeyLocation;
+            PlayRight = playRight;
+        }
+
+
         [JsonProperty("playRight")]
         public PlayReadyPlayRight PlayRight { get; set; }
 
@@ -23,20 +35,25 @@ namespace MK.IO
         public bool AllowTestDevices { get; set; }
 
         [JsonProperty("contentKeyLocation")]
-        public ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader ContentKeyLocation { get; set; }
+        public PlayReadyContentKeyLocation ContentKeyLocation { get; set; }
 
     }
 
     public class PlayReadyPlayRight
     {
+        public PlayReadyPlayRight(int firstPlayExpiration, int licenseValidityDuration, int playEnablers, int scmsRestriction, string allowPassingVideoContentToUnknownOutput)
+        {
+            ScmsRestriction = scmsRestriction;
+            AllowPassingVideoContentToUnknownOutput = allowPassingVideoContentToUnknownOutput;
+        }
+
         [JsonProperty("scmsRestriction")]
         public int ScmsRestriction { get; set; }
 
         [JsonProperty("allowPassingVideoContentToUnknownOutput")]
         public string AllowPassingVideoContentToUnknownOutput { get; set; }
     }
-
-    
+ 
 
 
 }

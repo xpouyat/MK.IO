@@ -5,14 +5,23 @@ using Newtonsoft.Json;
 
 namespace MK.IO
 {
-    public class ContentKeyPolicyConfigurationFairPlay : ContentKeyPolicyConfigurationBase
+    public class ContentKeyPolicyConfigurationFairPlay : ContentKeyPolicyConfiguration
     {
+
+        public ContentKeyPolicyConfigurationFairPlay(string ask, string fairPlayPfx, string fairPlayPfxPassword, int rentalDuration, string rentalAndLeaseKeyType)
+        {
+            Ask = ask;
+            FairPlayPfx = fairPlayPfx;
+            RentalDuration = rentalDuration;
+            FairPlayPfxPassword = fairPlayPfxPassword;
+            RentalAndLeaseKeyType = rentalAndLeaseKeyType;
+        }
+
+        [JsonProperty("@odata.type")]
+        internal string OdataType => "#Microsoft.Media.ContentKeyPolicyConfigurationFairPlay";
 
         [JsonProperty("ask")]
         public string Ask { get; set; }
-
-        [JsonProperty("@odata.type")]
-        public string OdataType { get; set; }
 
         [JsonProperty("fairPlayPfx")]
         public string FairPlayPfx { get; set; }
@@ -25,6 +34,5 @@ namespace MK.IO
 
         [JsonProperty("rentalAndLeaseKeyType")]
         public string RentalAndLeaseKeyType { get; set; }
-
     }
 }

@@ -90,5 +90,10 @@ namespace MK.IO
             string URL = GenerateApiUrl(streamingEndpointApiUrl + (operation != null ? "/" + operation : string.Empty), streamingEndpointName);
             await ObjectContentAsync(URL, httpMethod);
         }
+
+        public string GenerateUniqueName(string prefix)
+        {
+            return prefix + "-" + Guid.NewGuid().ToString()[..13];
+        }
     }
 }

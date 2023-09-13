@@ -5,8 +5,13 @@ using Newtonsoft.Json;
 
 namespace MK.IO
 {
-    public class ContentKeyPolicyClearKeyConfiguration : ContentKeyPolicyConfigurationBase
+    public class ContentKeyPolicyClearKeyConfiguration : ContentKeyPolicyConfiguration
     {
-       
+        public ContentKeyPolicyClearKeyConfiguration()
+        {
+        }
+
+        [JsonProperty("@odata.type")]
+        internal string OdataType => "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration";
     }
 }

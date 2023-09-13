@@ -9,6 +9,18 @@ namespace MK.IO
 {
     public class ContentKeyPolicyTokenRestriction : ContentKeyPolicyRestriction
     {
+
+        public ContentKeyPolicyTokenRestriction(string issuer, string audience, string restrictionTokenType, ContentKeyPolicyVerificationKey primaryVerificationKey)
+        {
+            Issuer = issuer;
+            Audience = audience;
+            RestrictionTokenType = restrictionTokenType;
+            PrimaryVerificationKey = primaryVerificationKey;
+        }
+
+        [JsonProperty("@odata.type")]
+        internal string OdataType => "#Microsoft.Media.ContentKeyPolicyTokenRestriction";
+
         [JsonProperty("issuer")]
         public string Issuer { get; set; }
 
@@ -20,8 +32,5 @@ namespace MK.IO
 
         [JsonProperty("primaryVerificationKey")]
         public ContentKeyPolicyVerificationKey PrimaryVerificationKey { get; set; }
-
     }
-
-   
 }

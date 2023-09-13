@@ -13,7 +13,11 @@ namespace MK.IO
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyConfigurationFairPlay), "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyClearKeyConfiguration), "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration")]
 
-    public class ContentKeyPolicyConfigurationBase
+    //
+    // Summary:
+    //     Base class for Content Key Policy configuration. A derived class must be used
+    //     to create a configuration.
+    public class ContentKeyPolicyConfiguration
     {
         [JsonProperty("@odata.type")]
         internal virtual string OdataType { get; set; }
