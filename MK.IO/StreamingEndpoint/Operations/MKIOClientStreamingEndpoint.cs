@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using IO.Swagger.Model;
+using Newtonsoft.Json;
+
 namespace MK.IO
 {
     /// <summary>
@@ -16,43 +19,44 @@ namespace MK.IO
         private const string streamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
         private const string streamingEndpointApiUrl = streamingEndpointsApiUrl + "/{1}";
 
-        public List<StreamingEndpoint> ListStreamingEndpoints()
+        public List<StreamingEndpointSchema> ListStreamingEndpoints()
         {
-            Task<List<StreamingEndpoint>> task = Task.Run<List<StreamingEndpoint>>(async () => await ListStreamingEndpointsAsync());
+            var task = Task.Run<List<StreamingEndpointSchema>>(async () => await ListStreamingEndpointsAsync());
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<List<StreamingEndpoint>> ListStreamingEndpointsAsync()
+        public async Task<List<StreamingEndpointSchema>> ListStreamingEndpointsAsync()
         {
             string URL = GenerateApiUrl(streamingEndpointsApiUrl);
             string responseContent = await GetObjectContentAsync(URL);
-            return ListStreamingEndpoint.FromJson(responseContent).Value;
+            return JsonConvert.DeserializeObject<StreamingEndpointListResponseSchema>(responseContent, ConverterLE.Settings).Value;
         }
 
-        public StreamingEndpoint GetStreamingEndpoint(string streamingEndpointName)
+        public StreamingEndpointSchema GetStreamingEndpoint(string streamingEndpointName)
         {
-            Task<StreamingEndpoint> task = Task.Run<StreamingEndpoint>(async () => await GetStreamingEndpointAsync(streamingEndpointName));
+            var task = Task.Run<StreamingEndpointSchema>(async () => await GetStreamingEndpointAsync(streamingEndpointName));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<StreamingEndpoint> GetStreamingEndpointAsync(string streamingEndpointName)
+        public async Task<StreamingEndpointSchema> GetStreamingEndpointAsync(string streamingEndpointName)
         {
             string URL = GenerateApiUrl(streamingEndpointApiUrl, streamingEndpointName);
             string responseContent = await GetObjectContentAsync(URL);
-            return StreamingEndpoint.FromJson(responseContent);
+            return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings);
         }
 
-        public StreamingEndpoint CreateStreamingEndpoint(string streamingEndpointName, StreamingEndpoint content, bool autoStart = true)
+        public StreamingEndpointSchema CreateStreamingEndpoint(string streamingEndpointName, string location, Dictionary<string, string> tags, StreamingEndpointProperties content, bool autoStart = false)
         {
-            Task<StreamingEndpoint> task = Task.Run<StreamingEndpoint>(async () => await CreateStreamingEndpointAsync(streamingEndpointName, content, autoStart));
+            var task = Task.Run<StreamingEndpointSchema>(async () => await CreateStreamingEndpointAsync(streamingEndpointName, location, tags, content, autoStart));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<StreamingEndpoint> CreateStreamingEndpointAsync(string streamingEndpointName, StreamingEndpoint content, bool autoStart = true)
+        public async Task<StreamingEndpointSchema> CreateStreamingEndpointAsync(string streamingEndpointName, string location, Dictionary<string, string> tags, StreamingEndpointProperties properties, bool autoStart = false)
         {
             string URL = GenerateApiUrl(streamingEndpointApiUrl + "?autoStart=" + autoStart.ToString(), streamingEndpointName);
-            string responseContent = await CreateObjectAsync(URL, content.ToJson());
-            return StreamingEndpoint.FromJson(responseContent);
+            var content = new StreamingEndpointSchema { Location = location, Properties = properties, Tags = tags };
+            string responseContent = await CreateObjectAsync(URL, JsonConvert.SerializeObject(content, ConverterLE.Settings));
+            return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings);
         }
 
         public void StopStreamingEndpoint(string streamingEndpointName)

@@ -148,12 +148,25 @@ namespace Sample
             var mkses = MKIOClient.ListStreamingEndpoints();
 
             // create streaming endpoint
-            // var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", new StreamingEndpoint("francecentral", "my description", new StreamingEndpointSku("Standard", 600), 0, false), true);
+
+            /*
+            var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new Dictionary<string, string>(), new StreamingEndpointProperties
+            {
+                Description = "my description",
+                ScaleUnits = 0,
+                CdnEnabled = false,
+                Sku = new StreamingEndpointsCurrentSku
+                {
+                    Name = "Standard",
+                    Capacity = 600
+                }
+            });
+            */
 
             // start, stop, delete streaming endpoint
-            // MKIOClient.StartStreamingEndpoint("streamingendpoint1");
-            // MKIOClient.StopStreamingEndpoint("streamingendpoint1");
-            // MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
+            //MKIOClient.StartStreamingEndpoint("streamingendpoint1");
+            //MKIOClient.StopStreamingEndpoint("streamingendpoint1");
+            //MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
 
 
             // ******************************
@@ -169,7 +182,7 @@ namespace Sample
             //var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new StreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
             var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new StreamingLocatorProperties { AssetName = "copy-ef2058b692-copy", StreamingPolicyName = "Predefined_ClearStreamingOnly" });
 
-            var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
+            var pathsl = MKIOClient.ListUrlPathsStreamingLocator(mklocator2.Name);
 
             // MKIOClient.DeleteStreamingLocator("locator-25452");
 
