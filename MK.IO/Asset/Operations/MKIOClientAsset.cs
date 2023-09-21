@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using IO.Swagger.Model;
 using MK.IO.Models;
+using Newtonsoft.Json;
 
 namespace MK.IO
 {
@@ -20,43 +22,54 @@ namespace MK.IO
         private const string assetListStreamingLocatorsApiUrl = assetApiUrl + "/listStreamingLocators";
         private const string assetListTracksAndDirectoryApiUrl = assetApiUrl + "/storage/";
 
-        public List<Asset> ListAssets()
+        public List<AssetSchema> ListAssets()
         {
-            Task<List<Asset>> task = Task.Run<List<Asset>>(async () => await ListAssetsAsync());
+            Task<List<AssetSchema>> task = Task.Run<List<AssetSchema>>(async () => await ListAssetsAsync());
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<List<Asset>> ListAssetsAsync()
+        public async Task<List<AssetSchema>> ListAssetsAsync()
         {
             string URL = GenerateApiUrl(assetsApiUrl);
             string responseContent = await GetObjectContentAsync(URL);
-            return Models.ListAssets.FromJson(responseContent).Value;
+            return JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings).Value;
         }
 
-        public Asset GetAsset(string assetName)
+        public AssetSchema GetAsset(string assetName)
         {
-            Task<Asset> task = Task.Run<Asset>(async () => await GetAssetAsync(assetName));
+            Task<AssetSchema> task = Task.Run<AssetSchema>(async () => await GetAssetAsync(assetName));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<Asset> GetAssetAsync(string assetName)
+        public async Task<AssetSchema> GetAssetAsync(string assetName)
         {
             string URL = GenerateApiUrl(assetApiUrl, assetName);
             string responseContent = await GetObjectContentAsync(URL);
-            return Asset.FromJson(responseContent);
+            return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings);
         }
 
-        public Asset CreateOrUpdateAsset(string assetName, Asset content)
+        public AssetSchema CreateOrUpdateAsset(string assetName, string containerName, string storageName, string description = null)
         {
-            Task<Asset> task = Task.Run<Asset>(async () => await CreateOrUpdateAssetAsync(assetName, content));
+            Task<AssetSchema> task = Task.Run<AssetSchema>(async () => await CreateOrUpdateAssetAsync(assetName, containerName, storageName, description));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<Asset> CreateOrUpdateAssetAsync(string assetName, Asset content)
+        public async Task<AssetSchema> CreateOrUpdateAssetAsync(string assetName, string containerName, string storageName, string description = null)
         {
             string URL = GenerateApiUrl(assetApiUrl, assetName);
-            string responseContent = await CreateObjectAsync(URL, content.ToJson());
-            return Asset.FromJson(responseContent);
+            AssetSchema content = new AssetSchema
+            {
+                Name = assetName,
+                Properties = new AssetProperties
+                {
+                    Container = containerName,
+                    Description = description,
+                    StorageAccountName = storageName
+                }
+            };
+
+            string responseContent = await CreateObjectAsync(URL, JsonConvert.SerializeObject(content, Formatting.Indented));
+            return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings);
         }
 
         public void DeleteAsset(string assetName)

@@ -3,6 +3,7 @@ using MK.IO.Models;
 using Microsoft.Extensions.Configuration;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
+using IO.Swagger.Model;
 
 namespace Sample
 {
@@ -76,6 +77,7 @@ namespace Sample
 
             }
 
+            /*
             var key = GenerateSymKeyAsBase64();
 
             var newpol = MKIOClient.CreateContentKeyPolicy(
@@ -94,14 +96,14 @@ namespace Sample
                         )
                 })
                 );
-
+            */
 
             // *******************
             // storage operations
             // *******************
 
             // Creation
-            var storage = MKIOClient.CreateStorageAccount(new StorageSpec(config["StorageName"], config["StorageRegion"], new Uri(config["StorageSAS"]), "my description"));
+            // var storage = MKIOClient.CreateStorageAccount(new StorageSpec(config["StorageName"], config["StorageRegion"], new Uri(config["StorageSAS"]), "my description"));
 
             // List
             var storages = MKIOClient.ListStorageAccounts();
@@ -110,7 +112,7 @@ namespace Sample
             var storage2 = MKIOClient.GetStorageAccount(storages.First().Metadata.Id);
 
             // Delete
-            MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
+            // MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
 
 
             // *****************
@@ -126,13 +128,13 @@ namespace Sample
             var locatorsAsset = MKIOClient.ListStreamingLocatorsForAsset("copy-1b510ee166-copy-d32391984a");
 
             // get asset
-            var mkasset = MKIOClient.GetAsset("mmyassetname");
+            var mkasset = MKIOClient.GetAsset("copy-152b839997");
 
             // create asset
-            var newasset = MKIOClient.CreateOrUpdateAsset("asset-33adc1873f", new Asset("asset-67c25a02-a672-40cd-a4da-dcc48b89acae", "description of asset", "storagename"));
+            var newasset = MKIOClient.CreateOrUpdateAsset("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy" ) ;
 
             // delete asset
-            MKIOClient.DeleteAsset("asset-33adc1873f");
+            //MKIOClient.DeleteAsset("asset-33adc1873f");
 
 
             // ******************************
@@ -167,8 +169,6 @@ namespace Sample
             var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new StreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
 
             var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
-
-
         }
 
 
