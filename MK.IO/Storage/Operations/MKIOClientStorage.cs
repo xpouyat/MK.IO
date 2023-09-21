@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using IO.Swagger.Model;
+using Newtonsoft.Json;
+
 namespace MK.IO
 {
     /// <summary>
@@ -19,44 +22,44 @@ namespace MK.IO
         private const string storageCredentialApiUrl = storageListCredentialsApiUrl + "{3}/";
 
 
-        public ObjectStorage CreateStorageAccount(StorageSpec storage)
+        public StorageResponseSchema CreateStorageAccount(StorageRequestSchema storage)
         {
-            Task<ObjectStorage> task = Task.Run<ObjectStorage>(async () => await CreateStorageAccountAsync(storage));
+           var task = Task.Run<StorageResponseSchema>(async () => await CreateStorageAccountAsync(storage));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<ObjectStorage> CreateStorageAccountAsync(StorageSpec storage)
+        public async Task<StorageResponseSchema> CreateStorageAccountAsync(StorageRequestSchema storage)
         {
-            var content = new BaseObjectStorage(storage);
+            storage.Spec.Type = "Microsoft.Storage"; // needed
             string URL = GenerateStorageApiUrl(storageApiUrl);
-            string responseContent = await CreateObjectPostAsync(URL, content.ToJson());
-            return ObjectStorage.FromJson(responseContent);
+            string responseContent = await CreateObjectPostAsync(URL, storage.ToJson());
+            return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings);
         }
 
-        public List<BaseObjectStorage> ListStorageAccounts()
+        public List<StorageResponseSchema> ListStorageAccounts()
         {
-            Task<List<BaseObjectStorage>> task = Task.Run<List<BaseObjectStorage>>(async () => await ListStorageAccountAsync());
+            var task = Task.Run<List<StorageResponseSchema>>(async () => await ListStorageAccountAsync());
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<List<BaseObjectStorage>> ListStorageAccountAsync()
+        public async Task<List<StorageResponseSchema>> ListStorageAccountAsync()
         {
             string URL = GenerateStorageApiUrl(storageApiUrl);
             string responseContent = await GetObjectContentAsync(URL);
-            return ObjectStorageList.FromJson(responseContent).Items;
+            return JsonConvert.DeserializeObject<StorageListResponseSchema>(responseContent, ConverterLE.Settings).Items;
         }
 
-        public ObjectStorage GetStorageAccount(Guid storageAccountId)
+        public StorageResponseSchema GetStorageAccount(Guid storageAccountId)
         {
-            Task<ObjectStorage> task = Task.Run<ObjectStorage>(async () => await GetStorageAccountAsync(storageAccountId));
+           var task = Task.Run<StorageResponseSchema>(async () => await GetStorageAccountAsync(storageAccountId));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<ObjectStorage> GetStorageAccountAsync(Guid storageAccountId)
+        public async Task<StorageResponseSchema> GetStorageAccountAsync(Guid storageAccountId)
         {
             string URL = GenerateStorageApiUrl(storageSelectionApiUrl, storageAccountId.ToString());
             string responseContent = await GetObjectContentAsync(URL);
-            return ObjectStorage.FromJson(responseContent);
+            return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings);
         }
 
         public void DeleteStorageAccount(Guid storageAccountId)
@@ -75,30 +78,30 @@ namespace MK.IO
             await ObjectContentAsync(URL, httpMethod);
         }
 
-        public List<StorageCredential> ListStorageAccountCredentials(Guid storageAccountId)
+        public List<CredentialResponseSchema> ListStorageAccountCredentials(Guid storageAccountId)
         {
-            Task<List<StorageCredential>> task = Task.Run<List<StorageCredential>>(async () => await ListStorageAccountCredentialsAsync(storageAccountId));
+            var task = Task.Run<List<CredentialResponseSchema>>(async () => await ListStorageAccountCredentialsAsync(storageAccountId));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<List<StorageCredential>> ListStorageAccountCredentialsAsync(Guid storageAccountId)
+        public async Task<List<CredentialResponseSchema>> ListStorageAccountCredentialsAsync(Guid storageAccountId)
         {
             string URL = GenerateStorageApiUrl(storageListCredentialsApiUrl, storageAccountId.ToString());
             string responseContent = await GetObjectContentAsync(URL);
-            return StorageCredentialList.FromJson(responseContent).Items;
+            return JsonConvert.DeserializeObject<CredentialListReponseSchema>(responseContent, ConverterLE.Settings).Items;
         }
 
-        public StorageCredential GetStorageAccountCredential(Guid storageAccountId, Guid credentialId)
+        public CredentialResponseSchema GetStorageAccountCredential(Guid storageAccountId, Guid credentialId)
         {
-            Task<StorageCredential> task = Task.Run<StorageCredential>(async () => await GetStorageAccountCredentialAsync(storageAccountId, credentialId));
+           var task = Task.Run<CredentialResponseSchema>(async () => await GetStorageAccountCredentialAsync(storageAccountId, credentialId));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<StorageCredential> GetStorageAccountCredentialAsync(Guid storageAccountId, Guid credentialId)
+        public async Task<CredentialResponseSchema> GetStorageAccountCredentialAsync(Guid storageAccountId, Guid credentialId)
         {
             string URL = GenerateStorageApiUrl(storageCredentialApiUrl, storageAccountId.ToString(), credentialId.ToString());
             string responseContent = await GetObjectContentAsync(URL);
-            return StorageCredential.FromJson(responseContent);
+            return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings);
         }
 
     }

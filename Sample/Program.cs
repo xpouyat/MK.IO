@@ -103,13 +103,35 @@ namespace Sample
             // *******************
 
             // Creation
-            // var storage = MKIOClient.CreateStorageAccount(new StorageSpec(config["StorageName"], config["StorageRegion"], new Uri(config["StorageSAS"]), "my description"));
+            
+            /*
+            var storage = MKIOClient.CreateStorageAccount(new StorageRequestSchema
+            {
+                Spec = new StorageSchema
+                {
+                    Name = config["StorageName"],
+                    Location = config["StorageRegion"],
+                    Description = "my description",
+                    AzureStorageConfiguration = new BlobStorageAzureProperties
+                    {
+                        Url = config["StorageSAS"]
+                    }
+                }
+            }
+            );
+            */
 
             // List
             var storages = MKIOClient.ListStorageAccounts();
 
             // Get
-            var storage2 = MKIOClient.GetStorageAccount(storages.First().Metadata.Id);
+            var storage2 = MKIOClient.GetStorageAccount((Guid)storages.First().Metadata.Id);
+
+
+            var creds = MKIOClient.ListStorageAccountCredentials((Guid)storages.First().Metadata.Id);
+
+            var cred = MKIOClient.GetStorageAccountCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
+
 
             // Delete
             // MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
