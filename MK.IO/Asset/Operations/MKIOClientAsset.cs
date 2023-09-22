@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
 using MK.IO.Models;
 using Newtonsoft.Json;
 
@@ -57,7 +56,7 @@ namespace MK.IO
         public async Task<AssetSchema> CreateOrUpdateAssetAsync(string assetName, string containerName, string storageName, string description = null)
         {
             string URL = GenerateApiUrl(assetApiUrl, assetName);
-            AssetSchema content = new AssetSchema
+            AssetSchema content = new()
             {
                 Name = assetName,
                 Properties = new AssetProperties

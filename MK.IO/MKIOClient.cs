@@ -70,7 +70,7 @@ namespace MK.IO
 
         private async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod)
         {
-            using HttpRequestMessage request = new HttpRequestMessage()
+            using HttpRequestMessage request = new()
             {
                 RequestUri = new Uri(url),
                 Method = httpMethod,
@@ -96,7 +96,7 @@ namespace MK.IO
 
         internal async Task<string> CreateObjectInternalAsync(string url, string amsJSONObject, HttpMethod httpMethod)
         {
-            using HttpRequestMessage request = new HttpRequestMessage()
+            using HttpRequestMessage request = new()
             {
                 RequestUri = new Uri(url),
                 Method = httpMethod,
