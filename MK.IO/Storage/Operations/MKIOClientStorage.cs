@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using IO.Swagger.Model;
+
+using MK.IO.Models;
 using Newtonsoft.Json;
 
 namespace MK.IO
@@ -20,7 +21,6 @@ namespace MK.IO
         private const string storageSelectionApiUrl = storageApiUrl + "{2}/";
         private const string storageListCredentialsApiUrl = storageSelectionApiUrl + "credentials/";
         private const string storageCredentialApiUrl = storageListCredentialsApiUrl + "{3}/";
-
 
         public StorageResponseSchema CreateStorageAccount(StorageRequestSchema storage)
         {
@@ -103,6 +103,5 @@ namespace MK.IO
             string responseContent = await GetObjectContentAsync(URL);
             return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings);
         }
-
     }
 }

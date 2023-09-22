@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using IO.Swagger.Model;
+
+using MK.IO.Models;
 using Newtonsoft.Json;
 
 namespace MK.IO

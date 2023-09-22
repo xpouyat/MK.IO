@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace IO.Swagger.Model {
+namespace MK.IO.Models {
 
   /// <summary>
   /// Class for CommonEncryptionCbcs encryption scheme

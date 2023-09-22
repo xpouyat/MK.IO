@@ -3,7 +3,6 @@ using MK.IO.Models;
 using Microsoft.Extensions.Configuration;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
-using IO.Swagger.Model;
 
 namespace Sample
 {
