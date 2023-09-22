@@ -51,6 +51,21 @@ namespace Sample
             // Get subscription stats
             var stats = MKIOClient.GetStats();
 
+            // **********************
+            // live event operations
+            // **********************
+
+            var les = MKIOClient.ListLiveEvents();
+
+            // MKIOClient.DeleteLiveEvent("liveevent4");
+
+            var le = MKIOClient.CreateLiveEvent("liveevent4", "francecentral", new LiveEventProperties
+            {
+                Input = new LiveEventInput { StreamingProtocol = "RTMP" },
+                StreamOptions = new List<string> { "Default" },
+                Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
+            });
+
 
             // *****************
             // asset operations
@@ -253,7 +268,7 @@ namespace Sample
             // create streaming endpoint
 
             /*
-            var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new Dictionary<string, string>(), new StreamingEndpointProperties
+            var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
                 Description = "my description",
                 ScaleUnits = 0,

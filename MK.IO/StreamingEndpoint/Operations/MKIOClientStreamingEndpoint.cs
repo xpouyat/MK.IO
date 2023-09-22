@@ -46,15 +46,19 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings);
         }
 
-        public StreamingEndpointSchema CreateStreamingEndpoint(string streamingEndpointName, string location, Dictionary<string, string> tags, StreamingEndpointProperties content, bool autoStart = false)
+        public StreamingEndpointSchema CreateStreamingEndpoint(string streamingEndpointName, string location, StreamingEndpointProperties content, bool autoStart = false, Dictionary<string, string> tags = null)
         {
-            var task = Task.Run<StreamingEndpointSchema>(async () => await CreateStreamingEndpointAsync(streamingEndpointName, location, tags, content, autoStart));
+            var task = Task.Run<StreamingEndpointSchema>(async () => await CreateStreamingEndpointAsync(streamingEndpointName, location, content, autoStart, tags));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<StreamingEndpointSchema> CreateStreamingEndpointAsync(string streamingEndpointName, string location, Dictionary<string, string> tags, StreamingEndpointProperties properties, bool autoStart = false)
+        public async Task<StreamingEndpointSchema> CreateStreamingEndpointAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string> tags = null)
         {
             string URL = GenerateApiUrl(streamingEndpointApiUrl + "?autoStart=" + autoStart.ToString(), streamingEndpointName);
+            if (tags == null)
+            {
+                tags = new Dictionary<string, string>();
+            }
             var content = new StreamingEndpointSchema { Location = location, Properties = properties, Tags = tags };
             string responseContent = await CreateObjectAsync(URL, JsonConvert.SerializeObject(content, ConverterLE.Settings));
             return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings);

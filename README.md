@@ -29,6 +29,7 @@ In the current version, operations are supported for :
 - Content key policies
 - Transforms
 - Jobs
+- Live events
 
 ### Sample code
 
@@ -125,7 +126,7 @@ var mkse = MKIOClient.GetStreamingEndpoint("streamingendpoint1");
 var mkses = MKIOClient.ListStreamingEndpoints();
 
 // create streaming endpoint
-var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new Dictionary<string, string>(), new StreamingEndpointProperties
+var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
                 Description = "my description",
                 ScaleUnits = 0,
@@ -291,7 +292,7 @@ var mkse = await MKIOClient.GetStreamingEndpointAsync("streamingendpoint1");
 var mkses = await MKIOClient.ListStreamingEndpointsAsync();
 
 // create streaming endpoint
-var newSe = await MKIOClient.CreateStreamingEndpointAsync("streamingendpoint2", "francecentral", new Dictionary<string, string>(), new StreamingEndpointProperties
+var newSe = await MKIOClient.CreateStreamingEndpointAsync("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
                 Description = "my description",
                 ScaleUnits = 0,

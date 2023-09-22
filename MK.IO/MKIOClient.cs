@@ -155,7 +155,6 @@ namespace MK.IO
             }
         }
 
-
         private static void AnalyzeResponseAndThrowIfNeeded(HttpResponseMessage amsRequestResult, string responseContent)
         {
             var status_ = (int)amsRequestResult.StatusCode;
