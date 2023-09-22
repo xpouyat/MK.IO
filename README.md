@@ -262,6 +262,23 @@ MKIOClient.CancelJob("simpletransform", "testjob2");
 MKIOClient.DeleteJob("simpletransform", "testjob1");
 
 
+// **********************
+// live event operations
+// **********************
+
+var list_le = MKIOClient.ListLiveEvents();
+
+// Creation
+var le = MKIOClient.CreateLiveEvent("liveevent4", "francecentral", new LiveEventProperties
+{
+    Input = new LiveEventInput { StreamingProtocol = "RTMP" },
+    StreamOptions = new List<string> { "Default" },
+    Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
+});
+
+// Delete
+MKIOClient.DeleteLiveEvent("liveevent4");
+
 ```
 
 Async operations are also supported. For example :
