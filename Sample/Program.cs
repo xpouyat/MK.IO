@@ -51,6 +51,28 @@ namespace Sample
             // Get subscription stats
             var stats = MKIOClient.GetStats();
 
+
+            // *****************
+            // asset operations
+            // *****************
+
+            // list assets
+            var mkioAssets = MKIOClient.ListAssets("name desc", 4);
+
+            var specc = MKIOClient.ListTracksAndDirListingForAsset("copy-ef2058b692-copy");
+
+            // get streaming locators for asset
+            var locatorsAsset = MKIOClient.ListStreamingLocatorsForAsset("copy-1b510ee166-copy-d32391984a");
+
+            // get asset
+            var mkasset = MKIOClient.GetAsset("copy-152b839997");
+
+            // create asset
+            // var newasset = MKIOClient.CreateOrUpdateAsset("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
+
+            // delete asset
+            //MKIOClient.DeleteAsset("asset-33adc1873f");
+
             // *********************
             // transform operations
             // *********************
@@ -207,27 +229,7 @@ namespace Sample
             // Delete
             // MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
 
-
-            // *****************
-            // asset operations
-            // *****************
-
-            // list assets
-            var mkioAssets = MKIOClient.ListAssets();
-
-            var specc = MKIOClient.ListTracksAndDirListingForAsset("copy-ef2058b692-copy");
-
-            // get streaming locators for asset
-            var locatorsAsset = MKIOClient.ListStreamingLocatorsForAsset("copy-1b510ee166-copy-d32391984a");
-
-            // get asset
-            var mkasset = MKIOClient.GetAsset("copy-152b839997");
-
-            // create asset
-            // var newasset = MKIOClient.CreateOrUpdateAsset("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
-
-            // delete asset
-            //MKIOClient.DeleteAsset("asset-33adc1873f");
+                    
 
 
             // ******************************

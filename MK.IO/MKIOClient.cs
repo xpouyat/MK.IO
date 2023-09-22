@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json;
+using System.Collections.Specialized;
 using System.Net.Http.Headers;
+using System.Web;
 
 namespace MK.IO
 {
@@ -233,6 +235,28 @@ namespace MK.IO
                     throw new ApiException("The HTTP status code of the response was not expected(" + status_ + ").", status_, responseContent, null);
                 }
             }
+        }
+
+        private static string AddParametersToUrl(string url, string name, string? value = null)
+        {
+            if (value != null)
+            {
+                UriBuilder baseUri = new UriBuilder(url);
+                NameValueCollection queryString = HttpUtility.ParseQueryString(baseUri.Query);
+
+                if (!queryString.HasKeys())
+                {
+                    url += '?';
+                }
+                else
+                {
+                    url += '&';
+                }
+
+                url += HttpUtility.UrlPathEncode(name + '=' + value);
+            }
+
+            return url;
         }
     }
 }
