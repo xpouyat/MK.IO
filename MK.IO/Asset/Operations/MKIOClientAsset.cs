@@ -94,21 +94,19 @@ namespace MK.IO
             string responseContent = await GetObjectContentAsync(URL);
             return AssetListStreamingLocators.FromJson(responseContent).StreamingLocators;
         }
-
-        // Removed as there is an error (same behavior in the portal too)
-        /*
-        public Spec ListTracksAndDirListingForAsset(string assetName)
+       
+        public AssetStorageResponseSchema ListTracksAndDirListingForAsset(string assetName)
         {
-            Task<Spec> task = Task.Run<Spec>(async () => await ListTracksAndDirListingForAssetAsync(assetName));
+           var task = Task.Run<AssetStorageResponseSchema>(async () => await ListTracksAndDirListingForAssetAsync(assetName));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<Spec> ListTracksAndDirListingForAssetAsync(string assetName)
+        public async Task<AssetStorageResponseSchema> ListTracksAndDirListingForAssetAsync(string assetName)
         {
             string URL = GenerateApiUrl(assetListTracksAndDirectoryApiUrl, assetName);
             string responseContent = await GetObjectContentAsync(URL);
-            return MKIOAssetTracksAndDir.FromJson(responseContent).Spec;
+            //return AssetStorageResponseSchema.FromJson(responseContent).Spec;
+            return JsonConvert.DeserializeObject<AssetStorageResponseSchema>(responseContent, ConverterLE.Settings);
         }
-        */
     }
 }

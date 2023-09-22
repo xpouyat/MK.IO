@@ -41,7 +41,20 @@ var stats = MKIOClient.GetStats();
 // *******************
 
 // Creation
-var storage = MKIOClient.CreateStorageAccount(new StorageSpec("amsxpfrstorage", "francecentral", new Uri("https://insertyoursasuri"), "my description"));
+var storage = MKIOClient.CreateStorageAccount(new StorageRequestSchema
+            {
+                Spec = new StorageSchema
+                {
+                    Name = "amsxpfrstorage",
+                    Location = "francecentral",
+                    Description = "my description",
+                    AzureStorageConfiguration = new BlobStorageAzureProperties
+                    {
+                        Url = "https://insertyoursasuri"
+                    }
+                }
+            }
+            );
 
 // List
 var storages = MKIOClient.ListStorageAccounts();
@@ -51,6 +64,12 @@ var storage2 = MKIOClient.GetStorageAccount(storages.First().Metadata.Id);
 
 // Delete
 MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
+
+// List credentials of a storage
+var credentials = MKIOClient.ListStorageAccountCredentials((Guid)storages.First().Metadata.Id);
+
+// Get specific credential
+var credential = MKIOClient.GetStorageAccountCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
 
 
 // *****************
@@ -69,6 +88,12 @@ var newasset = MKIOClient.CreateOrUpdateAsset("asset-33adc1873f", new Asset("ass
 // delete asset
 MKIOClient.DeleteAsset("asset-33adc1873f");
 
+// get streaming locators for asset
+var locatorsAsset = MKIOClient.ListStreamingLocatorsForAsset("copy-1b510ee166");
+
+// Get tracks and directory of an asset
+var tracksAndDir = MKIOClient.ListTracksAndDirListingForAsset("copy-ef2058b692");
+
 
 // ******************************
 // Streaming endpoint operations
@@ -81,7 +106,17 @@ var mkse = MKIOClient.GetStreamingEndpoint("streamingendpoint1");
 var mkses = MKIOClient.ListStreamingEndpoints();
 
 // create streaming endpoint
-var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", new StreamingEndpoint("francecentral", "my description", new StreamingEndpointSku("Standard", 600), 0, false), true);
+var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new Dictionary<string, string>(), new StreamingEndpointProperties
+            {
+                Description = "my description",
+                ScaleUnits = 0,
+                CdnEnabled = false,
+                Sku = new StreamingEndpointsCurrentSku
+                {
+                    Name = "Standard",
+                    Capacity = 600
+                }
+            });
 
 // start, stop, delete streaming endpoint
 MKIOClient.StartStreamingEndpoint("streamingendpoint1");
@@ -95,8 +130,42 @@ MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
 
 var mklocators = MKIOClient.ListStreamingLocators();
 var mklocator1 = MKIOClient.GetStreamingLocator("locator-25452");
-var mklocator2 = MKIOClient.CreateStreamingLocator("locator23", new StreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
+
+var mklocator2 = MKIOClient.CreateStreamingLocator(
+                locatorName,
+                new StreamingLocatorProperties
+                {
+                    AssetName = "copy-ef2058b692",
+                    StreamingPolicyName = "Predefined_ClearStreamingOnly"
+                });
+
 var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
+
+
+// ******************************
+// content key policy operations
+// ******************************
+
+var ck = await MKIOClient.GetContentKeyPolicyAsync("testpol1");
+var cks = MKIOClient.ListContentKeyPolicies();
+MKIOClient.DeleteContentKeyPolicy("testpolcreate");
+
+var newpol = MKIOClient.CreateContentKeyPolicy(
+                "testpolcreate",
+                new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
+                {
+                    new ContentKeyPolicyOption(
+                        "option1",
+                        new ContentKeyPolicyConfigurationWidevine("{}"),
+                        new ContentKeyPolicyTokenRestriction(
+                            "issuer",
+                            "audience",
+                            "Jwt",
+                            new ContentKeyPolicySymmetricTokenKey(key)
+                            )
+                        )
+                })
+                );
 
 ```
 
@@ -114,7 +183,17 @@ var mkse = await MKIOClient.GetStreamingEndpointAsync("streamingendpoint1");
 var mkses = await MKIOClient.ListStreamingEndpointsAsync();
 
 // create streaming endpoint
-var newSe = await MKIOClient.CreateStreamingEndpointAsync("streamingendpoint2", new StreamingEndpoint("francecentral", "my description", new StreamingEndpointSku("Standard", 600), 0, false), true);
+var newSe = await MKIOClient.CreateStreamingEndpointAsync("streamingendpoint2", "francecentral", new Dictionary<string, string>(), new StreamingEndpointProperties
+            {
+                Description = "my description",
+                ScaleUnits = 0,
+                CdnEnabled = false,
+                Sku = new StreamingEndpointsCurrentSku
+                {
+                    Name = "Standard",
+                    Capacity = 600
+                }
+            });
 
 // start, stop, delete streaming endpoint
 await MKIOClient.StartStreamingEndpointAsync("streamingendpoint1");
@@ -130,3 +209,4 @@ In this version, operations are supported for :
 - Streaming endpoints
 - Streaming locators
 - Storage accounts
+- Content key policy

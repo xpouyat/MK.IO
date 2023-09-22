@@ -50,6 +50,12 @@ namespace Sample
 
             // Get subscription stats
             var stats = MKIOClient.GetStats();
+
+
+            // ******************************
+            // content key policy operations
+            // ******************************
+
             try
             {
                 // ck = await MKIOClient.GetContentKeyPolicyAsync("testpolcreate");
@@ -139,7 +145,7 @@ namespace Sample
             // list assets
             var mkioAssets = MKIOClient.ListAssets();
 
-            // var specc = MKIOClient.ListTracksAndDirListingForAsset("copy-1b510ee166-copy-d32391984a");
+            var specc = MKIOClient.ListTracksAndDirListingForAsset("copy-ef2058b692-copy");
 
             // get streaming locators for asset
             var locatorsAsset = MKIOClient.ListStreamingLocatorsForAsset("copy-1b510ee166-copy-d32391984a");
@@ -197,7 +203,13 @@ namespace Sample
             string uniqueness = Guid.NewGuid().ToString()[..13];
             string locatorName = $"locator-{uniqueness}";
             //var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new StreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
-            var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new StreamingLocatorProperties { AssetName = "copy-ef2058b692-copy", StreamingPolicyName = "Predefined_ClearStreamingOnly" });
+            var mklocator2 = MKIOClient.CreateStreamingLocator(
+                locatorName,
+                new StreamingLocatorProperties
+                {
+                    AssetName = "copy-ef2058b692-copy",
+                    StreamingPolicyName = "Predefined_ClearStreamingOnly"
+                });
 
             var pathsl = MKIOClient.ListUrlPathsStreamingLocator(mklocator2.Name);
 

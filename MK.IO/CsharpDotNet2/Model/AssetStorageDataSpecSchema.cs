@@ -39,14 +39,14 @@ namespace MK.IO.Models
         /// </summary>
         [DataMember(Name = "files", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "files")]
-        public FileSchema Files { get; set; }
+        public List<FileSchema> Files { get; set; }
 
         /// <summary>
         /// Gets or Sets Folders
         /// </summary>
         [DataMember(Name = "folders", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "folders")]
-        public FolderSchema Folders { get; set; }
+        public List<FolderSchema> Folders { get; set; }
 
         /// <summary>
         /// A hint to the client as to the format of the data.          mk.mezz.v0 is MediaKind's mezzanine format and will emit a period element.          ams.v0 is Azure Media Services' format and will emit a tracks element.
