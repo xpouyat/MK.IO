@@ -19,6 +19,17 @@ This should provide you with your user_id and token. Note that this token is val
 Another way to get the token is to use [Fiddler](https://www.telerik.com/fiddler) when you connect to the MK/IO portal with your browser.
 It is displayed in the header as `x-mkio-token`. For example, you should see it on the second REST call to https://api.io.mediakind.com/api/ams/mkiosubscriptionname/stats/.
 
+### Supported operations
+
+In the current version, operations are supported for :
+- Assets
+- Streaming endpoints
+- Streaming locators
+- Storage accounts
+- Content key policies
+- Transforms
+- Jobs
+
 ### Sample code
 
 ```csharp
@@ -277,13 +288,3 @@ await MKIOClient.DeleteStreamingEndpointAsync("streamingendpoint2");
 
 ```
 
-### Supported operations
-
-In this version, operations are supported for :
-- Assets
-- Streaming endpoints
-- Streaming locators
-- Storage accounts
-- Content key policy
-- Transforms
-- Jobs
