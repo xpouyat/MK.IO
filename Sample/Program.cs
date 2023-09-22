@@ -57,7 +57,15 @@ namespace Sample
             // *****************
 
             // list assets
-            var mkioAssets = MKIOClient.ListAssets("name desc", 4);
+            //var mkioAssets = MKIOClient.ListAssets("name desc", 4);
+
+
+            var mkioAssetsResult = MKIOClient.ListAssetsAsPage("name desc", 4);
+            do
+            {
+                mkioAssetsResult = MKIOClient.ListAssetsAsPageNext(mkioAssetsResult.NextPageLink);
+            } while (mkioAssetsResult.NextPageLink != null);
+
 
             var specc = MKIOClient.ListTracksAndDirListingForAsset("copy-ef2058b692-copy");
 
@@ -229,7 +237,7 @@ namespace Sample
             // Delete
             // MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
 
-                    
+
 
 
             // ******************************

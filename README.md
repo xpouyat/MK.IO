@@ -90,6 +90,14 @@ var credential = MKIOClient.GetStorageAccountCredential((Guid)storages.First().M
 // list assets
 var mkioAssets = MKIOClient.ListAssets();
 
+// list assets with pages
+var mkioAssetsResult = MKIOClient.ListAssetsAsPage("name desc", 10);
+do
+{
+    mkioAssetsResult = MKIOClient.ListAssetsAsPageNext(mkioAssetsResult.NextPageLink);
+    // do stuff
+} while (mkioAssetsResult.NextPageLink != null);
+
 // get asset
 var mkasset = MKIOClient.GetAsset("mmyassetname");
 
@@ -258,6 +266,20 @@ MKIOClient.DeleteJob("simpletransform", "testjob1");
 Async operations are also supported. For example :
 
 ```csharp
+
+// *****************
+// asset operations
+// *****************
+
+// Retrieve assets with pages for better performances
+var mkioAssetsResult = await MKIOClient.ListAssetsAsPageAsync("name desc", 10);
+        do
+        {
+            mkioAssetsResult = await MKIOClient.ListAssetsAsPageNextAsync(mkioAssetsResult.NextPageLink);
+            // do stuff
+        } while (mkioAssetsResult.NextPageLink != null);
+
+
 // ******************************
 // Streaming endpoint operations
 // ******************************
