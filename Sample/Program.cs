@@ -51,6 +51,19 @@ namespace Sample
             // Get subscription stats
             var stats = MKIOClient.GetStats();
 
+            // *********************
+            // transform operations
+            // *********************
+
+            var tranform = MKIOClient.CreateTransform("mytesttranf", new TransformProperties
+            {
+                Description = "desc",
+                Outputs = new List<TransformOutput>() {
+                    new TransformOutput {
+                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720P),
+                        RelativePriority = "Normal" } }
+            });
+
 
             // ******************************
             // content key policy operations

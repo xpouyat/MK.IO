@@ -210,3 +210,4 @@ In this version, operations are supported for :
 - Streaming locators
 - Storage accounts
 - Content key policy
+- Transforms
