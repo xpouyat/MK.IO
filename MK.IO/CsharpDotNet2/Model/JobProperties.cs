@@ -49,7 +49,7 @@ namespace MK.IO.Models
         /// <value>The inputs of the Job.</value>
         [DataMember(Name = "input", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "input")]
-        public OneOfJobPropertiesInput Input { get; set; }
+        public JobInput Input { get; set; }
 
         /// <summary>
         /// The last modified date and time of the Job. Set by the system.

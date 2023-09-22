@@ -55,6 +55,7 @@ namespace Sample
             // transform operations
             // *********************
 
+            /*
             var tranform = MKIOClient.CreateTransform("mytesttranf", new TransformProperties
             {
                 Description = "desc",
@@ -63,7 +64,63 @@ namespace Sample
                         Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720P),
                         RelativePriority = "Normal" } }
             });
+            */
 
+
+            // ***************
+            // job operations
+            // ***************
+
+            var jobs = MKIOClient.ListAllJobs();
+
+            //var job = MKIOClient.GetJob("simple", "testjob1");
+
+            /*
+            var outputAsset = MKIOClient.CreateOrUpdateAsset("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
+
+            MKIOClient.CreateJob("simple", "testjob2", new JobProperties
+            {
+                Description = "My job",
+                Priority = "Normal",
+                Input = new JobInputAsset(
+                    "copy-ef2058b692-copy",
+                    new List<string> {
+                        "switch_1920x1080_AACAudio_3677.mp4"
+                    }),
+                Outputs = new List<JobOutputAsset>()
+                {
+                    new JobOutputAsset()
+                    {
+                        AssetName="outputasset-012"
+                    }
+                }
+            }
+            );
+            */
+
+            var outputAsset = MKIOClient.CreateOrUpdateAsset("outputasset-014", "asset-outputasset-014", config["StorageName"], "output asset for job");
+
+            MKIOClient.CreateJob("simple", "testjob3", new JobProperties
+            {
+                Description = "My job",
+                Priority = "Normal",
+                Input = new JobInputHttp(
+                    null,
+                    new List<string> {
+                        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                    }),
+                Outputs = new List<JobOutputAsset>()
+                {
+                    new JobOutputAsset()
+                    {
+                        AssetName="outputasset-014"
+                    }
+                }
+            }
+            );
+
+            MKIOClient.CancelJob("simple", "testjob2");
+            //MKIOClient.DeleteJob("simple", "testjob1");
 
             // ******************************
             // content key policy operations

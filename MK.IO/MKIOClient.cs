@@ -40,6 +40,10 @@ namespace MK.IO
             _customer_id = GetUserInfo().CustomerId;
         }
 
+        private string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
+        {
+            return baseUrl + string.Format(urlPath, _MKIOSubscriptionName, objectName1, objectName2);
+        }
         private string GenerateApiUrl(string urlPath, string objectName)
         {
             return baseUrl + string.Format(urlPath, _MKIOSubscriptionName, objectName);

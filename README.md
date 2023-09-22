@@ -167,6 +167,81 @@ var newpol = MKIOClient.CreateContentKeyPolicy(
                 })
                 );
 
+
+// *********************
+// transform operations
+// *********************
+
+// Create a transform
+var tranform = MKIOClient.CreateTransform("simpletransform", new TransformProperties
+            {
+                Description = "Encoding to 720p single bitrate",
+                Outputs = new List<TransformOutput>() {
+                    new TransformOutput {
+                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720P),
+                        RelativePriority = "Normal" } }
+            });
+
+
+// ***************
+// job operations
+// ***************
+
+// list all jobs
+var jobs = MKIOClient.ListAllJobs();
+
+// create output asset
+var outputAsset = MKIOClient.CreateOrUpdateAsset("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
+// create a job with the output asset created and with an asset as a source
+var newJob = MKIOClient.CreateJob("simpletransform", "testjob2", new JobProperties
+    {
+        Description = "My job",
+        Priority = "Normal",
+        Input = new JobInputAsset(
+            "copy-ef2058b692-copy",
+            new List<string> {
+                "switch_1920x1080_AACAudio_3677.mp4"
+            }),
+        Outputs = new List<JobOutputAsset>()
+        {
+            new JobOutputAsset()
+            {
+                AssetName="outputasset-012"
+            }
+        }
+    }
+    );
+
+// with http source as a source
+var newJobH = MKIOClient.CreateJob("simple", "testjob3", new JobProperties
+            {
+                Description = "My job",
+                Priority = "Normal",
+                Input = new JobInputHttp(
+                    null,
+                    new List<string> {
+                        "https://myurltovideofile.mp4"
+                    }),
+                Outputs = new List<JobOutputAsset>()
+                {
+                    new JobOutputAsset()
+                    {
+                        AssetName="outputasset-014"
+                    }
+                }
+            }
+            );
+
+// Get a job
+var job2 = MKIOClient.GetJob("simpletransform", "testjob1");
+
+// Cancel a job
+MKIOClient.CancelJob("simpletransform", "testjob2");
+
+// Delete a job
+MKIOClient.DeleteJob("simpletransform", "testjob1");
+
+
 ```
 
 Async operations are also supported. For example :
@@ -211,3 +286,4 @@ In this version, operations are supported for :
 - Storage accounts
 - Content key policy
 - Transforms
+- Jobs
