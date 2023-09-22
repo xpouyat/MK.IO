@@ -3,12 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Specialized;
 using System.Web;
-using System.Web.Http;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MK.IO
 {
@@ -194,44 +189,7 @@ namespace MK.IO
         {
             string URL = GenerateApiUrl(assetListTracksAndDirectoryApiUrl, assetName);
             string responseContent = await GetObjectContentAsync(URL);
-            //return AssetStorageResponseSchema.FromJson(responseContent).Spec;
             return JsonConvert.DeserializeObject<AssetStorageResponseSchema>(responseContent, ConverterLE.Settings);
         }
     }
-
-
-
-
-    public class PagedResult<T>
-    {
-        public List<T> Results { get; set; }
-        public string? NextPageLink { get; set; }
-    }
-    /*
-    public class YourController : ApiController
-    {
-        private YourDbContext db = new YourDbContext();
-
-        [HttpGet]
-        public PagedResult<YourEntity> Get(int top = 10, string continuationToken = null)
-        {
-            var query = db.YourEntities.AsQueryable();
-
-            if (!string.IsNullOrEmpty(continuationToken))
-            {
-                var lastId = int.Parse(continuationToken);
-                query = query.Where(e => e.Id > lastId);
-            }
-
-            var results = query.OrderBy(e => e.Id).Take(top).ToList();
-            var nextPageLink = results.Any() ? $"api/YourController?top={top}&continuationToken={results.Last().Id}" : null;
-
-            return new PagedResult<YourEntity>
-            {
-                Results = results,
-                NextPageLink = nextPageLink
-            };
-        }
-    }
-    */
 }
