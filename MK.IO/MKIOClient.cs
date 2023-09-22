@@ -3,9 +3,6 @@
 
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Threading;
-using static System.Net.WebRequestMethods;
 
 namespace MK.IO
 {
@@ -16,12 +13,12 @@ namespace MK.IO
     /// </summary>
     public partial class MKIOClient
     {
-        private string baseUrl = "https://api.io.mediakind.com/";
-        private string _MKIOSubscriptionName;
-        private string _MKIOtoken;
-        private HttpClient _httpClient;
-        private Guid _subscription_id;
-        private Guid _customer_id;
+        private readonly string baseUrl = "https://api.io.mediakind.com/";
+        private readonly string _MKIOSubscriptionName;
+        private readonly string _MKIOtoken;
+        private readonly HttpClient _httpClient;
+        private readonly Guid _subscription_id;
+        private readonly Guid _customer_id;
 
         public MKIOClient(string MKIOSubscriptionName, string MKIOtoken)
         {

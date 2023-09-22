@@ -7,7 +7,7 @@ Get-ChildItem $filePath -Recurse | ForEach-Object {
     $content = Get-Content $_.FullName
 
     # Replace the old string with the new string
-    $content = $content -replace 'namespace IO.Swagger.Model {', 'namespace MK.IO.Models {'
+    $content = $content -replace 'namespace IO.Swagger.Model', 'namespace MK.IO.Models'
 
     # Write the new content back to the file
     Set-Content -Path $_.FullName -Value $content

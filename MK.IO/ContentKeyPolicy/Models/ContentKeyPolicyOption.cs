@@ -8,7 +8,7 @@ namespace MK.IO
     public class ContentKeyPolicyOption
     {
 
-        public ContentKeyPolicyOption(string name,  ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
+        public ContentKeyPolicyOption(string name, ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
         {
             Name = name;
             Restriction = restriction;

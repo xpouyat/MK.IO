@@ -24,7 +24,7 @@ namespace MK.IO
 
         public StorageResponseSchema CreateStorageAccount(StorageRequestSchema storage)
         {
-           var task = Task.Run<StorageResponseSchema>(async () => await CreateStorageAccountAsync(storage));
+            var task = Task.Run<StorageResponseSchema>(async () => await CreateStorageAccountAsync(storage));
             return task.GetAwaiter().GetResult();
         }
 
@@ -51,7 +51,7 @@ namespace MK.IO
 
         public StorageResponseSchema GetStorageAccount(Guid storageAccountId)
         {
-           var task = Task.Run<StorageResponseSchema>(async () => await GetStorageAccountAsync(storageAccountId));
+            var task = Task.Run<StorageResponseSchema>(async () => await GetStorageAccountAsync(storageAccountId));
             return task.GetAwaiter().GetResult();
         }
 
@@ -72,7 +72,7 @@ namespace MK.IO
             await StorageAccountOperationAsync(storageAccountId, HttpMethod.Delete);
         }
 
-        private async Task StorageAccountOperationAsync(Guid storageAccountId,  HttpMethod httpMethod)
+        private async Task StorageAccountOperationAsync(Guid storageAccountId, HttpMethod httpMethod)
         {
             string URL = GenerateStorageApiUrl(storageSelectionApiUrl, storageAccountId.ToString());
             await ObjectContentAsync(URL, httpMethod);
@@ -93,7 +93,7 @@ namespace MK.IO
 
         public CredentialResponseSchema GetStorageAccountCredential(Guid storageAccountId, Guid credentialId)
         {
-           var task = Task.Run<CredentialResponseSchema>(async () => await GetStorageAccountCredentialAsync(storageAccountId, credentialId));
+            var task = Task.Run<CredentialResponseSchema>(async () => await GetStorageAccountCredentialAsync(storageAccountId, credentialId));
             return task.GetAwaiter().GetResult();
         }
 

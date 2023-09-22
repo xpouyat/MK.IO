@@ -1,10 +1,5 @@
 ﻿using JsonSubTypes;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MK.IO
 {
@@ -20,6 +15,6 @@ namespace MK.IO
     {
         [JsonProperty("@odata.type")]
         public virtual string OdataType { get; set; }
-               
+
     }
 }

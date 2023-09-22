@@ -1,7 +1,6 @@
 ﻿using MK.IO;
 using MK.IO.Models;
 using Microsoft.Extensions.Configuration;
-using System.Linq.Expressions;
 using System.Security.Cryptography;
 
 namespace Sample
@@ -48,12 +47,6 @@ namespace Sample
 
             // Get subscription stats
             var stats = MKIOClient.GetStats();
-
-            // ******************************
-            // Content policy operations
-            // ******************************
-
-            ContentKeyPolicy ck;
             try
             {
                 // ck = await MKIOClient.GetContentKeyPolicyAsync("testpolcreate");
@@ -102,7 +95,7 @@ namespace Sample
             // *******************
 
             // Creation
-            
+
             /*
             var storage = MKIOClient.CreateStorageAccount(new StorageRequestSchema
             {

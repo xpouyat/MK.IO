@@ -55,8 +55,8 @@ namespace MK.IO.Models
         public List<Audio> Audio { get; set; }
     }
 
- 
-     
+
+
     public class Extra
     {
     }
@@ -105,7 +105,7 @@ namespace MK.IO.Models
         [JsonProperty("name")]
         public string Name { get; set; }
     }
-  
+
 
     public class Spec
     {
@@ -121,7 +121,7 @@ namespace MK.IO.Models
         [JsonProperty("tracks")]
         public Tracks Tracks { get; set; }
 
-     
+
     }
 
     public class Textstream

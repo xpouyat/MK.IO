@@ -17,7 +17,7 @@ namespace MK.IO
         {
             return JsonConvert.SerializeObject(this, ConverterLE.Settings);
         }
-            
+
 
         [JsonProperty("assets")]
         public Assets Assets { get; set; }
@@ -74,7 +74,7 @@ namespace MK.IO
         [JsonProperty("total")]
         public int Total { get; set; }
     }
-      
+
 
     public class StorageAccounts
     {
