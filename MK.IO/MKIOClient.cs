@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using MK.IO.Asset.Operations;
+using MK.IO.Asset;
 using Newtonsoft.Json;
 using System.Collections.Specialized;
 using System.Net.Http.Headers;
@@ -48,12 +48,19 @@ namespace MK.IO
         private void Initialize()
         {
             Assets = new AssetsOperations(this);
+            LiveEvents = new LiveEventsOperations(this);
         }
 
         /// <summary>
         /// Gets the IAssetsOperations.
         /// </summary>
         public virtual IAssetsOperations Assets { get; private set; }
+
+        /// <summary>
+        /// Gets the ILiveEventsOperations.
+        /// </summary>
+        public virtual ILiveEventsOperations LiveEvents { get; private set; }
+
 
         string IMKIOClient.baseUrl => baseUrl;
 

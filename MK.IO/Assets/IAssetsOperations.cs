@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MK.IO.Asset.Operations
+namespace MK.IO.Asset
 {
     public interface IAssetsOperations
     {

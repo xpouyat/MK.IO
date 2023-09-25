@@ -1,15 +1,10 @@
 ﻿using MK.IO.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
-namespace MK.IO.Asset.Operations
+namespace MK.IO.Asset
 {
-    internal partial class AssetsOperations : IAssetsOperations
+    internal class AssetsOperations : IAssetsOperations
     {
         private const string assetsApiUrl = "api/ams/{0}/assets";
         private const string assetApiUrl = assetsApiUrl + "/{1}";
@@ -27,14 +22,14 @@ namespace MK.IO.Asset.Operations
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
         internal AssetsOperations(MKIOClient client)
         {
             if (client == null)
             {
-                throw new System.ArgumentNullException("client");
+                throw new ArgumentNullException("client");
             }
             Client = client;
         }
@@ -47,7 +42,7 @@ namespace MK.IO.Asset.Operations
         /// <returns></returns>
         public List<AssetSchema> List(string? orderBy = null, int? top = null)
         {
-            Task<List<AssetSchema>> task = Task.Run<List<AssetSchema>>(async () => await ListAsync(orderBy, top));
+            Task<List<AssetSchema>> task = Task.Run(async () => await ListAsync(orderBy, top));
             return task.GetAwaiter().GetResult();
         }
 
@@ -74,7 +69,7 @@ namespace MK.IO.Asset.Operations
         /// <returns></returns>
         public PagedResult<AssetSchema> ListAsPage(string? orderBy = null, int? top = null)
         {
-            Task<PagedResult<AssetSchema>> task = Task.Run<PagedResult<AssetSchema>>(async () => await ListAsPageAsync(orderBy, top));
+            Task<PagedResult<AssetSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, top));
             return task.GetAwaiter().GetResult();
         }
 
@@ -110,7 +105,7 @@ namespace MK.IO.Asset.Operations
         /// <returns></returns>
         public PagedResult<AssetSchema> ListAsPageNext(string? nextPageLink)
         {
-            Task<PagedResult<AssetSchema>> task = Task.Run<PagedResult<AssetSchema>>(async () => await ListAsPageNextAsync(nextPageLink));
+            Task<PagedResult<AssetSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
             return task.GetAwaiter().GetResult();
         }
 
@@ -149,7 +144,7 @@ namespace MK.IO.Asset.Operations
 
         public AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string description = null)
         {
-            Task<AssetSchema> task = Task.Run<AssetSchema>(async () => await CreateOrUpdateAsync(assetName, containerName, storageName, description));
+            Task<AssetSchema> task = Task.Run(async () => await CreateOrUpdateAsync(assetName, containerName, storageName, description));
             return task.GetAwaiter().GetResult();
         }
 
@@ -184,7 +179,7 @@ namespace MK.IO.Asset.Operations
 
         public List<AssetStreamingLocator> ListStreamingLocators(string assetName)
         {
-            Task<List<AssetStreamingLocator>> task = Task.Run<List<AssetStreamingLocator>>(async () => await ListStreamingLocatorsAsync(assetName));
+            Task<List<AssetStreamingLocator>> task = Task.Run(async () => await ListStreamingLocatorsAsync(assetName));
             return task.GetAwaiter().GetResult();
         }
 
@@ -197,7 +192,7 @@ namespace MK.IO.Asset.Operations
 
         public AssetStorageResponseSchema ListTracksAndDirListing(string assetName)
         {
-            var task = Task.Run<AssetStorageResponseSchema>(async () => await ListTracksAndDirListingAsync(assetName));
+            var task = Task.Run(async () => await ListTracksAndDirListingAsync(assetName));
             return task.GetAwaiter().GetResult();
         }
 

@@ -266,10 +266,10 @@ client.DeleteJob("simpletransform", "testjob1");
 // live event operations
 // **********************
 
-var list_le = client.ListLiveEvents();
+var list_le = client.LiveEvents.List();
 
 // Creation
-var le = client.CreateLiveEvent("liveevent4", "francecentral", new LiveEventProperties
+var le = client.LiveEvents.Create("liveevent4", "francecentral", new LiveEventProperties
 {
     Input = new LiveEventInput { StreamingProtocol = "RTMP" },
     StreamOptions = new List<string> { "Default" },
@@ -277,7 +277,7 @@ var le = client.CreateLiveEvent("liveevent4", "francecentral", new LiveEventProp
 });
 
 // Delete
-client.DeleteLiveEvent("liveevent4");
+client.LiveEvents.Delete("liveevent4");
 
 ```
 

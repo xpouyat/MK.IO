@@ -57,11 +57,11 @@ namespace Sample
             // live event operations
             // **********************
 
-            var les = client.ListLiveEvents();
+            var les = client.LiveEvents.List();
 
-            // client.DeleteLiveEvent("liveevent4");
+            // client.LiveEvents.Delete("liveevent4");
 
-            var le = client.CreateLiveEvent("liveevent4", "francecentral", new LiveEventProperties
+            var le = client.LiveEvents.Create("liveevent4", "francecentral", new LiveEventProperties
             {
                 Input = new LiveEventInput { StreamingProtocol = "RTMP" },
                 StreamOptions = new List<string> { "Default" },
