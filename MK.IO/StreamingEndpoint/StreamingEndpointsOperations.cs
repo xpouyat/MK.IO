@@ -12,7 +12,7 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public class StreamingEndpointsOperations: IStreamingEndpointsOperations
+    internal class StreamingEndpointsOperations: IStreamingEndpointsOperations
     {
         //
         // streaming endpoints

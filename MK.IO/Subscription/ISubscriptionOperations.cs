@@ -3,8 +3,12 @@
 
 namespace MK.IO
 {
-    public interface IAccountOperations
+    public interface ISubscriptionOperations
     {
+        string SubscriptionName { get; }
+        Guid SubscriptionId { get; }
+        Guid CustomerId { get; }
+
         AccountStats GetStats();
         Task<AccountStats> GetStatsAsync();
         UserInfo GetUserInfo();

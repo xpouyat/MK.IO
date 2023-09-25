@@ -14,14 +14,15 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public partial class MKIOClient : IMKIOClient
+    public class MKIOClient : IMKIOClient
     {
         internal readonly string baseUrl = "https://api.io.mediakind.com/";
-        internal readonly string _MKIOSubscriptionName;
+
+        internal readonly string _subscriptionName;
+        private Guid _subscriptionId;
+        private Guid _customerId;
         private readonly string _MKIOtoken;
         private readonly HttpClient _httpClient;
-        private readonly Guid _subscription_id;
-        private readonly Guid _customer_id;
 
         internal const string allJobsApiUrl = "api/ams/{0}/jobs";
         internal const string transformsApiUrl = "api/ams/{0}/transforms";
@@ -39,7 +40,7 @@ namespace MK.IO
             if (MKIOtoken == null)
                 throw new System.ArgumentNullException(nameof(MKIOtoken));
 
-            _MKIOSubscriptionName = MKIOSubscriptionName;
+            _subscriptionName = MKIOSubscriptionName;
             _MKIOtoken = MKIOtoken;
 
             _httpClient = new HttpClient();
@@ -47,17 +48,16 @@ namespace MK.IO
             // Request headers
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-
             Initialize();
-
-            _subscription_id = Account.GetStats().Extra.SubscriptionId;
-            _customer_id = Account.GetUserInfo().CustomerId;
-
         }
 
         private void Initialize()
         {
-            Account = new AccountOperations(this);
+            Subscription = new SubscriptionOperations(this);
+            // as GetStats and USerInfo has been called in Subscription operations, let's save the data used by other API calls
+            _subscriptionId = Subscription.SubscriptionId;
+            _customerId = Subscription.CustomerId;
+
             StorageAccounts = new StorageAccountsOperations(this);
             Assets = new AssetsOperations(this);
             LiveEvents = new LiveEventsOperations(this);
@@ -71,7 +71,7 @@ namespace MK.IO
         /// <summary>
         /// Gets the IAccountOperations.
         /// </summary>
-        public virtual IAccountOperations Account { get; private set; }
+        public virtual ISubscriptionOperations Subscription { get; private set; }
 
         /// <summary>
         /// Gets the IStorageAccountsOperations.
@@ -114,36 +114,32 @@ namespace MK.IO
         public virtual IContentKeyPoliciesOperations ContentKeyPolicies { get; private set; }
 
 
-        string IMKIOClient.baseUrl => baseUrl;
 
-        string IMKIOClient._MKIOSubscriptionName => _MKIOSubscriptionName;
-
-
-        public string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
+        internal string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
         {
-            return baseUrl + string.Format(urlPath, _MKIOSubscriptionName, objectName1, objectName2);
+            return baseUrl + string.Format(urlPath, _subscriptionName, objectName1, objectName2);
         }
-        public string GenerateApiUrl(string urlPath, string objectName)
+        internal string GenerateApiUrl(string urlPath, string objectName)
         {
-            return baseUrl + string.Format(urlPath, _MKIOSubscriptionName, objectName);
+            return baseUrl + string.Format(urlPath, _subscriptionName, objectName);
         }
-        public string GenerateApiUrl(string urlPath)
+        internal string GenerateApiUrl(string urlPath)
         {
-            return baseUrl + string.Format(urlPath, _MKIOSubscriptionName);
+            return baseUrl + string.Format(urlPath, _subscriptionName);
         }
 
-        public string GenerateStorageApiUrl(string urlPath)
+        internal string GenerateStorageApiUrl(string urlPath)
         {
-            return baseUrl + string.Format(urlPath, _customer_id, _subscription_id);
+            return baseUrl + string.Format(urlPath, _customerId, _subscriptionId);
         }
 
-        public string GenerateStorageApiUrl(string urlPath, string objectName)
+        internal string GenerateStorageApiUrl(string urlPath, string objectName)
         {
-            return baseUrl + string.Format(urlPath, _customer_id, _subscription_id, objectName);
+            return baseUrl + string.Format(urlPath, _customerId, _subscriptionId, objectName);
         }
-        public string GenerateStorageApiUrl(string urlPath, string objectName, string objectName2)
+        internal string GenerateStorageApiUrl(string urlPath, string objectName, string objectName2)
         {
-            return baseUrl + string.Format(urlPath, _customer_id, _subscription_id, objectName, objectName2);
+            return baseUrl + string.Format(urlPath, _customerId, _subscriptionId, objectName, objectName2);
         }
 
         internal async Task<string> GetObjectContentAsync(string url)
@@ -333,13 +329,6 @@ namespace MK.IO
             }
 
             return url;
-        }
-
-
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }

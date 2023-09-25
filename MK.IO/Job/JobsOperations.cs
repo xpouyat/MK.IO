@@ -12,7 +12,7 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public class JobsOperations : IJobsOperations
+    internal class JobsOperations : IJobsOperations
     {
         //
         // jobs

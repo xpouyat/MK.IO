@@ -46,12 +46,12 @@ namespace Sample
 
             var client = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
 
-            var profile = client.Account.GetUserInfo();
+            var profile = client.Subscription.GetUserInfo();
 
             // Get subscription stats
-            var stats = client.Account.GetStats();
+            var stats = client.Subscription.GetStats();
 
-            var lista = client.Assets.ListAsync();
+            var lista = await client.Assets.ListAsync();
 
             // **********************
             // live event operations
@@ -308,7 +308,7 @@ namespace Sample
             var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
 
             // client.StreamingLocators.Delete("locator-25452");
-
+           
         }
 
 

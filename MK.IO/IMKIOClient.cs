@@ -14,12 +14,9 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public interface IMKIOClient : System.IDisposable
+    public interface IMKIOClient
     {
-        string baseUrl { get; }
-        string _MKIOSubscriptionName { get; }
-
-        IAccountOperations Account { get; }
+        ISubscriptionOperations Subscription { get; }
         IAssetsOperations Assets { get; }
         ILiveEventsOperations LiveEvents { get; }
         IJobsOperations Jobs { get; }

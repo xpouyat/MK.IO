@@ -12,7 +12,7 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public class StreamingLocatorsOperations : IStreamingLocatorsOperations
+    internal class StreamingLocatorsOperations : IStreamingLocatorsOperations
     {
         //
         // streaming locators

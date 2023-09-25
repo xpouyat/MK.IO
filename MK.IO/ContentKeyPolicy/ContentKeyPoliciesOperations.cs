@@ -8,7 +8,7 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public class ContentKeyPoliciesOperations : IContentKeyPoliciesOperations
+    internal class ContentKeyPoliciesOperations : IContentKeyPoliciesOperations
     {
         //
         // content key policy
