@@ -56,6 +56,7 @@ namespace MK.IO
             Jobs = new JobsOperations(this);
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             Transforms = new TransformsOperations(this);
+            StreamingLocators = new StreamingLocatorsOperations(this);
         }
 
         /// <summary>
@@ -82,6 +83,11 @@ namespace MK.IO
         /// Gets the ITransformsOperations.
         /// </summary>
         public virtual ITransformsOperations Transforms { get; private set; }
+
+        /// <summary>
+        /// Gets the ITransformsOperations.
+        /// </summary>
+        public virtual IStreamingLocatorsOperations StreamingLocators { get; private set; }
 
 
         string IMKIOClient.baseUrl => baseUrl;

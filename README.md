@@ -148,10 +148,10 @@ client.StreamingEndpoints.Delete("streamingendpoint2");
 // Streaming locator operations
 // ******************************
 
-var mklocators = client.ListStreamingLocators();
-var mklocator1 = client.GetStreamingLocator("locator-25452");
+var mklocators = client.StreamingLocators.List();
+var mklocator1 = client.StreamingLocators.Get("locator-25452");
 
-var mklocator2 = client.CreateStreamingLocator(
+var mklocator2 = client.StreamingLocators.Create(
                 locatorName,
                 new StreamingLocatorProperties
                 {
@@ -159,7 +159,7 @@ var mklocator2 = client.CreateStreamingLocator(
                     StreamingPolicyName = "Predefined_ClearStreamingOnly"
                 });
 
-var pathsl = client.ListUrlPathsStreamingLocator("locator-25452");
+var pathsl = client.StreamingLocators.ListUrlPaths("locator-25452");
 
 
 // ******************************

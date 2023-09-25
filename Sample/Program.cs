@@ -293,14 +293,14 @@ namespace Sample
             // Streaming locator operations
             // ******************************
 
-            var mklocators = client.ListStreamingLocators();
+            var mklocators = client.StreamingLocators.List();
 
-            //var mklocator1 = client.GetStreamingLocator("locator-25452");
+            //var mklocator1 = client.StreamingLocators.Get("locator-25452");
 
             string uniqueness = Guid.NewGuid().ToString()[..13];
             string locatorName = $"locator-{uniqueness}";
-            //var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new StreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
-            var mklocator2 = client.CreateStreamingLocator(
+            //var mklocator2 = MKIOClient.StreamingLocators.Create(locatorName, new StreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
+            var mklocator2 = client.StreamingLocators.Create(
                 locatorName,
                 new StreamingLocatorProperties
                 {
@@ -308,9 +308,9 @@ namespace Sample
                     StreamingPolicyName = "Predefined_ClearStreamingOnly"
                 });
 
-            var pathsl = client.ListUrlPathsStreamingLocator(mklocator2.Name);
+            var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
 
-            // client.DeleteStreamingLocator("locator-25452");
+            // client.StreamingLocators.Delete("locator-25452");
 
         }
 
