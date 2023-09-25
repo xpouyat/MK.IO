@@ -17,7 +17,7 @@ namespace MK.IO
         //
         // streaming endpoints
         //
-        private const string streamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
+        private const string streamingEndpointsApiUrl = MKIOClient.streamingEndpointsApiUrl;
         private const string streamingEndpointApiUrl = streamingEndpointsApiUrl + "/{1}";
 
         /// <summary>

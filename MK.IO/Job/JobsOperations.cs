@@ -18,7 +18,7 @@ namespace MK.IO
         // jobs
         //
 
-        private const string allJobsApiUrl = "api/ams/{0}/jobs";
+        private const string allJobsApiUrl = MKIOClient.allJobsApiUrl;
         private const string jobsApiUrl = MKIOClient.transformsApiUrl + "/jobs";
         private const string jobApiUrl = jobsApiUrl + "/{2}";
 

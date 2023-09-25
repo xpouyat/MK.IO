@@ -13,7 +13,7 @@ namespace MK.IO
         //
         // content key policy
         //
-        private const string contentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
+        private const string contentKeyPoliciesApiUrl = MKIOClient.contentKeyPoliciesApiUrl;
         private const string contentKeyPolicyApiUrl = contentKeyPoliciesApiUrl + "/{1}";
 
         /// <summary>

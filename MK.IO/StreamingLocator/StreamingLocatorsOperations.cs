@@ -17,7 +17,7 @@ namespace MK.IO
         //
         // streaming locators
         //
-        private const string streamingLocatorsApiUrl = "api/ams/{0}/streamingLocators";
+        private const string streamingLocatorsApiUrl = MKIOClient.streamingLocatorsApiUrl;
         private const string streamingLocatorApiUrl = streamingLocatorsApiUrl + "/{1}";
         private const string streamingLocatorListPathsApiUrl = streamingLocatorApiUrl + "/listPaths";
 

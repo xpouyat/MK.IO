@@ -240,21 +240,18 @@ namespace Sample
             */
 
             // List
-            var storages = client.ListStorageAccounts();
+            var storages = client.StorageAccounts.List();
 
             // Get
-            var storage2 = client.GetStorageAccount((Guid)storages.First().Metadata.Id);
+            var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
 
 
-            var creds = client.ListStorageAccountCredentials((Guid)storages.First().Metadata.Id);
+            var creds = client.StorageAccounts.ListCredentials((Guid)storages.First().Metadata.Id);
 
-            var cred = client.GetStorageAccountCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
-
+            var cred = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
 
             // Delete
-            // client.DeleteStorageAccount(storages.First().Metadata.Id);
-
-
+            // client.StorageAccounts.Delete(storages.First().Metadata.Id);
 
 
             // ******************************

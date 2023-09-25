@@ -53,7 +53,7 @@ var stats = client.Account.GetStats();
 // *******************
 
 // Creation
-var storage = client.CreateStorageAccount(new StorageRequestSchema
+var storage = client.StorageAccounts.Create(new StorageRequestSchema
             {
                 Spec = new StorageSchema
                 {
@@ -69,19 +69,19 @@ var storage = client.CreateStorageAccount(new StorageRequestSchema
             );
 
 // List
-var storages = client.ListStorageAccounts();
+var storages = client.StorageAccounts.List();
 
 // Get
-var storage2 = client.GetStorageAccount(storages.First().Metadata.Id);
+var storage2 = client.StorageAccounts.Get(storages.First().Metadata.Id);
 
 // Delete
-client.DeleteStorageAccount(storages.First().Metadata.Id);
+client.StorageAccounts.Delete(storages.First().Metadata.Id);
 
 // List credentials of a storage
-var credentials = client.ListStorageAccountCredentials((Guid)storages.First().Metadata.Id);
+var credentials = client.StorageAccounts.ListCredentials((Guid)storages.First().Metadata.Id);
 
 // Get specific credential
-var credential = client.GetStorageAccountCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
+var credential = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
 
 
 // *****************

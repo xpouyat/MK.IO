@@ -18,7 +18,7 @@ namespace MK.IO
         //
         // live events
         //
-        private const string LiveEventsApiUrl = "api/ams/{0}/liveEvents";
+        private const string LiveEventsApiUrl = MKIOClient.LiveEventsApiUrl;
         private const string LiveEventApiUrl = LiveEventsApiUrl + "/{1}";
 
 

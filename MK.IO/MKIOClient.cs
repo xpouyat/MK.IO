@@ -23,9 +23,13 @@ namespace MK.IO
         private readonly Guid _subscription_id;
         private readonly Guid _customer_id;
 
+        internal const string allJobsApiUrl = "api/ams/{0}/jobs";
         internal const string transformsApiUrl = "api/ams/{0}/transforms";
         internal const string assetsApiUrl = "api/ams/{0}/assets";
-
+        internal const string streamingLocatorsApiUrl = "api/ams/{0}/streamingLocators";
+        internal const string LiveEventsApiUrl = "api/ams/{0}/liveEvents";
+        internal const string contentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
+        internal const string streamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
 
         public MKIOClient(string MKIOSubscriptionName, string MKIOtoken)
         {
@@ -54,6 +58,7 @@ namespace MK.IO
         private void Initialize()
         {
             Account = new AccountOperations(this);
+            StorageAccounts = new StorageAccountsOperations(this);
             Assets = new AssetsOperations(this);
             LiveEvents = new LiveEventsOperations(this);
             Jobs = new JobsOperations(this);
@@ -64,9 +69,14 @@ namespace MK.IO
         }
 
         /// <summary>
-        /// Gets the IAssetsOperations.
+        /// Gets the IAccountOperations.
         /// </summary>
         public virtual IAccountOperations Account { get; private set; }
+
+        /// <summary>
+        /// Gets the IStorageAccountsOperations.
+        /// </summary>
+        public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
 
         /// <summary>
         /// Gets the IAssetsOperations.
@@ -94,12 +104,12 @@ namespace MK.IO
         public virtual ITransformsOperations Transforms { get; private set; }
 
         /// <summary>
-        /// Gets the ITransformsOperations.
+        /// Gets the IStreamingLocatorsOperations.
         /// </summary>
         public virtual IStreamingLocatorsOperations StreamingLocators { get; private set; }
 
         /// <summary>
-        /// Gets the ITransformsOperations.
+        /// Gets the IContentKeyPoliciesOperations.
         /// </summary>
         public virtual IContentKeyPoliciesOperations ContentKeyPolicies { get; private set; }
 
