@@ -56,8 +56,8 @@ namespace MK.IO
 
         public async Task<AccountStats> GetStatsAsync()
         {
-            string URL = Client.GenerateApiUrl(accountStatsApiUrl);
-            string responseContent = await Client.GetObjectContentAsync(URL);
+            var url = Client.GenerateApiUrl(accountStatsApiUrl);
+            string responseContent = await Client.GetObjectContentAsync(url);
             return AccountStats.FromJson(responseContent);
         }
 

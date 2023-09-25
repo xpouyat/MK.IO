@@ -53,8 +53,8 @@ namespace MK.IO
 
         public async Task<List<StreamingLocatorSchema>> ListAsync()
         {
-            string URL = Client.GenerateApiUrl(streamingLocatorsApiUrl);
-            string responseContent = await Client.GetObjectContentAsync(URL);
+            var url = Client.GenerateApiUrl(streamingLocatorsApiUrl);
+            string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StreamingLocatorListResponseSchema>(responseContent, ConverterLE.Settings).Value;
 
         }
@@ -67,8 +67,8 @@ namespace MK.IO
 
         public async Task<StreamingLocatorSchema> GetAsync(string streamingLocatorName)
         {
-            string URL = Client.GenerateApiUrl(streamingLocatorApiUrl, streamingLocatorName);
-            string responseContent = await Client.GetObjectContentAsync(URL);
+            var url = Client.GenerateApiUrl(streamingLocatorApiUrl, streamingLocatorName);
+            string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StreamingLocatorSchema>(responseContent, ConverterLE.Settings);
         }
 
@@ -80,9 +80,9 @@ namespace MK.IO
 
         public async Task<StreamingLocatorSchema> CreateAsync(string streamingLocatorName, StreamingLocatorProperties properties)
         {
-            string URL = Client.GenerateApiUrl(streamingLocatorApiUrl, streamingLocatorName);
+            var url = Client.GenerateApiUrl(streamingLocatorApiUrl, streamingLocatorName);
             var content = new StreamingLocatorSchema { Properties = properties };
-            string responseContent = await Client.CreateObjectAsync(URL, content.ToJson());
+            string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
             return JsonConvert.DeserializeObject<StreamingLocatorSchema>(responseContent, ConverterLE.Settings);
         }
 
@@ -93,8 +93,8 @@ namespace MK.IO
 
         public async Task DeleteAsync(string streamingLocatorName)
         {
-            string URL = Client.GenerateApiUrl(streamingLocatorApiUrl, streamingLocatorName);
-            await Client.ObjectContentAsync(URL, HttpMethod.Delete);
+            var url = Client.GenerateApiUrl(streamingLocatorApiUrl, streamingLocatorName);
+            await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
 
         public StreamingLocatorListPathsResponseSchema ListUrlPaths(string streamingLocatorName)
@@ -105,8 +105,8 @@ namespace MK.IO
 
         public async Task<StreamingLocatorListPathsResponseSchema> ListUrlPathsAsync(string streamingLocatorName)
         {
-            string URL = Client.GenerateApiUrl(streamingLocatorListPathsApiUrl, streamingLocatorName);
-            string responseContent = await Client.ObjectContentAsync(URL, HttpMethod.Post);
+            var url = Client.GenerateApiUrl(streamingLocatorListPathsApiUrl, streamingLocatorName);
+            string responseContent = await Client.ObjectContentAsync(url, HttpMethod.Post);
             return JsonConvert.DeserializeObject<StreamingLocatorListPathsResponseSchema>(responseContent, ConverterLE.Settings);
         }
     }

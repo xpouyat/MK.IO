@@ -52,8 +52,8 @@ namespace MK.IO
 
         public async Task<List<LiveEventSchema>> ListAsync()
         {
-            string URL = Client.GenerateApiUrl(LiveEventsApiUrl);
-            string responseContent = await Client.GetObjectContentAsync(URL);
+            var url = Client.GenerateApiUrl(LiveEventsApiUrl);
+            string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<LiveEventListResponseSchema>(responseContent, ConverterLE.Settings).Value;
 
         }
@@ -66,8 +66,8 @@ namespace MK.IO
 
         public async Task<LiveEventSchema> GetAsync(string liveEventName)
         {
-            string URL = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
-            string responseContent = await Client.GetObjectContentAsync(URL);
+            var url = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
+            string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
         }
 
@@ -79,13 +79,13 @@ namespace MK.IO
 
         public async Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags)
         {
-            string URL = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
+            var url = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
             if (tags == null)
             {
                 tags = new Dictionary<string, string>();
             }
             var content = new LiveEventSchema { Location = location, Tags = tags, Properties = properties };
-            string responseContent = await Client.CreateObjectAsync(URL, content.ToJson());
+            string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
         }
 
@@ -96,8 +96,8 @@ namespace MK.IO
 
         public async Task DeleteAsync(string liveEventName)
         {
-            string URL = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
-            await Client.ObjectContentAsync(URL, HttpMethod.Delete);
+            var url = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
+            await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
 
         public void Start(string liveEventName)
@@ -142,8 +142,8 @@ namespace MK.IO
 
         private async Task LiveEventOperationAsync(string liveEventName, string? operation, HttpMethod httpMethod)
         {
-            string URL = Client.GenerateApiUrl(LiveEventApiUrl + (operation != null ? "/" + operation : string.Empty), liveEventName);
-            await Client.ObjectContentAsync(URL, httpMethod);
+            var url = Client.GenerateApiUrl(LiveEventApiUrl + (operation != null ? "/" + operation : string.Empty), liveEventName);
+            await Client.ObjectContentAsync(url, httpMethod);
         }
     }
 }
