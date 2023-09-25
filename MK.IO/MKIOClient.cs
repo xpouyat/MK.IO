@@ -54,6 +54,7 @@ namespace MK.IO
             Assets = new AssetsOperations(this);
             LiveEvents = new LiveEventsOperations(this);
             Jobs = new JobsOperations(this);
+            StreamingEndpoints = new StreamingEndpointsOperations(this);
         }
 
         /// <summary>
@@ -70,6 +71,11 @@ namespace MK.IO
         /// Gets the IJobsOperations.
         /// </summary>
         public virtual IJobsOperations Jobs { get; private set; }
+
+        /// <summary>
+        /// Gets the IStreamingEndpointsOperations.
+        /// </summary>
+        public virtual IStreamingEndpointsOperations StreamingEndpoints { get; private set; }
 
 
         string IMKIOClient.baseUrl => baseUrl;

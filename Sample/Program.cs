@@ -262,15 +262,15 @@ namespace Sample
             // ******************************
 
             // get streaming endpoint
-            var mkse = client.GetStreamingEndpoint("xpouyatse1");
+            var mkse = client.StreamingEndpoints.Get("xpouyatse1");
 
             // list streaming endpoints
-            var mkses = client.ListStreamingEndpoints();
+            var mkses = client.StreamingEndpoints.List();
 
             // create streaming endpoint
 
             /*
-            var newSe = client.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new StreamingEndpointProperties
+            var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
                 Description = "my description",
                 ScaleUnits = 0,
@@ -284,9 +284,9 @@ namespace Sample
             */
 
             // start, stop, delete streaming endpoint
-            //client.StartStreamingEndpoint("streamingendpoint1");
-            //client.StopStreamingEndpoint("streamingendpoint1");
-            //client.DeleteStreamingEndpoint("streamingendpoint2");
+            //client.StreamingEndpoints.Start("streamingendpoint1");
+            //client.StreamingEndpoints.Stop("streamingendpoint1");
+            //client.StreamingEndpoints.Delete("streamingendpoint2");
 
 
             // ******************************

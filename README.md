@@ -120,13 +120,13 @@ var tracksAndDir = client.Assets.ListTracksAndDirListing("copy-ef2058b692");
 // ******************************
 
 // get streaming endpoint
-var mkse = client.GetStreamingEndpoint("streamingendpoint1");
+var mkse = client.StreamingEndpoints.Get("streamingendpoint1");
 
 // list streaming endpoints
-var mkses = client.ListStreamingEndpoints();
+var mkses = client.StreamingEndpoints.List();
 
 // create streaming endpoint
-var newSe = client.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new StreamingEndpointProperties
+var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
                 Description = "my description",
                 ScaleUnits = 0,
@@ -139,9 +139,9 @@ var newSe = client.CreateStreamingEndpoint("streamingendpoint2", "francecentral"
             });
 
 // start, stop, delete streaming endpoint
-client.StartStreamingEndpoint("streamingendpoint1");
-client.StopStreamingEndpoint("streamingendpoint1");
-client.DeleteStreamingEndpoint("streamingendpoint2");
+client.StreamingEndpoints.Start("streamingendpoint1");
+client.StreamingEndpoints.Stop("streamingendpoint1");
+client.StreamingEndpoints.Delete("streamingendpoint2");
 
 
 // ******************************
@@ -303,13 +303,13 @@ var mkioAssetsResult = await client.Assets.ListAsPageAsync("name desc", 10);
 // ******************************
 
 // get streaming endpoint
-var mkse = await client.GetStreamingEndpointAsync("streamingendpoint1");
+var mkse = await client.StreamingEndpoints.GetAsync("streamingendpoint1");
 
 // list streaming endpoints
-var mkses = await client.ListStreamingEndpointsAsync();
+var mkses = await client.StreamingEndpoints.ListAsync();
 
 // create streaming endpoint
-var newSe = await client.CreateStreamingEndpointAsync("streamingendpoint2", "francecentral", new StreamingEndpointProperties
+var newSe = await client.StreamingEndpoints.CreateAsync("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
                 Description = "my description",
                 ScaleUnits = 0,
@@ -322,9 +322,9 @@ var newSe = await client.CreateStreamingEndpointAsync("streamingendpoint2", "fra
             });
 
 // start, stop, delete streaming endpoint
-await client.StartStreamingEndpointAsync("streamingendpoint1");
-await client.StopStreamingEndpointAsync("streamingendpoint1");
-await client.DeleteStreamingEndpointAsync("streamingendpoint2");
+await client.StreamingEndpoints.StartAsync("streamingendpoint1");
+await client.StreamingEndpoints.StopAsync("streamingendpoint1");
+await client.StreamingEndpoints.DeleteAsync("streamingendpoint2");
 
 ```
 
