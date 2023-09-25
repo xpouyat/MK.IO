@@ -175,7 +175,7 @@ namespace Sample
 
             try
             {
-                // ck = await MKIOClient.GetContentKeyPolicyAsync("testpolcreate");
+                // ck = await client.ContentKeyPolicies.Get("testpolcreate");
             }
 
             catch
@@ -183,11 +183,11 @@ namespace Sample
 
             }
 
-            // var cks = MKIOClient.ListContentKeyPolicies();
+            // var cks = client.ContentKeyPolicies.List();
 
             try
             {
-                await client.DeleteContentKeyPolicyAsync("testpolcreate");
+                await client.ContentKeyPolicies.DeleteAsync("testpolcreate");
             }
 
             catch
@@ -198,7 +198,7 @@ namespace Sample
             /*
             var key = GenerateSymKeyAsBase64();
 
-            var newpol = client.CreateContentKeyPolicy(
+            var newpol = client.ContentKeyPolicies.Create(
                 "testpolcreate",
                 new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
                 {

@@ -57,6 +57,7 @@ namespace MK.IO
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             Transforms = new TransformsOperations(this);
             StreamingLocators = new StreamingLocatorsOperations(this);
+            ContentKeyPolicies = new ContentKeyPoliciesOperations(this);
         }
 
         /// <summary>
@@ -88,6 +89,11 @@ namespace MK.IO
         /// Gets the ITransformsOperations.
         /// </summary>
         public virtual IStreamingLocatorsOperations StreamingLocators { get; private set; }
+
+        /// <summary>
+        /// Gets the ITransformsOperations.
+        /// </summary>
+        public virtual IContentKeyPoliciesOperations ContentKeyPolicies { get; private set; }
 
 
         string IMKIOClient.baseUrl => baseUrl;
@@ -311,7 +317,7 @@ namespace MK.IO
             return url;
         }
 
-     
+
 
         public void Dispose()
         {

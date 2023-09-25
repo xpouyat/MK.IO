@@ -22,5 +22,9 @@ namespace MK.IO
         IAssetsOperations Assets { get; }
         ILiveEventsOperations LiveEvents { get; }
         IJobsOperations Jobs { get; }
+        IStreamingEndpointsOperations StreamingEndpoints { get; }
+        ITransformsOperations Transforms { get; }
+        IStreamingLocatorsOperations StreamingLocators { get; }
+        IContentKeyPoliciesOperations ContentKeyPolicies { get; }
     }
 }

@@ -166,11 +166,11 @@ var pathsl = client.StreamingLocators.ListUrlPaths("locator-25452");
 // content key policy operations
 // ******************************
 
-var ck = await client.GetContentKeyPolicyAsync("testpol1");
-var cks = client.ListContentKeyPolicies();
-client.DeleteContentKeyPolicy("testpolcreate");
+var ck = await client.ContentKeyPolicies.Get("testpol1");
+var cks = client.ContentKeyPolicies.List();
+client.ContentKeyPolicies.Delete("testpolcreate");
 
-var newpol = client.CreateContentKeyPolicy(
+var newpol = client.ContentKeyPolicies.Create(
                 "testpolcreate",
                 new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
                 {
