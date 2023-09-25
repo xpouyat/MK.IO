@@ -102,8 +102,8 @@ namespace Sample
             // transform operations
             // *********************
 
-            /*
-            var tranform = client.CreateTransform("mytesttranf", new TransformProperties
+           
+            var tranform = client.Transforms.Create("mytesttranf", new TransformProperties
             {
                 Description = "desc",
                 Outputs = new List<TransformOutput>() {
@@ -111,7 +111,7 @@ namespace Sample
                         Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720P),
                         RelativePriority = "Normal" } }
             });
-            */
+           
 
 
             // ***************

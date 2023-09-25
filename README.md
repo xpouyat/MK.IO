@@ -193,7 +193,7 @@ var newpol = client.CreateContentKeyPolicy(
 // *********************
 
 // Create a transform
-var tranform = client.CreateTransform("simpletransform", new TransformProperties
+var tranform = client.Transforms.Create("simpletransform", new TransformProperties
             {
                 Description = "Encoding to 720p single bitrate",
                 Outputs = new List<TransformOutput>() {
