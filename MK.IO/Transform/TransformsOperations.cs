@@ -12,7 +12,7 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    internal class TransformsOperations: ITransformsOperations
+    internal class TransformsOperations : ITransformsOperations
     {
         //
         // transforms

@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using MK.IO.Asset;
-using Newtonsoft.Json;
-using System.Collections.Specialized;
-using System.Net.Http.Headers;
-using System.Web;
 
 namespace MK.IO
 {

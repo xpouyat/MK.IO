@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using JsonSubTypes;
-using Newtonsoft.Json;
-
 namespace MK.IO
 {
     /// <summary> The built-in preset to be used for encoding videos. </summary>

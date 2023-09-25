@@ -313,7 +313,7 @@ namespace MK.IO
         {
             if (value != null)
             {
-                UriBuilder baseUri = new UriBuilder(url);
+                UriBuilder baseUri = new(url);
                 NameValueCollection queryString = HttpUtility.ParseQueryString(baseUri.Query);
 
                 if (!queryString.HasKeys())

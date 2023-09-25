@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using JsonSubTypes;
-using MK.IO.Models;
 using Newtonsoft.Json;
 namespace MK.IO
 {

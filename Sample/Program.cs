@@ -102,7 +102,7 @@ namespace Sample
             // transform operations
             // *********************
 
-           
+
             var tranform = client.Transforms.Create("mytesttranf", new TransformProperties
             {
                 Description = "desc",
@@ -111,7 +111,7 @@ namespace Sample
                         Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720P),
                         RelativePriority = "Normal" } }
             });
-           
+
 
 
             // ***************
@@ -308,7 +308,7 @@ namespace Sample
             var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
 
             // client.StreamingLocators.Delete("locator-25452");
-           
+
         }
 
 
