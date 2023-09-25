@@ -21,5 +21,6 @@ namespace MK.IO
 
         IAssetsOperations Assets { get; }
         ILiveEventsOperations LiveEvents { get; }
+        IJobsOperations Jobs { get; }
     }
 }

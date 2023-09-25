@@ -118,14 +118,14 @@ namespace Sample
             // job operations
             // ***************
 
-            var jobs = client.ListAllJobs();
+            var jobs = client.Jobs.ListAll();
 
-            //var job = client.GetJob("simple", "testjob1");
+            //var job = client.Jobs.Get("simple", "testjob1");
 
             /*
             var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
 
-            client.CreateJob("simple", "testjob2", new JobProperties
+            client.Jobs.Create("simple", "testjob2", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -147,7 +147,7 @@ namespace Sample
 
             var outputAsset = client.Assets.CreateOrUpdate("outputasset-014", "asset-outputasset-014", config["StorageName"], "output asset for job");
 
-            client.CreateJob("simple", "testjob3", new JobProperties
+            client.Jobs.Create("simple", "testjob3", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -166,8 +166,8 @@ namespace Sample
             }
             );
 
-            client.CancelJob("simple", "testjob2");
-            //client.DeleteJob("simple", "testjob1");
+            client.Jobs.Cancel("simple", "testjob2");
+            //client.Jobs.Delete("simple", "testjob1");
 
             // ******************************
             // content key policy operations

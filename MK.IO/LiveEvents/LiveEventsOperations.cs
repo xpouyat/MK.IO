@@ -28,7 +28,7 @@ namespace MK.IO
         private MKIOClient Client { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the AssetsOperations class.
+        /// Initializes a new instance of the LiveEventsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.

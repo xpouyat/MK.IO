@@ -17,7 +17,7 @@ namespace MK.IO
         //
         // transforms
         //
-        private const string transformsApiUrl = "api/ams/{0}/transforms";
+       // private const string transformsApiUrl = "api/ams/{0}/transforms";
         private const string transformApiUrl = transformsApiUrl + "/{1}";
 
         public List<TransformSchema> ListTransforms()

@@ -6,7 +6,7 @@ namespace MK.IO.Asset
 {
     internal class AssetsOperations : IAssetsOperations
     {
-        private const string assetsApiUrl = "api/ams/{0}/assets";
+        private const string assetsApiUrl = MKIOClient.assetsApiUrl;
         private const string assetApiUrl = assetsApiUrl + "/{1}";
         private const string assetListStreamingLocatorsApiUrl = assetApiUrl + "/listStreamingLocators";
         private const string assetListTracksAndDirectoryApiUrl = assetApiUrl + "/storage/";

@@ -208,12 +208,12 @@ var tranform = client.CreateTransform("simpletransform", new TransformProperties
 // ***************
 
 // list all jobs
-var jobs = client.ListAllJobs();
+var jobs = client.Jobs.ListAll();
 
 // create output asset
 var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
 // create a job with the output asset created and with an asset as a source
-var newJob = client.CreateJob("simpletransform", "testjob2", new JobProperties
+var newJob = client.Jobs.Create("simpletransform", "testjob2", new JobProperties
     {
         Description = "My job",
         Priority = "Normal",
@@ -233,7 +233,7 @@ var newJob = client.CreateJob("simpletransform", "testjob2", new JobProperties
     );
 
 // with http source as a source
-var newJobH = client.CreateJob("simple", "testjob3", new JobProperties
+var newJobH = client.Jobs.Create("simple", "testjob3", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -253,13 +253,13 @@ var newJobH = client.CreateJob("simple", "testjob3", new JobProperties
             );
 
 // Get a job
-var job2 = client.GetJob("simpletransform", "testjob1");
+var job2 = client.Jobs.Get("simpletransform", "testjob1");
 
 // Cancel a job
-client.CancelJob("simpletransform", "testjob2");
+client.Jobs.Cancel("simpletransform", "testjob2");
 
 // Delete a job
-client.DeleteJob("simpletransform", "testjob1");
+client.Jobs.Delete("simpletransform", "testjob1");
 
 
 // **********************
@@ -290,10 +290,10 @@ Async operations are also supported. For example :
 // *****************
 
 // Retrieve assets with pages for better performances
-var mkioAssetsResult = await client.ListAssetsAsPageAsync("name desc", 10);
+var mkioAssetsResult = await client.Assets.ListAsPageAsync("name desc", 10);
         do
         {
-            mkioAssetsResult = await client.ListAssetsAsPageNextAsync(mkioAssetsResult.NextPageLink);
+            mkioAssetsResult = await client.Assets.ListAsPageNextAsync(mkioAssetsResult.NextPageLink);
             // do stuff
         } while (mkioAssetsResult.NextPageLink != null);
 

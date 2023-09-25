@@ -23,6 +23,10 @@ namespace MK.IO
         private readonly Guid _subscription_id;
         private readonly Guid _customer_id;
 
+        internal const string transformsApiUrl = "api/ams/{0}/transforms";
+        internal const string assetsApiUrl = "api/ams/{0}/assets";
+
+
         public MKIOClient(string MKIOSubscriptionName, string MKIOtoken)
         {
             if (MKIOSubscriptionName == null)
@@ -49,6 +53,7 @@ namespace MK.IO
         {
             Assets = new AssetsOperations(this);
             LiveEvents = new LiveEventsOperations(this);
+            Jobs = new JobsOperations(this);
         }
 
         /// <summary>
@@ -61,13 +66,18 @@ namespace MK.IO
         /// </summary>
         public virtual ILiveEventsOperations LiveEvents { get; private set; }
 
+        /// <summary>
+        /// Gets the IJobsOperations.
+        /// </summary>
+        public virtual IJobsOperations Jobs { get; private set; }
+
 
         string IMKIOClient.baseUrl => baseUrl;
 
         string IMKIOClient._MKIOSubscriptionName => _MKIOSubscriptionName;
 
-      
-        private string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
+
+        public string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
         {
             return baseUrl + string.Format(urlPath, _MKIOSubscriptionName, objectName1, objectName2);
         }
