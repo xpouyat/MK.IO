@@ -41,19 +41,19 @@ using MK.IO.Models;
 // MK/IO Client creation
 // **********************
 
-var MKIOClient = new MKIOClient("mkiosubscriptionname", "mkiotoken");
+var client = new MKIOClient("mkiosubscriptionname", "mkiotoken");
 
-var profile = MKIOClient.GetUserInfo();
+var profile = client.GetUserInfo();
 
 // Get subscription stats
-var stats = MKIOClient.GetStats();
+var stats = client.GetStats();
 
 // *******************
 // storage operations
 // *******************
 
 // Creation
-var storage = MKIOClient.CreateStorageAccount(new StorageRequestSchema
+var storage = client.CreateStorageAccount(new StorageRequestSchema
             {
                 Spec = new StorageSchema
                 {
@@ -69,19 +69,19 @@ var storage = MKIOClient.CreateStorageAccount(new StorageRequestSchema
             );
 
 // List
-var storages = MKIOClient.ListStorageAccounts();
+var storages = client.ListStorageAccounts();
 
 // Get
-var storage2 = MKIOClient.GetStorageAccount(storages.First().Metadata.Id);
+var storage2 = client.GetStorageAccount(storages.First().Metadata.Id);
 
 // Delete
-MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
+client.DeleteStorageAccount(storages.First().Metadata.Id);
 
 // List credentials of a storage
-var credentials = MKIOClient.ListStorageAccountCredentials((Guid)storages.First().Metadata.Id);
+var credentials = client.ListStorageAccountCredentials((Guid)storages.First().Metadata.Id);
 
 // Get specific credential
-var credential = MKIOClient.GetStorageAccountCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
+var credential = client.GetStorageAccountCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
 
 
 // *****************
@@ -89,30 +89,30 @@ var credential = MKIOClient.GetStorageAccountCredential((Guid)storages.First().M
 // *****************
 
 // list assets
-var mkioAssets = MKIOClient.ListAssets();
+var mkioAssets = client.Assets.List();
 
 // list assets with pages
-var mkioAssetsResult = MKIOClient.ListAssetsAsPage("name desc", 10);
+var mkioAssetsResult = client.Assets.ListAsPage("name desc", 10);
 do
 {
-    mkioAssetsResult = MKIOClient.ListAssetsAsPageNext(mkioAssetsResult.NextPageLink);
+    mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
     // do stuff
 } while (mkioAssetsResult.NextPageLink != null);
 
 // get asset
-var mkasset = MKIOClient.GetAsset("mmyassetname");
+var mkasset = client.Assets.Get("mmyassetname");
 
 // create asset
-var newasset = MKIOClient.CreateOrUpdateAsset("asset-33adc1873f", new Asset("asset-67c25a02-a672-40cd-a4da-dcc48b89acae", "description of asset", "storagename"));
+var newasset = client.Assets.CreateOrUpdate("asset-33adc1873f", new Asset("asset-67c25a02-a672-40cd-a4da-dcc48b89acae", "description of asset", "storagename"));
 
 // delete asset
-MKIOClient.DeleteAsset("asset-33adc1873f");
+MKIOClient.Assets.Delete("asset-33adc1873f");
 
 // get streaming locators for asset
-var locatorsAsset = MKIOClient.ListStreamingLocatorsForAsset("copy-1b510ee166");
+var locatorsAsset = client.Assets.ListStreamingLocators("copy-1b510ee166");
 
 // Get tracks and directory of an asset
-var tracksAndDir = MKIOClient.ListTracksAndDirListingForAsset("copy-ef2058b692");
+var tracksAndDir = client.Assets.ListTracksAndDirListing("copy-ef2058b692");
 
 
 // ******************************
@@ -120,13 +120,13 @@ var tracksAndDir = MKIOClient.ListTracksAndDirListingForAsset("copy-ef2058b692")
 // ******************************
 
 // get streaming endpoint
-var mkse = MKIOClient.GetStreamingEndpoint("streamingendpoint1");
+var mkse = client.GetStreamingEndpoint("streamingendpoint1");
 
 // list streaming endpoints
-var mkses = MKIOClient.ListStreamingEndpoints();
+var mkses = client.ListStreamingEndpoints();
 
 // create streaming endpoint
-var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new StreamingEndpointProperties
+var newSe = client.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
                 Description = "my description",
                 ScaleUnits = 0,
@@ -139,19 +139,19 @@ var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", "francecent
             });
 
 // start, stop, delete streaming endpoint
-MKIOClient.StartStreamingEndpoint("streamingendpoint1");
-MKIOClient.StopStreamingEndpoint("streamingendpoint1");
-MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
+client.StartStreamingEndpoint("streamingendpoint1");
+client.StopStreamingEndpoint("streamingendpoint1");
+client.DeleteStreamingEndpoint("streamingendpoint2");
 
 
 // ******************************
 // Streaming locator operations
 // ******************************
 
-var mklocators = MKIOClient.ListStreamingLocators();
-var mklocator1 = MKIOClient.GetStreamingLocator("locator-25452");
+var mklocators = client.ListStreamingLocators();
+var mklocator1 = client.GetStreamingLocator("locator-25452");
 
-var mklocator2 = MKIOClient.CreateStreamingLocator(
+var mklocator2 = client.CreateStreamingLocator(
                 locatorName,
                 new StreamingLocatorProperties
                 {
@@ -159,18 +159,18 @@ var mklocator2 = MKIOClient.CreateStreamingLocator(
                     StreamingPolicyName = "Predefined_ClearStreamingOnly"
                 });
 
-var pathsl = MKIOClient.ListUrlPathsStreamingLocator("locator-25452");
+var pathsl = client.ListUrlPathsStreamingLocator("locator-25452");
 
 
 // ******************************
 // content key policy operations
 // ******************************
 
-var ck = await MKIOClient.GetContentKeyPolicyAsync("testpol1");
-var cks = MKIOClient.ListContentKeyPolicies();
-MKIOClient.DeleteContentKeyPolicy("testpolcreate");
+var ck = await client.GetContentKeyPolicyAsync("testpol1");
+var cks = client.ListContentKeyPolicies();
+client.DeleteContentKeyPolicy("testpolcreate");
 
-var newpol = MKIOClient.CreateContentKeyPolicy(
+var newpol = client.CreateContentKeyPolicy(
                 "testpolcreate",
                 new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
                 {
@@ -193,7 +193,7 @@ var newpol = MKIOClient.CreateContentKeyPolicy(
 // *********************
 
 // Create a transform
-var tranform = MKIOClient.CreateTransform("simpletransform", new TransformProperties
+var tranform = client.CreateTransform("simpletransform", new TransformProperties
             {
                 Description = "Encoding to 720p single bitrate",
                 Outputs = new List<TransformOutput>() {
@@ -208,12 +208,12 @@ var tranform = MKIOClient.CreateTransform("simpletransform", new TransformProper
 // ***************
 
 // list all jobs
-var jobs = MKIOClient.ListAllJobs();
+var jobs = client.ListAllJobs();
 
 // create output asset
-var outputAsset = MKIOClient.CreateOrUpdateAsset("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
+var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
 // create a job with the output asset created and with an asset as a source
-var newJob = MKIOClient.CreateJob("simpletransform", "testjob2", new JobProperties
+var newJob = client.CreateJob("simpletransform", "testjob2", new JobProperties
     {
         Description = "My job",
         Priority = "Normal",
@@ -233,7 +233,7 @@ var newJob = MKIOClient.CreateJob("simpletransform", "testjob2", new JobProperti
     );
 
 // with http source as a source
-var newJobH = MKIOClient.CreateJob("simple", "testjob3", new JobProperties
+var newJobH = client.CreateJob("simple", "testjob3", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -253,23 +253,23 @@ var newJobH = MKIOClient.CreateJob("simple", "testjob3", new JobProperties
             );
 
 // Get a job
-var job2 = MKIOClient.GetJob("simpletransform", "testjob1");
+var job2 = client.GetJob("simpletransform", "testjob1");
 
 // Cancel a job
-MKIOClient.CancelJob("simpletransform", "testjob2");
+client.CancelJob("simpletransform", "testjob2");
 
 // Delete a job
-MKIOClient.DeleteJob("simpletransform", "testjob1");
+client.DeleteJob("simpletransform", "testjob1");
 
 
 // **********************
 // live event operations
 // **********************
 
-var list_le = MKIOClient.ListLiveEvents();
+var list_le = client.ListLiveEvents();
 
 // Creation
-var le = MKIOClient.CreateLiveEvent("liveevent4", "francecentral", new LiveEventProperties
+var le = client.CreateLiveEvent("liveevent4", "francecentral", new LiveEventProperties
 {
     Input = new LiveEventInput { StreamingProtocol = "RTMP" },
     StreamOptions = new List<string> { "Default" },
@@ -277,7 +277,7 @@ var le = MKIOClient.CreateLiveEvent("liveevent4", "francecentral", new LiveEvent
 });
 
 // Delete
-MKIOClient.DeleteLiveEvent("liveevent4");
+client.DeleteLiveEvent("liveevent4");
 
 ```
 
@@ -290,10 +290,10 @@ Async operations are also supported. For example :
 // *****************
 
 // Retrieve assets with pages for better performances
-var mkioAssetsResult = await MKIOClient.ListAssetsAsPageAsync("name desc", 10);
+var mkioAssetsResult = await client.ListAssetsAsPageAsync("name desc", 10);
         do
         {
-            mkioAssetsResult = await MKIOClient.ListAssetsAsPageNextAsync(mkioAssetsResult.NextPageLink);
+            mkioAssetsResult = await client.ListAssetsAsPageNextAsync(mkioAssetsResult.NextPageLink);
             // do stuff
         } while (mkioAssetsResult.NextPageLink != null);
 
@@ -303,13 +303,13 @@ var mkioAssetsResult = await MKIOClient.ListAssetsAsPageAsync("name desc", 10);
 // ******************************
 
 // get streaming endpoint
-var mkse = await MKIOClient.GetStreamingEndpointAsync("streamingendpoint1");
+var mkse = await client.GetStreamingEndpointAsync("streamingendpoint1");
 
 // list streaming endpoints
-var mkses = await MKIOClient.ListStreamingEndpointsAsync();
+var mkses = await client.ListStreamingEndpointsAsync();
 
 // create streaming endpoint
-var newSe = await MKIOClient.CreateStreamingEndpointAsync("streamingendpoint2", "francecentral", new StreamingEndpointProperties
+var newSe = await client.CreateStreamingEndpointAsync("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
                 Description = "my description",
                 ScaleUnits = 0,
@@ -322,9 +322,9 @@ var newSe = await MKIOClient.CreateStreamingEndpointAsync("streamingendpoint2", 
             });
 
 // start, stop, delete streaming endpoint
-await MKIOClient.StartStreamingEndpointAsync("streamingendpoint1");
-await MKIOClient.StopStreamingEndpointAsync("streamingendpoint1");
-await MKIOClient.DeleteStreamingEndpointAsync("streamingendpoint2");
+await client.StartStreamingEndpointAsync("streamingendpoint1");
+await client.StopStreamingEndpointAsync("streamingendpoint1");
+await client.DeleteStreamingEndpointAsync("streamingendpoint2");
 
 ```
 

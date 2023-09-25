@@ -1,26 +1,43 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using MK.IO.Models;
+﻿using MK.IO.Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
-namespace MK.IO
+namespace MK.IO.Asset.Operations
 {
-    /// <summary>
-    /// REST Client for MKIO
-    /// https://io.mediakind.com
-    /// 
-    /// </summary>
-    public partial class MKIOClient
+    internal partial class AssetsOperations : IAssetsOperations
     {
-        //
-        // assets
-        //
         private const string assetsApiUrl = "api/ams/{0}/assets";
         private const string assetApiUrl = assetsApiUrl + "/{1}";
         private const string assetListStreamingLocatorsApiUrl = assetApiUrl + "/listStreamingLocators";
         private const string assetListTracksAndDirectoryApiUrl = assetApiUrl + "/storage/";
+
+        /// <summary>
+        /// Gets a reference to the AzureMediaServicesClient
+        /// </summary>
+        private MKIOClient Client { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the AssetsOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        internal AssetsOperations(MKIOClient client)
+        {
+            if (client == null)
+            {
+                throw new System.ArgumentNullException("client");
+            }
+            Client = client;
+        }
 
         /// <summary>
         /// Retrieves a list of assets in the instance.
@@ -28,9 +45,9 @@ namespace MK.IO
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        public List<AssetSchema> ListAssets(string? orderBy = null, int? top = null)
+        public List<AssetSchema> List(string? orderBy = null, int? top = null)
         {
-            Task<List<AssetSchema>> task = Task.Run<List<AssetSchema>>(async () => await ListAssetsAsync(orderBy, top));
+            Task<List<AssetSchema>> task = Task.Run<List<AssetSchema>>(async () => await ListAsync(orderBy, top));
             return task.GetAwaiter().GetResult();
         }
 
@@ -40,12 +57,12 @@ namespace MK.IO
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        public async Task<List<AssetSchema>> ListAssetsAsync(string? orderBy = null, int? top = null)
+        public async Task<List<AssetSchema>> ListAsync(string? orderBy = null, int? top = null)
         {
-            string URL = GenerateApiUrl(assetsApiUrl);
-            URL = AddParametersToUrl(URL, "$orderby", orderBy);
-            URL = AddParametersToUrl(URL, "$top", top != null ? ((int)top).ToString() : null);
-            string responseContent = await GetObjectContentAsync(URL);
+            string URL = Client.GenerateApiUrl(assetsApiUrl);
+            URL = MKIOClient.AddParametersToUrl(URL, "$orderby", orderBy);
+            URL = MKIOClient.AddParametersToUrl(URL, "$top", top != null ? ((int)top).ToString() : null);
+            string responseContent = await Client.GetObjectContentAsync(URL);
             return JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings).Value;
         }
 
@@ -55,9 +72,9 @@ namespace MK.IO
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        public PagedResult<AssetSchema> ListAssetsAsPage(string? orderBy = null, int? top = null)
+        public PagedResult<AssetSchema> ListAsPage(string? orderBy = null, int? top = null)
         {
-            Task<PagedResult<AssetSchema>> task = Task.Run<PagedResult<AssetSchema>>(async () => await ListAssetsAsPageAsync(orderBy, top));
+            Task<PagedResult<AssetSchema>> task = Task.Run<PagedResult<AssetSchema>>(async () => await ListAsPageAsync(orderBy, top));
             return task.GetAwaiter().GetResult();
         }
 
@@ -67,12 +84,12 @@ namespace MK.IO
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        public async Task<PagedResult<AssetSchema>> ListAssetsAsPageAsync(string? orderBy = null, int? top = null)
+        public async Task<PagedResult<AssetSchema>> ListAsPageAsync(string? orderBy = null, int? top = null)
         {
-            string URL = GenerateApiUrl(assetsApiUrl);
-            URL = AddParametersToUrl(URL, "$orderby", orderBy);
-            URL = AddParametersToUrl(URL, "$top", top != null ? ((int)top).ToString() : null);
-            string responseContent = await GetObjectContentAsync(URL);
+            string URL = Client.GenerateApiUrl(assetsApiUrl);
+            URL = MKIOClient.AddParametersToUrl(URL, "$orderby", orderBy);
+            URL = MKIOClient.AddParametersToUrl(URL, "$top", top != null ? ((int)top).ToString() : null);
+            string responseContent = await Client.GetObjectContentAsync(URL);
 
             dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
             string? nextPageLink = null;
@@ -91,9 +108,9 @@ namespace MK.IO
         /// </summary>
         /// <param name="nextPageLink">Next page link.</param>
         /// <returns></returns>
-        public PagedResult<AssetSchema> ListAssetsAsPageNext(string? nextPageLink)
+        public PagedResult<AssetSchema> ListAsPageNext(string? nextPageLink)
         {
-            Task<PagedResult<AssetSchema>> task = Task.Run<PagedResult<AssetSchema>>(async () => await ListtAssetsAsPageNextAsync(nextPageLink));
+            Task<PagedResult<AssetSchema>> task = Task.Run<PagedResult<AssetSchema>>(async () => await ListAsPageNextAsync(nextPageLink));
             return task.GetAwaiter().GetResult();
         }
 
@@ -102,10 +119,10 @@ namespace MK.IO
         /// </summary>
         /// <param name="nextPageLink">Next page link.</param>
         /// <returns></returns>
-        public async Task<PagedResult<AssetSchema>> ListtAssetsAsPageNextAsync(string? nextPageLink)
+        public async Task<PagedResult<AssetSchema>> ListAsPageNextAsync(string? nextPageLink)
         {
-            string URL = baseUrl.Substring(0, baseUrl.Length - 1) + nextPageLink;
-            string responseContent = await GetObjectContentAsync(URL);
+            string URL = Client.baseUrl.Substring(0, Client.baseUrl.Length - 1) + nextPageLink;
+            string responseContent = await Client.GetObjectContentAsync(URL);
 
             dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
 
@@ -118,28 +135,27 @@ namespace MK.IO
             };
         }
 
-        public AssetSchema GetAsset(string assetName)
+        public AssetSchema Get(string assetName)
         {
-            Task<AssetSchema> task = Task.Run<AssetSchema>(async () => await GetAssetAsync(assetName));
-            return task.GetAwaiter().GetResult();
+            return GetAsync(assetName).GetAwaiter().GetResult();
         }
 
-        public async Task<AssetSchema> GetAssetAsync(string assetName)
+        public async Task<AssetSchema> GetAsync(string assetName)
         {
-            string URL = GenerateApiUrl(assetApiUrl, assetName);
-            string responseContent = await GetObjectContentAsync(URL);
+            string URL = Client.GenerateApiUrl(assetApiUrl, assetName);
+            string responseContent = await Client.GetObjectContentAsync(URL);
             return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings);
         }
 
-        public AssetSchema CreateOrUpdateAsset(string assetName, string containerName, string storageName, string description = null)
+        public AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string description = null)
         {
-            Task<AssetSchema> task = Task.Run<AssetSchema>(async () => await CreateOrUpdateAssetAsync(assetName, containerName, storageName, description));
+            Task<AssetSchema> task = Task.Run<AssetSchema>(async () => await CreateOrUpdateAsync(assetName, containerName, storageName, description));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<AssetSchema> CreateOrUpdateAssetAsync(string assetName, string containerName, string storageName, string description = null)
+        public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string description = null)
         {
-            string URL = GenerateApiUrl(assetApiUrl, assetName);
+            string URL = Client.GenerateApiUrl(assetApiUrl, assetName);
             AssetSchema content = new()
             {
                 Name = assetName,
@@ -151,44 +167,44 @@ namespace MK.IO
                 }
             };
 
-            string responseContent = await CreateObjectAsync(URL, JsonConvert.SerializeObject(content, Formatting.Indented));
+            string responseContent = await Client.CreateObjectAsync(URL, JsonConvert.SerializeObject(content, Formatting.Indented));
             return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings);
         }
 
-        public void DeleteAsset(string assetName)
+        public void Delete(string assetName)
         {
-            Task.Run(async () => await DeleteAssetAsync(assetName));
+            Task.Run(async () => await DeleteAsync(assetName));
         }
 
-        public async Task DeleteAssetAsync(string assetName)
+        public async Task DeleteAsync(string assetName)
         {
-            string URL = GenerateApiUrl(assetApiUrl, assetName);
-            await ObjectContentAsync(URL, HttpMethod.Delete);
+            string URL = Client.GenerateApiUrl(assetApiUrl, assetName);
+            await Client.ObjectContentAsync(URL, HttpMethod.Delete);
         }
 
-        public List<AssetStreamingLocator> ListStreamingLocatorsForAsset(string assetName)
+        public List<AssetStreamingLocator> ListStreamingLocators(string assetName)
         {
-            Task<List<AssetStreamingLocator>> task = Task.Run<List<AssetStreamingLocator>>(async () => await ListStreamingLocatorsForAssetAsync(assetName));
+            Task<List<AssetStreamingLocator>> task = Task.Run<List<AssetStreamingLocator>>(async () => await ListStreamingLocatorsAsync(assetName));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<List<AssetStreamingLocator>> ListStreamingLocatorsForAssetAsync(string assetName)
+        public async Task<List<AssetStreamingLocator>> ListStreamingLocatorsAsync(string assetName)
         {
-            string URL = GenerateApiUrl(assetListStreamingLocatorsApiUrl, assetName);
-            string responseContent = await GetObjectContentAsync(URL);
+            string URL = Client.GenerateApiUrl(assetListStreamingLocatorsApiUrl, assetName);
+            string responseContent = await Client.GetObjectContentAsync(URL);
             return AssetListStreamingLocators.FromJson(responseContent).StreamingLocators;
         }
 
-        public AssetStorageResponseSchema ListTracksAndDirListingForAsset(string assetName)
+        public AssetStorageResponseSchema ListTracksAndDirListing(string assetName)
         {
-            var task = Task.Run<AssetStorageResponseSchema>(async () => await ListTracksAndDirListingForAssetAsync(assetName));
+            var task = Task.Run<AssetStorageResponseSchema>(async () => await ListTracksAndDirListingAsync(assetName));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<AssetStorageResponseSchema> ListTracksAndDirListingForAssetAsync(string assetName)
+        public async Task<AssetStorageResponseSchema> ListTracksAndDirListingAsync(string assetName)
         {
-            string URL = GenerateApiUrl(assetListTracksAndDirectoryApiUrl, assetName);
-            string responseContent = await GetObjectContentAsync(URL);
+            string URL = Client.GenerateApiUrl(assetListTracksAndDirectoryApiUrl, assetName);
+            string responseContent = await Client.GetObjectContentAsync(URL);
             return JsonConvert.DeserializeObject<AssetStorageResponseSchema>(responseContent, ConverterLE.Settings);
         }
     }

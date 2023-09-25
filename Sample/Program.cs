@@ -44,22 +44,24 @@ namespace Sample
             // MK/IO Client creation
             // **********************
 
-            var MKIOClient = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
+            var client = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
 
-            var profile = MKIOClient.GetUserInfo();
+            var profile = client.GetUserInfo();
 
             // Get subscription stats
-            var stats = MKIOClient.GetStats();
+            var stats = client.GetStats();
+
+            var lista = client.Assets.ListAsync();
 
             // **********************
             // live event operations
             // **********************
 
-            var les = MKIOClient.ListLiveEvents();
+            var les = client.ListLiveEvents();
 
-            // MKIOClient.DeleteLiveEvent("liveevent4");
+            // client.DeleteLiveEvent("liveevent4");
 
-            var le = MKIOClient.CreateLiveEvent("liveevent4", "francecentral", new LiveEventProperties
+            var le = client.CreateLiveEvent("liveevent4", "francecentral", new LiveEventProperties
             {
                 Input = new LiveEventInput { StreamingProtocol = "RTMP" },
                 StreamOptions = new List<string> { "Default" },
@@ -72,36 +74,36 @@ namespace Sample
             // *****************
 
             // list assets
-            //var mkioAssets = MKIOClient.ListAssets("name desc", 4);
+            //var mkioAssets = client.Assets.List("name desc", 4);
 
 
-            var mkioAssetsResult = MKIOClient.ListAssetsAsPage("name desc", 4);
+            var mkioAssetsResult = client.Assets.ListAsPage("name desc", 4);
             do
             {
-                mkioAssetsResult = MKIOClient.ListAssetsAsPageNext(mkioAssetsResult.NextPageLink);
+                mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
             } while (mkioAssetsResult.NextPageLink != null);
 
 
-            var specc = MKIOClient.ListTracksAndDirListingForAsset("copy-ef2058b692-copy");
+            var specc = client.Assets.ListTracksAndDirListing("copy-ef2058b692-copy");
 
             // get streaming locators for asset
-            var locatorsAsset = MKIOClient.ListStreamingLocatorsForAsset("copy-1b510ee166-copy-d32391984a");
+            var locatorsAsset = client.Assets.ListStreamingLocators("copy-1b510ee166-copy-d32391984a");
 
             // get asset
-            var mkasset = MKIOClient.GetAsset("copy-152b839997");
+            var mkasset = client.Assets.Get("copy-152b839997");
 
             // create asset
-            // var newasset = MKIOClient.CreateOrUpdateAsset("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
+            // var newasset = client.Assets.CreateOrUpdate("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
 
             // delete asset
-            //MKIOClient.DeleteAsset("asset-33adc1873f");
+            //client.Assets.Delete("asset-33adc1873f");
 
             // *********************
             // transform operations
             // *********************
 
             /*
-            var tranform = MKIOClient.CreateTransform("mytesttranf", new TransformProperties
+            var tranform = client.CreateTransform("mytesttranf", new TransformProperties
             {
                 Description = "desc",
                 Outputs = new List<TransformOutput>() {
@@ -116,14 +118,14 @@ namespace Sample
             // job operations
             // ***************
 
-            var jobs = MKIOClient.ListAllJobs();
+            var jobs = client.ListAllJobs();
 
-            //var job = MKIOClient.GetJob("simple", "testjob1");
+            //var job = client.GetJob("simple", "testjob1");
 
             /*
-            var outputAsset = MKIOClient.CreateOrUpdateAsset("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
+            var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
 
-            MKIOClient.CreateJob("simple", "testjob2", new JobProperties
+            client.CreateJob("simple", "testjob2", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -143,9 +145,9 @@ namespace Sample
             );
             */
 
-            var outputAsset = MKIOClient.CreateOrUpdateAsset("outputasset-014", "asset-outputasset-014", config["StorageName"], "output asset for job");
+            var outputAsset = client.Assets.CreateOrUpdate("outputasset-014", "asset-outputasset-014", config["StorageName"], "output asset for job");
 
-            MKIOClient.CreateJob("simple", "testjob3", new JobProperties
+            client.CreateJob("simple", "testjob3", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -164,8 +166,8 @@ namespace Sample
             }
             );
 
-            MKIOClient.CancelJob("simple", "testjob2");
-            //MKIOClient.DeleteJob("simple", "testjob1");
+            client.CancelJob("simple", "testjob2");
+            //client.DeleteJob("simple", "testjob1");
 
             // ******************************
             // content key policy operations
@@ -185,7 +187,7 @@ namespace Sample
 
             try
             {
-                await MKIOClient.DeleteContentKeyPolicyAsync("testpolcreate");
+                await client.DeleteContentKeyPolicyAsync("testpolcreate");
             }
 
             catch
@@ -196,7 +198,7 @@ namespace Sample
             /*
             var key = GenerateSymKeyAsBase64();
 
-            var newpol = MKIOClient.CreateContentKeyPolicy(
+            var newpol = client.CreateContentKeyPolicy(
                 "testpolcreate",
                 new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
                 {
@@ -221,7 +223,7 @@ namespace Sample
             // Creation
 
             /*
-            var storage = MKIOClient.CreateStorageAccount(new StorageRequestSchema
+            var storage = client.CreateStorageAccount(new StorageRequestSchema
             {
                 Spec = new StorageSchema
                 {
@@ -238,19 +240,19 @@ namespace Sample
             */
 
             // List
-            var storages = MKIOClient.ListStorageAccounts();
+            var storages = client.ListStorageAccounts();
 
             // Get
-            var storage2 = MKIOClient.GetStorageAccount((Guid)storages.First().Metadata.Id);
+            var storage2 = client.GetStorageAccount((Guid)storages.First().Metadata.Id);
 
 
-            var creds = MKIOClient.ListStorageAccountCredentials((Guid)storages.First().Metadata.Id);
+            var creds = client.ListStorageAccountCredentials((Guid)storages.First().Metadata.Id);
 
-            var cred = MKIOClient.GetStorageAccountCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
+            var cred = client.GetStorageAccountCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
 
 
             // Delete
-            // MKIOClient.DeleteStorageAccount(storages.First().Metadata.Id);
+            // client.DeleteStorageAccount(storages.First().Metadata.Id);
 
 
 
@@ -260,15 +262,15 @@ namespace Sample
             // ******************************
 
             // get streaming endpoint
-            var mkse = MKIOClient.GetStreamingEndpoint("xpouyatse1");
+            var mkse = client.GetStreamingEndpoint("xpouyatse1");
 
             // list streaming endpoints
-            var mkses = MKIOClient.ListStreamingEndpoints();
+            var mkses = client.ListStreamingEndpoints();
 
             // create streaming endpoint
 
             /*
-            var newSe = MKIOClient.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new StreamingEndpointProperties
+            var newSe = client.CreateStreamingEndpoint("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
                 Description = "my description",
                 ScaleUnits = 0,
@@ -282,23 +284,23 @@ namespace Sample
             */
 
             // start, stop, delete streaming endpoint
-            //MKIOClient.StartStreamingEndpoint("streamingendpoint1");
-            //MKIOClient.StopStreamingEndpoint("streamingendpoint1");
-            //MKIOClient.DeleteStreamingEndpoint("streamingendpoint2");
+            //client.StartStreamingEndpoint("streamingendpoint1");
+            //client.StopStreamingEndpoint("streamingendpoint1");
+            //client.DeleteStreamingEndpoint("streamingendpoint2");
 
 
             // ******************************
             // Streaming locator operations
             // ******************************
 
-            var mklocators = MKIOClient.ListStreamingLocators();
+            var mklocators = client.ListStreamingLocators();
 
-            //var mklocator1 = MKIOClient.GetStreamingLocator("locator-25452");
+            //var mklocator1 = client.GetStreamingLocator("locator-25452");
 
             string uniqueness = Guid.NewGuid().ToString()[..13];
             string locatorName = $"locator-{uniqueness}";
             //var mklocator2 = MKIOClient.CreateStreamingLocator(locatorName, new StreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
-            var mklocator2 = MKIOClient.CreateStreamingLocator(
+            var mklocator2 = client.CreateStreamingLocator(
                 locatorName,
                 new StreamingLocatorProperties
                 {
@@ -306,9 +308,9 @@ namespace Sample
                     StreamingPolicyName = "Predefined_ClearStreamingOnly"
                 });
 
-            var pathsl = MKIOClient.ListUrlPathsStreamingLocator(mklocator2.Name);
+            var pathsl = client.ListUrlPathsStreamingLocator(mklocator2.Name);
 
-            // MKIOClient.DeleteStreamingLocator("locator-25452");
+            // client.DeleteStreamingLocator("locator-25452");
 
         }
 

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using MK.IO.Asset.Operations;
 using Newtonsoft.Json;
 using System.Collections.Specialized;
 using System.Net.Http.Headers;
@@ -13,10 +14,10 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public partial class MKIOClient
+    public partial class MKIOClient : IMKIOClient
     {
-        private readonly string baseUrl = "https://api.io.mediakind.com/";
-        private readonly string _MKIOSubscriptionName;
+        internal readonly string baseUrl = "https://api.io.mediakind.com/";
+        internal readonly string _MKIOSubscriptionName;
         private readonly string _MKIOtoken;
         private readonly HttpClient _httpClient;
         private readonly Guid _subscription_id;
@@ -40,41 +41,58 @@ namespace MK.IO
 
             _subscription_id = GetStats().Extra.SubscriptionId;
             _customer_id = GetUserInfo().CustomerId;
+
+            Initialize();
         }
 
+        private void Initialize()
+        {
+            Assets = new AssetsOperations(this);
+        }
+
+        /// <summary>
+        /// Gets the IAssetsOperations.
+        /// </summary>
+        public virtual IAssetsOperations Assets { get; private set; }
+
+        string IMKIOClient.baseUrl => baseUrl;
+
+        string IMKIOClient._MKIOSubscriptionName => _MKIOSubscriptionName;
+
+      
         private string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
         {
             return baseUrl + string.Format(urlPath, _MKIOSubscriptionName, objectName1, objectName2);
         }
-        private string GenerateApiUrl(string urlPath, string objectName)
+        public string GenerateApiUrl(string urlPath, string objectName)
         {
             return baseUrl + string.Format(urlPath, _MKIOSubscriptionName, objectName);
         }
-        private string GenerateApiUrl(string urlPath)
+        public string GenerateApiUrl(string urlPath)
         {
             return baseUrl + string.Format(urlPath, _MKIOSubscriptionName);
         }
 
-        private string GenerateStorageApiUrl(string urlPath)
+        public string GenerateStorageApiUrl(string urlPath)
         {
             return baseUrl + string.Format(urlPath, _customer_id, _subscription_id);
         }
 
-        private string GenerateStorageApiUrl(string urlPath, string objectName)
+        public string GenerateStorageApiUrl(string urlPath, string objectName)
         {
             return baseUrl + string.Format(urlPath, _customer_id, _subscription_id, objectName);
         }
-        private string GenerateStorageApiUrl(string urlPath, string objectName, string objectName2)
+        public string GenerateStorageApiUrl(string urlPath, string objectName, string objectName2)
         {
             return baseUrl + string.Format(urlPath, _customer_id, _subscription_id, objectName, objectName2);
         }
 
-        private async Task<string> GetObjectContentAsync(string url)
+        internal async Task<string> GetObjectContentAsync(string url)
         {
             return await ObjectContentAsync(url, HttpMethod.Get);
         }
 
-        private async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod)
+        internal async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod)
         {
             using HttpRequestMessage request = new()
             {
@@ -90,12 +108,12 @@ namespace MK.IO
             return responseContent;
         }
 
-        private async Task<string> CreateObjectAsync(string url, string amsJSONObject)
+        internal async Task<string> CreateObjectAsync(string url, string amsJSONObject)
         {
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Put);
         }
 
-        private async Task<string> CreateObjectPostAsync(string url, string amsJSONObject)
+        internal async Task<string> CreateObjectPostAsync(string url, string amsJSONObject)
         {
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Post);
         }
@@ -236,7 +254,7 @@ namespace MK.IO
             }
         }
 
-        private static string AddParametersToUrl(string url, string name, string? value = null)
+        internal static string AddParametersToUrl(string url, string name, string? value = null)
         {
             if (value != null)
             {
@@ -256,6 +274,13 @@ namespace MK.IO
             }
 
             return url;
+        }
+
+     
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
