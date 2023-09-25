@@ -46,10 +46,10 @@ namespace Sample
 
             var client = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
 
-            var profile = client.GetUserInfo();
+            var profile = client.Account.GetUserInfo();
 
             // Get subscription stats
-            var stats = client.GetStats();
+            var stats = client.Account.GetStats();
 
             var lista = client.Assets.ListAsync();
 

@@ -8,13 +8,36 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public partial class MKIOClient
+    public  class AccountOperations: IAccountOperations
     {
         //
         // account
         //
         private const string accountProfileApiUrl = "api/profile";
         private const string accountStatsApiUrl = "api/ams/{0}/stats";
+
+        /// <summary>
+        /// Gets a reference to the AzureMediaServicesClient
+        /// </summary>
+        private MKIOClient Client { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the AccountOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        internal AccountOperations(MKIOClient client)
+        {
+            if (client == null)
+            {
+                throw new ArgumentNullException("client");
+            }
+            Client = client;
+        }
 
         public AccountStats GetStats()
         {
@@ -24,8 +47,8 @@ namespace MK.IO
 
         public async Task<AccountStats> GetStatsAsync()
         {
-            string URL = GenerateApiUrl(accountStatsApiUrl);
-            string responseContent = await GetObjectContentAsync(URL);
+            string URL = Client.GenerateApiUrl(accountStatsApiUrl);
+            string responseContent = await Client.GetObjectContentAsync(URL);
             return AccountStats.FromJson(responseContent);
         }
 
@@ -38,9 +61,8 @@ namespace MK.IO
 
         public async Task<UserInfo> GetUserInfoAsync()
         {
-            string responseContent = await GetObjectContentAsync(baseUrl + accountProfileApiUrl);
+            string responseContent = await Client.GetObjectContentAsync(Client.baseUrl + accountProfileApiUrl);
             return AccountProfile.FromJson(responseContent).Spec;
         }
-
     }
 }

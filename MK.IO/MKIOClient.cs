@@ -43,14 +43,17 @@ namespace MK.IO
             // Request headers
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            _subscription_id = GetStats().Extra.SubscriptionId;
-            _customer_id = GetUserInfo().CustomerId;
 
             Initialize();
+
+            _subscription_id = Account.GetStats().Extra.SubscriptionId;
+            _customer_id = Account.GetUserInfo().CustomerId;
+
         }
 
         private void Initialize()
         {
+            Account = new AccountOperations(this);
             Assets = new AssetsOperations(this);
             LiveEvents = new LiveEventsOperations(this);
             Jobs = new JobsOperations(this);
@@ -59,6 +62,11 @@ namespace MK.IO
             StreamingLocators = new StreamingLocatorsOperations(this);
             ContentKeyPolicies = new ContentKeyPoliciesOperations(this);
         }
+
+        /// <summary>
+        /// Gets the IAssetsOperations.
+        /// </summary>
+        public virtual IAccountOperations Account { get; private set; }
 
         /// <summary>
         /// Gets the IAssetsOperations.

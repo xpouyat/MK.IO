@@ -19,6 +19,7 @@ namespace MK.IO
         string baseUrl { get; }
         string _MKIOSubscriptionName { get; }
 
+        IAccountOperations Account { get; }
         IAssetsOperations Assets { get; }
         ILiveEventsOperations LiveEvents { get; }
         IJobsOperations Jobs { get; }
