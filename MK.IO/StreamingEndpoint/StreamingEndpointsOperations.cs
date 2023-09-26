@@ -17,8 +17,8 @@ namespace MK.IO
         //
         // streaming endpoints
         //
-        private const string StreamingEndpointsApiUrl = MKIOClient.StreamingEndpointsApiUrl;
-        private const string StreamingEndpointApiUrl = StreamingEndpointsApiUrl + "/{1}";
+        private const string _streamingEndpointsApiUrl = MKIOClient._streamingEndpointsApiUrl;
+        private const string _streamingEndpointApiUrl = _streamingEndpointsApiUrl + "/{1}";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
@@ -36,11 +36,7 @@ namespace MK.IO
         /// </exception>
         internal StreamingEndpointsOperations(MKIOClient client)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException("client");
-            }
-            Client = client;
+            Client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         /// <inheritdoc/>
@@ -53,7 +49,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<List<StreamingEndpointSchema>> ListAsync()
         {
-            var url = Client.GenerateApiUrl(StreamingEndpointsApiUrl);
+            var url = Client.GenerateApiUrl(_streamingEndpointsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StreamingEndpointListResponseSchema>(responseContent, ConverterLE.Settings).Value;
         }
@@ -68,7 +64,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<StreamingEndpointSchema> GetAsync(string streamingEndpointName)
         {
-            var url = Client.GenerateApiUrl(StreamingEndpointApiUrl, streamingEndpointName);
+            var url = Client.GenerateApiUrl(_streamingEndpointApiUrl, streamingEndpointName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings);
         }
@@ -83,11 +79,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<StreamingEndpointSchema> CreateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string> tags = null)
         {
-            var url = Client.GenerateApiUrl(StreamingEndpointApiUrl + "?autoStart=" + autoStart.ToString(), streamingEndpointName);
-            if (tags == null)
-            {
-                tags = new Dictionary<string, string>();
-            }
+            var url = Client.GenerateApiUrl(_streamingEndpointApiUrl + "?autoStart=" + autoStart.ToString(), streamingEndpointName);
+            tags ??= new Dictionary<string, string>();
             var content = new StreamingEndpointSchema { Location = location, Properties = properties, Tags = tags };
             string responseContent = await Client.CreateObjectAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
             return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings);
@@ -131,7 +124,7 @@ namespace MK.IO
 
         private async Task StreamingEndpointOperationAsync(string streamingEndpointName, string? operation, HttpMethod httpMethod)
         {
-            var url = Client.GenerateApiUrl(StreamingEndpointApiUrl + (operation != null ? "/" + operation : string.Empty), streamingEndpointName);
+            var url = Client.GenerateApiUrl(_streamingEndpointApiUrl + (operation != null ? "/" + operation : string.Empty), streamingEndpointName);
             await Client.ObjectContentAsync(url, httpMethod);
         }
 

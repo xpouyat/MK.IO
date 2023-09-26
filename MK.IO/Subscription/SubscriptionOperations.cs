@@ -13,8 +13,8 @@ namespace MK.IO
         //
         // account
         //
-        private const string AccountProfileApiUrl = "api/profile";
-        private const string AccountStatsApiUrl = "api/ams/{0}/stats";
+        private const string _accountProfileApiUrl = "api/profile";
+        private const string _accountStatsApiUrl = "api/ams/{0}/stats";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
@@ -32,11 +32,7 @@ namespace MK.IO
         /// </exception>
         internal SubscriptionOperations(MKIOClient client)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException("client");
-            }
-            Client = client;
+            Client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         public AccountStats GetStats()
@@ -47,7 +43,7 @@ namespace MK.IO
 
         public async Task<AccountStats> GetStatsAsync()
         {
-            var url = Client.GenerateApiUrl(AccountStatsApiUrl);
+            var url = Client.GenerateApiUrl(_accountStatsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return AccountStats.FromJson(responseContent);
         }
@@ -60,7 +56,7 @@ namespace MK.IO
 
         public async Task<UserInfo> GetUserInfoAsync()
         {
-            string responseContent = await Client.GetObjectContentAsync(Client.BaseUrl + AccountProfileApiUrl);
+            string responseContent = await Client.GetObjectContentAsync(Client._baseUrl + _accountProfileApiUrl);
             return AccountProfile.FromJson(responseContent).Spec;
         }
     }

@@ -16,14 +16,14 @@ namespace MK.IO
     /// </summary>
     public partial class MKIOClient : IMKIOClient
     {
-        internal readonly string BaseUrl = "https://api.io.mediakind.com/";
-        internal const string AllJobsApiUrl = "api/ams/{0}/jobs";
-        internal const string TransformsApiUrl = "api/ams/{0}/transforms";
-        internal const string AssetsApiUrl = "api/ams/{0}/assets";
-        internal const string StreamingLocatorsApiUrl = "api/ams/{0}/streamingLocators";
-        internal const string LiveEventsApiUrl = "api/ams/{0}/liveEvents";
-        internal const string ContentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
-        internal const string StreamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
+        internal readonly string _baseUrl = "https://api.io.mediakind.com/";
+        internal const string _allJobsApiUrl = "api/ams/{0}/jobs";
+        internal const string _transformsApiUrl = "api/ams/{0}/transforms";
+        internal const string _assetsApiUrl = "api/ams/{0}/assets";
+        internal const string _streamingLocatorsApiUrl = "api/ams/{0}/streamingLocators";
+        internal const string _liveEventsApiUrl = "api/ams/{0}/liveEvents";
+        internal const string _contentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
+        internal const string _streamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
 
         private readonly string _subscriptionName;
         private readonly string _apiToken;
@@ -32,7 +32,7 @@ namespace MK.IO
         private Guid _subscriptionId;
         internal Guid GetSubscriptionId()
         {
-            if (default(Guid) == _subscriptionId)
+            if (default == _subscriptionId)
             {
                 _subscriptionId = Subscription.GetStats().Extra.SubscriptionId;
             }
@@ -42,7 +42,7 @@ namespace MK.IO
         private Guid _customerId;
         internal Guid GetCustomerId()
         {
-            if (default(Guid) == _customerId)
+            if (default == _customerId)
             {
                 _customerId = Subscription.GetUserInfo().CustomerId;
             }
@@ -51,14 +51,8 @@ namespace MK.IO
 
         public MKIOClient(string MKIOSubscriptionName, string MKIOtoken)
         {
-            if (MKIOSubscriptionName == null)
-                throw new System.ArgumentNullException(nameof(MKIOSubscriptionName));
-
-            if (MKIOtoken == null)
-                throw new System.ArgumentNullException(nameof(MKIOtoken));
-
-            _subscriptionName = MKIOSubscriptionName;
-            _apiToken = MKIOtoken;
+            _subscriptionName = MKIOSubscriptionName ?? throw new System.ArgumentNullException(nameof(MKIOSubscriptionName));
+            _apiToken = MKIOtoken ?? throw new System.ArgumentNullException(nameof(MKIOtoken));
 
             _httpClient = new HttpClient();
 
@@ -129,15 +123,15 @@ namespace MK.IO
 
         internal string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
         {
-            return BaseUrl + string.Format(urlPath, _subscriptionName, objectName1, objectName2);
+            return _baseUrl + string.Format(urlPath, _subscriptionName, objectName1, objectName2);
         }
         internal string GenerateApiUrl(string urlPath, string objectName)
         {
-            return BaseUrl + string.Format(urlPath, _subscriptionName, objectName);
+            return _baseUrl + string.Format(urlPath, _subscriptionName, objectName);
         }
         internal string GenerateApiUrl(string urlPath)
         {
-            return BaseUrl + string.Format(urlPath, _subscriptionName);
+            return _baseUrl + string.Format(urlPath, _subscriptionName);
         }
 
         internal async Task<string> GetObjectContentAsync(string url)

@@ -13,8 +13,8 @@ namespace MK.IO
         //
         // content key policy
         //
-        private const string ContentKeyPoliciesApiUrl = MKIOClient.ContentKeyPoliciesApiUrl;
-        private const string ContentKeyPolicyApiUrl = ContentKeyPoliciesApiUrl + "/{1}";
+        private const string _contentKeyPoliciesApiUrl = MKIOClient._contentKeyPoliciesApiUrl;
+        private const string _contentKeyPolicyApiUrl = _contentKeyPoliciesApiUrl + "/{1}";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
@@ -32,11 +32,7 @@ namespace MK.IO
         /// </exception>
         internal ContentKeyPoliciesOperations(MKIOClient client)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException("client");
-            }
-            Client = client;
+            Client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         /// <inheritdoc/>
@@ -49,7 +45,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<List<ContentKeyPolicy>> ListAsync()
         {
-            var url = Client.GenerateApiUrl(ContentKeyPoliciesApiUrl);
+            var url = Client.GenerateApiUrl(_contentKeyPoliciesApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return Models.ListContentKeyPolicies.FromJson(responseContent).Value;
         }
@@ -64,7 +60,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<ContentKeyPolicy> GetAsync(string contentKeyPolicyName)
         {
-            var url = Client.GenerateApiUrl(ContentKeyPolicyApiUrl, contentKeyPolicyName);
+            var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return ContentKeyPolicy.FromJson(responseContent);
         }
@@ -78,7 +74,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteAsync(string contentKeyPolicyName)
         {
-            var url = Client.GenerateApiUrl(ContentKeyPolicyApiUrl, contentKeyPolicyName);
+            var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
 
@@ -92,9 +88,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<ContentKeyPolicy> CreateAsync(string contentKeyPolicyName, ContentKeyPolicy content)
         {
-            var url = Client.GenerateApiUrl(ContentKeyPolicyApiUrl, contentKeyPolicyName);
+            var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
-            var t = content.ToJson();
             return ContentKeyPolicy.FromJson(responseContent);
         }
     }

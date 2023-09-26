@@ -53,7 +53,4 @@ namespace MK.IO
         [JsonProperty("allowPassingVideoContentToUnknownOutput")]
         public string AllowPassingVideoContentToUnknownOutput { get; set; }
     }
-
-
-
 }

@@ -17,8 +17,8 @@ namespace MK.IO
         //
         // live events
         //
-        private const string LiveEventsApiUrl = MKIOClient.LiveEventsApiUrl;
-        private const string LiveEventApiUrl = LiveEventsApiUrl + "/{1}";
+        private const string _liveEventsApiUrl = MKIOClient._liveEventsApiUrl;
+        private const string _liveEventApiUrl = _liveEventsApiUrl + "/{1}";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
@@ -36,11 +36,7 @@ namespace MK.IO
         /// </exception>
         internal LiveEventsOperations(MKIOClient client)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException("client");
-            }
-            Client = client;
+            Client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         /// <inheritdoc/>
@@ -53,7 +49,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<List<LiveEventSchema>> ListAsync()
         {
-            var url = Client.GenerateApiUrl(LiveEventsApiUrl);
+            var url = Client.GenerateApiUrl(_liveEventsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<LiveEventListResponseSchema>(responseContent, ConverterLE.Settings).Value;
 
@@ -69,7 +65,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<LiveEventSchema> GetAsync(string liveEventName)
         {
-            var url = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
+            var url = Client.GenerateApiUrl(_liveEventApiUrl, liveEventName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
         }
@@ -84,11 +80,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags)
         {
-            var url = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
-            if (tags == null)
-            {
-                tags = new Dictionary<string, string>();
-            }
+            var url = Client.GenerateApiUrl(_liveEventApiUrl, liveEventName);
+            tags ??= new Dictionary<string, string>();
             var content = new LiveEventSchema { Location = location, Tags = tags, Properties = properties };
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
@@ -103,7 +96,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteAsync(string liveEventName)
         {
-            var url = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
+            var url = Client.GenerateApiUrl(_liveEventApiUrl, liveEventName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
 
@@ -156,7 +149,7 @@ namespace MK.IO
 
         private async Task LiveEventOperationAsync(string liveEventName, string? operation, HttpMethod httpMethod)
         {
-            var url = Client.GenerateApiUrl(LiveEventApiUrl + (operation != null ? "/" + operation : string.Empty), liveEventName);
+            var url = Client.GenerateApiUrl(_liveEventApiUrl + (operation != null ? "/" + operation : string.Empty), liveEventName);
             await Client.ObjectContentAsync(url, httpMethod);
         }
     }
