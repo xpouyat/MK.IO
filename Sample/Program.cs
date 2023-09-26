@@ -53,7 +53,43 @@ namespace Sample
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
 
-            var lista = await client.Assets.ListAsync();
+
+            // **********************
+            // live event operations
+            // **********************
+
+            var les = client.LiveEvents.List();
+            
+            // client.LiveEvents.Delete("liveevent4");
+
+            var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveEvent"), "francecentral", new LiveEventProperties
+            {
+                Input = new LiveEventInput { StreamingProtocol = "RTMP" },
+                StreamOptions = new List<string> { "Default" },
+                Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
+            });
+
+            // **********************
+            // live output operations
+            // **********************
+
+            // create live output asset
+            var nameasset = MKIOClient.GenerateUniqueName("liveoutput");
+            var loasset = client.Assets.CreateOrUpdate(nameasset, "asset-" + nameasset, config["StorageName"], "live output asset");
+
+            var lo = client.LiveOutputs.Create(le.Name, MKIOClient.GenerateUniqueName("liveOutput"), new LiveOutputProperties
+            {
+                ArchiveWindowLength = "PT5M",
+                AssetName = nameasset
+            });
+
+            // live outputs listing
+            var los = client.LiveOutputs.List(le.Name);
+
+            if (los.Count == 1)
+            {
+                var looo = client.LiveOutputs.Get(le.Name, los.First().Name);
+            }
 
             // *******************
             // storage operations
@@ -93,21 +129,6 @@ namespace Sample
             // client.StorageAccounts.Delete(storages.First().Metadata.Id);
 
 
-
-            // **********************
-            // live event operations
-            // **********************
-
-            var les = client.LiveEvents.List();
-
-            // client.LiveEvents.Delete("liveevent4");
-
-            var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveEvent"), "francecentral", new LiveEventProperties
-            {
-                Input = new LiveEventInput { StreamingProtocol = "RTMP" },
-                StreamOptions = new List<string> { "Default" },
-                Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
-            });
 
 
             // *****************
@@ -166,7 +187,7 @@ namespace Sample
             /*
             var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
 
-            client.Jobs.Create("testjob2", "simple", new JobProperties
+            client.Jobs.Create("simple", "testjob2", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -188,7 +209,7 @@ namespace Sample
 
             var outputAsset = client.Assets.CreateOrUpdate("outputasset-014", "asset-outputasset-014", config["StorageName"], "output asset for job");
 
-            var jobHttp = client.Jobs.Create(MKIOClient.GenerateUniqueName("job"), "simple", new JobProperties
+            var jobHttp = client.Jobs.Create("simple", MKIOClient.GenerateUniqueName("job"), new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",

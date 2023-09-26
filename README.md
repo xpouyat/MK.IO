@@ -213,7 +213,7 @@ var jobs = client.Jobs.ListAll();
 // create output asset
 var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
 // create a job with the output asset created and with an asset as a source
-var newJob = client.Jobs.Create( MKIOClient.GenerateUniqueName("job"), "simpletransform", new JobProperties
+var newJob = client.Jobs.Create("simpletransform", MKIOClient.GenerateUniqueName("job"), new JobProperties
     {
         Description = "My job",
         Priority = "Normal",
@@ -233,7 +233,7 @@ var newJob = client.Jobs.Create( MKIOClient.GenerateUniqueName("job"), "simpletr
     );
 
 // with http source as a source
-var newJobH = client.Jobs.Create(MKIOClient.GenerateUniqueName("job"), "simple", new JobProperties
+var newJobH = client.Jobs.Create("simple", MKIOClient.GenerateUniqueName("job"), new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -262,19 +262,37 @@ client.Jobs.Cancel("simpletransform", "testjob2");
 client.Jobs.Delete("simpletransform", "testjob1");
 
 
-// **********************
-// live event operations
-// **********************
+// *********************************
+// live event and output operations
+// *********************************
 
 var list_le = client.LiveEvents.List();
 
 // Creation
-var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveevent"), "francecentral", new LiveEventProperties
+var liveEvent = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveevent"), "francecentral", new LiveEventProperties
 {
     Input = new LiveEventInput { StreamingProtocol = "RTMP" },
     StreamOptions = new List<string> { "Default" },
     Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
 });
+
+// create live output asset
+var nameOutputAsset = MKIOClient.GenerateUniqueName("liveoutput");
+var liveOutputAsset = client.Assets.CreateOrUpdate(nameOutputAsset, "asset-" + nameOutputAsset, config["StorageName"], "live output asset");
+
+var lo = client.LiveOutputs.Create(liveEvent.Name, MKIOClient.GenerateUniqueName("liveOutput"), new LiveOutputProperties
+{
+    ArchiveWindowLength = "PT5M",
+    AssetName = nameOutputAsset
+});
+
+// live outputs listing for this live event
+var liveOutputs = client.LiveOutputs.List(liveEvent.Name);
+
+if (liveOutputs.Count == 1)
+{
+    var looo = client.LiveOutputs.Get(le.Name, liveOutputs.First().Name);
+}
 
 // Delete
 client.LiveEvents.Delete("liveevent4");

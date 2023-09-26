@@ -72,7 +72,7 @@ namespace MK.IO
         /// <param name="jobName"></param>
         /// <param name="properties"></param>
         /// <returns></returns>
-        JobSchema Create(string jobName, string transformName, JobProperties properties);
+        JobSchema Create(string transformName, string jobName, JobProperties properties);
 
         /// <summary>
         /// Create a new Job.
@@ -81,7 +81,7 @@ namespace MK.IO
         /// <param name="jobName"></param>
         /// <param name="properties"></param>
         /// <returns></returns>
-        Task<JobSchema> CreateAsync(string jobName, string transformName, JobProperties properties);
+        Task<JobSchema> CreateAsync(string transformName, string jobName, JobProperties properties);
 
         /// <summary>
         /// Cancel an already running Job.

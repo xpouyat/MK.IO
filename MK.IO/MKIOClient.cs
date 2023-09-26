@@ -68,6 +68,7 @@ namespace MK.IO
             StorageAccounts = new StorageAccountsOperations(this);
             Assets = new AssetsOperations(this);
             LiveEvents = new LiveEventsOperations(this);
+            LiveOutputs = new LiveOutputsOperations(this);
             Jobs = new JobsOperations(this);
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             Transforms = new TransformsOperations(this);
@@ -94,6 +95,11 @@ namespace MK.IO
         /// Gets the ILiveEventsOperations.
         /// </summary>
         public virtual ILiveEventsOperations LiveEvents { get; private set; }
+
+        /// <summary>
+        /// Gets the ILiveOutputsOperations.
+        /// </summary>
+        public virtual ILiveOutputsOperations LiveOutputs { get; private set; }
 
         /// <summary>
         /// Gets the IJobsOperations.
