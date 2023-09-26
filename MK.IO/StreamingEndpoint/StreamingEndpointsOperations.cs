@@ -134,6 +134,6 @@ namespace MK.IO
             var url = Client.GenerateApiUrl(StreamingEndpointApiUrl + (operation != null ? "/" + operation : string.Empty), streamingEndpointName);
             await Client.ObjectContentAsync(url, httpMethod);
         }
-   
+
     }
 }

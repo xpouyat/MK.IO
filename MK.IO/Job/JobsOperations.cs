@@ -98,7 +98,7 @@ namespace MK.IO
         }
 
         /// <inheritdoc/>
-        public async Task<JobSchema> CreateAsync(string jobName, string transformName,  JobProperties properties)
+        public async Task<JobSchema> CreateAsync(string jobName, string transformName, JobProperties properties)
         {
             var url = Client.GenerateApiUrl(JobApiUrl, transformName, jobName);
             // fix to make sure Odattype is set as we use the generated class

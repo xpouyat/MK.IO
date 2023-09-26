@@ -38,7 +38,7 @@ namespace MK.IO
             }
             Client = client;
         }
-           
+
         public AccountStats GetStats()
         {
             Task<AccountStats> task = Task.Run<AccountStats>(async () => await GetStatsAsync());

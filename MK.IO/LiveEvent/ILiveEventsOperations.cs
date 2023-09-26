@@ -56,7 +56,7 @@ namespace MK.IO
         /// <param name="tags"></param>
         /// <returns></returns>
         LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null);
-        
+
         /// <summary>
         /// Create a single live event
         /// </summary>
