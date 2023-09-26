@@ -46,12 +46,52 @@ namespace Sample
 
             var client = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
 
-            var profile = client.Subscription.GetUserInfo();
+            //var profile = client.Subscription.GetUserInfo();
 
             // Get subscription stats
-            var stats = client.Subscription.GetStats();
+            //var stats = client.Subscription.GetStats();
 
             var lista = await client.Assets.ListAsync();
+
+
+            // *******************
+            // storage operations
+            // *******************
+
+            // Creation
+
+            /*
+            var storage = client.CreateStorageAccount(new StorageRequestSchema
+            {
+                Spec = new StorageSchema
+                {
+                    Name = config["StorageName"],
+                    Location = config["StorageRegion"],
+                    Description = "my description",
+                    AzureStorageConfiguration = new BlobStorageAzureProperties
+                    {
+                        Url = config["StorageSAS"]
+                    }
+                }
+            }
+            );
+            */
+
+            // List
+            var storages = client.StorageAccounts.List();
+
+            // Get
+            var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
+
+
+            var creds = client.StorageAccounts.ListCredentials((Guid)storages.First().Metadata.Id);
+
+            var cred = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
+
+            // Delete
+            // client.StorageAccounts.Delete(storages.First().Metadata.Id);
+
+
 
             // **********************
             // live event operations
@@ -216,42 +256,7 @@ namespace Sample
                 );
             */
 
-            // *******************
-            // storage operations
-            // *******************
-
-            // Creation
-
-            /*
-            var storage = client.CreateStorageAccount(new StorageRequestSchema
-            {
-                Spec = new StorageSchema
-                {
-                    Name = config["StorageName"],
-                    Location = config["StorageRegion"],
-                    Description = "my description",
-                    AzureStorageConfiguration = new BlobStorageAzureProperties
-                    {
-                        Url = config["StorageSAS"]
-                    }
-                }
-            }
-            );
-            */
-
-            // List
-            var storages = client.StorageAccounts.List();
-
-            // Get
-            var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
-
-
-            var creds = client.StorageAccounts.ListCredentials((Guid)storages.First().Metadata.Id);
-
-            var cred = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
-
-            // Delete
-            // client.StorageAccounts.Delete(storages.First().Metadata.Id);
+           
 
 
             // ******************************

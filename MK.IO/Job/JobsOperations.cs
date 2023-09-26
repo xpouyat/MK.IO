@@ -18,9 +18,9 @@ namespace MK.IO
         // jobs
         //
 
-        private const string allJobsApiUrl = MKIOClient.allJobsApiUrl;
-        private const string jobsApiUrl = MKIOClient.transformsApiUrl + "/jobs";
-        private const string jobApiUrl = jobsApiUrl + "/{2}";
+        private const string AllJobsApiUrl = MKIOClient.AllJobsApiUrl;
+        private const string JobsApiUrl = MKIOClient.TransformsApiUrl + "/jobs";
+        private const string JobApiUrl = JobsApiUrl + "/{2}";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
@@ -53,7 +53,7 @@ namespace MK.IO
 
         public async Task<List<JobSchema>> ListAllAsync()
         {
-            var url = Client.GenerateApiUrl(allJobsApiUrl);
+            var url = Client.GenerateApiUrl(AllJobsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings).Value;
         }
@@ -66,7 +66,7 @@ namespace MK.IO
 
         public async Task<List<JobSchema>> ListAsync(string transformName)
         {
-            var url = Client.GenerateApiUrl(jobsApiUrl, transformName);
+            var url = Client.GenerateApiUrl(JobsApiUrl, transformName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings).Value;
         }
@@ -79,7 +79,7 @@ namespace MK.IO
 
         public async Task<JobSchema> GetAsync(string transformName, string jobName)
         {
-            var url = Client.GenerateApiUrl(jobApiUrl, transformName, jobName);
+            var url = Client.GenerateApiUrl(JobApiUrl, transformName, jobName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings);
         }
@@ -92,7 +92,7 @@ namespace MK.IO
 
         public async Task<JobSchema> CreateAsync(string transformName, string jobName, JobProperties properties)
         {
-            var url = Client.GenerateApiUrl(jobApiUrl, transformName, jobName);
+            var url = Client.GenerateApiUrl(JobApiUrl, transformName, jobName);
             // fix to make sure Odattype is set as we use the generated class
             foreach (var o in properties.Outputs)
             {
@@ -111,7 +111,7 @@ namespace MK.IO
 
         public async Task CancelAsync(string transformName, string jobName)
         {
-            var url = Client.GenerateApiUrl(jobApiUrl + "/cancelJob", transformName, jobName);
+            var url = Client.GenerateApiUrl(JobApiUrl + "/cancelJob", transformName, jobName);
             await Client.ObjectContentAsync(url, HttpMethod.Post);
         }
 
@@ -122,7 +122,7 @@ namespace MK.IO
 
         public async Task DeleteAsync(string transformName, string jobName)
         {
-            var url = Client.GenerateApiUrl(jobApiUrl, transformName, jobName);
+            var url = Client.GenerateApiUrl(JobApiUrl, transformName, jobName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
     }

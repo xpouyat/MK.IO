@@ -17,8 +17,8 @@ namespace MK.IO
         //
         // streaming endpoints
         //
-        private const string streamingEndpointsApiUrl = MKIOClient.streamingEndpointsApiUrl;
-        private const string streamingEndpointApiUrl = streamingEndpointsApiUrl + "/{1}";
+        private const string StreamingEndpointsApiUrl = MKIOClient.StreamingEndpointsApiUrl;
+        private const string StreamingEndpointApiUrl = StreamingEndpointsApiUrl + "/{1}";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
@@ -52,7 +52,7 @@ namespace MK.IO
 
         public async Task<List<StreamingEndpointSchema>> ListAsync()
         {
-            var url = Client.GenerateApiUrl(streamingEndpointsApiUrl);
+            var url = Client.GenerateApiUrl(StreamingEndpointsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StreamingEndpointListResponseSchema>(responseContent, ConverterLE.Settings).Value;
         }
@@ -65,7 +65,7 @@ namespace MK.IO
 
         public async Task<StreamingEndpointSchema> GetAsync(string streamingEndpointName)
         {
-            var url = Client.GenerateApiUrl(streamingEndpointApiUrl, streamingEndpointName);
+            var url = Client.GenerateApiUrl(StreamingEndpointApiUrl, streamingEndpointName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings);
         }
@@ -78,7 +78,7 @@ namespace MK.IO
 
         public async Task<StreamingEndpointSchema> CreateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string> tags = null)
         {
-            var url = Client.GenerateApiUrl(streamingEndpointApiUrl + "?autoStart=" + autoStart.ToString(), streamingEndpointName);
+            var url = Client.GenerateApiUrl(StreamingEndpointApiUrl + "?autoStart=" + autoStart.ToString(), streamingEndpointName);
             if (tags == null)
             {
                 tags = new Dictionary<string, string>();
@@ -120,7 +120,7 @@ namespace MK.IO
 
         private async Task StreamingEndpointOperationAsync(string streamingEndpointName, string? operation, HttpMethod httpMethod)
         {
-            var url = Client.GenerateApiUrl(streamingEndpointApiUrl + (operation != null ? "/" + operation : string.Empty), streamingEndpointName);
+            var url = Client.GenerateApiUrl(StreamingEndpointApiUrl + (operation != null ? "/" + operation : string.Empty), streamingEndpointName);
             await Client.ObjectContentAsync(url, httpMethod);
         }
 

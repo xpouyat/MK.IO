@@ -13,8 +13,8 @@ namespace MK.IO
         //
         // account
         //
-        private const string accountProfileApiUrl = "api/profile";
-        private const string accountStatsApiUrl = "api/ams/{0}/stats";
+        private const string AccountProfileApiUrl = "api/profile";
+        private const string AccountStatsApiUrl = "api/ams/{0}/stats";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
@@ -37,17 +37,8 @@ namespace MK.IO
                 throw new ArgumentNullException("client");
             }
             Client = client;
-
-            // let's call the two API to get info on subscription and exposed to the user and also to be used by the MKIO client.
-            SubscriptionId = GetStats().Extra.SubscriptionId;
-            CustomerId = GetUserInfo().CustomerId;
-            SubscriptionName = client._subscriptionName;
         }
-
-        public string SubscriptionName { get; private set; }
-        public Guid SubscriptionId { get; private set; }
-        public Guid CustomerId { get; private set; }
-
+           
         public AccountStats GetStats()
         {
             Task<AccountStats> task = Task.Run<AccountStats>(async () => await GetStatsAsync());
@@ -56,7 +47,7 @@ namespace MK.IO
 
         public async Task<AccountStats> GetStatsAsync()
         {
-            var url = Client.GenerateApiUrl(accountStatsApiUrl);
+            var url = Client.GenerateApiUrl(AccountStatsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return AccountStats.FromJson(responseContent);
         }
@@ -69,7 +60,7 @@ namespace MK.IO
 
         public async Task<UserInfo> GetUserInfoAsync()
         {
-            string responseContent = await Client.GetObjectContentAsync(Client.baseUrl + accountProfileApiUrl);
+            string responseContent = await Client.GetObjectContentAsync(Client.BaseUrl + AccountProfileApiUrl);
             return AccountProfile.FromJson(responseContent).Spec;
         }
     }

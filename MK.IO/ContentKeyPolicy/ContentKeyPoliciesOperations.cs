@@ -13,8 +13,8 @@ namespace MK.IO
         //
         // content key policy
         //
-        private const string contentKeyPoliciesApiUrl = MKIOClient.contentKeyPoliciesApiUrl;
-        private const string contentKeyPolicyApiUrl = contentKeyPoliciesApiUrl + "/{1}";
+        private const string ContentKeyPoliciesApiUrl = MKIOClient.ContentKeyPoliciesApiUrl;
+        private const string ContentKeyPolicyApiUrl = ContentKeyPoliciesApiUrl + "/{1}";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
@@ -47,7 +47,7 @@ namespace MK.IO
 
         public async Task<List<ContentKeyPolicy>> ListContentKeyPoliciesAsync()
         {
-            var url = Client.GenerateApiUrl(contentKeyPoliciesApiUrl);
+            var url = Client.GenerateApiUrl(ContentKeyPoliciesApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return Models.ListContentKeyPolicies.FromJson(responseContent).Value;
         }
@@ -60,7 +60,7 @@ namespace MK.IO
 
         public async Task<ContentKeyPolicy> GetAsync(string contentKeyPolicyName)
         {
-            var url = Client.GenerateApiUrl(contentKeyPolicyApiUrl, contentKeyPolicyName);
+            var url = Client.GenerateApiUrl(ContentKeyPolicyApiUrl, contentKeyPolicyName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return ContentKeyPolicy.FromJson(responseContent);
         }
@@ -72,7 +72,7 @@ namespace MK.IO
 
         public async Task DeleteAsync(string contentKeyPolicyName)
         {
-            var url = Client.GenerateApiUrl(contentKeyPolicyApiUrl, contentKeyPolicyName);
+            var url = Client.GenerateApiUrl(ContentKeyPolicyApiUrl, contentKeyPolicyName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
 
@@ -84,7 +84,7 @@ namespace MK.IO
 
         public async Task<ContentKeyPolicy> CreateAsync(string contentKeyPolicyName, ContentKeyPolicy content)
         {
-            var url = Client.GenerateApiUrl(contentKeyPolicyApiUrl, contentKeyPolicyName);
+            var url = Client.GenerateApiUrl(ContentKeyPolicyApiUrl, contentKeyPolicyName);
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
             var t = content.ToJson();
             return ContentKeyPolicy.FromJson(responseContent);

@@ -54,7 +54,7 @@ namespace MK.IO
         public async Task<StorageResponseSchema> CreateAsync(StorageRequestSchema storage)
         {
             storage.Spec.Type = "Microsoft.Storage"; // needed
-            var url = Client.GenerateStorageApiUrl(storageApiUrl);
+            var url = GenerateStorageApiUrl(storageApiUrl);
             string responseContent = await Client.CreateObjectPostAsync(url, storage.ToJson());
             return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings);
         }
@@ -67,7 +67,7 @@ namespace MK.IO
 
         public async Task<List<StorageResponseSchema>> ListAsync()
         {
-            var url = Client.GenerateStorageApiUrl(storageApiUrl);
+            var url = GenerateStorageApiUrl(storageApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StorageListResponseSchema>(responseContent, ConverterLE.Settings).Items;
         }
@@ -80,7 +80,7 @@ namespace MK.IO
 
         public async Task<StorageResponseSchema> GetAsync(Guid storageAccountId)
         {
-            var url = Client.GenerateStorageApiUrl(storageSelectionApiUrl, storageAccountId.ToString());
+            var url = GenerateStorageApiUrl(storageSelectionApiUrl, storageAccountId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings);
         }
@@ -103,7 +103,7 @@ namespace MK.IO
 
         public async Task<List<CredentialResponseSchema>> ListCredentialsAsync(Guid storageAccountId)
         {
-            var url = Client.GenerateStorageApiUrl(storageListCredentialsApiUrl, storageAccountId.ToString());
+            var url = GenerateStorageApiUrl(storageListCredentialsApiUrl, storageAccountId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<CredentialListReponseSchema>(responseContent, ConverterLE.Settings).Items;
         }
@@ -116,15 +116,30 @@ namespace MK.IO
 
         public async Task<CredentialResponseSchema> GetCredentialAsync(Guid storageAccountId, Guid credentialId)
         {
-            var url = Client.GenerateStorageApiUrl(storageCredentialApiUrl, storageAccountId.ToString(), credentialId.ToString());
+            var url = GenerateStorageApiUrl(storageCredentialApiUrl, storageAccountId.ToString(), credentialId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings);
         }
 
         private async Task StorageAccountOperationAsync(Guid storageAccountId, HttpMethod httpMethod)
         {
-            var url = Client.GenerateStorageApiUrl(storageSelectionApiUrl, storageAccountId.ToString());
+            var url = GenerateStorageApiUrl(storageSelectionApiUrl, storageAccountId.ToString());
             await Client.ObjectContentAsync(url, httpMethod);
+        }
+
+
+        internal string GenerateStorageApiUrl(string urlPath)
+        {
+            return Client.BaseUrl + string.Format(urlPath, Client.GetCustomerId(), Client.GetSubscriptionId());
+        }
+
+        internal string GenerateStorageApiUrl(string urlPath, string objectName)
+        {
+            return Client.BaseUrl + string.Format(urlPath, Client.GetCustomerId(), Client.GetSubscriptionId(), objectName);
+        }
+        internal string GenerateStorageApiUrl(string urlPath, string objectName, string objectName2)
+        {
+            return Client.BaseUrl + string.Format(urlPath, Client.GetCustomerId(), Client.GetSubscriptionId(), objectName, objectName2);
         }
     }
 }

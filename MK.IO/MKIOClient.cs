@@ -5,6 +5,7 @@ using MK.IO.Asset;
 using Newtonsoft.Json;
 using System.Collections.Specialized;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Web;
 
 namespace MK.IO
@@ -16,21 +17,39 @@ namespace MK.IO
     /// </summary>
     public class MKIOClient : IMKIOClient
     {
-        internal readonly string baseUrl = "https://api.io.mediakind.com/";
+        internal readonly string BaseUrl = "https://api.io.mediakind.com/";
+        internal const string AllJobsApiUrl = "api/ams/{0}/jobs";
+        internal const string TransformsApiUrl = "api/ams/{0}/transforms";
+        internal const string AssetsApiUrl = "api/ams/{0}/assets";
+        internal const string StreamingLocatorsApiUrl = "api/ams/{0}/streamingLocators";
+        internal const string LiveEventsApiUrl = "api/ams/{0}/liveEvents";
+        internal const string ContentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
+        internal const string StreamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
 
-        internal readonly string _subscriptionName;
-        private Guid _subscriptionId;
-        private Guid _customerId;
-        private readonly string _MKIOtoken;
+        private readonly string _subscriptionName;
+
+        private readonly string _apiToken;
         private readonly HttpClient _httpClient;
 
-        internal const string allJobsApiUrl = "api/ams/{0}/jobs";
-        internal const string transformsApiUrl = "api/ams/{0}/transforms";
-        internal const string assetsApiUrl = "api/ams/{0}/assets";
-        internal const string streamingLocatorsApiUrl = "api/ams/{0}/streamingLocators";
-        internal const string LiveEventsApiUrl = "api/ams/{0}/liveEvents";
-        internal const string contentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
-        internal const string streamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
+        private Guid _subscriptionId;
+        internal Guid GetSubscriptionId()
+        {
+            if (default(Guid) == _subscriptionId)
+            {
+                _subscriptionId = Subscription.GetStats().Extra.SubscriptionId;
+            }
+            return _subscriptionId;
+        }
+
+        private Guid _customerId;
+        internal Guid GetCustomerId()
+        {
+            if (default(Guid) == _customerId)
+            {
+                _customerId = Subscription.GetUserInfo().CustomerId;
+            }
+            return _customerId;
+        }
 
         public MKIOClient(string MKIOSubscriptionName, string MKIOtoken)
         {
@@ -41,7 +60,7 @@ namespace MK.IO
                 throw new System.ArgumentNullException(nameof(MKIOtoken));
 
             _subscriptionName = MKIOSubscriptionName;
-            _MKIOtoken = MKIOtoken;
+            _apiToken = MKIOtoken;
 
             _httpClient = new HttpClient();
 
@@ -55,8 +74,8 @@ namespace MK.IO
         {
             Subscription = new SubscriptionOperations(this);
             // as GetStats and USerInfo has been called in Subscription operations, let's save the data used by other API calls
-            _subscriptionId = Subscription.SubscriptionId;
-            _customerId = Subscription.CustomerId;
+            // _subscriptionId = Subscription.SubscriptionId;
+            // _customerId = Subscription.CustomerId;
 
             StorageAccounts = new StorageAccountsOperations(this);
             Assets = new AssetsOperations(this);
@@ -114,32 +133,17 @@ namespace MK.IO
         public virtual IContentKeyPoliciesOperations ContentKeyPolicies { get; private set; }
 
 
-
         internal string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
         {
-            return baseUrl + string.Format(urlPath, _subscriptionName, objectName1, objectName2);
+            return BaseUrl + string.Format(urlPath, _subscriptionName, objectName1, objectName2);
         }
         internal string GenerateApiUrl(string urlPath, string objectName)
         {
-            return baseUrl + string.Format(urlPath, _subscriptionName, objectName);
+            return BaseUrl + string.Format(urlPath, _subscriptionName, objectName);
         }
         internal string GenerateApiUrl(string urlPath)
         {
-            return baseUrl + string.Format(urlPath, _subscriptionName);
-        }
-
-        internal string GenerateStorageApiUrl(string urlPath)
-        {
-            return baseUrl + string.Format(urlPath, _customerId, _subscriptionId);
-        }
-
-        internal string GenerateStorageApiUrl(string urlPath, string objectName)
-        {
-            return baseUrl + string.Format(urlPath, _customerId, _subscriptionId, objectName);
-        }
-        internal string GenerateStorageApiUrl(string urlPath, string objectName, string objectName2)
-        {
-            return baseUrl + string.Format(urlPath, _customerId, _subscriptionId, objectName, objectName2);
+            return BaseUrl + string.Format(urlPath, _subscriptionName);
         }
 
         internal async Task<string> GetObjectContentAsync(string url)
@@ -154,7 +158,7 @@ namespace MK.IO
                 RequestUri = new Uri(url),
                 Method = httpMethod,
             };
-            request.Headers.Add("x-mkio-token", _MKIOtoken);
+            request.Headers.Add("x-mkio-token", _apiToken);
 
             using HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead).ConfigureAwait(false);
             string responseContent = await amsRequestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -180,7 +184,7 @@ namespace MK.IO
                 RequestUri = new Uri(url),
                 Method = httpMethod,
             };
-            request.Headers.Add("x-mkio-token", _MKIOtoken);
+            request.Headers.Add("x-mkio-token", _apiToken);
             request.Content = new StringContent(amsJSONObject, System.Text.Encoding.UTF8, "application/json");
 
             using HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request).ConfigureAwait(false);

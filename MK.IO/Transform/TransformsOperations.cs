@@ -18,8 +18,8 @@ namespace MK.IO
         // transforms
         //
 
-        private const string transformsApiUrl = MKIOClient.transformsApiUrl;
-        private const string transformApiUrl = transformsApiUrl + "/{1}";
+        private const string TransformsApiUrl = MKIOClient.TransformsApiUrl;
+        private const string TransformApiUrl = TransformsApiUrl + "/{1}";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
@@ -53,7 +53,7 @@ namespace MK.IO
 
         public async Task<List<TransformSchema>> ListAsync()
         {
-            var url = Client.GenerateApiUrl(transformsApiUrl);
+            var url = Client.GenerateApiUrl(TransformsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<TransformListResponseSchema>(responseContent, ConverterLE.Settings).Value;
 
@@ -67,7 +67,7 @@ namespace MK.IO
 
         public async Task<TransformSchema> GetAsync(string transformName)
         {
-            var url = Client.GenerateApiUrl(transformApiUrl, transformName);
+            var url = Client.GenerateApiUrl(TransformApiUrl, transformName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings);
         }
@@ -80,7 +80,7 @@ namespace MK.IO
 
         public async Task<TransformSchema> CreateAsync(string transformName, TransformProperties properties)
         {
-            var url = Client.GenerateApiUrl(transformApiUrl, transformName);
+            var url = Client.GenerateApiUrl(TransformApiUrl, transformName);
             var content = new TransformSchema { Properties = properties };
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
             return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings);
@@ -93,7 +93,7 @@ namespace MK.IO
 
         public async Task DeleteAsync(string transformName)
         {
-            var url = Client.GenerateApiUrl(transformApiUrl, transformName);
+            var url = Client.GenerateApiUrl(TransformApiUrl, transformName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
     }

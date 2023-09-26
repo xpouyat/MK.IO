@@ -20,7 +20,6 @@ namespace MK.IO
         private const string LiveEventsApiUrl = MKIOClient.LiveEventsApiUrl;
         private const string LiveEventApiUrl = LiveEventsApiUrl + "/{1}";
 
-
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
         /// </summary>
