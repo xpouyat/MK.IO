@@ -27,7 +27,6 @@ namespace MK.IO
         internal const string StreamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
 
         private readonly string _subscriptionName;
-
         private readonly string _apiToken;
         private readonly HttpClient _httpClient;
 
@@ -73,10 +72,6 @@ namespace MK.IO
         private void Initialize()
         {
             Subscription = new SubscriptionOperations(this);
-            // as GetStats and USerInfo has been called in Subscription operations, let's save the data used by other API calls
-            // _subscriptionId = Subscription.SubscriptionId;
-            // _customerId = Subscription.CustomerId;
-
             StorageAccounts = new StorageAccountsOperations(this);
             Assets = new AssetsOperations(this);
             LiveEvents = new LiveEventsOperations(this);
