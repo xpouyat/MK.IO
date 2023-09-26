@@ -43,10 +43,10 @@ using MK.IO.Models;
 
 var client = new MKIOClient("mkiosubscriptionname", "mkiotoken");
 
-var profile = client.Account.GetUserInfo();
+var profile = client.Subscription.GetUserInfo();
 
 // Get subscription stats
-var stats = client.Account.GetStats();
+var stats = client.Subscription.GetStats();
 
 // *******************
 // storage operations
