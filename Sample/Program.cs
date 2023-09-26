@@ -46,13 +46,14 @@ namespace Sample
 
             var client = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
 
+            MKIOClient.GenerateUniqueName("asset");
+
             //var profile = client.Subscription.GetUserInfo();
 
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
 
             var lista = await client.Assets.ListAsync();
-
 
             // *******************
             // storage operations
@@ -101,7 +102,7 @@ namespace Sample
 
             // client.LiveEvents.Delete("liveevent4");
 
-            var le = client.LiveEvents.Create("liveevent4", "francecentral", new LiveEventProperties
+            var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveEvent"), "francecentral", new LiveEventProperties
             {
                 Input = new LiveEventInput { StreamingProtocol = "RTMP" },
                 StreamOptions = new List<string> { "Default" },
@@ -143,7 +144,7 @@ namespace Sample
             // *********************
 
 
-            var tranform = client.Transforms.Create("mytesttranf", new TransformProperties
+            var tranform = client.Transforms.CreateOrUpdate("mytesttranf", new TransformProperties
             {
                 Description = "desc",
                 Outputs = new List<TransformOutput>() {
@@ -165,7 +166,7 @@ namespace Sample
             /*
             var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
 
-            client.Jobs.Create("simple", "testjob2", new JobProperties
+            client.Jobs.Create("testjob2", "simple", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -187,7 +188,7 @@ namespace Sample
 
             var outputAsset = client.Assets.CreateOrUpdate("outputasset-014", "asset-outputasset-014", config["StorageName"], "output asset for job");
 
-            client.Jobs.Create("simple", "testjob3", new JobProperties
+            var jobHttp = client.Jobs.Create(MKIOClient.GenerateUniqueName("job"), "simple", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -200,7 +201,7 @@ namespace Sample
                 {
                     new JobOutputAsset()
                     {
-                        AssetName="outputasset-014"
+                        AssetName=MKIOClient.GenerateUniqueName("outputasset")
                     }
                 }
             }
@@ -256,7 +257,7 @@ namespace Sample
                 );
             */
 
-           
+
 
 
             // ******************************
@@ -299,16 +300,13 @@ namespace Sample
 
             //var mklocator1 = client.StreamingLocators.Get("locator-25452");
 
-            string uniqueness = Guid.NewGuid().ToString()[..13];
-            string locatorName = $"locator-{uniqueness}";
-            //var mklocator2 = MKIOClient.StreamingLocators.Create(locatorName, new StreamingLocator("copy-9ec48d1bf3-mig", "Predefined_ClearStreamingOnly"));
             var mklocator2 = client.StreamingLocators.Create(
-                locatorName,
-                new StreamingLocatorProperties
-                {
-                    AssetName = "copy-ef2058b692-copy",
-                    StreamingPolicyName = "Predefined_ClearStreamingOnly"
-                });
+               MKIOClient.GenerateUniqueName("locator"),
+               new StreamingLocatorProperties
+               {
+                   AssetName = "copy-ef2058b692-copy",
+                   StreamingPolicyName = "Predefined_ClearStreamingOnly"
+               });
 
             var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
 

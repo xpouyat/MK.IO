@@ -15,7 +15,7 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public class MKIOClient : IMKIOClient
+    public partial class MKIOClient : IMKIOClient
     {
         internal readonly string BaseUrl = "https://api.io.mediakind.com/";
         internal const string AllJobsApiUrl = "api/ams/{0}/jobs";
@@ -207,26 +207,6 @@ namespace MK.IO
             return responseContent;
         }
 
-        public partial class ApiException : Exception
-        {
-            public int StatusCode { get; private set; }
-
-            public string? Response { get; private set; }
-
-            public ApiException(string message, int statusCode, string? response, Exception? innerException)
-                : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
-            // : base(message , innerException)
-            {
-                StatusCode = statusCode;
-                Response = response;
-            }
-
-            public override string ToString()
-            {
-                return string.Format("HTTP Response: \n\n{0}\n\n{1}", Response, base.ToString());
-            }
-        }
-
         private static void AnalyzeResponseAndThrowIfNeeded(HttpResponseMessage amsRequestResult, string responseContent)
         {
             var status_ = (int)amsRequestResult.StatusCode;
@@ -328,6 +308,17 @@ namespace MK.IO
             }
 
             return url;
+        }
+
+        /// <summary>
+        /// Generates a unique name based on a prefix. Useful for creating unique names for assets, locators, etc.
+        /// </summary>
+        /// <param name="prefix">Prefix of the name</param>
+        /// <param name="length">Lenght of the unique name (without the '-' before)</param>
+        /// <returns></returns>
+        public static string GenerateUniqueName(string prefix, int length = 8)
+        {
+            return prefix + "-" + Guid.NewGuid().ToString()[..length];
         }
     }
 }

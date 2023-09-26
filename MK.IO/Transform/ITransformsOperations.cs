@@ -8,13 +8,59 @@ namespace MK.IO
 {
     public interface ITransformsOperations
     {
-        TransformSchema Create(string transformName, TransformProperties properties);
-        Task<TransformSchema> CreateAsync(string transformName, TransformProperties properties);
-        void Delete(string transformName);
-        Task DeleteAsync(string transformName);
-        TransformSchema Get(string transformName);
-        Task<TransformSchema> GetAsync(string transformName);
+        /// <summary>
+        /// Retrieves a list of transforms for the subscription.
+        /// </summary>
+        /// <returns></returns>
         List<TransformSchema> List();
+
+        /// <summary>
+        /// Retrieves a list of transforms for the subscription.
+        /// </summary>
+        /// <returns></returns>
         Task<List<TransformSchema>> ListAsync();
+
+        /// <summary>
+        /// Delete a Transform.
+        /// </summary>
+        /// <param name="transformName"></param>
+        void Delete(string transformName);
+
+        /// <summary>
+        /// Delete a Transform.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <returns></returns>
+        Task DeleteAsync(string transformName);
+
+        /// <summary>
+        /// Get a Transform by name.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <returns></returns>
+        TransformSchema Get(string transformName);
+
+        /// <summary>
+        /// Get a Transform by name.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <returns></returns>
+        Task<TransformSchema> GetAsync(string transformName);
+
+        /// <summary>
+        /// Create or Update a new Transform.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <param name="properties"></param>
+        /// <returns></returns>
+        TransformSchema CreateOrUpdate(string transformName, TransformProperties properties);
+
+        /// <summary>
+        /// Create or Update a new Transform.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <param name="properties"></param>
+        /// <returns></returns>
+        Task<TransformSchema> CreateOrUpdateAsync(string transformName, TransformProperties properties);
     }
 }

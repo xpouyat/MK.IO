@@ -45,12 +45,14 @@ namespace MK.IO
             Client = client;
         }
 
+        /// <inheritdoc/>
         public List<JobSchema> ListAll()
         {
             var task = Task.Run<List<JobSchema>>(async () => await ListAllAsync());
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<List<JobSchema>> ListAllAsync()
         {
             var url = Client.GenerateApiUrl(AllJobsApiUrl);
@@ -58,12 +60,14 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings).Value;
         }
 
+        /// <inheritdoc/>
         public List<JobSchema> List(string transformName)
         {
             var task = Task.Run<List<JobSchema>>(async () => await ListAsync(transformName));
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<List<JobSchema>> ListAsync(string transformName)
         {
             var url = Client.GenerateApiUrl(JobsApiUrl, transformName);
@@ -71,12 +75,14 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings).Value;
         }
 
+        /// <inheritdoc/>
         public JobSchema Get(string transformName, string jobName)
         {
             var task = Task.Run<JobSchema>(async () => await GetAsync(transformName, jobName));
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<JobSchema> GetAsync(string transformName, string jobName)
         {
             var url = Client.GenerateApiUrl(JobApiUrl, transformName, jobName);
@@ -84,13 +90,15 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings);
         }
 
-        public JobSchema Create(string transformName, string jobName, JobProperties properties)
+        /// <inheritdoc/>
+        public JobSchema Create(string jobName, string transformName, JobProperties properties)
         {
             var task = Task.Run<JobSchema>(async () => await CreateAsync(transformName, jobName, properties));
             return task.GetAwaiter().GetResult();
         }
 
-        public async Task<JobSchema> CreateAsync(string transformName, string jobName, JobProperties properties)
+        /// <inheritdoc/>
+        public async Task<JobSchema> CreateAsync(string jobName, string transformName,  JobProperties properties)
         {
             var url = Client.GenerateApiUrl(JobApiUrl, transformName, jobName);
             // fix to make sure Odattype is set as we use the generated class
@@ -104,22 +112,26 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings);
         }
 
+        /// <inheritdoc/>
         public void Cancel(string transformName, string jobName)
         {
             Task.Run(async () => await CancelAsync(transformName, jobName));
         }
 
+        /// <inheritdoc/>
         public async Task CancelAsync(string transformName, string jobName)
         {
             var url = Client.GenerateApiUrl(JobApiUrl + "/cancelJob", transformName, jobName);
             await Client.ObjectContentAsync(url, HttpMethod.Post);
         }
 
+        /// <inheritdoc/>
         public void Delete(string transformName, string jobName)
         {
             Task.Run(async () => await DeleteAsync(transformName, jobName));
         }
 
+        /// <inheritdoc/>
         public async Task DeleteAsync(string transformName, string jobName)
         {
             var url = Client.GenerateApiUrl(JobApiUrl, transformName, jobName);

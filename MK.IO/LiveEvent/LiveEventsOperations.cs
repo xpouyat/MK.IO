@@ -43,12 +43,14 @@ namespace MK.IO
             Client = client;
         }
 
+        /// <inheritdoc/>
         public List<LiveEventSchema> List()
         {
             var task = Task.Run<List<LiveEventSchema>>(async () => await ListAsync());
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<List<LiveEventSchema>> ListAsync()
         {
             var url = Client.GenerateApiUrl(LiveEventsApiUrl);
@@ -57,12 +59,14 @@ namespace MK.IO
 
         }
 
+        /// <inheritdoc/>
         public LiveEventSchema Get(string liveEventName)
         {
             var task = Task.Run<LiveEventSchema>(async () => await GetAsync(liveEventName));
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<LiveEventSchema> GetAsync(string liveEventName)
         {
             var url = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
@@ -70,12 +74,14 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
         }
 
+        /// <inheritdoc/>
         public LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null)
         {
             var task = Task.Run<LiveEventSchema>(async () => await CreateAsync(liveEventName, location, properties, tags));
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags)
         {
             var url = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
@@ -88,22 +94,26 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
         }
 
+        /// <inheritdoc/>
         public void Delete(string liveEventName)
         {
             Task.Run(async () => await DeleteAsync(liveEventName));
         }
 
+        /// <inheritdoc/>
         public async Task DeleteAsync(string liveEventName)
         {
             var url = Client.GenerateApiUrl(LiveEventApiUrl, liveEventName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
 
+        /// <inheritdoc/>
         public void Start(string liveEventName)
         {
             Task.Run(async () => await StartAsync(liveEventName));
         }
 
+        /// <inheritdoc/>
         public async Task StartAsync(string liveEventName)
         {
             await LiveEventOperationAsync(liveEventName, "start", HttpMethod.Post);
@@ -114,26 +124,31 @@ namespace MK.IO
             Task.Run(async () => await StopAsync(liveEventName));
         }
 
+        /// <inheritdoc/>
         public async Task StopAsync(string liveEventName)
         {
             await LiveEventOperationAsync(liveEventName, "stop", HttpMethod.Post);
         }
 
+        /// <inheritdoc/>
         public void Reset(string liveEventName)
         {
             Task.Run(async () => await ResetAsync(liveEventName));
         }
 
+        /// <inheritdoc/>
         public async Task ResetAsync(string liveEventName)
         {
             await LiveEventOperationAsync(liveEventName, "reset", HttpMethod.Post);
         }
 
+        /// <inheritdoc/>
         public void Allocate(string liveEventName)
         {
             Task.Run(async () => await AllocateAsync(liveEventName));
         }
 
+        /// <inheritdoc/>
         public async Task AllocateAsync(string liveEventName)
         {
             await LiveEventOperationAsync(liveEventName, "allocate", HttpMethod.Post);

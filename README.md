@@ -103,7 +103,7 @@ do
 var mkasset = client.Assets.Get("mmyassetname");
 
 // create asset
-var newasset = client.Assets.CreateOrUpdate("asset-33adc1873f", new Asset("asset-67c25a02-a672-40cd-a4da-dcc48b89acae", "description of asset", "storagename"));
+var newasset = client.Assets.CreateOrUpdate(MKIOClient.GenerateUniqueName("asset"), new Asset("asset-67c25a02-a672-40cd-a4da-dcc48b89acae", "description of asset", "storagename"));
 
 // delete asset
 MKIOClient.Assets.Delete("asset-33adc1873f");
@@ -152,7 +152,7 @@ var mklocators = client.StreamingLocators.List();
 var mklocator1 = client.StreamingLocators.Get("locator-25452");
 
 var mklocator2 = client.StreamingLocators.Create(
-                locatorName,
+                MKIOClient.GenerateUniqueName("locator"),
                 new StreamingLocatorProperties
                 {
                     AssetName = "copy-ef2058b692",
@@ -171,7 +171,7 @@ var cks = client.ContentKeyPolicies.List();
 client.ContentKeyPolicies.Delete("testpolcreate");
 
 var newpol = client.ContentKeyPolicies.Create(
-                "testpolcreate",
+                MKIOClient.GenerateUniqueName("ckpolicy"),
                 new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
                 {
                     new ContentKeyPolicyOption(
@@ -213,7 +213,7 @@ var jobs = client.Jobs.ListAll();
 // create output asset
 var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
 // create a job with the output asset created and with an asset as a source
-var newJob = client.Jobs.Create("simpletransform", "testjob2", new JobProperties
+var newJob = client.Jobs.Create( MKIOClient.GenerateUniqueName("job"), "simpletransform", new JobProperties
     {
         Description = "My job",
         Priority = "Normal",
@@ -233,7 +233,7 @@ var newJob = client.Jobs.Create("simpletransform", "testjob2", new JobProperties
     );
 
 // with http source as a source
-var newJobH = client.Jobs.Create("simple", "testjob3", new JobProperties
+var newJobH = client.Jobs.Create(MKIOClient.GenerateUniqueName("job"), "simple", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -269,7 +269,7 @@ client.Jobs.Delete("simpletransform", "testjob1");
 var list_le = client.LiveEvents.List();
 
 // Creation
-var le = client.LiveEvents.Create("liveevent4", "francecentral", new LiveEventProperties
+var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveevent"), "francecentral", new LiveEventProperties
 {
     Input = new LiveEventInput { StreamingProtocol = "RTMP" },
     StreamOptions = new List<string> { "Default" },

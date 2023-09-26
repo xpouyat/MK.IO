@@ -45,12 +45,14 @@ namespace MK.IO
             Client = client;
         }
 
+        /// <inheritdoc/>
         public StorageResponseSchema Create(StorageRequestSchema storage)
         {
             var task = Task.Run<StorageResponseSchema>(async () => await CreateAsync(storage));
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<StorageResponseSchema> CreateAsync(StorageRequestSchema storage)
         {
             storage.Spec.Type = "Microsoft.Storage"; // needed
@@ -59,12 +61,14 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings);
         }
 
+        /// <inheritdoc/>
         public List<StorageResponseSchema> List()
         {
             var task = Task.Run<List<StorageResponseSchema>>(async () => await ListAsync());
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<List<StorageResponseSchema>> ListAsync()
         {
             var url = GenerateStorageApiUrl(storageApiUrl);
@@ -72,12 +76,14 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<StorageListResponseSchema>(responseContent, ConverterLE.Settings).Items;
         }
 
+        /// <inheritdoc/>
         public StorageResponseSchema Get(Guid storageAccountId)
         {
             var task = Task.Run<StorageResponseSchema>(async () => await GetAsync(storageAccountId));
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<StorageResponseSchema> GetAsync(Guid storageAccountId)
         {
             var url = GenerateStorageApiUrl(storageSelectionApiUrl, storageAccountId.ToString());
@@ -85,22 +91,26 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings);
         }
 
+        /// <inheritdoc/>
         public void Delete(Guid storageAccountId)
         {
             Task.Run(async () => await DeleteAsync(storageAccountId));
         }
 
+        /// <inheritdoc/>
         public async Task DeleteAsync(Guid storageAccountId)
         {
             await StorageAccountOperationAsync(storageAccountId, HttpMethod.Delete);
         }
 
+        /// <inheritdoc/>
         public List<CredentialResponseSchema> ListCredentials(Guid storageAccountId)
         {
             var task = Task.Run<List<CredentialResponseSchema>>(async () => await ListCredentialsAsync(storageAccountId));
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<List<CredentialResponseSchema>> ListCredentialsAsync(Guid storageAccountId)
         {
             var url = GenerateStorageApiUrl(storageListCredentialsApiUrl, storageAccountId.ToString());
@@ -108,12 +118,14 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<CredentialListReponseSchema>(responseContent, ConverterLE.Settings).Items;
         }
 
+        /// <inheritdoc/>
         public CredentialResponseSchema GetCredential(Guid storageAccountId, Guid credentialId)
         {
             var task = Task.Run<CredentialResponseSchema>(async () => await GetCredentialAsync(storageAccountId, credentialId));
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<CredentialResponseSchema> GetCredentialAsync(Guid storageAccountId, Guid credentialId)
         {
             var url = GenerateStorageApiUrl(storageCredentialApiUrl, storageAccountId.ToString(), credentialId.ToString());
