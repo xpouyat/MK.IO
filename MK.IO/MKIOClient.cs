@@ -14,7 +14,7 @@ namespace MK.IO
     /// https://io.mediakind.com
     /// 
     /// </summary>
-    public partial class MKIOClient : IMKIOClient
+    public class MKIOClient : IMKIOClient
     {
         internal readonly string _baseUrl = "https://api.io.mediakind.com/";
         internal const string _allJobsApiUrl = "api/ams/{0}/jobs";

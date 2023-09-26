@@ -12,13 +12,44 @@ namespace MK.IO
     /// </summary>
     public interface IMKIOClient
     {
+        /// <summary>
+        /// Gets the ISubscriptionOperations.
+        /// </summary>
         ISubscriptionOperations Subscription { get; }
+
+        /// <summary>
+        /// Gets the IAssetsOperations.
+        /// </summary>
         IAssetsOperations Assets { get; }
+
+        /// <summary>
+        /// Gets the ILiveEventsOperations.
+        /// </summary>
         ILiveEventsOperations LiveEvents { get; }
+
+        /// <summary>
+        /// Gets the IJobsOperations.
+        /// </summary>
         IJobsOperations Jobs { get; }
+
+        /// <summary>
+        /// Gets the IStreamingEndpointsOperations.
+        /// </summary>
         IStreamingEndpointsOperations StreamingEndpoints { get; }
+
+        /// <summary>
+        /// Gets the ITransformsOperations.
+        /// </summary>
         ITransformsOperations Transforms { get; }
+
+        /// <summary>
+        /// Gets the IStreamingLocatorsOperations.
+        /// </summary>
         IStreamingLocatorsOperations StreamingLocators { get; }
+
+        /// <summary>
+        /// Gets the IContentKeyPoliciesOperations.
+        /// </summary>
         IContentKeyPoliciesOperations ContentKeyPolicies { get; }
     }
 }

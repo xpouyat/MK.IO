@@ -8,4 +8,4 @@ In TransformOutput.cs, public OneOfTransformOutputPreset Preset { get; set; } ch
 In JobProperties.cs, public OneOfJobPropertiesInput Input { get; set; } changed to public JobInput Input { get; set; }
 In JobProperties.cs, public OneOfJobPropertiesInput Input { get; set; } changed to public JobInput Input { get; set; }
 
-Deleted : OneOfTransformOutputPreset.cs, BuiltInStandardEncoderPreset.cs, JobInputAsset.cs, JobInputHttp.cs
+Deleted : OneOfTransformOutputPreset.cs, BuiltInStandardEncoderPreset.cs, JobInputAsset.cs, JobInputHttp.cs, ContentKeyPolicyOption

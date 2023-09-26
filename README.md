@@ -72,16 +72,16 @@ var storage = client.StorageAccounts.Create(new StorageRequestSchema
 var storages = client.StorageAccounts.List();
 
 // Get
-var storage2 = client.StorageAccounts.Get(storages.First().Metadata.Id);
+var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
 
 // Delete
-client.StorageAccounts.Delete(storages.First().Metadata.Id);
+client.StorageAccounts.Delete((Guid)storages.First().Metadata.Id);
 
 // List credentials of a storage
 var credentials = client.StorageAccounts.ListCredentials((Guid)storages.First().Metadata.Id);
 
 // Get specific credential
-var credential = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
+var credential = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)credentials.First().Metadata.Id);
 
 
 // *****************
@@ -103,10 +103,10 @@ do
 var mkasset = client.Assets.Get("mmyassetname");
 
 // create asset
-var newasset = client.Assets.CreateOrUpdate(MKIOClient.GenerateUniqueName("asset"), new Asset("asset-67c25a02-a672-40cd-a4da-dcc48b89acae", "description of asset", "storagename"));
+var newasset = client.Assets.CreateOrUpdate(MKIOClient.GenerateUniqueName("asset"), "asset-67c25a02-a672-40cd-a4da-dcc48b89acae", "description of asset", "storagename");
 
 // delete asset
-MKIOClient.Assets.Delete("asset-33adc1873f");
+client.Assets.Delete("asset-33adc1873f");
 
 // get streaming locators for asset
 var locatorsAsset = client.Assets.ListStreamingLocators("copy-1b510ee166");
@@ -166,7 +166,7 @@ var pathsl = client.StreamingLocators.ListUrlPaths("locator-25452");
 // content key policy operations
 // ******************************
 
-var ck = await client.ContentKeyPolicies.Get("testpol1");
+var ck = client.ContentKeyPolicies.Get("testpol1");
 var cks = client.ContentKeyPolicies.List();
 client.ContentKeyPolicies.Delete("testpolcreate");
 
@@ -193,7 +193,7 @@ var newpol = client.ContentKeyPolicies.Create(
 // *********************
 
 // Create a transform
-var tranform = client.Transforms.Create("simpletransform", new TransformProperties
+var transform = client.Transforms.CreateOrUpdate("simpletransform", new TransformProperties
             {
                 Description = "Encoding to 720p single bitrate",
                 Outputs = new List<TransformOutput>() {
