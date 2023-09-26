@@ -53,13 +53,51 @@ namespace Sample
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
 
+            // **************************
+            // account filter operations
+            // **************************
+
+            var acfilters = client.AccountFilters.List();
+
+            var filter = client.AccountFilters.CreateOrUpdate("filter7", new MediaFilterProperties
+            {
+                PresentationTimeRange = new PresentationTimeRange
+                {
+                    Timescale = 10000000,
+                },
+                Tracks = new List<FilterTrackSelection>()
+                {
+
+                    new FilterTrackSelection
+                    {
+                        //TrackType = "Audio",
+                        TrackSelections = new List<FilterTrackPropertyCondition>()
+                        {
+                            new FilterTrackPropertyCondition
+                            {
+                                Property = "Language",
+                                Operation = "Equal",
+                                Value = "eng"
+                            },
+                            new FilterTrackPropertyCondition
+                            {
+                                Property = "Type",
+                                Operation = "Equal",
+                                Value = "Audio"
+                            }
+                        }
+                    }
+                }
+            });
+
+            client.AccountFilters.Delete("filter4");
 
             // **********************
             // live event operations
             // **********************
 
             var les = client.LiveEvents.List();
-            
+
             // client.LiveEvents.Delete("liveevent4");
 
             var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveEvent"), "francecentral", new LiveEventProperties
