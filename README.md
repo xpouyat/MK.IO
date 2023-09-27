@@ -163,7 +163,7 @@ Additional samples are available :
 
 - [live operations sample](SampleLiveOperations.md) 
 - [storage operations sample](SampleStorageOperations.md)
-- [transforma and job operations sample](SampleTransformAndJobOperations.md)
+- [transform and job operations sample](SampleTransformAndJobOperations.md)
 
 
 Async operations are also supported. For example :
