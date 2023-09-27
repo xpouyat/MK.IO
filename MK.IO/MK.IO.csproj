@@ -27,6 +27,9 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <None Include="..\SampleLiveOperations.md" Link="SampleLiveOperations.md" />
+    <None Include="..\SampleStorageOperations.md" Link="SampleStorageOperations.md" />
+    <None Include="..\SampleTransformAndJobOperations.md" Link="SampleTransformAndJobOperations.md" />
   </ItemGroup>
 
   <ItemGroup>
