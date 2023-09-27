@@ -22,14 +22,12 @@ namespace Sample
         {
             Console.WriteLine("Sample that operates MK/IO.");
 
-
             /* you need to add an appsettings.json file with the following content:
              {
                 "MKIOSubscriptionName": "yourMKIOsubscriptionname",
                 "MKIOToken": "yourMKIOtoken"
              }
             */
-
 
             // Build a config object, using env vars and JSON providers.
             IConfigurationRoot config = new ConfigurationBuilder()
@@ -38,7 +36,6 @@ namespace Sample
                 .Build();
 
             Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK/IO subscription.");
-
 
             // **********************
             // MK/IO Client creation
@@ -53,7 +50,120 @@ namespace Sample
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
 
-            var lista = await client.Assets.ListAsync();
+            // ************************
+            // asset filter operations
+            // ************************
+
+            var assetFilters = client.AssetFilters.List("liveoutput-c4debfe5");
+
+            var assetFilter1 = client.AssetFilters.Get("liveoutput-c4debfe5", assetFilters.First().Name);
+
+            var assetFilter = client.AssetFilters.CreateOrUpdate("liveoutput-c4debfe5", MKIOClient.GenerateUniqueName("filter"), new MediaFilterProperties
+            {
+                PresentationTimeRange = new PresentationTimeRange
+                {
+                    Timescale = 10000000,
+                },
+                Tracks = new List<FilterTrackSelection>()
+                {
+                    new FilterTrackSelection
+                    {
+                        TrackSelections = new List<FilterTrackPropertyCondition>()
+                        {
+                            new FilterTrackPropertyCondition
+                            {
+                                Property = "Language",
+                                Operation = "Equal",
+                                Value = "eng"
+                            },
+                            new FilterTrackPropertyCondition
+                            {
+                                Property = "Type",
+                                Operation = "Equal",
+                                Value = "Audio"
+                            }
+                        }
+                    }
+                }
+            });
+
+            client.AssetFilters.Delete("liveoutput-c4debfe5", assetFilter.Name);
+
+            // **************************
+            // account filter operations
+            // **************************
+
+            var acfilters = client.AccountFilters.List();
+
+            var filter = client.AccountFilters.CreateOrUpdate("filter7", new MediaFilterProperties
+            {
+                PresentationTimeRange = new PresentationTimeRange
+                {
+                    Timescale = 10000000,
+                },
+                Tracks = new List<FilterTrackSelection>()
+                {
+
+                    new FilterTrackSelection
+                    {
+                        //TrackType = "Audio",
+                        TrackSelections = new List<FilterTrackPropertyCondition>()
+                        {
+                            new FilterTrackPropertyCondition
+                            {
+                                Property = "Language",
+                                Operation = "Equal",
+                                Value = "eng"
+                            },
+                            new FilterTrackPropertyCondition
+                            {
+                                Property = "Type",
+                                Operation = "Equal",
+                                Value = "Audio"
+                            }
+                        }
+                    }
+                }
+            });
+
+            client.AccountFilters.Delete("filter4");
+
+            // **********************
+            // live event operations
+            // **********************
+
+            var les = client.LiveEvents.List();
+
+            // client.LiveEvents.Delete("liveevent4");
+
+            var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveEvent"), "francecentral", new LiveEventProperties
+            {
+                Input = new LiveEventInput { StreamingProtocol = "RTMP" },
+                StreamOptions = new List<string> { "Default" },
+                Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
+            });
+
+            // **********************
+            // live output operations
+            // **********************
+
+            // create live output asset
+            var nameasset = MKIOClient.GenerateUniqueName("liveoutput");
+            var loasset = client.Assets.CreateOrUpdate(nameasset, "asset-" + nameasset, config["StorageName"], "live output asset");
+
+            var lo = client.LiveOutputs.Create(le.Name, MKIOClient.GenerateUniqueName("liveOutput"), new LiveOutputProperties
+            {
+                ArchiveWindowLength = "PT5M",
+                AssetName = nameasset
+            });
+
+            // live outputs listing
+            var los = client.LiveOutputs.List(le.Name);
+
+            if (los.Count == 1)
+            {
+                var looo = client.LiveOutputs.Get(le.Name, los.First().Name);
+            }
 
             // *******************
             // storage operations
@@ -93,21 +203,6 @@ namespace Sample
             // client.StorageAccounts.Delete(storages.First().Metadata.Id);
 
 
-
-            // **********************
-            // live event operations
-            // **********************
-
-            var les = client.LiveEvents.List();
-
-            // client.LiveEvents.Delete("liveevent4");
-
-            var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveEvent"), "francecentral", new LiveEventProperties
-            {
-                Input = new LiveEventInput { StreamingProtocol = "RTMP" },
-                StreamOptions = new List<string> { "Default" },
-                Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
-            });
 
 
             // *****************
@@ -166,7 +261,7 @@ namespace Sample
             /*
             var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
 
-            client.Jobs.Create("testjob2", "simple", new JobProperties
+            client.Jobs.Create("simple", "testjob2", new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",
@@ -188,7 +283,7 @@ namespace Sample
 
             var outputAsset = client.Assets.CreateOrUpdate("outputasset-014", "asset-outputasset-014", config["StorageName"], "output asset for job");
 
-            var jobHttp = client.Jobs.Create(MKIOClient.GenerateUniqueName("job"), "simple", new JobProperties
+            var jobHttp = client.Jobs.Create("simple", MKIOClient.GenerateUniqueName("job"), new JobProperties
             {
                 Description = "My job",
                 Priority = "Normal",

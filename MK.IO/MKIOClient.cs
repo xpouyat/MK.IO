@@ -24,6 +24,7 @@ namespace MK.IO
         internal const string _liveEventsApiUrl = "api/ams/{0}/liveEvents";
         internal const string _contentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
         internal const string _streamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
+        internal const string _accountFiltersApiUrl = "api/ams/{0}/accountFilters"; 
 
         private readonly string _subscriptionName;
         private readonly string _apiToken;
@@ -68,11 +69,14 @@ namespace MK.IO
             StorageAccounts = new StorageAccountsOperations(this);
             Assets = new AssetsOperations(this);
             LiveEvents = new LiveEventsOperations(this);
+            LiveOutputs = new LiveOutputsOperations(this);
             Jobs = new JobsOperations(this);
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             Transforms = new TransformsOperations(this);
             StreamingLocators = new StreamingLocatorsOperations(this);
             ContentKeyPolicies = new ContentKeyPoliciesOperations(this);
+            AccountFilters = new AccountFiltersOperations(this);
+            AssetFilters = new AssetFiltersOperations(this);
         }
 
         /// <summary>
@@ -94,6 +98,11 @@ namespace MK.IO
         /// Gets the ILiveEventsOperations.
         /// </summary>
         public virtual ILiveEventsOperations LiveEvents { get; private set; }
+
+        /// <summary>
+        /// Gets the ILiveOutputsOperations.
+        /// </summary>
+        public virtual ILiveOutputsOperations LiveOutputs { get; private set; }
 
         /// <summary>
         /// Gets the IJobsOperations.
@@ -120,6 +129,15 @@ namespace MK.IO
         /// </summary>
         public virtual IContentKeyPoliciesOperations ContentKeyPolicies { get; private set; }
 
+        /// <summary>
+        /// Gets the IAccountFiltersOperations.
+        /// </summary>
+        public virtual IAccountFiltersOperations AccountFilters { get; private set; }
+
+        /// <summary>
+        /// Gets the IAssetFiltersOperations.
+        /// </summary>
+        public virtual IAssetFiltersOperations AssetFilters { get; private set; }
 
         internal string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
         {
@@ -210,7 +228,8 @@ namespace MK.IO
             {
                 if (message == null)
                 {
-                    throw new ApiException("Response was null which was not expected.", status_, null, null);
+                    // commented. In case of Account filter deletion, message is null, code 204. But all seems ok.
+                    //throw new ApiException("Response was null which was not expected.", status_, null, null);
                 }
             }
             else

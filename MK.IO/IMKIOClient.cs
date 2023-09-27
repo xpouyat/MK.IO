@@ -51,5 +51,10 @@ namespace MK.IO
         /// Gets the IContentKeyPoliciesOperations.
         /// </summary>
         IContentKeyPoliciesOperations ContentKeyPolicies { get; }
+
+        /// <summary>
+        /// Gets the IAccountFiltersOperations.
+        /// </summary>
+        IAccountFiltersOperations AccountFilters { get; }
     }
 }

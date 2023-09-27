@@ -19,6 +19,8 @@ This should provide you with your user_id and token. Note that this token is val
 Another way to get the token is to use [Fiddler](https://www.telerik.com/fiddler) when you connect to the MK/IO portal with your browser.
 It is displayed in the header as `x-mkio-token`. For example, you should see it on the second REST call to https://api.io.mediakind.com/api/ams/mkiosubscriptionname/stats/.
 
+For more information, please read this [article](https://support.mediakind.com/portal/en/kb/articles/how-to-use-mkio-apis-step-by-step).
+
 ### Supported operations
 
 In the current version, operations are supported for :
@@ -30,6 +32,9 @@ In the current version, operations are supported for :
 - Transforms
 - Jobs
 - Live events
+- Live outputs
+- Asset filters
+- Account filters
 
 ### Sample code
 
@@ -47,42 +52,6 @@ var profile = client.Subscription.GetUserInfo();
 
 // Get subscription stats
 var stats = client.Subscription.GetStats();
-
-// *******************
-// storage operations
-// *******************
-
-// Creation
-var storage = client.StorageAccounts.Create(new StorageRequestSchema
-            {
-                Spec = new StorageSchema
-                {
-                    Name = "amsxpfrstorage",
-                    Location = "francecentral",
-                    Description = "my description",
-                    AzureStorageConfiguration = new BlobStorageAzureProperties
-                    {
-                        Url = "https://insertyoursasuri"
-                    }
-                }
-            }
-            );
-
-// List
-var storages = client.StorageAccounts.List();
-
-// Get
-var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
-
-// Delete
-client.StorageAccounts.Delete((Guid)storages.First().Metadata.Id);
-
-// List credentials of a storage
-var credentials = client.StorageAccounts.ListCredentials((Guid)storages.First().Metadata.Id);
-
-// Get specific credential
-var credential = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)credentials.First().Metadata.Id);
-
 
 // *****************
 // asset operations
@@ -188,98 +157,14 @@ var newpol = client.ContentKeyPolicies.Create(
                 );
 
 
-// *********************
-// transform operations
-// *********************
-
-// Create a transform
-var transform = client.Transforms.CreateOrUpdate("simpletransform", new TransformProperties
-            {
-                Description = "Encoding to 720p single bitrate",
-                Outputs = new List<TransformOutput>() {
-                    new TransformOutput {
-                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720P),
-                        RelativePriority = "Normal" } }
-            });
-
-
-// ***************
-// job operations
-// ***************
-
-// list all jobs
-var jobs = client.Jobs.ListAll();
-
-// create output asset
-var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
-// create a job with the output asset created and with an asset as a source
-var newJob = client.Jobs.Create( MKIOClient.GenerateUniqueName("job"), "simpletransform", new JobProperties
-    {
-        Description = "My job",
-        Priority = "Normal",
-        Input = new JobInputAsset(
-            "copy-ef2058b692-copy",
-            new List<string> {
-                "switch_1920x1080_AACAudio_3677.mp4"
-            }),
-        Outputs = new List<JobOutputAsset>()
-        {
-            new JobOutputAsset()
-            {
-                AssetName="outputasset-012"
-            }
-        }
-    }
-    );
-
-// with http source as a source
-var newJobH = client.Jobs.Create(MKIOClient.GenerateUniqueName("job"), "simple", new JobProperties
-            {
-                Description = "My job",
-                Priority = "Normal",
-                Input = new JobInputHttp(
-                    null,
-                    new List<string> {
-                        "https://myurltovideofile.mp4"
-                    }),
-                Outputs = new List<JobOutputAsset>()
-                {
-                    new JobOutputAsset()
-                    {
-                        AssetName="outputasset-014"
-                    }
-                }
-            }
-            );
-
-// Get a job
-var job2 = client.Jobs.Get("simpletransform", "testjob1");
-
-// Cancel a job
-client.Jobs.Cancel("simpletransform", "testjob2");
-
-// Delete a job
-client.Jobs.Delete("simpletransform", "testjob1");
-
-
-// **********************
-// live event operations
-// **********************
-
-var list_le = client.LiveEvents.List();
-
-// Creation
-var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveevent"), "francecentral", new LiveEventProperties
-{
-    Input = new LiveEventInput { StreamingProtocol = "RTMP" },
-    StreamOptions = new List<string> { "Default" },
-    Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
-});
-
-// Delete
-client.LiveEvents.Delete("liveevent4");
-
 ```
+
+Additional samples are available :
+
+- [live operations sample](SampleLiveOperations.md) 
+- [storage operations sample](SampleStorageOperations.md)
+- [transform and job operations sample](SampleTransformAndJobOperations.md)
+
 
 Async operations are also supported. For example :
 
