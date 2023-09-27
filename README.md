@@ -75,7 +75,7 @@ var mkasset = client.Assets.Get("mmyassetname");
 var newasset = client.Assets.CreateOrUpdate(MKIOClient.GenerateUniqueName("asset"), "asset-67c25a02-a672-40cd-a4da-dcc48b89acae", "description of asset", "storagename");
 
 // delete asset
-client.Assets.Delete("asset-33adc1873f");
+client.Assets.Delete(newsasset.Name);
 
 // get streaming locators for asset
 var locatorsAsset = client.Assets.ListStreamingLocators("copy-1b510ee166");
@@ -161,9 +161,11 @@ var newpol = client.ContentKeyPolicies.Create(
 
 Additional samples are available :
 
-- [live operations sample](SampleLiveOperations.md) 
-- [storage operations sample](SampleStorageOperations.md)
-- [transform and job operations sample](SampleTransformAndJobOperations.md)
+- [live operations](SampleLiveOperations.md) 
+- [storage operations](SampleStorageOperations.md)
+- [transform and job operations](SampleTransformAndJobOperations.md)
+- [account filter and asset filter operations](SampleFilterOperations.md)
+- [content key policy and streaming locator operations](SampleContentKeyPolicyOperations.md)
 
 
 Async operations are also supported. For example :

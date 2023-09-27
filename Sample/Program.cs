@@ -232,7 +232,7 @@ namespace Sample
             // var newasset = client.Assets.CreateOrUpdate("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
 
             // delete asset
-            //client.Assets.Delete("asset-33adc1873f");
+            // client.Assets.Delete("asset-33adc1873f");
 
             // *********************
             // transform operations
