@@ -22,14 +22,12 @@ namespace Sample
         {
             Console.WriteLine("Sample that operates MK/IO.");
 
-
             /* you need to add an appsettings.json file with the following content:
              {
                 "MKIOSubscriptionName": "yourMKIOsubscriptionname",
                 "MKIOToken": "yourMKIOtoken"
              }
             */
-
 
             // Build a config object, using env vars and JSON providers.
             IConfigurationRoot config = new ConfigurationBuilder()
@@ -38,7 +36,6 @@ namespace Sample
                 .Build();
 
             Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK/IO subscription.");
-
 
             // **********************
             // MK/IO Client creation
@@ -52,6 +49,45 @@ namespace Sample
 
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
+
+            // ************************
+            // asset filter operations
+            // ************************
+
+            var assetFilters = client.AssetFilters.List("liveoutput-c4debfe5");
+
+            var assetFilter1 = client.AssetFilters.Get("liveoutput-c4debfe5", assetFilters.First().Name);
+
+            var assetFilter = client.AssetFilters.CreateOrUpdate("liveoutput-c4debfe5", MKIOClient.GenerateUniqueName("filter"), new MediaFilterProperties
+            {
+                PresentationTimeRange = new PresentationTimeRange
+                {
+                    Timescale = 10000000,
+                },
+                Tracks = new List<FilterTrackSelection>()
+                {
+                    new FilterTrackSelection
+                    {
+                        TrackSelections = new List<FilterTrackPropertyCondition>()
+                        {
+                            new FilterTrackPropertyCondition
+                            {
+                                Property = "Language",
+                                Operation = "Equal",
+                                Value = "eng"
+                            },
+                            new FilterTrackPropertyCondition
+                            {
+                                Property = "Type",
+                                Operation = "Equal",
+                                Value = "Audio"
+                            }
+                        }
+                    }
+                }
+            });
+
+            client.AssetFilters.Delete("liveoutput-c4debfe5", assetFilter.Name);
 
             // **************************
             // account filter operations

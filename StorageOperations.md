@@ -32,9 +32,6 @@ In the current version, operations are supported for :
 - Transforms
 - Jobs
 - Live events
-- Live outputs
-- Asset filters
-- Account filters
 
 ### Sample code
 
@@ -52,6 +49,42 @@ var profile = client.Subscription.GetUserInfo();
 
 // Get subscription stats
 var stats = client.Subscription.GetStats();
+
+// *******************
+// storage operations
+// *******************
+
+// Creation
+var storage = client.StorageAccounts.Create(new StorageRequestSchema
+            {
+                Spec = new StorageSchema
+                {
+                    Name = "amsxpfrstorage",
+                    Location = "francecentral",
+                    Description = "my description",
+                    AzureStorageConfiguration = new BlobStorageAzureProperties
+                    {
+                        Url = "https://insertyoursasuri"
+                    }
+                }
+            }
+            );
+
+// List
+var storages = client.StorageAccounts.List();
+
+// Get
+var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
+
+// Delete
+client.StorageAccounts.Delete((Guid)storages.First().Metadata.Id);
+
+// List credentials of a storage
+var credentials = client.StorageAccounts.ListCredentials((Guid)storages.First().Metadata.Id);
+
+// Get specific credential
+var credential = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)credentials.First().Metadata.Id);
+
 
 // *****************
 // asset operations
@@ -157,14 +190,116 @@ var newpol = client.ContentKeyPolicies.Create(
                 );
 
 
+// *********************
+// transform operations
+// *********************
+
+// Create a transform
+var transform = client.Transforms.CreateOrUpdate("simpletransform", new TransformProperties
+            {
+                Description = "Encoding to 720p single bitrate",
+                Outputs = new List<TransformOutput>() {
+                    new TransformOutput {
+                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720P),
+                        RelativePriority = "Normal" } }
+            });
+
+
+// ***************
+// job operations
+// ***************
+
+// list all jobs
+var jobs = client.Jobs.ListAll();
+
+// create output asset
+var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
+// create a job with the output asset created and with an asset as a source
+var newJob = client.Jobs.Create("simpletransform", MKIOClient.GenerateUniqueName("job"), new JobProperties
+    {
+        Description = "My job",
+        Priority = "Normal",
+        Input = new JobInputAsset(
+            "copy-ef2058b692-copy",
+            new List<string> {
+                "switch_1920x1080_AACAudio_3677.mp4"
+            }),
+        Outputs = new List<JobOutputAsset>()
+        {
+            new JobOutputAsset()
+            {
+                AssetName="outputasset-012"
+            }
+        }
+    }
+    );
+
+// with http source as a source
+var newJobH = client.Jobs.Create("simple", MKIOClient.GenerateUniqueName("job"), new JobProperties
+            {
+                Description = "My job",
+                Priority = "Normal",
+                Input = new JobInputHttp(
+                    null,
+                    new List<string> {
+                        "https://myurltovideofile.mp4"
+                    }),
+                Outputs = new List<JobOutputAsset>()
+                {
+                    new JobOutputAsset()
+                    {
+                        AssetName="outputasset-014"
+                    }
+                }
+            }
+            );
+
+// Get a job
+var job2 = client.Jobs.Get("simpletransform", "testjob1");
+
+// Cancel a job
+client.Jobs.Cancel("simpletransform", "testjob2");
+
+// Delete a job
+client.Jobs.Delete("simpletransform", "testjob1");
+
+
+// *********************************
+// live event and output operations
+// *********************************
+
+var list_le = client.LiveEvents.List();
+
+// Creation
+var liveEvent = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveevent"), "francecentral", new LiveEventProperties
+{
+    Input = new LiveEventInput { StreamingProtocol = "RTMP" },
+    StreamOptions = new List<string> { "Default" },
+    Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
+});
+
+// create live output asset
+var nameOutputAsset = MKIOClient.GenerateUniqueName("liveoutput");
+var liveOutputAsset = client.Assets.CreateOrUpdate(nameOutputAsset, "asset-" + nameOutputAsset, config["StorageName"], "live output asset");
+
+var lo = client.LiveOutputs.Create(liveEvent.Name, MKIOClient.GenerateUniqueName("liveOutput"), new LiveOutputProperties
+{
+    ArchiveWindowLength = "PT5M",
+    AssetName = nameOutputAsset
+});
+
+// live outputs listing for this live event
+var liveOutputs = client.LiveOutputs.List(liveEvent.Name);
+
+if (liveOutputs.Count == 1)
+{
+    var looo = client.LiveOutputs.Get(le.Name, liveOutputs.First().Name);
+}
+
+// Delete
+client.LiveEvents.Delete("liveevent4");
+
 ```
-
-Additional samples are available :
-
-- [live operations sample](SampleLiveOperations.md) 
-- [storage operations sample](SampleStorageOperations.md)
-- [transforma and job operations sample](SampleTransformAndJobOperations.md)
-
 
 Async operations are also supported. For example :
 

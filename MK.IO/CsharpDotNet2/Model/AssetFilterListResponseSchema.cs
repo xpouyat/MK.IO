@@ -15,9 +15,9 @@ namespace MK.IO.Models
         /// A list of asset filters
         /// </summary>
         /// <value>A list of asset filters</value>
-        [DataMember(Name = "value", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "value")]
-        public List<AssetFilterSchema> Value { get; set; }
+        [DataMember(Name = "filters", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "filters")]
+        public List<AssetFilterSchema> Filters { get; set; }
 
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace MK.IO.Models
         {
             var sb = new StringBuilder();
             sb.Append("class AssetFilterListResponseSchema {\n");
-            sb.Append("  Value: ").Append(Value).Append("\n");
+            sb.Append("  Value: ").Append(Filters).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

@@ -8,6 +8,6 @@ In TransformOutput.cs, public OneOfTransformOutputPreset Preset { get; set; } ch
 In JobProperties.cs, public OneOfJobPropertiesInput Input { get; set; } changed to public JobInput Input { get; set; }
 In JobProperties.cs, public OneOfJobPropertiesInput Input { get; set; } changed to public JobInput Input { get; set; }
 In AccountFilterSchema, ID changed to List<string>
-In AccountFilterListResponseSchema, Value changed to Filters
+In AccountFilterListResponseSchema and AssetFilterListResponseSchema, Value changed to Filters
 
 Deleted : OneOfTransformOutputPreset.cs, BuiltInStandardEncoderPreset.cs, JobInputAsset.cs, JobInputHttp.cs, ContentKeyPolicyOption
