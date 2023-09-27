@@ -111,52 +111,6 @@ var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentra
 client.StreamingEndpoints.Start("streamingendpoint1");
 client.StreamingEndpoints.Stop("streamingendpoint1");
 client.StreamingEndpoints.Delete("streamingendpoint2");
-
-
-// ******************************
-// Streaming locator operations
-// ******************************
-
-var mklocators = client.StreamingLocators.List();
-var mklocator1 = client.StreamingLocators.Get("locator-25452");
-
-var mklocator2 = client.StreamingLocators.Create(
-                MKIOClient.GenerateUniqueName("locator"),
-                new StreamingLocatorProperties
-                {
-                    AssetName = "copy-ef2058b692",
-                    StreamingPolicyName = "Predefined_ClearStreamingOnly"
-                });
-
-var pathsl = client.StreamingLocators.ListUrlPaths("locator-25452");
-
-
-// ******************************
-// content key policy operations
-// ******************************
-
-var ck = client.ContentKeyPolicies.Get("testpol1");
-var cks = client.ContentKeyPolicies.List();
-client.ContentKeyPolicies.Delete("testpolcreate");
-
-var newpol = client.ContentKeyPolicies.Create(
-                MKIOClient.GenerateUniqueName("ckpolicy"),
-                new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
-                {
-                    new ContentKeyPolicyOption(
-                        "option1",
-                        new ContentKeyPolicyConfigurationWidevine("{}"),
-                        new ContentKeyPolicyTokenRestriction(
-                            "issuer",
-                            "audience",
-                            "Jwt",
-                            new ContentKeyPolicySymmetricTokenKey(key)
-                            )
-                        )
-                })
-                );
-
-
 ```
 
 Additional samples are available :
