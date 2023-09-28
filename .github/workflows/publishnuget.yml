@@ -58,7 +58,7 @@ jobs:
     # Publish only when creating a GitHub Release
     # https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
     # You can update this logic if you want to manage releases differently
-    # if: github.event_name == 'release'
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     needs: [ run_test ]
     steps:
@@ -78,5 +78,5 @@ jobs:
       - name: Publish NuGet package
         run: |
           foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://int.nugettest.org/ --skip-duplicate
+              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
           }
