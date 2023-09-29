@@ -141,15 +141,15 @@ namespace MK.IO
 
         internal string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
         {
-            return _baseUrl + string.Format(urlPath, _subscriptionName, objectName1, objectName2);
+            return _baseUrl + string.Format(urlPath, HttpUtility.UrlEncode(_subscriptionName), HttpUtility.UrlEncode(objectName1), HttpUtility.UrlEncode(objectName2));
         }
         internal string GenerateApiUrl(string urlPath, string objectName)
         {
-            return _baseUrl + string.Format(urlPath, _subscriptionName, objectName);
+            return _baseUrl + string.Format(urlPath, HttpUtility.UrlEncode(_subscriptionName), HttpUtility.UrlEncode(objectName));
         }
         internal string GenerateApiUrl(string urlPath)
         {
-            return _baseUrl + string.Format(urlPath, _subscriptionName);
+            return _baseUrl + string.Format(urlPath, HttpUtility.UrlEncode(_subscriptionName));
         }
 
         internal async Task<string> GetObjectContentAsync(string url)
