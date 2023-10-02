@@ -4,6 +4,7 @@
 using Microsoft.Extensions.Configuration;
 using MK.IO;
 using MK.IO.Models;
+using System;
 using System.Security.Cryptography;
 
 namespace Sample
@@ -45,7 +46,16 @@ namespace Sample
 
             MKIOClient.GenerateUniqueName("asset");
 
-            //var profile = client.Subscription.GetUserInfo();
+            try
+            {
+                var profile = client.Subscription.GetUserInfo();
+            }
+            catch (ApiException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Environment.Exit(0);
+            }
+           
 
             // Get subscription stats
             //var stats = client.Subscription.GetStats();

@@ -79,6 +79,5 @@ private static string GenerateSymKeyAsBase64()
     rng.GetBytes(TokenSigningKey);
     return Convert.ToBase64String(TokenSigningKey);
 }
-            
 
 ```

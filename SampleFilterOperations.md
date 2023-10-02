@@ -55,7 +55,7 @@ client.AssetFilters.Delete("liveoutput-c4debfe5", assetFilter.Name);
 
 var acfilters = client.AccountFilters.List();
 
-var filter = client.AccountFilters.CreateOrUpdate("filter7", new MediaFilterProperties
+var filter = client.AccountFilters.CreateOrUpdate("filter123", new MediaFilterProperties
 {
     PresentationTimeRange = new PresentationTimeRange
     {
@@ -86,6 +86,6 @@ var filter = client.AccountFilters.CreateOrUpdate("filter7", new MediaFilterProp
     }
 });
 
-client.AccountFilters.Delete("filter4");
+client.AccountFilters.Delete("filter123");
 
 ```

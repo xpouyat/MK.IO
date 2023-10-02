@@ -33,7 +33,8 @@ var transform = client.Transforms.CreateOrUpdate("simpletransform", new Transfor
 var jobs = client.Jobs.ListAll();
 
 // create output asset
-var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
+var outputAssetName = MKIOClient.GenerateUniqueName("asset");
+var outputAsset = client.Assets.CreateOrUpdate(outputAssetName, outputAssetName, config["StorageName"], "output asset for job");
 // create a job with the output asset created and with an asset as a source
 var newJob = client.Jobs.Create("simpletransform", MKIOClient.GenerateUniqueName("job"), new JobProperties
     {
@@ -48,7 +49,7 @@ var newJob = client.Jobs.Create("simpletransform", MKIOClient.GenerateUniqueName
         {
             new JobOutputAsset()
             {
-                AssetName="outputasset-012"
+                AssetName = outputAssetName
             }
         }
     }
@@ -56,23 +57,23 @@ var newJob = client.Jobs.Create("simpletransform", MKIOClient.GenerateUniqueName
 
 // with http source as a source
 var newJobH = client.Jobs.Create("simple", MKIOClient.GenerateUniqueName("job"), new JobProperties
+    {
+        Description = "My job",
+        Priority = "Normal",
+        Input = new JobInputHttp(
+            null,
+            new List<string> {
+                "https://myurltovideofile.mp4"
+            }),
+        Outputs = new List<JobOutputAsset>()
+        {
+            new JobOutputAsset()
             {
-                Description = "My job",
-                Priority = "Normal",
-                Input = new JobInputHttp(
-                    null,
-                    new List<string> {
-                        "https://myurltovideofile.mp4"
-                    }),
-                Outputs = new List<JobOutputAsset>()
-                {
-                    new JobOutputAsset()
-                    {
-                        AssetName="outputasset-014"
-                    }
-                }
+                AssetName = outputAssetName
             }
-            );
+        }
+    }
+    );
 
 // Get a job
 var job2 = client.Jobs.Get("simpletransform", "testjob1");

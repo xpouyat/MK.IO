@@ -11,9 +11,10 @@ A client library for [MediaKind MK/IO](https://io.mediakind.com/).
 You need the MK/IO API token `mkiotoken` to connect to the API.
 
 To do so,
+
 1. Open a web browser and log into https://io.mediakind.com (sign in with Microsoft SSO).
 1. Once you are logged in, open a second tab on the same browser and open this link in the new tab: https://api.io.mediakind.com/auth/token/
- 
+
 This should provide you with your user_id and token. Note that this token is valid for 1 year.
 
 Another way to get the token is to use [Fiddler](https://www.telerik.com/fiddler) when you connect to the MK/IO portal with your browser.
@@ -24,6 +25,7 @@ For more information, please read this [article](https://support.mediakind.com/p
 ### Supported operations
 
 In the current version, operations are supported for :
+
 - Assets
 - Streaming endpoints
 - Streaming locators
@@ -168,4 +170,3 @@ await client.StreamingEndpoints.StopAsync("streamingendpoint1");
 await client.StreamingEndpoints.DeleteAsync("streamingendpoint2");
 
 ```
-
