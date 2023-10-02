@@ -79,64 +79,40 @@ namespace MK.IO
             AssetFilters = new AssetFiltersOperations(this);
         }
 
-        /// <summary>
-        /// Gets the IAccountOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual ISubscriptionOperations Subscription { get; private set; }
 
-        /// <summary>
-        /// Gets the IStorageAccountsOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
 
-        /// <summary>
-        /// Gets the IAssetsOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual IAssetsOperations Assets { get; private set; }
 
-        /// <summary>
-        /// Gets the ILiveEventsOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual ILiveEventsOperations LiveEvents { get; private set; }
 
-        /// <summary>
-        /// Gets the ILiveOutputsOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual ILiveOutputsOperations LiveOutputs { get; private set; }
 
-        /// <summary>
-        /// Gets the IJobsOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual IJobsOperations Jobs { get; private set; }
 
-        /// <summary>
-        /// Gets the IStreamingEndpointsOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual IStreamingEndpointsOperations StreamingEndpoints { get; private set; }
 
-        /// <summary>
-        /// Gets the ITransformsOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual ITransformsOperations Transforms { get; private set; }
 
-        /// <summary>
-        /// Gets the IStreamingLocatorsOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual IStreamingLocatorsOperations StreamingLocators { get; private set; }
 
-        /// <summary>
-        /// Gets the IContentKeyPoliciesOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual IContentKeyPoliciesOperations ContentKeyPolicies { get; private set; }
 
-        /// <summary>
-        /// Gets the IAccountFiltersOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual IAccountFiltersOperations AccountFilters { get; private set; }
 
-        /// <summary>
-        /// Gets the IAssetFiltersOperations.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual IAssetFiltersOperations AssetFilters { get; private set; }
 
         internal string GenerateApiUrl(string urlPath, string objectName1, string objectName2)

@@ -4,6 +4,7 @@
 using Microsoft.Extensions.Configuration;
 using MK.IO;
 using MK.IO.Models;
+using System;
 using System.Security.Cryptography;
 
 namespace Sample
@@ -45,7 +46,16 @@ namespace Sample
 
             MKIOClient.GenerateUniqueName("asset");
 
-            //var profile = client.Subscription.GetUserInfo();
+            try
+            {
+                var profile = client.Subscription.GetUserInfo();
+            }
+            catch (ApiException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Environment.Exit(0);
+            }
+           
 
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
@@ -232,7 +242,7 @@ namespace Sample
             // var newasset = client.Assets.CreateOrUpdate("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
 
             // delete asset
-            //client.Assets.Delete("asset-33adc1873f");
+            // client.Assets.Delete("asset-33adc1873f");
 
             // *********************
             // transform operations

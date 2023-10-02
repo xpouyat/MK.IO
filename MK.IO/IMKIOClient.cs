@@ -56,5 +56,10 @@ namespace MK.IO
         /// Gets the IAccountFiltersOperations.
         /// </summary>
         IAccountFiltersOperations AccountFilters { get; }
+
+        /// <summary>
+        /// Gets the IAccountFiltersOperations.
+        /// </summary>
+        IAssetFiltersOperations AssetFilters { get; }
     }
 }

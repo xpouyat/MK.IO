@@ -11,7 +11,7 @@ namespace MK.IO
     internal class SubscriptionOperations : ISubscriptionOperations
     {
         //
-        // account
+        // subscription operations
         //
         private const string _accountProfileApiUrl = "api/profile";
         private const string _accountStatsApiUrl = "api/ams/{0}/stats";
@@ -35,12 +35,14 @@ namespace MK.IO
             Client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
+        /// <inheritdoc/>
         public AccountStats GetStats()
         {
             Task<AccountStats> task = Task.Run<AccountStats>(async () => await GetStatsAsync());
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<AccountStats> GetStatsAsync()
         {
             var url = Client.GenerateApiUrl(_accountStatsApiUrl);
@@ -48,12 +50,14 @@ namespace MK.IO
             return AccountStats.FromJson(responseContent);
         }
 
+        /// <inheritdoc/>
         public UserInfo GetUserInfo()
         {
             Task<UserInfo> task = Task.Run<UserInfo>(async () => await GetUserInfoAsync());
             return task.GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc/>
         public async Task<UserInfo> GetUserInfoAsync()
         {
             string responseContent = await Client.GetObjectContentAsync(Client._baseUrl + _accountProfileApiUrl);
