@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>The id of the account filter</value>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "id")]
-        public List<string> Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// The name of the account filter
