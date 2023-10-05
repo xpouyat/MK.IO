@@ -24,7 +24,7 @@ namespace MK.IO
         internal const string _liveEventsApiUrl = "api/ams/{0}/liveEvents";
         internal const string _contentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
         internal const string _streamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
-        internal const string _accountFiltersApiUrl = "api/ams/{0}/accountFilters"; 
+        internal const string _accountFiltersApiUrl = "api/ams/{0}/accountFilters";
 
         private readonly string _subscriptionName;
         private readonly string _apiToken;
@@ -216,7 +216,7 @@ namespace MK.IO
             else
             {
                 string? errorDetail = null;
-                if (message!= null && message.ContainsKey("error"))
+                if (message != null && message.ContainsKey("error"))
                 {
                     try
                     {

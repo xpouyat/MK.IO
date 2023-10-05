@@ -4,7 +4,6 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
-using System.Net;
 
 namespace MK.IO
 {
@@ -189,6 +188,6 @@ namespace MK.IO
             return Client._baseUrl + string.Format(urlPath, Client.GetCustomerId(), Client.GetSubscriptionId(), objectName, objectName2);
         }
 
-      
+
     }
 }

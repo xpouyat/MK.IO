@@ -1,6 +1,5 @@
 ﻿using MK.IO.Models;
 using Newtonsoft.Json;
-using System.Web;
 
 namespace MK.IO.Asset
 {
@@ -70,7 +69,7 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task<AssetFilterSchema> CreateOrUpdateAsync(string assetName, string filterName, MediaFilterProperties properties)
         {
-            var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName,filterName);
+            var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);
             AssetFilterSchema content = new()
             {
                 //Name = assetFilterName,

@@ -15,7 +15,7 @@ namespace MK.IO
         // Summary:
         //     Predefined Streaming Policy which supports download only
         public static readonly string DownloadOnly = "Predefined_DownloadOnly";
-    
+
         //
         // Summary:
         //     Predefined Streaming Policy which supports download and clear streaming

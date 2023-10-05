@@ -74,7 +74,7 @@ namespace Sample
 
             }
 
-           
+
 
             try
             {
@@ -105,7 +105,7 @@ namespace Sample
                         )
                 })
                 );
-            
+
             var ckpolprop = await client.ContentKeyPolicies.GetPolicyPropertiesWithSecretsAsync("testpolcreate");
 
 
@@ -148,7 +148,7 @@ namespace Sample
             var cred = client.StorageAccounts.CreateCredential((Guid)storage2.Metadata.Id, new CredentialSchema
             {
                 AzureCredential = new AzureCredential
-                { 
+                {
                     SasToken = "mySasToken"
                 }
             });
@@ -315,7 +315,7 @@ namespace Sample
                 var looo = client.LiveOutputs.Get(le.Name, los.First().Name);
             }
 
-          
+
 
 
 
