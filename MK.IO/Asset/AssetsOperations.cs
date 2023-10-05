@@ -63,7 +63,7 @@ namespace MK.IO.Asset
             string responseContent = await Client.GetObjectContentAsync(url);
 
             dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string?  nextPageLink = responseObject["@odata.nextLink"];
+            string? nextPageLink = responseObject["@odata.nextLink"];
 
             return new PagedResult<AssetSchema>
             {

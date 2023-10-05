@@ -211,7 +211,7 @@ namespace MK.IO
             else
             {
                 string? errorDetail = null;
-                if (message.ContainsKey("error"))
+                if (message!= null && message.ContainsKey("error"))
                 {
                     try
                     {

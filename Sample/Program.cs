@@ -59,6 +59,54 @@ namespace Sample
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
 
+            // *******************
+            // storage operations
+            // *******************
+
+            // Creation
+
+            /*
+            var storage = client.StorageAccounts.Create(new StorageRequestSchema
+            {
+                Spec = new StorageSchema
+                {
+                    Name = config["StorageName"],
+                    Location = config["StorageRegion"],
+                    Description = "my description",
+                    AzureStorageConfiguration = new BlobStorageAzureProperties
+                    {
+                        Url = config["StorageSAS"]
+                    }
+                }
+            }
+            );
+            */
+
+            // List
+            var storages = client.StorageAccounts.List();
+
+            // Get
+            var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
+
+
+            var creds = client.StorageAccounts.ListCredentials((Guid)storage2.Metadata.Id);
+
+            // var cred = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
+
+            // client.StorageAccounts.DeleteCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
+
+            var cred = client.StorageAccounts.CreateCredential((Guid)storage2.Metadata.Id, new CredentialSchema
+            {
+                AzureCredential = new AzureCredential
+                { 
+                    SasToken = "mySasToken"
+                }
+            });
+
+            // Delete
+            // client.StorageAccounts.Delete(storages.First().Metadata.Id);
+
+
             // ************************
             // asset filter operations
             // ************************
@@ -217,42 +265,7 @@ namespace Sample
                 var looo = client.LiveOutputs.Get(le.Name, los.First().Name);
             }
 
-            // *******************
-            // storage operations
-            // *******************
-
-            // Creation
-
-            /*
-            var storage = client.StorageAccounts.Create(new StorageRequestSchema
-            {
-                Spec = new StorageSchema
-                {
-                    Name = config["StorageName"],
-                    Location = config["StorageRegion"],
-                    Description = "my description",
-                    AzureStorageConfiguration = new BlobStorageAzureProperties
-                    {
-                        Url = config["StorageSAS"]
-                    }
-                }
-            }
-            );
-            */
-
-            // List
-            var storages = client.StorageAccounts.List();
-
-            // Get
-            var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
-
-
-            var creds = client.StorageAccounts.ListCredentials((Guid)storages.First().Metadata.Id);
-
-            var cred = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
-
-            // Delete
-            // client.StorageAccounts.Delete(storages.First().Metadata.Id);
+          
 
 
 

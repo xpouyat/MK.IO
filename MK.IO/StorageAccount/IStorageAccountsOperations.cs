@@ -3,6 +3,9 @@
 
 
 using MK.IO.Models;
+using System.Net;
+using System.Security.Cryptography;
+using System.Security.Principal;
 
 namespace MK.IO
 {
@@ -22,7 +25,7 @@ namespace MK.IO
 
         /// <summary>
         /// Create a storage account.
-        // The account must be in the same location as your subscription.
+        /// The account must be in the same location as your subscription.
         /// </summary>
         /// <param name="storage"></param>
         /// <returns></returns>
@@ -30,7 +33,7 @@ namespace MK.IO
 
         /// <summary>
         /// Create a storage account.
-        // The account must be in the same location as your subscription.
+        /// The account must be in the same location as your subscription.
         /// </summary>
         /// <param name="storage"></param>
         /// <returns></returns>
@@ -93,5 +96,41 @@ namespace MK.IO
         /// <param name="credentialId"></param>
         /// <returns></returns>
         Task<CredentialResponseSchema> GetCredentialAsync(Guid storageAccountId, Guid credentialId);
+
+        /// <summary>
+        /// <para>Creates a storage credential.</para>
+        /// <para>You can add as many credentials as you like to a storage account.
+        /// We will choose the credential with the longest expiry time when we need to access the storage account.
+        /// Credentials are immutable once created - create a new credential record, then delete the old one, to change a credential.</para>
+        /// </summary>
+        /// <param name="storageAccountId"></param>
+        /// <returns></returns>
+        CredentialResponseSchema CreateCredential(Guid storageAccountId, CredentialSchema credential);
+
+        /// <summary>
+        /// <para>Creates a storage credential.</para>
+        /// <para>You can add as many credentials as you like to a storage account.
+        /// We will choose the credential with the longest expiry time when we need to access the storage account.
+        /// Credentials are immutable once created - create a new credential record, then delete the old one, to change a credential.</para>
+        /// </summary>
+        /// <param name="storageAccountId"></param>
+        /// <returns></returns>
+        Task<CredentialResponseSchema> CreateCredentialAsync(Guid storageAccountId, CredentialSchema credential);
+
+        /// <summary>
+        /// <para>Removes a storage credential from the storage account.</para>
+        /// <para>If the credential is in use and no alternative credentials are available, the storage account will be inaccessible.</para>
+        /// </summary>
+        /// <param name="storageAccountId"></param>
+        /// <returns></returns>
+        void DeleteCredential(Guid storageAccountId, Guid credentialId);
+
+        /// <summary>
+        /// <para>Removes a storage credential from the storage account.</para>
+        /// <para>If the credential is in use and no alternative credentials are available, the storage account will be inaccessible.</para>
+        /// </summary>
+        /// <param name="storageAccountId"></param>
+        /// <returns></returns>
+        Task DeleteCredentialAsync(Guid storageAccountId, Guid credentialId);
     }
 }
