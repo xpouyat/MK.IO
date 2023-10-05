@@ -60,7 +60,7 @@ var mklocator = client.StreamingLocators.Create(
     new StreamingLocatorProperties
     {
         AssetName = "copy-ef2058b692-copy",
-        StreamingPolicyName = "Predefined_ClearStreamingOnly"
+        StreamingPolicyName = PredefinedStreamingPolicy.ClearStreamingOnly
     });
 
 var mklocator2 = client.StreamingLocators.Get(mklocator.Name);

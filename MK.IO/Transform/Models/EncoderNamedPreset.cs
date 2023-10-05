@@ -7,13 +7,13 @@ namespace MK.IO
     public readonly partial struct EncoderNamedPreset
     {
         public static readonly string H264SingleBitrateSD = "H264SingleBitrateSD";
-        public static readonly string H264SingleBitrate720P = "H264SingleBitrate720p";
-        public static readonly string H264SingleBitrate1080P = "H264SingleBitrate1080p";
-        public static readonly string H264MultipleBitrate1080P = "H264MultipleBitrate1080p";
-        public static readonly string H264MultipleBitrate720P = "H264MultipleBitrate720p";
+        public static readonly string H264SingleBitrate720p = "H264SingleBitrate720p";
+        public static readonly string H264SingleBitrate1080p = "H264SingleBitrate1080p";
+        public static readonly string H264MultipleBitrate1080p = "H264MultipleBitrate1080p";
+        public static readonly string H264MultipleBitrate720p = "H264MultipleBitrate720p";
         public static readonly string H264MultipleBitrateSD = "H264MultipleBitrateSD";
 
-        public static readonly string H265SingleBitrate1080P = "H265SingleBitrate1080p";
+        public static readonly string H265SingleBitrate1080p = "H265SingleBitrate1080p";
         public static readonly string H265SingleBitrate4K = "H265SingleBitrate4K";
     }
 }

@@ -182,7 +182,7 @@ namespace Sample
             // Creation
 
             /*
-            var storage = client.CreateStorageAccount(new StorageRequestSchema
+            var storage = client.StorageAccounts.Create(new StorageRequestSchema
             {
                 Spec = new StorageSchema
                 {
@@ -254,7 +254,7 @@ namespace Sample
                 Description = "desc",
                 Outputs = new List<TransformOutput>() {
                     new TransformOutput {
-                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720P),
+                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720p),
                         RelativePriority = "Normal" } }
             });
 
@@ -410,7 +410,7 @@ namespace Sample
                new StreamingLocatorProperties
                {
                    AssetName = "copy-ef2058b692-copy",
-                   StreamingPolicyName = "Predefined_ClearStreamingOnly"
+                   StreamingPolicyName = PredefinedStreamingPolicy.ClearStreamingOnly
                });
 
             var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
