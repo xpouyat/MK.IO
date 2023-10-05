@@ -58,5 +58,8 @@ namespace MK.IO
         /// <param name="content"></param>
         /// <returns></returns>
         Task<ContentKeyPolicy> CreateAsync(string contentKeyPolicyName, ContentKeyPolicy content);
+
+
+        Task<ContentKeyPolicyProperties> GetPolicyPropertiesWithSecretsAsync(string contentKeyPolicyName);
     }
 }

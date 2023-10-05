@@ -92,5 +92,12 @@ namespace MK.IO
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
             return ContentKeyPolicy.FromJson(responseContent);
         }
+
+        public async Task<ContentKeyPolicyProperties> GetPolicyPropertiesWithSecretsAsync(string contentKeyPolicyName)
+        {
+            var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl + "/getPolicyPropertiesWithSecrets", contentKeyPolicyName);
+            string responseContent = await Client.GetObjectPostContentAsync(url);
+            return ContentKeyPolicy.FromJson(responseContent).Properties;
+        }
     }
 }

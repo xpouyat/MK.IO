@@ -133,6 +133,11 @@ namespace MK.IO
             return await ObjectContentAsync(url, HttpMethod.Get);
         }
 
+        internal async Task<string> GetObjectPostContentAsync(string url)
+        {
+            return await ObjectContentAsync(url, HttpMethod.Post);
+        }
+
         internal async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod)
         {
             using HttpRequestMessage request = new()

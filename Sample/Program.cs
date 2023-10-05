@@ -59,6 +59,56 @@ namespace Sample
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
 
+
+            // ******************************
+            // content key policy operations
+            // ******************************
+
+            try
+            {
+                var ck = client.ContentKeyPolicies.Get("testpolcreate");
+            }
+
+            catch
+            {
+
+            }
+
+            // var cks = client.ContentKeyPolicies.List();
+
+            try
+            {
+                await client.ContentKeyPolicies.DeleteAsync("testpolcreate");
+            }
+
+            catch
+            {
+
+            }
+
+            
+            var key = GenerateSymKeyAsBase64();
+
+            var newpol = client.ContentKeyPolicies.Create(
+                "testpolcreate",
+                new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
+                {
+                    new ContentKeyPolicyOption(
+                        "option1",
+                        new ContentKeyPolicyConfigurationWidevine("{}"),
+                        new ContentKeyPolicyTokenRestriction(
+                            "issuer",
+                            "audience",
+                            "Jwt",
+                            new ContentKeyPolicySymmetricTokenKey(key)
+                            )
+                        )
+                })
+                );
+            
+            var ckpolprop = await client.ContentKeyPolicies.GetPolicyPropertiesWithSecretsAsync("testpolcreate");
+
+
             // *******************
             // storage operations
             // *******************
@@ -369,53 +419,6 @@ namespace Sample
 
             client.Jobs.Cancel("simple", "testjob2");
             //client.Jobs.Delete("simple", "testjob1");
-
-            // ******************************
-            // content key policy operations
-            // ******************************
-
-            try
-            {
-                // ck = await client.ContentKeyPolicies.Get("testpolcreate");
-            }
-
-            catch
-            {
-
-            }
-
-            // var cks = client.ContentKeyPolicies.List();
-
-            try
-            {
-                await client.ContentKeyPolicies.DeleteAsync("testpolcreate");
-            }
-
-            catch
-            {
-
-            }
-
-            /*
-            var key = GenerateSymKeyAsBase64();
-
-            var newpol = client.ContentKeyPolicies.Create(
-                "testpolcreate",
-                new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
-                {
-                    new ContentKeyPolicyOption(
-                        "option1",
-                        new ContentKeyPolicyConfigurationWidevine("{}"),
-                        new ContentKeyPolicyTokenRestriction(
-                            "issuer",
-                            "audience",
-                            "Jwt",
-                            new ContentKeyPolicySymmetricTokenKey(key)
-                            )
-                        )
-                })
-                );
-            */
 
 
 
