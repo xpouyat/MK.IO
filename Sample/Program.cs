@@ -74,7 +74,7 @@ namespace Sample
 
             }
 
-            // var cks = client.ContentKeyPolicies.List();
+           
 
             try
             {
@@ -85,8 +85,8 @@ namespace Sample
             {
 
             }
+            var cks = client.ContentKeyPolicies.List();
 
-            
             var key = GenerateSymKeyAsBase64();
 
             var newpol = client.ContentKeyPolicies.Create(
