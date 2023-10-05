@@ -4,7 +4,6 @@
 using Microsoft.Extensions.Configuration;
 using MK.IO;
 using MK.IO.Models;
-using System;
 using System.Security.Cryptography;
 
 namespace Sample
@@ -55,7 +54,7 @@ namespace Sample
                 Console.WriteLine(ex.Message);
                 Environment.Exit(0);
             }
-           
+
 
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
@@ -64,11 +63,16 @@ namespace Sample
             // asset filter operations
             // ************************
 
-            var assetFilters = client.AssetFilters.List("liveoutput-c4debfe5");
+            var assetFilters = client.AssetFilters.List("copy-ef2058b692-copy");
 
-            var assetFilter1 = client.AssetFilters.Get("liveoutput-c4debfe5", assetFilters.First().Name);
+            assetFilters.ForEach(af => client.AssetFilters.Delete("copy-ef2058b692-copy", af.Name));
+            //var assetFilter1 = client.AssetFilters.Get("liveoutput-c4debfe5", assetFilters.First().Name);
 
-            var assetFilter = client.AssetFilters.CreateOrUpdate("liveoutput-c4debfe5", MKIOClient.GenerateUniqueName("filter"), new MediaFilterProperties
+            // asset filter creation
+            // Typically, you will want to select a matching Type, such as Video, and then select additional filters.
+            // For instance, to include all audio tracks with mp4a, and all video tracks that are between 0 and 1 Mbps, you would provide these FilterTrackSelection objects:
+
+            var assetFilter = client.AssetFilters.CreateOrUpdate("copy-ef2058b692-copy", MKIOClient.GenerateUniqueName("filter"), new MediaFilterProperties
             {
                 PresentationTimeRange = new PresentationTimeRange
                 {
@@ -82,15 +86,33 @@ namespace Sample
                         {
                             new FilterTrackPropertyCondition
                             {
-                                Property = "Language",
-                                Operation = "Equal",
-                                Value = "eng"
+                                Property = FilterTrackPropertyType.Type,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = FilterPropertyTypeValue.Video
                             },
                             new FilterTrackPropertyCondition
                             {
-                                Property = "Type",
-                                Operation = "Equal",
-                                Value = "Audio"
+                                Property = FilterTrackPropertyType.Bitrate,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = "0-1048576"
+                            }
+                        },
+                    },
+                    new FilterTrackSelection
+                    {
+                        TrackSelections = new List<FilterTrackPropertyCondition>()
+                        {
+                            new FilterTrackPropertyCondition
+                             {
+                                Property = FilterTrackPropertyType.Type,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = FilterPropertyTypeValue.Audio
+                            },
+                            new FilterTrackPropertyCondition
+                            {
+                                Property = FilterTrackPropertyType.FourCC,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = "mp4a"
                             }
                         }
                     }
@@ -105,7 +127,11 @@ namespace Sample
 
             var acfilters = client.AccountFilters.List();
 
-            var filter = client.AccountFilters.CreateOrUpdate("filter7", new MediaFilterProperties
+            // account filter creation
+            // Typically, you will want to select a matching Type, such as Video, and then select additional filters.
+            // For instance, to include all audio tracks with mp4a, and all video tracks that are between 0 and 1 Mbps, you would provide these FilterTrackSelection objects:
+
+            var filter = client.AccountFilters.CreateOrUpdate(MKIOClient.GenerateUniqueName("acc-filter"), new MediaFilterProperties
             {
                 PresentationTimeRange = new PresentationTimeRange
                 {
@@ -113,30 +139,46 @@ namespace Sample
                 },
                 Tracks = new List<FilterTrackSelection>()
                 {
-
                     new FilterTrackSelection
                     {
-                        //TrackType = "Audio",
                         TrackSelections = new List<FilterTrackPropertyCondition>()
                         {
                             new FilterTrackPropertyCondition
                             {
-                                Property = "Language",
-                                Operation = "Equal",
-                                Value = "eng"
+                                Property = FilterTrackPropertyType.Type,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = FilterPropertyTypeValue.Video
                             },
                             new FilterTrackPropertyCondition
                             {
-                                Property = "Type",
-                                Operation = "Equal",
-                                Value = "Audio"
+                                Property = FilterTrackPropertyType.Bitrate,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = "0-1048576"
+                            }
+                        },
+                    },
+                    new FilterTrackSelection
+                    {
+                        TrackSelections = new List<FilterTrackPropertyCondition>()
+                        {
+                            new FilterTrackPropertyCondition
+                             {
+                                Property = FilterTrackPropertyType.Type,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = FilterPropertyTypeValue.Audio
+                            },
+                            new FilterTrackPropertyCondition
+                            {
+                                Property = FilterTrackPropertyType.FourCC,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = "mp4a"
                             }
                         }
                     }
                 }
             });
 
-            client.AccountFilters.Delete("filter4");
+            client.AccountFilters.Delete(filter.Name);
 
             // **********************
             // live event operations
@@ -419,7 +461,10 @@ namespace Sample
 
         }
 
-
+        /// <summary>
+        /// Generates a random symmetric key as a Base64 string.
+        /// </summary>
+        /// <returns></returns>
         private static string GenerateSymKeyAsBase64()
         {
             byte[] TokenSigningKey = new byte[40];
