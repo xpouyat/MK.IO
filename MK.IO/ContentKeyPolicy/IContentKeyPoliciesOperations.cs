@@ -59,7 +59,18 @@ namespace MK.IO
         /// <returns></returns>
         Task<ContentKeyPolicy> CreateAsync(string contentKeyPolicyName, ContentKeyPolicy content);
 
+        /// <summary>
+        /// Get the properties of a Content Key Policy including secret values
+        /// </summary>
+        /// <param name="contentKeyPolicyName"></param>
+        /// <returns></returns>
+        ContentKeyPolicyProperties GetPolicyPropertiesWithSecrets(string contentKeyPolicyName);
 
+        /// <summary>
+        /// Get the properties of a Content Key Policy including secret values
+        /// </summary>
+        /// <param name="contentKeyPolicyName"></param>
+        /// <returns></returns>
         Task<ContentKeyPolicyProperties> GetPolicyPropertiesWithSecretsAsync(string contentKeyPolicyName);
     }
 }
