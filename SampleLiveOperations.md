@@ -19,9 +19,9 @@ var list_le = client.LiveEvents.List();
 // Creation
 var liveEvent = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveevent"), "francecentral", new LiveEventProperties
 {
-    Input = new LiveEventInput { StreamingProtocol = "RTMP" },
+    Input = new LiveEventInput { StreamingProtocol = LiveEventInputProtocol.RTMP },
     StreamOptions = new List<string> { "Default" },
-    Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
+    Encoding = new LiveEventEncoding { EncodingType = LiveEventEncodingType.PassthroughBasic }
 });
 
 // create live output asset

@@ -164,6 +164,11 @@ namespace MK.IO
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Post);
         }
 
+        internal async Task<string> UpdateObjectAsync(string url, string amsJSONObject)
+        {
+            return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Patch);
+        }
+
         internal async Task<string> CreateObjectInternalAsync(string url, string amsJSONObject, HttpMethod httpMethod)
         {
             using HttpRequestMessage request = new()

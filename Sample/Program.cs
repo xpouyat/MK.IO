@@ -59,6 +59,50 @@ namespace Sample
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
 
+            // **********************
+            // live event operations
+            // **********************
+
+            var les = client.LiveEvents.List();
+
+            // client.LiveEvents.Delete("liveevent4");
+
+            var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveEvent"), "francecentral", new LiveEventProperties
+            {
+                Input = new LiveEventInput { StreamingProtocol = LiveEventInputProtocol.RTMP },
+                StreamOptions = new List<string> { "Default" },
+                Encoding = new LiveEventEncoding { EncodingType = LiveEventEncodingType.PassthroughBasic }
+            });
+
+            le = client.LiveEvents.Update(le.Name, "francecentral", new LiveEventProperties
+            {
+                Input = new LiveEventInput { StreamingProtocol = LiveEventInputProtocol.SRT },
+                StreamOptions = new List<string> { "Default" },
+                Encoding = new LiveEventEncoding { EncodingType = LiveEventEncodingType.PassthroughBasic }
+            });
+
+            // **********************
+            // live output operations
+            // **********************
+
+            // create live output asset
+            var nameasset = MKIOClient.GenerateUniqueName("liveoutput");
+            var loasset = client.Assets.CreateOrUpdate(nameasset, "asset-" + nameasset, config["StorageName"], "live output asset");
+
+            var lo = client.LiveOutputs.Create(le.Name, MKIOClient.GenerateUniqueName("liveOutput"), new LiveOutputProperties
+            {
+                ArchiveWindowLength = "PT5M",
+                AssetName = nameasset
+            });
+
+            // live outputs listing
+            var los = client.LiveOutputs.List(le.Name);
+
+            if (los.Count == 1)
+            {
+                var looo = client.LiveOutputs.Get(le.Name, los.First().Name);
+            }
+
 
             // ******************************
             // content key policy operations
@@ -278,43 +322,7 @@ namespace Sample
 
             client.AccountFilters.Delete(filter.Name);
 
-            // **********************
-            // live event operations
-            // **********************
-
-            var les = client.LiveEvents.List();
-
-            // client.LiveEvents.Delete("liveevent4");
-
-            var le = client.LiveEvents.Create(MKIOClient.GenerateUniqueName("liveEvent"), "francecentral", new LiveEventProperties
-            {
-                Input = new LiveEventInput { StreamingProtocol = "RTMP" },
-                StreamOptions = new List<string> { "Default" },
-                Encoding = new LiveEventEncoding { EncodingType = "PassthroughBasic" }
-            });
-
-            // **********************
-            // live output operations
-            // **********************
-
-            // create live output asset
-            var nameasset = MKIOClient.GenerateUniqueName("liveoutput");
-            var loasset = client.Assets.CreateOrUpdate(nameasset, "asset-" + nameasset, config["StorageName"], "live output asset");
-
-            var lo = client.LiveOutputs.Create(le.Name, MKIOClient.GenerateUniqueName("liveOutput"), new LiveOutputProperties
-            {
-                ArchiveWindowLength = "PT5M",
-                AssetName = nameasset
-            });
-
-            // live outputs listing
-            var los = client.LiveOutputs.List(le.Name);
-
-            if (los.Count == 1)
-            {
-                var looo = client.LiveOutputs.Get(le.Name, los.First().Name);
-            }
-
+  
 
 
 

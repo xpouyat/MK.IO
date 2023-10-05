@@ -52,7 +52,6 @@ namespace MK.IO
             var url = Client.GenerateApiUrl(_liveEventsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<LiveEventListResponseSchema>(responseContent, ConverterLE.Settings).Value;
-
         }
 
         /// <inheritdoc/>
@@ -71,6 +70,19 @@ namespace MK.IO
         }
 
         /// <inheritdoc/>
+        public LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null)
+        {
+            var task = Task.Run<LiveEventSchema>(async () => await UpdateAsync(liveEventName, location, properties, tags));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<LiveEventSchema> UpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags)
+        {
+            return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.UpdateObjectAsync);
+        }
+
+        /// <inheritdoc/>
         public LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null)
         {
             var task = Task.Run<LiveEventSchema>(async () => await CreateAsync(liveEventName, location, properties, tags));
@@ -80,10 +92,15 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags)
         {
+            return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.CreateObjectAsync);
+        }
+
+        internal async Task<LiveEventSchema> CreateOrUpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags, Func<string ,string, Task<string>> func)
+        {
             var url = Client.GenerateApiUrl(_liveEventApiUrl, liveEventName);
             tags ??= new Dictionary<string, string>();
             var content = new LiveEventSchema { Location = location, Tags = tags, Properties = properties };
-            string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
+            string responseContent = await func(url, content.ToJson());
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
         }
 
