@@ -186,5 +186,6 @@ namespace MK.IO
         internal string GenerateStorageApiUrl(string urlPath, string objectName, string objectName2)
         {
             return Client._baseUrl + string.Format(urlPath, Client.GetCustomerId(), Client.GetSubscriptionId(), objectName, objectName2);
+        }
     }
 }
