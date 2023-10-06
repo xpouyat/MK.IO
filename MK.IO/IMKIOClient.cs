@@ -15,7 +15,7 @@ namespace MK.IO
         /// <summary>
         /// Gets the ISubscriptionOperations.
         /// </summary>
-        ISubscriptionOperations Subscription { get; }
+        IAccountOperations Account { get; }
 
         /// <summary>
         /// Gets the IAssetsOperations.

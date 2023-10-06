@@ -35,7 +35,7 @@ namespace MK.IO
         {
             if (default == _subscriptionId)
             {
-                _subscriptionId = Subscription.GetStats().Extra.SubscriptionId;
+                _subscriptionId = Account.GetSubscriptionStats().Extra.SubscriptionId;
             }
             return _subscriptionId;
         }
@@ -45,7 +45,7 @@ namespace MK.IO
         {
             if (default == _customerId)
             {
-                _customerId = Subscription.GetUserInfo().CustomerId;
+                _customerId = Account.GetUserProfile().CustomerId;
             }
             return _customerId;
         }
@@ -65,7 +65,7 @@ namespace MK.IO
 
         private void Initialize()
         {
-            Subscription = new SubscriptionOperations(this);
+            Account = new AccountOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
             Assets = new AssetsOperations(this);
             LiveEvents = new LiveEventsOperations(this);
@@ -80,7 +80,7 @@ namespace MK.IO
         }
 
         /// <inheritdoc/>
-        public virtual ISubscriptionOperations Subscription { get; private set; }
+        public virtual IAccountOperations Account { get; private set; }
 
         /// <inheritdoc/>
         public virtual IStorageAccountsOperations StorageAccounts { get; private set; }

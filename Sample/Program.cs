@@ -47,7 +47,7 @@ namespace Sample
 
             try
             {
-                var profile = client.Subscription.GetUserInfo();
+                var profile = client.Account.GetUserProfile();
             }
             catch (ApiException ex)
             {
@@ -57,7 +57,10 @@ namespace Sample
 
 
             // Get subscription stats
-            var stats = client.Subscription.GetStats();
+            var stats = client.Account.GetSubscriptionStats();
+
+            var subs = await client.Account.ListAllSubscriptionsAsync();
+            var sub = await client.Account.GetSubscriptionAsync();
 
 
             // *********************

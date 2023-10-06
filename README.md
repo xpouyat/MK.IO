@@ -50,10 +50,11 @@ using MK.IO.Models;
 
 var client = new MKIOClient("mkiosubscriptionname", "mkiotoken");
 
-var profile = client.Subscription.GetUserInfo();
+// get user profile info
+var profile = client.Account.GetUserProfile();
 
 // Get subscription stats
-var stats = client.Subscription.GetStats();
+var stats = client.Account.GetSubscriptionStats();
 
 // *****************
 // asset operations
