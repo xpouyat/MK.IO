@@ -68,7 +68,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Delete(string contentKeyPolicyName)
         {
-            Task.Run(async () => await DeleteAsync(contentKeyPolicyName));
+            Task.Run(async () => await DeleteAsync(contentKeyPolicyName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>

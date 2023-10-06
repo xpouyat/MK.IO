@@ -83,7 +83,7 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public void Delete(string assetName, string filterName)
         {
-            Task.Run(async () => await DeleteAsync(assetName, filterName));
+            Task.Run(async () => await DeleteAsync(assetName, filterName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>

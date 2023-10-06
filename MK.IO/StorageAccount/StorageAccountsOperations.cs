@@ -90,7 +90,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Delete(Guid storageAccountId)
         {
-            Task.Run(async () => await DeleteAsync(storageAccountId));
+            Task.Run(async () => await DeleteAsync(storageAccountId)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -151,7 +151,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void DeleteCredential(Guid storageAccountId, Guid credentialId)
         {
-            Task.Run(async () => await DeleteCredentialAsync(storageAccountId, credentialId));
+            Task.Run(async () => await DeleteCredentialAsync(storageAccountId, credentialId)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -186,8 +186,5 @@ namespace MK.IO
         internal string GenerateStorageApiUrl(string urlPath, string objectName, string objectName2)
         {
             return Client._baseUrl + string.Format(urlPath, Client.GetCustomerId(), Client.GetSubscriptionId(), objectName, objectName2);
-        }
-
-
     }
 }

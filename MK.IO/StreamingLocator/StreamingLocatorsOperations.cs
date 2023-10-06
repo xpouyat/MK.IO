@@ -43,7 +43,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public List<StreamingLocatorSchema> List()
         {
-            var task = Task.Run<List<StreamingLocatorSchema>>(async () => await ListAsync());
+            var task = Task.Run(async () => await ListAsync());
             return task.GetAwaiter().GetResult();
         }
 
@@ -59,7 +59,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public StreamingLocatorSchema Get(string streamingLocatorName)
         {
-            var task = Task.Run<StreamingLocatorSchema>(async () => await GetAsync(streamingLocatorName));
+            var task = Task.Run(async () => await GetAsync(streamingLocatorName));
             return task.GetAwaiter().GetResult();
         }
 
@@ -74,7 +74,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public StreamingLocatorSchema Create(string streamingLocatorName, StreamingLocatorProperties properties)
         {
-            var task = Task.Run<StreamingLocatorSchema>(async () => await CreateAsync(streamingLocatorName, properties));
+            var task = Task.Run(async () => await CreateAsync(streamingLocatorName, properties));
             return task.GetAwaiter().GetResult();
         }
 
@@ -90,7 +90,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Delete(string streamingLocatorName)
         {
-            Task.Run(async () => await DeleteAsync(streamingLocatorName));
+            Task.Run(async () => await DeleteAsync(streamingLocatorName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -103,7 +103,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public StreamingLocatorListPathsResponseSchema ListUrlPaths(string streamingLocatorName)
         {
-            var task = Task.Run<StreamingLocatorListPathsResponseSchema>(async () => await ListUrlPathsAsync(streamingLocatorName));
+            var task = Task.Run(async () => await ListUrlPathsAsync(streamingLocatorName));
             return task.GetAwaiter().GetResult();
         }
 

@@ -107,7 +107,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Delete(string liveEventName)
         {
-            Task.Run(async () => await DeleteAsync(liveEventName));
+            Task.Run(async () => await DeleteAsync(liveEventName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -120,7 +120,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Start(string liveEventName)
         {
-            Task.Run(async () => await StartAsync(liveEventName));
+            Task.Run(async () => await StartAsync(liveEventName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -131,7 +131,7 @@ namespace MK.IO
 
         public void Stop(string liveEventName)
         {
-            Task.Run(async () => await StopAsync(liveEventName));
+            Task.Run(async () => await StopAsync(liveEventName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -143,7 +143,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Reset(string liveEventName)
         {
-            Task.Run(async () => await ResetAsync(liveEventName));
+            Task.Run(async () => await ResetAsync(liveEventName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -155,7 +155,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Allocate(string liveEventName)
         {
-            Task.Run(async () => await AllocateAsync(liveEventName));
+            Task.Run(async () => await AllocateAsync(liveEventName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>

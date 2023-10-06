@@ -80,7 +80,7 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public void Delete(string accountFilterName)
         {
-            Task.Run(async () => await DeleteAsync(accountFilterName));
+            Task.Run(async () => await DeleteAsync(accountFilterName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>

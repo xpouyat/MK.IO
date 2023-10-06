@@ -59,6 +59,92 @@ namespace Sample
             // Get subscription stats
             //var stats = client.Subscription.GetStats();
 
+
+            // *********************
+            // transform operations
+            // *********************
+
+
+            var tranform = client.Transforms.CreateOrUpdate("simpleTransformSD", new TransformProperties
+            {
+                Description = "desc",
+                Outputs = new List<TransformOutput>() {
+                    new TransformOutput {
+                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrateSD),
+                        RelativePriority = "Normal" } }
+            });
+
+
+
+            // ***************
+            // job operations
+            // ***************
+
+            // var jobs = client.Jobs.ListAll();
+
+            // var job = client.Jobs.Get("simple", "testjob1");
+
+
+            //var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
+
+            /*
+            client.Jobs.Create("simple", "testjob2", new JobProperties
+            {
+                Description = "My job",
+                Priority = "Normal",
+                Input = new JobInputAsset(
+                    "copy-ef2058b692-copy",
+                    new List<string> {
+                        "switch_1920x1080_AACAudio_3677.mp4"
+                    }),
+                Outputs = new List<JobOutputAsset>()
+                {
+                    new JobOutputAsset()
+                    {
+                        AssetName="outputasset-012"
+                    }
+                }
+            }
+            );
+            */
+
+            var outputAssetName = MKIOClient.GenerateUniqueName("output");
+            var outputAsset2 = client.Assets.CreateOrUpdate(outputAssetName, "mkioasset-" + outputAssetName, config["StorageName"], "output asset for job");
+
+            var jobHttp = client.Jobs.Create(tranform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
+            {
+                Description = "My SD encoding job",
+                Priority = "Normal",
+                Input = new JobInputHttp(
+                    null,
+                    new List<string> {
+                        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                    }),
+                Outputs = new List<JobOutputAsset>()
+                {
+                    new JobOutputAsset()
+                    {
+                        AssetName = outputAssetName
+                    }
+                }
+            }
+            );
+
+            while (jobHttp.Properties.State == JobState.Queued || jobHttp.Properties.State == JobState.Scheduled || jobHttp.Properties.State == JobState.Processing)
+            {
+                jobHttp = client.Jobs.Get(tranform.Name, jobHttp.Name);
+                Console.WriteLine(jobHttp.Properties.State);
+                Thread.Sleep(10000);
+            }
+
+
+
+            //client.Jobs.Cancel("simple", "testjob2");
+            client.Jobs.Delete(tranform.Name, jobHttp.Name);
+
+
+
+
             // **********************
             // live event operations
             // **********************
@@ -322,7 +408,7 @@ namespace Sample
 
             client.AccountFilters.Delete(filter.Name);
 
-  
+
 
 
 
@@ -356,78 +442,6 @@ namespace Sample
 
             // delete asset
             // client.Assets.Delete("asset-33adc1873f");
-
-            // *********************
-            // transform operations
-            // *********************
-
-
-            var tranform = client.Transforms.CreateOrUpdate("mytesttranf", new TransformProperties
-            {
-                Description = "desc",
-                Outputs = new List<TransformOutput>() {
-                    new TransformOutput {
-                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720p),
-                        RelativePriority = "Normal" } }
-            });
-
-
-
-            // ***************
-            // job operations
-            // ***************
-
-            var jobs = client.Jobs.ListAll();
-
-            //var job = client.Jobs.Get("simple", "testjob1");
-
-            /*
-            var outputAsset = client.Assets.CreateOrUpdate("outputasset-012", "asset-outputasset-012", config["StorageName"], "output asset for job");
-
-            client.Jobs.Create("simple", "testjob2", new JobProperties
-            {
-                Description = "My job",
-                Priority = "Normal",
-                Input = new JobInputAsset(
-                    "copy-ef2058b692-copy",
-                    new List<string> {
-                        "switch_1920x1080_AACAudio_3677.mp4"
-                    }),
-                Outputs = new List<JobOutputAsset>()
-                {
-                    new JobOutputAsset()
-                    {
-                        AssetName="outputasset-012"
-                    }
-                }
-            }
-            );
-            */
-
-            var outputAsset = client.Assets.CreateOrUpdate("outputasset-014", "asset-outputasset-014", config["StorageName"], "output asset for job");
-
-            var jobHttp = client.Jobs.Create("simple", MKIOClient.GenerateUniqueName("job"), new JobProperties
-            {
-                Description = "My job",
-                Priority = "Normal",
-                Input = new JobInputHttp(
-                    null,
-                    new List<string> {
-                        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
-                    }),
-                Outputs = new List<JobOutputAsset>()
-                {
-                    new JobOutputAsset()
-                    {
-                        AssetName=MKIOClient.GenerateUniqueName("outputasset")
-                    }
-                }
-            }
-            );
-
-            client.Jobs.Cancel("simple", "testjob2");
-            //client.Jobs.Delete("simple", "testjob1");
-
 
 
 

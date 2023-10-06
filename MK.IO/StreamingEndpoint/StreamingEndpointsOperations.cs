@@ -89,7 +89,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Stop(string streamingEndpointName)
         {
-            Task.Run(async () => await StopAsync(streamingEndpointName));
+            Task.Run(async () => await StopAsync(streamingEndpointName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -101,7 +101,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Start(string streamingEndpointName)
         {
-            Task.Run(async () => await StartAsync(streamingEndpointName));
+            Task.Run(async () => await StartAsync(streamingEndpointName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -113,7 +113,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Delete(string streamingEndpointName)
         {
-            Task.Run(async () => await DeleteAsync(streamingEndpointName));
+            Task.Run(async () => await DeleteAsync(streamingEndpointName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -127,6 +127,5 @@ namespace MK.IO
             var url = Client.GenerateApiUrl(_streamingEndpointApiUrl + (operation != null ? "/" + operation : string.Empty), streamingEndpointName);
             await Client.ObjectContentAsync(url, httpMethod);
         }
-
     }
 }

@@ -19,7 +19,7 @@ namespace MK.IO
         //
 
         private const string _allJobsApiUrl = MKIOClient._allJobsApiUrl;
-        private const string _jobsApiUrl = MKIOClient._transformsApiUrl + "/jobs";
+        private const string _jobsApiUrl = MKIOClient._transformsApiUrl + "/{1}/jobs";
         private const string _jobApiUrl = _jobsApiUrl + "/{2}";
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Cancel(string transformName, string jobName)
         {
-            Task.Run(async () => await CancelAsync(transformName, jobName));
+            Task.Run(async () => await CancelAsync(transformName, jobName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -124,7 +124,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Delete(string transformName, string jobName)
         {
-            Task.Run(async () => await DeleteAsync(transformName, jobName));
+            Task.Run(async () => await DeleteAsync(transformName, jobName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>

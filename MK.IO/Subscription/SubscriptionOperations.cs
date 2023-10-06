@@ -38,7 +38,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public AccountStats GetStats()
         {
-            Task<AccountStats> task = Task.Run<AccountStats>(async () => await GetStatsAsync());
+            var task = Task.Run(async () => await GetStatsAsync());
             return task.GetAwaiter().GetResult();
         }
 
@@ -53,7 +53,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public UserInfo GetUserInfo()
         {
-            Task<UserInfo> task = Task.Run<UserInfo>(async () => await GetUserInfoAsync());
+            var task = Task.Run(async () => await GetUserInfoAsync());
             return task.GetAwaiter().GetResult();
         }
 
