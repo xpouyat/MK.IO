@@ -90,7 +90,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Delete(string transformName)
         {
-            Task.Run(async () => await DeleteAsync(transformName));
+            Task.Run(async () => await DeleteAsync(transformName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>

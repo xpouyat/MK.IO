@@ -20,7 +20,7 @@ var transform = client.Transforms.CreateOrUpdate("simpletransform", new Transfor
                 Description = "Encoding to 720p single bitrate",
                 Outputs = new List<TransformOutput>() {
                     new TransformOutput {
-                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720P),
+                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720p),
                         RelativePriority = "Normal" } }
             });
 
@@ -36,7 +36,7 @@ var jobs = client.Jobs.ListAll();
 var outputAssetName = MKIOClient.GenerateUniqueName("asset");
 var outputAsset = client.Assets.CreateOrUpdate(outputAssetName, outputAssetName, config["StorageName"], "output asset for job");
 // create a job with the output asset created and with an asset as a source
-var newJob = client.Jobs.Create("simpletransform", MKIOClient.GenerateUniqueName("job"), new JobProperties
+var newJob = client.Jobs.Create(transform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
     {
         Description = "My job",
         Priority = "Normal",
@@ -55,8 +55,8 @@ var newJob = client.Jobs.Create("simpletransform", MKIOClient.GenerateUniqueName
     }
     );
 
-// with http source as a source
-var newJobH = client.Jobs.Create("simple", MKIOClient.GenerateUniqueName("job"), new JobProperties
+// job with http source as a source
+var newJobH = client.Jobs.Create(transform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
     {
         Description = "My job",
         Priority = "Normal",
@@ -75,13 +75,22 @@ var newJobH = client.Jobs.Create("simple", MKIOClient.GenerateUniqueName("job"),
     }
     );
 
+// wait for the job to complete
+while (newJobH.Properties.State == JobState.Queued || newJobH.Properties.State == JobState.Scheduled || newJobH.Properties.State == JobState.Processing)
+{
+    newJobH = client.Jobs.Get(tranform.Name, newJobH.Name);
+    Console.WriteLine(jobHttp.Properties.State);
+    Thread.Sleep(10000);
+}
+
+
 // Get a job
-var job2 = client.Jobs.Get("simpletransform", "testjob1");
+var job2 = client.Jobs.Get(tranform.Name, "testjob1");
 
 // Cancel a job
-client.Jobs.Cancel("simpletransform", "testjob2");
+client.Jobs.Cancel(tranform.Name, "testjob2");
 
 // Delete a job
-client.Jobs.Delete("simpletransform", "testjob1");
+client.Jobs.Delete(tranform.Name, "testjob3");
 
 ```

@@ -89,7 +89,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Delete(string liveEventName, string liveOutputName)
         {
-            Task.Run(async () => await DeleteAsync(liveEventName, liveOutputName));
+            Task.Run(async () => await DeleteAsync(liveEventName, liveOutputName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>

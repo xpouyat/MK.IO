@@ -12,6 +12,6 @@ namespace MK.IO
     public class PlayReadyContentKeyLocation
     {
         [JsonProperty("@odata.type")]
-        public virtual string OdataType { get; set; }
+        internal virtual string OdataType { get; set; }
     }
 }

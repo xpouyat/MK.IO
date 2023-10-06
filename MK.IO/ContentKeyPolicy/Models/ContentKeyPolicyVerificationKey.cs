@@ -14,7 +14,6 @@ namespace MK.IO
     public abstract class ContentKeyPolicyVerificationKey
     {
         [JsonProperty("@odata.type")]
-        public virtual string OdataType { get; set; }
-
+        internal virtual string OdataType { get; set; }
     }
 }

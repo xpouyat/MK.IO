@@ -59,6 +59,6 @@ namespace MK.IO.Asset
         /// <param name="properties"></param>
         /// <returns></returns>
         Task<AccountFilterSchema> CreateOrUpdateAsync(string accountFilterName, MediaFilterProperties properties);
-       
+
     }
 }

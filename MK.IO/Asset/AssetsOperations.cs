@@ -63,7 +63,7 @@ namespace MK.IO.Asset
             string responseContent = await Client.GetObjectContentAsync(url);
 
             dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string?  nextPageLink = responseObject["@odata.nextLink"];
+            string? nextPageLink = responseObject["@odata.nextLink"];
 
             return new PagedResult<AssetSchema>
             {
@@ -139,7 +139,7 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public void Delete(string assetName)
         {
-            Task.Run(async () => await DeleteAsync(assetName));
+            Task.Run(async () => await DeleteAsync(assetName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>

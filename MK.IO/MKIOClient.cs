@@ -24,7 +24,7 @@ namespace MK.IO
         internal const string _liveEventsApiUrl = "api/ams/{0}/liveEvents";
         internal const string _contentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
         internal const string _streamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
-        internal const string _accountFiltersApiUrl = "api/ams/{0}/accountFilters"; 
+        internal const string _accountFiltersApiUrl = "api/ams/{0}/accountFilters";
 
         private readonly string _subscriptionName;
         private readonly string _apiToken;
@@ -133,6 +133,11 @@ namespace MK.IO
             return await ObjectContentAsync(url, HttpMethod.Get);
         }
 
+        internal async Task<string> GetObjectPostContentAsync(string url)
+        {
+            return await ObjectContentAsync(url, HttpMethod.Post);
+        }
+
         internal async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod)
         {
             using HttpRequestMessage request = new()
@@ -157,6 +162,11 @@ namespace MK.IO
         internal async Task<string> CreateObjectPostAsync(string url, string amsJSONObject)
         {
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Post);
+        }
+
+        internal async Task<string> UpdateObjectAsync(string url, string amsJSONObject)
+        {
+            return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Patch);
         }
 
         internal async Task<string> CreateObjectInternalAsync(string url, string amsJSONObject, HttpMethod httpMethod)
@@ -211,7 +221,7 @@ namespace MK.IO
             else
             {
                 string? errorDetail = null;
-                if (message.ContainsKey("error"))
+                if (message != null && message.ContainsKey("error"))
                 {
                     try
                     {

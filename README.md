@@ -2,7 +2,7 @@
 
 A client library for [MediaKind MK/IO](https://io.mediakind.com/).
 
-[Link to MK/IO Nuget package](https://www.nuget.org/packages/MK.IO)
+[Link to MK/IO Nuget package](https://www.nuget.org/packages/MK.IO).
 
 ## Usage (C#, .NET)
 

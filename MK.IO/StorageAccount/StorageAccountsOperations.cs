@@ -90,7 +90,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Delete(Guid storageAccountId)
         {
-            Task.Run(async () => await DeleteAsync(storageAccountId));
+            Task.Run(async () => await DeleteAsync(storageAccountId)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -129,12 +129,49 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings);
         }
 
+        /// <inheritdoc/>
+        public CredentialResponseSchema CreateCredential(Guid storageAccountId, CredentialSchema credential)
+        {
+            var task = Task.Run(async () => await CreateCredentialAsync(storageAccountId, credential));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<CredentialResponseSchema> CreateCredentialAsync(Guid storageAccountId, CredentialSchema credential)
+        {
+            var url = GenerateStorageApiUrl(_storageListCredentialsApiUrl, storageAccountId.ToString());
+            CredentialRequestSchema content = new()
+            {
+                Spec = credential
+            };
+            string responseContent = await Client.CreateObjectPostAsync(url, content.ToJson());
+            return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings);
+        }
+
+        /// <inheritdoc/>
+        public void DeleteCredential(Guid storageAccountId, Guid credentialId)
+        {
+            Task.Run(async () => await DeleteCredentialAsync(storageAccountId, credentialId)).GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task DeleteCredentialAsync(Guid storageAccountId, Guid credentialId)
+        {
+            await CredentialOperationAsync(storageAccountId, credentialId, HttpMethod.Delete);
+        }
+
+
         private async Task StorageAccountOperationAsync(Guid storageAccountId, HttpMethod httpMethod)
         {
             var url = GenerateStorageApiUrl(_storageSelectionApiUrl, storageAccountId.ToString());
             await Client.ObjectContentAsync(url, httpMethod);
         }
 
+        private async Task CredentialOperationAsync(Guid storageAccountId, Guid credentialId, HttpMethod httpMethod)
+        {
+            var url = GenerateStorageApiUrl(_storageCredentialApiUrl, storageAccountId.ToString(), credentialId.ToString());
+            await Client.ObjectContentAsync(url, httpMethod);
+        }
 
         internal string GenerateStorageApiUrl(string urlPath)
         {

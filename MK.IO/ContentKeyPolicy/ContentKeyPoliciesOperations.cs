@@ -38,7 +38,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public List<ContentKeyPolicy> List()
         {
-            Task<List<ContentKeyPolicy>> task = Task.Run<List<ContentKeyPolicy>>(async () => await ListAsync());
+            Task<List<ContentKeyPolicy>> task = Task.Run(async () => await ListAsync());
             return task.GetAwaiter().GetResult();
         }
 
@@ -53,7 +53,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public ContentKeyPolicy Get(string contentKeyPolicyName)
         {
-            Task<ContentKeyPolicy> task = Task.Run<ContentKeyPolicy>(async () => await GetAsync(contentKeyPolicyName));
+            Task<ContentKeyPolicy> task = Task.Run(async () => await GetAsync(contentKeyPolicyName));
             return task.GetAwaiter().GetResult();
         }
 
@@ -68,7 +68,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public void Delete(string contentKeyPolicyName)
         {
-            Task.Run(async () => await DeleteAsync(contentKeyPolicyName));
+            Task.Run(async () => await DeleteAsync(contentKeyPolicyName)).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
@@ -81,7 +81,7 @@ namespace MK.IO
         /// <inheritdoc/>
         public ContentKeyPolicy Create(string contentKeyPolicyName, ContentKeyPolicy content)
         {
-            Task<ContentKeyPolicy> task = Task.Run<ContentKeyPolicy>(async () => await CreateAsync(contentKeyPolicyName, content));
+            Task<ContentKeyPolicy> task = Task.Run(async () => await CreateAsync(contentKeyPolicyName, content));
             return task.GetAwaiter().GetResult();
         }
 
@@ -91,6 +91,21 @@ namespace MK.IO
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
             return ContentKeyPolicy.FromJson(responseContent);
+        }
+
+        /// <inheritdoc/>
+        public ContentKeyPolicyProperties GetPolicyPropertiesWithSecrets(string contentKeyPolicyName)
+        {
+            Task<ContentKeyPolicyProperties> task = Task.Run(async () => await GetPolicyPropertiesWithSecretsAsync(contentKeyPolicyName));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<ContentKeyPolicyProperties> GetPolicyPropertiesWithSecretsAsync(string contentKeyPolicyName)
+        {
+            var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl + "/getPolicyPropertiesWithSecrets", contentKeyPolicyName);
+            string responseContent = await Client.GetObjectPostContentAsync(url);
+            return ContentKeyPolicy.FromJson(responseContent).Properties;
         }
     }
 }
