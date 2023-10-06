@@ -13,8 +13,8 @@ namespace MK.IO
         //
         // subscription operations
         //
-        private const string _accountProfileApiUrl = "api/profile";
-        private const string _accountStatsApiUrl = "api/ams/{0}/stats";
+        private const string _accountProfileApiUrl = "api/profile/";
+        private const string _accountStatsApiUrl = "api/ams/{0}/stats/";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient

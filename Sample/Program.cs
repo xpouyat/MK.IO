@@ -57,7 +57,7 @@ namespace Sample
 
 
             // Get subscription stats
-            //var stats = client.Subscription.GetStats();
+            var stats = client.Subscription.GetStats();
 
 
             // *********************
