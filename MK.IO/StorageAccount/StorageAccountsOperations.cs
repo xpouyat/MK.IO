@@ -173,7 +173,6 @@ namespace MK.IO
             await Client.ObjectContentAsync(url, httpMethod);
         }
 
-
         internal string GenerateStorageApiUrl(string urlPath)
         {
             return Client._baseUrl + string.Format(urlPath, Client.GetCustomerId(), Client.GetSubscriptionId());
