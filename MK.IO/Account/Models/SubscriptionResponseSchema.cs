@@ -30,7 +30,7 @@ namespace MK.IO
     public class MetadataSubscription
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [JsonProperty("created")]
         public DateTime Created { get; set; }

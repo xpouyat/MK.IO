@@ -18,6 +18,7 @@ namespace MK.IO
         private const string _accountApiUrl = "api/accounts/{0}/";
         private const string _accountSubscriptionsUrl = _accountApiUrl + "subscriptions/";
         private const string _accountSubscriptionUrl = _accountSubscriptionsUrl + "{1}";
+        private const string _locationsApiUrl = "api/locations/";
 
         /// <summary>
         /// Gets a reference to the AzureMediaServicesClient
@@ -93,6 +94,20 @@ namespace MK.IO
         {
             string responseContent = await Client.GetObjectContentAsync(GenerateSubscriptionApiUrl(_accountSubscriptionUrl));
             return SubscriptionResponseSchema.FromJson(responseContent);
+        }
+
+        /// <inheritdoc/>
+        public List<LocationResponseSchema> ListAllLocations()
+        {
+            var task = Task.Run(async () => await ListAllLocationsAsync());
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<List<LocationResponseSchema>> ListAllLocationsAsync()
+        {
+            string responseContent = await Client.GetObjectContentAsync(Client._baseUrl + _locationsApiUrl);
+            return LocationListResponseSchema.FromJson(responseContent).Items;
         }
 
 

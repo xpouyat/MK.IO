@@ -8,13 +8,13 @@ namespace MK.IO
     public class SubscriptionSchema
     {
         [JsonProperty("customerId")]
-        public string CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
         [JsonProperty("createdById")]
-        public string CreatedById { get; set; }
+        public Guid CreatedById { get; set; }
 
         [JsonProperty("locationId")]
-        public string LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         [JsonProperty("azureSubscriptionName")]
         public string AzureSubscriptionName { get; set; }
@@ -26,16 +26,16 @@ namespace MK.IO
         public bool IsActive { get; set; }
 
         [JsonProperty("projectSubscriptionId")]
-        public string ProjectSubscriptionId { get; set; }
+        public Guid ProjectSubscriptionId { get; set; }
 
         [JsonProperty("productPublicationId")]
-        public string ProductPublicationId { get; set; }
+        public Guid ProductPublicationId { get; set; }
 
         [JsonProperty("azureSubscriptionStatus")]
         public string AzureSubscriptionStatus { get; set; }
 
         [JsonProperty("azureSubscriptionId")]
-        public string AzureSubscriptionId { get; set; }
+        public Guid AzureSubscriptionId { get; set; }
 
         [JsonProperty("azureSubscriptionOfferId")]
         public string AzureSubscriptionOfferId { get; set; }

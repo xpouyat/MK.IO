@@ -52,5 +52,17 @@ namespace MK.IO
         /// </summary>
         /// <returns></returns>
         Task<SubscriptionResponseSchema> GetSubscriptionAsync();
+
+        /// <summary>
+        /// List all possible locations for MK/IO (Ids and names).
+        /// </summary>
+        /// <returns></returns>
+        List<LocationResponseSchema> ListAllLocations();
+
+        /// <summary>
+        /// List all possible locations for MK/IO (Ids and names).
+        /// </summary>
+        /// <returns></returns>
+        Task<List<LocationResponseSchema>> ListAllLocationsAsync();
     }
 }

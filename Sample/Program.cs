@@ -55,13 +55,12 @@ namespace Sample
                 Environment.Exit(0);
             }
 
-
             // Get subscription stats
             var stats = client.Account.GetSubscriptionStats();
 
             var subs = await client.Account.ListAllSubscriptionsAsync();
             var sub = await client.Account.GetSubscriptionAsync();
-
+            var locs = await client.Account.ListAllLocationsAsync();
 
             // *********************
             // transform operations
@@ -76,7 +75,6 @@ namespace Sample
                         Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrateSD),
                         RelativePriority = "Normal" } }
             });
-
 
 
             // ***************
