@@ -8,7 +8,7 @@ namespace MK.IO
     public class ContentKeyPolicyConfigurationFairPlay : ContentKeyPolicyConfiguration
     {
 
-        public ContentKeyPolicyConfigurationFairPlay(string ask, string fairPlayPfx, string fairPlayPfxPassword, int rentalDuration, string rentalAndLeaseKeyType)
+        public ContentKeyPolicyConfigurationFairPlay(string ask, string fairPlayPfx, string fairPlayPfxPassword, long rentalDuration, string rentalAndLeaseKeyType)
         {
             Ask = ask;
             FairPlayPfx = fairPlayPfx;
@@ -27,7 +27,7 @@ namespace MK.IO
         public string FairPlayPfx { get; set; }
 
         [JsonProperty("rentalDuration")]
-        public int RentalDuration { get; set; }
+        public long RentalDuration { get; set; }
 
         [JsonProperty("fairPlayPfxPassword")]
         public string FairPlayPfxPassword { get; set; }
