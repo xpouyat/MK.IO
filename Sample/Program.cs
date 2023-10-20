@@ -62,6 +62,38 @@ namespace Sample
             var sub = await client.Account.GetSubscriptionAsync();
             var locs = await client.Account.ListAllLocationsAsync();
 
+
+
+            // *****************
+            // asset operations
+            // *****************
+
+            // list assets
+            //var mkioAssets = client.Assets.List("name desc", 4);
+
+
+            var mkioAssetsResult = client.Assets.ListAsPage("name desc", 4);
+            do
+            {
+                mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
+            } while (mkioAssetsResult.NextPageLink != null);
+
+
+            var specc = client.Assets.ListTracksAndDirListing("copy-ef2058b692-copy");
+
+            // get streaming locators for asset
+            var locatorsAsset = client.Assets.ListStreamingLocators("uploaded-c9c6146a98-CustomPreset-AutoFit-57653ac7b8-autofit");
+
+            // get asset
+            var mkasset = client.Assets.Get("copy-152b839997");
+
+            // create asset
+            // var newasset = client.Assets.CreateOrUpdate("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
+
+            // delete asset
+            // client.Assets.Delete("asset-33adc1873f");
+
+
             // *********************
             // transform operations
             // *********************
@@ -415,35 +447,7 @@ namespace Sample
 
 
 
-            // *****************
-            // asset operations
-            // *****************
-
-            // list assets
-            //var mkioAssets = client.Assets.List("name desc", 4);
-
-
-            var mkioAssetsResult = client.Assets.ListAsPage("name desc", 4);
-            do
-            {
-                mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
-            } while (mkioAssetsResult.NextPageLink != null);
-
-
-            var specc = client.Assets.ListTracksAndDirListing("copy-ef2058b692-copy");
-
-            // get streaming locators for asset
-            var locatorsAsset = client.Assets.ListStreamingLocators("copy-1b510ee166-copy-d32391984a");
-
-            // get asset
-            var mkasset = client.Assets.Get("copy-152b839997");
-
-            // create asset
-            // var newasset = client.Assets.CreateOrUpdate("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
-
-            // delete asset
-            // client.Assets.Delete("asset-33adc1873f");
-
+          
 
 
             // ******************************
