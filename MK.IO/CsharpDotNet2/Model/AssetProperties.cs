@@ -36,6 +36,14 @@ namespace MK.IO.Models
         public string Container { get; set; }
 
         /// <summary>
+        /// This field defines the deletion policy for the underlying storage container.          This determines the behavior when an asset record is deleted. There are two options, 'DELETE', and 'PRESERVE'.         A deletion policy of 'DELETE' will result in the associated storage container and all its contents being removed          from storage. A deletion policy of 'PRESERVE' will leave the content in-place in your storage account.         If left blank, the default behavior of the system will be to PRESERVE content. Once set by the user, this value          can be modified, but not un-set.
+        /// </summary>
+        /// <value>This field defines the deletion policy for the underlying storage container.          This determines the behavior when an asset record is deleted. There are two options, 'DELETE', and 'PRESERVE'.         A deletion policy of 'DELETE' will result in the associated storage container and all its contents being removed          from storage. A deletion policy of 'PRESERVE' will leave the content in-place in your storage account.         If left blank, the default behavior of the system will be to PRESERVE content. Once set by the user, this value          can be modified, but not un-set.</value>
+        [DataMember(Name = "containerDeletionPolicy", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "containerDeletionPolicy")]
+        public string ContainerDeletionPolicy { get; set; }
+
+        /// <summary>
         /// The Asset description.
         /// </summary>
         /// <value>The Asset description.</value>
@@ -79,6 +87,7 @@ namespace MK.IO.Models
             sb.Append("  AlternateId: ").Append(AlternateId).Append("\n");
             sb.Append("  AssetId: ").Append(AssetId).Append("\n");
             sb.Append("  Container: ").Append(Container).Append("\n");
+            sb.Append("  ContainerDeletionPolicy: ").Append(ContainerDeletionPolicy).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  EncryptionScope: ").Append(EncryptionScope).Append("\n");
             sb.Append("  StorageAccountName: ").Append(StorageAccountName).Append("\n");

@@ -12,6 +12,14 @@ namespace MK.IO.Models
     public class SelectAudioTrackByAttribute
     {
         /// <summary>
+        /// The discriminator for derived types.
+        /// </summary>
+        /// <value>The discriminator for derived types.</value>
+        [DataMember(Name = "@odata.type", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "@odata.type")]
+        public string OdataType { get; set; }
+
+        /// <summary>
         /// The TrackAttribute to filter the tracks by.
         /// </summary>
         /// <value>The TrackAttribute to filter the tracks by.</value>
@@ -43,14 +51,6 @@ namespace MK.IO.Models
         [JsonProperty(PropertyName = "filterValue")]
         public string FilterValue { get; set; }
 
-        /// <summary>
-        /// The discriminator for derived types.
-        /// </summary>
-        /// <value>The discriminator for derived types.</value>
-        [DataMember(Name = "odatatype", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "odatatype")]
-        public string Odatatype { get; set; }
-
 
         /// <summary>
         /// Get the string presentation of the object
@@ -60,11 +60,11 @@ namespace MK.IO.Models
         {
             var sb = new StringBuilder();
             sb.Append("class SelectAudioTrackByAttribute {\n");
+            sb.Append("  OdataType: ").Append(OdataType).Append("\n");
             sb.Append("  Attribute: ").Append(Attribute).Append("\n");
             sb.Append("  ChannelMapping: ").Append(ChannelMapping).Append("\n");
             sb.Append("  Filter: ").Append(Filter).Append("\n");
             sb.Append("  FilterValue: ").Append(FilterValue).Append("\n");
-            sb.Append("  Odatatype: ").Append(Odatatype).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

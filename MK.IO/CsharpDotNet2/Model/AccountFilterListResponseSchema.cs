@@ -15,9 +15,9 @@ namespace MK.IO.Models
         /// A list of account filters
         /// </summary>
         /// <value>A list of account filters</value>
-        [DataMember(Name = "filters", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "filters")]
-        public List<AccountFilterSchema> Filters { get; set; }
+        [DataMember(Name = "value", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "value")]
+        public List<AccountFilterSchema> Value { get; set; }
 
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace MK.IO.Models
         {
             var sb = new StringBuilder();
             sb.Append("class AccountFilterListResponseSchema {\n");
-            sb.Append("  Value: ").Append(Filters).Append("\n");
+            sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

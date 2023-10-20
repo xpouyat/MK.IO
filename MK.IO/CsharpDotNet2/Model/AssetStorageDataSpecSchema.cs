@@ -35,15 +35,17 @@ namespace MK.IO.Models
         public ExceptionsSchema Exceptions { get; set; }
 
         /// <summary>
-        /// Gets or Sets Files
+        /// A list of files in the storage container. This only represents files present at the top-level of the container.
         /// </summary>
+        /// <value>A list of files in the storage container. This only represents files present at the top-level of the container.</value>
         [DataMember(Name = "files", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "files")]
         public List<FileSchema> Files { get; set; }
 
         /// <summary>
-        /// Gets or Sets Folders
+        /// A list of folders in the storage container.
         /// </summary>
+        /// <value>A list of folders in the storage container.</value>
         [DataMember(Name = "folders", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "folders")]
         public List<FolderSchema> Folders { get; set; }

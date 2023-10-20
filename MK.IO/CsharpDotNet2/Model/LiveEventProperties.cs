@@ -72,9 +72,9 @@ namespace MK.IO.Models
         public LiveEventPreview Preview { get; set; }
 
         /// <summary>
-        /// The current provisioning state of the resource. One of 'inProgress', 'succeeded', or 'failed'
+        /// The current provisioning state of the resource. One of 'InProgress', 'Succeeded', or 'Failed'
         /// </summary>
-        /// <value>The current provisioning state of the resource. One of 'inProgress', 'succeeded', or 'failed'</value>
+        /// <value>The current provisioning state of the resource. One of 'InProgress', 'Succeeded', or 'Failed'</value>
         [DataMember(Name = "provisioningState", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }

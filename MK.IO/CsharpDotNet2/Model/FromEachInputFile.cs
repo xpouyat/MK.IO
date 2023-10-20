@@ -12,20 +12,20 @@ namespace MK.IO.Models
     public class FromEachInputFile
     {
         /// <summary>
+        /// The discriminator for derived types.
+        /// </summary>
+        /// <value>The discriminator for derived types.</value>
+        [DataMember(Name = "@odata.type", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "@odata.type")]
+        public string OdataType { get; set; }
+
+        /// <summary>
         /// The list of TrackDescriptors which define the metadata and selection of tracks in the input.
         /// </summary>
         /// <value>The list of TrackDescriptors which define the metadata and selection of tracks in the input.</value>
         [DataMember(Name = "includedTracks", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "includedTracks")]
         public List<TrackDiscriminator> IncludedTracks { get; set; }
-
-        /// <summary>
-        /// The discriminator for derived types.
-        /// </summary>
-        /// <value>The discriminator for derived types.</value>
-        [DataMember(Name = "odatatype", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "odatatype")]
-        public string Odatatype { get; set; }
 
 
         /// <summary>
@@ -36,8 +36,8 @@ namespace MK.IO.Models
         {
             var sb = new StringBuilder();
             sb.Append("class FromEachInputFile {\n");
+            sb.Append("  OdataType: ").Append(OdataType).Append("\n");
             sb.Append("  IncludedTracks: ").Append(IncludedTracks).Append("\n");
-            sb.Append("  Odatatype: ").Append(Odatatype).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
