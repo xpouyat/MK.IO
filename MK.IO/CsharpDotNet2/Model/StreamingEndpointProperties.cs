@@ -98,9 +98,9 @@ namespace MK.IO.Models
         public int? MaxCacheAge { get; set; }
 
         /// <summary>
-        /// The provisioning state of the streaming endpoint. Set by the system. One of inProgress,Succeeded,Failed.
+        /// The provisioning state of the streaming endpoint. Set by the system. One of InProgress,Succeeded,Failed.
         /// </summary>
-        /// <value>The provisioning state of the streaming endpoint. Set by the system. One of inProgress,Succeeded,Failed.</value>
+        /// <value>The provisioning state of the streaming endpoint. Set by the system. One of InProgress,Succeeded,Failed.</value>
         [DataMember(Name = "provisioningState", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }

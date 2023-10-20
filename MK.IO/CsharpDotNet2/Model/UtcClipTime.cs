@@ -15,9 +15,9 @@ namespace MK.IO.Models
         /// The discriminator for derived types.
         /// </summary>
         /// <value>The discriminator for derived types.</value>
-        [DataMember(Name = "odatatype", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "odatatype")]
-        public string Odatatype { get; set; }
+        [DataMember(Name = "@odata.type", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "@odata.type")]
+        public string OdataType { get; set; }
 
         /// <summary>
         /// The time position on the timeline of the input media based on Utc time.
@@ -36,7 +36,7 @@ namespace MK.IO.Models
         {
             var sb = new StringBuilder();
             sb.Append("class UtcClipTime {\n");
-            sb.Append("  Odatatype: ").Append(Odatatype).Append("\n");
+            sb.Append("  OdataType: ").Append(OdataType).Append("\n");
             sb.Append("  Time: ").Append(Time).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

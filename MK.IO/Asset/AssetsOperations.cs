@@ -160,7 +160,7 @@ namespace MK.IO.Asset
         public async Task<List<AssetStreamingLocator>> ListStreamingLocatorsAsync(string assetName)
         {
             var url = Client.GenerateApiUrl(_assetListStreamingLocatorsApiUrl, assetName);
-            string responseContent = await Client.GetObjectContentAsync(url);
+            string responseContent = await Client.GetObjectPostContentAsync(url);
             return AssetListStreamingLocators.FromJson(responseContent).StreamingLocators;
         }
 

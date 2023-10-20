@@ -100,7 +100,7 @@ namespace MK.IO
             // fix to make sure Odattype is set as we use the generated class
             foreach (var o in properties.Outputs)
             {
-                o.Odatatype = "#Microsoft.Media.JobOutputAsset";
+                o.OdataType = "#Microsoft.Media.JobOutputAsset";
             }
             var content = new JobSchema { Properties = properties };
 

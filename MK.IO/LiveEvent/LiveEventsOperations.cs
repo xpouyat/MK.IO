@@ -95,7 +95,7 @@ namespace MK.IO
             return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.CreateObjectAsync);
         }
 
-        internal async Task<LiveEventSchema> CreateOrUpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags, Func<string ,string, Task<string>> func)
+        internal async Task<LiveEventSchema> CreateOrUpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags, Func<string, string, Task<string>> func)
         {
             var url = Client.GenerateApiUrl(_liveEventApiUrl, liveEventName);
             tags ??= new Dictionary<string, string>();

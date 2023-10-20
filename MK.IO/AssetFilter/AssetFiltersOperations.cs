@@ -42,7 +42,7 @@ namespace MK.IO.Asset
         {
             var url = Client.GenerateApiUrl(_assetFiltersApiUrl, assetName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<AssetFilterListResponseSchema>(responseContent, ConverterLE.Settings).Filters;
+            return JsonConvert.DeserializeObject<AssetFilterListResponseSchema>(responseContent, ConverterLE.Settings).Value;
         }
 
         /// <inheritdoc/>

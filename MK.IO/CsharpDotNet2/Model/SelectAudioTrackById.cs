@@ -12,20 +12,20 @@ namespace MK.IO.Models
     public class SelectAudioTrackById
     {
         /// <summary>
+        /// The discriminator for derived types.
+        /// </summary>
+        /// <value>The discriminator for derived types.</value>
+        [DataMember(Name = "@odata.type", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "@odata.type")]
+        public string OdataType { get; set; }
+
+        /// <summary>
         /// Optional designation for single channel audio tracks.
         /// </summary>
         /// <value>Optional designation for single channel audio tracks.</value>
         [DataMember(Name = "channelMapping", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "channelMapping")]
         public string ChannelMapping { get; set; }
-
-        /// <summary>
-        /// The discriminator for derived types.
-        /// </summary>
-        /// <value>The discriminator for derived types.</value>
-        [DataMember(Name = "odatatype", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "odatatype")]
-        public string Odatatype { get; set; }
 
         /// <summary>
         /// Track indentifer to select
@@ -44,8 +44,8 @@ namespace MK.IO.Models
         {
             var sb = new StringBuilder();
             sb.Append("class SelectAudioTrackById {\n");
+            sb.Append("  OdataType: ").Append(OdataType).Append("\n");
             sb.Append("  ChannelMapping: ").Append(ChannelMapping).Append("\n");
-            sb.Append("  Odatatype: ").Append(Odatatype).Append("\n");
             sb.Append("  TrackId: ").Append(TrackId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

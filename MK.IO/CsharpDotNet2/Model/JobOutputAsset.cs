@@ -12,6 +12,14 @@ namespace MK.IO.Models
     public class JobOutputAsset
     {
         /// <summary>
+        /// The discriminator for derived types.
+        /// </summary>
+        /// <value>The discriminator for derived types.</value>
+        [DataMember(Name = "@odata.type", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "@odata.type")]
+        public string OdataType { get; set; }
+
+        /// <summary>
         /// The name of the input Asset
         /// </summary>
         /// <value>The name of the input Asset</value>
@@ -41,14 +49,6 @@ namespace MK.IO.Models
         [DataMember(Name = "label", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "label")]
         public string Label { get; set; }
-
-        /// <summary>
-        /// The discriminator for derived types.
-        /// </summary>
-        /// <value>The discriminator for derived types.</value>
-        [DataMember(Name = "odatatype", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "odatatype")]
-        public string Odatatype { get; set; }
 
         /// <summary>
         /// If the JobOutput is in a Processing state, this contains the Job completion percentage. The value is an estimate and not intended to be used to predict Job completion times.
@@ -83,11 +83,11 @@ namespace MK.IO.Models
         {
             var sb = new StringBuilder();
             sb.Append("class JobOutputAsset {\n");
+            sb.Append("  OdataType: ").Append(OdataType).Append("\n");
             sb.Append("  AssetName: ").Append(AssetName).Append("\n");
             sb.Append("  EndTime: ").Append(EndTime).Append("\n");
             sb.Append("  Error: ").Append(Error).Append("\n");
             sb.Append("  Label: ").Append(Label).Append("\n");
-            sb.Append("  Odatatype: ").Append(Odatatype).Append("\n");
             sb.Append("  Progress: ").Append(Progress).Append("\n");
             sb.Append("  StartTime: ").Append(StartTime).Append("\n");
             sb.Append("  State: ").Append(State).Append("\n");
