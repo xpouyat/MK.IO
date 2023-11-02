@@ -18,7 +18,6 @@ namespace MK.IO
             PlayRight = playRight;
         }
 
-
         [JsonProperty("playRight")]
         public PlayReadyPlayRight PlayRight { get; set; }
 
@@ -30,27 +29,57 @@ namespace MK.IO
 
         [JsonProperty("securityLevel")]
         public string PlayReadySecurityLevel { get; set; }
-
+        
         [JsonProperty("allowTestDevices")]
         public bool AllowTestDevices { get; set; }
 
         [JsonProperty("contentKeyLocation")]
         public PlayReadyContentKeyLocation ContentKeyLocation { get; set; }
 
+        [JsonProperty("gracePeriod")]
+        public string GracePeriod { get; set; }
+
+        [JsonProperty("relativeBeginDate")]
+        public string RelativeBeginDate { get; set; }
+
+        [JsonProperty("relativeExpirationDate")]
+        public string RelativeExpirationDate { get; set; }
     }
 
     public class PlayReadyPlayRight
     {
-        public PlayReadyPlayRight(int firstPlayExpiration, int licenseValidityDuration, int playEnablers, int scmsRestriction, string allowPassingVideoContentToUnknownOutput)
-        {
-            ScmsRestriction = scmsRestriction;
-            AllowPassingVideoContentToUnknownOutput = allowPassingVideoContentToUnknownOutput;
-        }
-
         [JsonProperty("scmsRestriction")]
         public int ScmsRestriction { get; set; }
+       
 
         [JsonProperty("allowPassingVideoContentToUnknownOutput")]
         public string AllowPassingVideoContentToUnknownOutput { get; set; }
+
+        [JsonProperty("analogVideoOpl")]
+        public int AnalogVideoOpl { get; set; }
+
+        [JsonProperty("compressedDigitalAudioOpl")]
+        public int CompressedDigitalAudioOpl { get; set; }
+
+        [JsonProperty("compressedDigitalVideoOpl")]
+        public int CompressedDigitalVideoOpl { get; set; }
+
+        [JsonProperty("uncompressedDigitalAudioOpl")]
+        public int UncompressedDigitalAudioOpl { get; set; }
+
+        [JsonProperty("uncompressedDigitalVideoOpl")]
+        public int UncompressedDigitalVideoOpl { get; set; }
+
+        [JsonProperty("digitalVideoOnlyContentRestriction")]
+        public bool DigitalVideoOnlyContentRestriction { get; set; }
+         
+        [JsonProperty("imageConstraintForAnalogComponentVideoRestriction")]
+        public bool ImageConstraintForAnalogComponentVideoRestriction { get; set; }
+
+        [JsonProperty("imageConstraintForAnalogComputerMonitorRestriction")]
+        public bool ImageConstraintForAnalogComputerMonitorRestriction { get; set; }
+
+        [JsonProperty("firstPlayExpiration")]
+        public string FirstPlayExpiration { get; set; }
     }
 }

@@ -2,12 +2,20 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace MK.IO
 {
 
     public partial class ContentKeyPolicy
     {
+        public ContentKeyPolicy() { }
+       
+
+        public ContentKeyPolicy(ContentKeyPolicyProperties properties)
+        {
+            Properties = properties;
+        }
 
         public ContentKeyPolicy(string description, List<ContentKeyPolicyOption> contentKeyPolicyOptions)
         {
@@ -27,6 +35,10 @@ namespace MK.IO
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        [DataMember(Name = "id", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
         [JsonProperty("properties")]
         public ContentKeyPolicyProperties Properties { get; set; }
 
@@ -39,5 +51,8 @@ namespace MK.IO
 
         [JsonProperty("description")]
         public string Description { get; set; }
+
+        [JsonProperty("policyId")]
+        public Guid? PolicyId { get; set; }
     }
 }
