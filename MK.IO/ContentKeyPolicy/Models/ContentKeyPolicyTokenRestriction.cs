@@ -11,6 +11,7 @@ namespace MK.IO
             Audience = audience;
             RestrictionTokenType = restrictionTokenType;
             PrimaryVerificationKey = primaryVerificationKey;
+            AlternateVerificationKeys = new List<ContentKeyPolicyVerificationKey>();
         }
 
         [JsonProperty("@odata.type")]
@@ -22,10 +23,27 @@ namespace MK.IO
         [JsonProperty("audience")]
         public string Audience { get; set; }
 
+        [JsonProperty("requiredClaims")]
+        public List<RequiredClaim> RequiredClaims { get; set; }
+
         [JsonProperty("restrictionTokenType")]
         public string RestrictionTokenType { get; set; }
 
         [JsonProperty("primaryVerificationKey")]
         public ContentKeyPolicyVerificationKey PrimaryVerificationKey { get; set; }
+
+        [JsonProperty("alternateVerificationKeys")]
+        public List<ContentKeyPolicyVerificationKey> AlternateVerificationKeys { get; set; }
+
     }
+
+    public class RequiredClaim
+    {
+        [JsonProperty("claimType")]
+        public string ClaimType { get; set; }
+
+        [JsonProperty("claimValue")]
+        public string ClaimValue { get; set; }
+    }
+
 }

@@ -7,7 +7,6 @@ namespace MK.IO
 {
     public class ContentKeyPolicyOption
     {
-
         public ContentKeyPolicyOption(string name, ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
         {
             Name = name;
@@ -23,5 +22,8 @@ namespace MK.IO
 
         [JsonProperty("configuration")]
         public ContentKeyPolicyConfiguration Configuration { get; set; }
+
+        [JsonProperty("policyOptionId")]
+        public Guid? PolicyOptionId { get; set; }
     }
 }
