@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace MK.IO
 {
-    public class BuiltInStandardEncoderPreset : TransformOutputPreset
+    public class BuiltInStandardEncoderPreset : TransformPreset
     {
 
         public BuiltInStandardEncoderPreset(EncoderNamedPreset presetName)

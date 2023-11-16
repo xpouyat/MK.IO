@@ -18,10 +18,14 @@ var client = new MKIOClient("mkiosubscriptionname", "mkiotoken");
 var transform = client.Transforms.CreateOrUpdate("simpletransform", new TransformProperties
             {
                 Description = "Encoding to 720p single bitrate",
-                Outputs = new List<TransformOutput>() {
-                    new TransformOutput {
+                Outputs =
+                {
+                    new TransformOutput
+                    {
                         Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrate720p),
-                        RelativePriority = "Normal" } }
+                        RelativePriority = "Normal"
+                    }
+                }
             });
 
 
