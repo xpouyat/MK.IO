@@ -9,7 +9,7 @@ namespace MK.IO
     /// 
     /// </summary>
     [DataContract]
-    public class AudioAnalyzerPreset : TransformOutputPreset
+    public class AudioAnalyzerPreset : TransformPreset
     {
         /// <summary>
         /// The discriminator for derived types.
@@ -40,7 +40,7 @@ namespace MK.IO
         /// <value>Determines the set of audio analysis operations to be performed. If unspecified, the Standard AudioAnalysisMode would be chosen.</value>
         [DataMember(Name = "mode", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "mode")]
-        public AudioAnalyzerMode Mode { get; set; }
+        public AudioAnalysisMode Mode { get; set; }
 
         /// <summary>
         /// Get the string presentation of the object

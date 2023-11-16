@@ -13,7 +13,7 @@ namespace MK.IO
     /// </summary>
     /// <value>Determines the set of audio analysis operations to be performed. If unspecified, the Standard AudioAnalysisMode would be chosen.</value>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum AudioAnalyzerMode
+    public enum AudioAnalysisMode
     {
         /// <summary>
         /// Enum Basic for value: Basic

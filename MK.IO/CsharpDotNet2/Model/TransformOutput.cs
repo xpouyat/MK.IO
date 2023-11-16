@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>Preset that describes the operations that will be used to modify, transcode, or extract insights from the source file to generate the output. Only BultiInStandardEncoderPreset is supported currently.</value>
         [DataMember(Name = "preset", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "preset")]
-        public TransformOutputPreset Preset { get; set; }
+        public TransformPreset Preset { get; set; }
 
         /// <summary>
         /// Sets the relative priority of the TransformOutputs within a Transform

@@ -90,7 +90,7 @@ namespace Sample
             {
                 Console.WriteLine(ex.Message);
             }
-            
+
 
             // get asset
             var mkasset = client.Assets.Get("copy-152b839997");
@@ -110,10 +110,14 @@ namespace Sample
             var tranform = client.Transforms.CreateOrUpdate("simpleTransformSD", new TransformProperties
             {
                 Description = "desc",
-                Outputs = new List<TransformOutput>() {
-                    new TransformOutput {
+                Outputs =
+                {
+                    new TransformOutput
+                    {
                         Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrateSD),
-                        RelativePriority = "Normal" } }
+                        RelativePriority = "Normal"
+                    }
+                }
             });
 
 
@@ -463,19 +467,19 @@ namespace Sample
 
             // create streaming endpoint
 
-           /*
-            var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
-            {
-                Description = "my description",
-                ScaleUnits = 0,
-                CdnEnabled = false,
-                Sku = new StreamingEndpointsCurrentSku
-                {
-                    Name = "Standard",
-                    Capacity = 600
-                }
-            });
-          */
+            /*
+             var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
+             {
+                 Description = "my description",
+                 ScaleUnits = 0,
+                 CdnEnabled = false,
+                 Sku = new StreamingEndpointsCurrentSku
+                 {
+                     Name = "Standard",
+                     Capacity = 600
+                 }
+             });
+           */
 
             // start, stop, delete streaming endpoint
             //client.StreamingEndpoints.Start("streamingendpoint1");
