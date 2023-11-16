@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>The time when the live event was created.</value>
         [DataMember(Name = "created", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "created")]
-        public string Created { get; set; }
+        public string Created { get; private set; }
 
         /// <summary>
         /// Gets or Sets CrossSiteAccessPolicies
@@ -62,7 +62,7 @@ namespace MK.IO.Models
         /// <value>The last time the live event was modified.</value>
         [DataMember(Name = "lastModified", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "lastModified")]
-        public string LastModified { get; set; }
+        public string LastModified { get; private set; }
 
         /// <summary>
         /// Gets or Sets Preview

@@ -60,6 +60,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<ContentKeyPolicy> GetAsync(string contentKeyPolicyName)
         {
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
+
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return ContentKeyPolicy.FromJson(responseContent);
@@ -74,6 +76,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteAsync(string contentKeyPolicyName)
         {
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
+
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
@@ -88,6 +92,9 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<ContentKeyPolicy> CreateAsync(string contentKeyPolicyName, ContentKeyPolicy content)
         {
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
+            Argument.AssertNotNull(content, nameof(content));
+
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
             return ContentKeyPolicy.FromJson(responseContent);
@@ -103,6 +110,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<ContentKeyPolicyProperties> GetPolicyPropertiesWithSecretsAsync(string contentKeyPolicyName)
         {
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
+
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl + "/getPolicyPropertiesWithSecrets", contentKeyPolicyName);
             string responseContent = await Client.GetObjectPostContentAsync(url);
             return ContentKeyPolicy.FromJson(responseContent).Properties;

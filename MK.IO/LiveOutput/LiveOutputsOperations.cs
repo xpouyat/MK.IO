@@ -49,6 +49,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<List<LiveOutputSchema>> ListAsync(string liveEventName)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
             var url = Client.GenerateApiUrl(_liveOutputsApiUrl, liveEventName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<LiveOutputListResponseSchema>(responseContent, ConverterLE.Settings).Value;
@@ -64,6 +66,9 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<LiveOutputSchema> GetAsync(string liveEventName, string liveOutputName)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+            
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName, liveOutputName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings);
@@ -79,6 +84,10 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<LiveOutputSchema> CreateAsync(string liveEventName, string liveOutputName, LiveOutputProperties properties)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName, liveOutputName);
             //tags ??= new Dictionary<string, string>();
             var content = new LiveOutputSchema { Properties = properties };
@@ -95,6 +104,9 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteAsync(string liveEventName, string liveOutputName)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }

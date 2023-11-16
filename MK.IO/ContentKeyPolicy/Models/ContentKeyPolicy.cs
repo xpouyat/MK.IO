@@ -10,7 +10,7 @@ namespace MK.IO
     public partial class ContentKeyPolicy
     {
         public ContentKeyPolicy() { }
-       
+
 
         public ContentKeyPolicy(ContentKeyPolicyProperties properties)
         {

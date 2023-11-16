@@ -29,7 +29,7 @@ namespace MK.IO
 
         [JsonProperty("securityLevel")]
         public string PlayReadySecurityLevel { get; set; }
-        
+
         [JsonProperty("allowTestDevices")]
         public bool AllowTestDevices { get; set; }
 
@@ -50,7 +50,7 @@ namespace MK.IO
     {
         [JsonProperty("scmsRestriction")]
         public int ScmsRestriction { get; set; }
-       
+
 
         [JsonProperty("allowPassingVideoContentToUnknownOutput")]
         public string AllowPassingVideoContentToUnknownOutput { get; set; }
@@ -72,7 +72,7 @@ namespace MK.IO
 
         [JsonProperty("digitalVideoOnlyContentRestriction")]
         public bool DigitalVideoOnlyContentRestriction { get; set; }
-         
+
         [JsonProperty("imageConstraintForAnalogComponentVideoRestriction")]
         public bool ImageConstraintForAnalogComponentVideoRestriction { get; set; }
 

@@ -64,6 +64,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<StreamingEndpointSchema> GetAsync(string streamingEndpointName)
         {
+            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+
             var url = Client.GenerateApiUrl(_streamingEndpointApiUrl, streamingEndpointName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings);
@@ -79,6 +81,10 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<StreamingEndpointSchema> CreateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string> tags = null)
         {
+            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             var url = Client.GenerateApiUrl(_streamingEndpointApiUrl + "?autoStart=" + autoStart.ToString(), streamingEndpointName);
             tags ??= new Dictionary<string, string>();
             var content = new StreamingEndpointSchema { Location = location, Properties = properties, Tags = tags };
@@ -95,6 +101,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task StopAsync(string streamingEndpointName)
         {
+            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+
             await StreamingEndpointOperationAsync(streamingEndpointName, "stop", HttpMethod.Post);
         }
 
@@ -107,6 +115,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task StartAsync(string streamingEndpointName)
         {
+            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+
             await StreamingEndpointOperationAsync(streamingEndpointName, "start", HttpMethod.Post);
         }
 
@@ -119,6 +129,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteAsync(string streamingEndpointName)
         {
+            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+
             await StreamingEndpointOperationAsync(streamingEndpointName, null, HttpMethod.Delete);
         }
 

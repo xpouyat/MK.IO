@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>The creation date and time of the Transform. Set by the system.</value>
         [DataMember(Name = "created", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "created")]
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; private set; }
 
         /// <summary>
         /// The description of the Transform.
@@ -33,7 +33,7 @@ namespace MK.IO.Models
         /// <value>The last modified date and time of the Transform. Set by the system.</value>
         [DataMember(Name = "lastModified", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "lastModified")]
-        public DateTime? LastModified { get; set; }
+        public DateTime? LastModified { get; private set; }
 
         /// <summary>
         /// An array of one or more TransformOutputs that the Transform should generate.

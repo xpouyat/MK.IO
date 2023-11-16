@@ -12,20 +12,20 @@ namespace MK.IO.Models
     public class JobSchema
     {
         /// <summary>
-        /// A path to access the resource.
+        /// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
-        /// <value>A path to access the resource.</value>
+        /// <value>Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</value>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
-        /// The name of the Job resource. This is provided in the URL when a resources is created, and is immutable.
+        /// The name of the resource
         /// </summary>
-        /// <value>The name of the Job resource. This is provided in the URL when a resources is created, and is immutable.</value>
+        /// <value>The name of the resource</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets or Sets Properties
@@ -33,6 +33,21 @@ namespace MK.IO.Models
         [DataMember(Name = "properties", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "properties")]
         public JobProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SystemData
+        /// </summary>
+        [DataMember(Name = "systemData", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemDataSchema SystemData { get; private set; }
+
+        /// <summary>
+        /// The type of the resource. E.g. \"Microsoft.Media/mediaservices/assets\"
+        /// </summary>
+        /// <value>The type of the resource. E.g. \"Microsoft.Media/mediaservices/assets\"</value>
+        [DataMember(Name = "type", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
 
         /// <summary>
@@ -46,6 +61,8 @@ namespace MK.IO.Models
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Properties: ").Append(Properties).Append("\n");
+            sb.Append("  SystemData: ").Append(SystemData).Append("\n");
+            sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

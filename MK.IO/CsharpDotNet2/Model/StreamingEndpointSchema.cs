@@ -12,14 +12,6 @@ namespace MK.IO.Models
     public class StreamingEndpointSchema
     {
         /// <summary>
-        /// A path to access the resource.
-        /// </summary>
-        /// <value>A path to access the resource.</value>
-        [DataMember(Name = "idx", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "idx")]
-        public string Idx { get; set; }
-
-        /// <summary>
         /// The name of the location in which the streaming endpoint is located. This field must match the location in which the user's subscription is provisioned.
         /// </summary>
         /// <value>The name of the location in which the streaming endpoint is located. This field must match the location in which the user's subscription is provisioned.</value>
@@ -28,12 +20,12 @@ namespace MK.IO.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// The name of the streamingEndpoint resource. This is provided in the URL when a resources is created, and is immutable.
+        /// The name of the resource
         /// </summary>
-        /// <value>The name of the streamingEndpoint resource. This is provided in the URL when a resources is created, and is immutable.</value>
+        /// <value>The name of the resource</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets or Sets Properties
@@ -50,14 +42,6 @@ namespace MK.IO.Models
         [JsonProperty(PropertyName = "tags")]
         public Dictionary<string, string> Tags { get; set; }
 
-        /// <summary>
-        /// The resource type. Not used for anything
-        /// </summary>
-        /// <value>The resource type. Not used for anything</value>
-        [DataMember(Name = "type", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
 
         /// <summary>
         /// Get the string presentation of the object
@@ -67,12 +51,10 @@ namespace MK.IO.Models
         {
             var sb = new StringBuilder();
             sb.Append("class StreamingEndpointSchema {\n");
-            sb.Append("  Idx: ").Append(Idx).Append("\n");
             sb.Append("  Location: ").Append(Location).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Properties: ").Append(Properties).Append("\n");
             sb.Append("  Tags: ").Append(Tags).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

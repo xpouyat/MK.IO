@@ -66,6 +66,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<TransformSchema> GetAsync(string transformName)
         {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings);
@@ -81,6 +83,9 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<TransformSchema> CreateOrUpdateAsync(string transformName, TransformProperties properties)
         {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);
             var content = new TransformSchema { Properties = properties };
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
@@ -96,6 +101,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteAsync(string transformName)
         {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }

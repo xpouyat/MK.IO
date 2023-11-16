@@ -1,5 +1,6 @@
 ﻿using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MK.IO.Asset
 {
@@ -40,6 +41,8 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task<List<AssetFilterSchema>> ListAsync(string assetName)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+
             var url = Client.GenerateApiUrl(_assetFiltersApiUrl, assetName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<AssetFilterListResponseSchema>(responseContent, ConverterLE.Settings).Value;
@@ -54,6 +57,9 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task<AssetFilterSchema> GetAsync(string assetName, string filterName)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<AssetFilterSchema>(responseContent, ConverterLE.Settings);
@@ -69,6 +75,10 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task<AssetFilterSchema> CreateOrUpdateAsync(string assetName, string filterName, MediaFilterProperties properties)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);
             AssetFilterSchema content = new()
             {
@@ -89,6 +99,9 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task DeleteAsync(string assetName, string filterName)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }

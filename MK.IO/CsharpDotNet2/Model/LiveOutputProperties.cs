@@ -33,7 +33,7 @@ namespace MK.IO.Models
         /// <value>The exact time the live output was created.</value>
         [DataMember(Name = "created", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "created")]
-        public string Created { get; set; }
+        public DateTime? Created { get; private set; }
 
         /// <summary>
         /// The description of the live output.
@@ -56,7 +56,7 @@ namespace MK.IO.Models
         /// <value>The exact time the live output was last modified.</value>
         [DataMember(Name = "lastModified", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "lastModified")]
-        public string LastModified { get; set; }
+        public DateTime? LastModified { get; private set; }
 
         /// <summary>
         /// The name of the manifest file. If not provided, the service will generate one automatically. This is the filename that will appear in playback URLs.

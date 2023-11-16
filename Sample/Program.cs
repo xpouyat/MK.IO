@@ -82,7 +82,15 @@ namespace Sample
             var specc = client.Assets.ListTracksAndDirListing("copy-ef2058b692-copy");
 
             // get streaming locators for asset
-            var locatorsAsset = client.Assets.ListStreamingLocators("uploaded-c9c6146a98-CustomPreset-AutoFit-57653ac7b8-autofit");
+            try
+            {
+                var locatorsAsset = client.Assets.ListStreamingLocators("uploaded-c9c6146a98-CustomPreset-AutoFit-57653ac7b8-autofit");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
 
             // get asset
             var mkasset = client.Assets.Get("copy-152b839997");
@@ -443,13 +451,6 @@ namespace Sample
 
 
 
-
-
-
-
-          
-
-
             // ******************************
             // Streaming endpoint operations
             // ******************************
@@ -462,7 +463,7 @@ namespace Sample
 
             // create streaming endpoint
 
-            /*
+           /*
             var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
                 Description = "my description",
@@ -474,7 +475,7 @@ namespace Sample
                     Capacity = 600
                 }
             });
-            */
+          */
 
             // start, stop, delete streaming endpoint
             //client.StreamingEndpoints.Start("streamingendpoint1");

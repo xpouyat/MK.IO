@@ -48,7 +48,7 @@ namespace MK.IO.Models
         /// <value>The creation date and time of the streaming endpoint. Set by the system.</value>
         [DataMember(Name = "created", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "created")]
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; private set; }
 
         /// <summary>
         /// Gets or Sets CrossSiteAccessPolicies
@@ -87,7 +87,7 @@ namespace MK.IO.Models
         /// <value>The last modified date and time of the streaming endpoint. Set by the system.</value>
         [DataMember(Name = "lastModified", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "lastModified")]
-        public DateTime? LastModified { get; set; }
+        public DateTime? LastModified { get; private set; }
 
         /// <summary>
         /// The maximum amount of time that content will be cached, in seconds. This value is superceded by any ETAG values set by the infrastructure.

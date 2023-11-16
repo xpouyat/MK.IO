@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>SAS Token for Azure Storage Account, including leading ?</value>
         [DataMember(Name = "sasToken", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "sasToken")]
-        public string SasToken { get; set; }
+        public string SasToken { get;  set; }
 
         /// <summary>
         /// Sanitized token returned in responses from the server. This is the same as the sasToken, but with the signature removed.
@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>Sanitized token returned in responses from the server. This is the same as the sasToken, but with the signature removed.</value>
         [DataMember(Name = "sasTokenSanitized", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "sasTokenSanitized")]
-        public string SasTokenSanitized { get; set; }
+        public string SasTokenSanitized { get; private set; }
 
 
         /// <summary>

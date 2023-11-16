@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>The creation date and time of the Job. Set by the system.</value>
         [DataMember(Name = "created", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "created")]
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; private set; }
 
         /// <summary>
         /// The description of the Job.
@@ -41,7 +41,7 @@ namespace MK.IO.Models
         /// <value>The UTC date and time at which this Job finished processing</value>
         [DataMember(Name = "endTime", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "endTime")]
-        public string EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
         /// <summary>
         /// The inputs of the Job.
@@ -57,7 +57,7 @@ namespace MK.IO.Models
         /// <value>The last modified date and time of the Job. Set by the system.</value>
         [DataMember(Name = "lastModified", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "lastModified")]
-        public DateTime? LastModified { get; set; }
+        public DateTime? LastModified { get; private set; }
 
         /// <summary>
         /// The outputs for the Job.
@@ -81,7 +81,7 @@ namespace MK.IO.Models
         /// <value>The UTC date and time at which this Job started processing</value>
         [DataMember(Name = "startTime", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "startTime")]
-        public string StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         /// <summary>
         /// The current state of the job.
@@ -89,7 +89,7 @@ namespace MK.IO.Models
         /// <value>The current state of the job.</value>
         [DataMember(Name = "state", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "state")]
-        public string State { get; set; }
+        public JobState State { get; set; }
 
 
         /// <summary>
