@@ -36,12 +36,11 @@ namespace MK.IO
 
         /// <summary>
         /// Determines the set of audio analysis operations to be performed. If unspecified, the Standard AudioAnalysisMode would be chosen.
-        /// Use AudioAnalyzerPresetMode to list values.
         /// </summary>
         /// <value>Determines the set of audio analysis operations to be performed. If unspecified, the Standard AudioAnalysisMode would be chosen.</value>
         [DataMember(Name = "mode", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "mode")]
-        public string Mode { get; set; }
+        public AudioAnalyzerMode Mode { get; set; }
 
         /// <summary>
         /// Get the string presentation of the object

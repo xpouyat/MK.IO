@@ -48,7 +48,7 @@ namespace MK.IO.Models
         /// <value>The input protocol for the live event.          This is specified at creation time and cannot be updated.         Must be one of RTMP or SRT. fmp4 smooth input is not supported.         </value>
         [DataMember(Name = "streamingProtocol", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "streamingProtocol")]
-        public string StreamingProtocol { get; set; }
+        public LiveEventInputProtocol StreamingProtocol { get; set; }
 
         /// <summary>
         /// The metadata endpoints for the live event.

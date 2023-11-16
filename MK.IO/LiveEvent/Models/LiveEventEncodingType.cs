@@ -1,30 +1,47 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
+
 namespace MK.IO
 {
-    /// <summary> The encoding types for live event. </summary>
-    public readonly partial struct LiveEventEncodingType
+    /// <summary>
+    /// Live event type. When encodingType is set to PassthroughBasic or PassthroughStandard, the service simply passes through the incoming video and audio layer(s) to the output. When encodingType is set to Standard or Premium1080p, a live encoder transcodes the incoming stream into multiple bitrates or layers
+    /// </summary>
+    /// <value>Live event type. When encodingType is set to PassthroughBasic or PassthroughStandard, the service simply passes through the incoming video and audio layer(s) to the output. When encodingType is set to Standard or Premium1080p, a live encoder transcodes the incoming stream into multiple bitrates or layers</value>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum LiveEventEncodingType
     {
+        /// <summary>
+        /// Enum None for value: None
+        /// </summary>
+        [EnumMember(Value = "None")]
+        None = 1,
 
         /// <summary>
-        /// The ingested stream passes through the live event from the contribution encoder.
+        /// Enum PassthroughBasic for value: PassthroughBasic
         /// </summary>
-        public static readonly string PassthroughBasic = "PassthroughBasic";
+        [EnumMember(Value = "PassthroughBasic")]
+        PassthroughBasic = 2,
 
         /// <summary>
-        /// The ingested stream passes through the live event from the contribution encoder.
+        /// Enum PassthroughStandard for value: PassthroughStandard
         /// </summary>
-        public static readonly string PassthroughStandard = "PassthroughStandard";
+        [EnumMember(Value = "PassthroughStandard")]
+        PassthroughStandard = 3,
 
         /// <summary>
-        /// A live encoder transcodes the incoming stream into multiple bitrates or layers
+        /// Enum Premium1080p for value: Premium1080p
         /// </summary>
-        public static readonly string Standard = "Standard ";
+        [EnumMember(Value = "Premium1080p")]
+        Premium1080p = 4,
 
         /// <summary>
-        /// A live encoder transcodes the incoming stream into multiple bitrates or layers
+        /// Enum Standard for value: Standard
         /// </summary>
-        public static readonly string Premium1080p = "Premium1080p ";
+        [EnumMember(Value = "Standard")]
+        Standard = 5
     }
 }

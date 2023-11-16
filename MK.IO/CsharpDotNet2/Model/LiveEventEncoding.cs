@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>Live event type. When encodingType is set to PassthroughBasic or PassthroughStandard, the service simply passes through the incoming video and audio layer(s) to the output. When encodingType is set to Standard or Premium1080p, a live encoder transcodes the incoming stream into multiple bitrates or layers</value>
         [DataMember(Name = "encodingType", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "encodingType")]
-        public string EncodingType { get; set; }
+        public LiveEventEncodingType EncodingType { get; set; }
 
         /// <summary>
         /// Use an ISO 8601 time value between 1 and 10 seconds to specify the output fragment length for the video and audio tracks of an encoding live event. For example, use PT2S to indicate 2 seconds. For the video track it also defines the key frame interval, or the length of a GoP (group of pictures). If this value is not set for an encoding live event, the fragment duration defaults to 2 seconds. The value cannot be set for pass-through live events.

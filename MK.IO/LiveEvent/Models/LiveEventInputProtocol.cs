@@ -1,12 +1,29 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
+
 namespace MK.IO
 {
-    /// <summary> The input protocols for live event. </summary>
-    public readonly partial struct LiveEventInputProtocol
+    /// <summary>
+    /// The input protocol for the live event.          This is specified at creation time and cannot be updated.         Must be one of RTMP or SRT. fmp4 smooth input is not supported.         
+    /// </summary>
+    /// <value>The input protocol for the live event.          This is specified at creation time and cannot be updated.         Must be one of RTMP or SRT. fmp4 smooth input is not supported.         </value>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum LiveEventInputProtocol
     {
-        public static readonly string RTMP = "RTMP";
-        public static readonly string SRT = "SRT ";
+        /// <summary>
+        /// Enum RTMP for value: RTMP
+        /// </summary>
+        [EnumMember(Value = "RTMP")]
+        RTMP = 1,
+
+        /// <summary>
+        /// Enum SRT for value: SRT
+        /// </summary>
+        [EnumMember(Value = "SRT")]
+        SRT = 2
     }
 }
