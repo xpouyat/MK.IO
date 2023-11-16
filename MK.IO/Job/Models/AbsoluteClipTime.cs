@@ -10,6 +10,11 @@ namespace MK.IO
     /// </summary>
     public class AbsoluteClipTime : JobInputTime
     {
+        public AbsoluteClipTime(TimeSpan time)
+        {
+            Time = time;
+        }
+
         [JsonProperty("@odata.type")]
         internal string OdataType => "#Microsoft.Media.AbsoluteClipTime";
 

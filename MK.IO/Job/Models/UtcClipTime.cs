@@ -1,3 +1,4 @@
+using MK.IO.Models;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Text;
@@ -10,6 +11,11 @@ namespace MK.IO
     /// </summary>
     public class UtcClipTime : JobInputTime
     {
+        public UtcClipTime(DateTime time)
+        {
+            Time = time;
+        }
+
         [JsonProperty("@odata.type")]
         internal string OdataType => "#Microsoft.Media.UtcClipTime";
 
