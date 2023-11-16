@@ -2,22 +2,21 @@ using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace MK.IO.Models
+namespace MK.IO
 {
 
     /// <summary>
     /// 
     /// </summary>
     [DataContract]
-    public class AudioAnalyzerPreset
+    public class AudioAnalyzerPreset : TransformOutputPreset
     {
         /// <summary>
         /// The discriminator for derived types.
         /// </summary>
         /// <value>The discriminator for derived types.</value>
-        [DataMember(Name = "@odata.type", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "@odata.type")]
-        public string OdataType { get; set; }
+        [JsonProperty("@odata.type")]
+        internal string OdataType => "#Microsoft.Media.AudioAnalyzerPreset";
 
         /// <summary>
         /// The language for the audio payload in the input using the BCP-47 format of 'language tag-region' (e.g: 'en-US')
@@ -37,12 +36,12 @@ namespace MK.IO.Models
 
         /// <summary>
         /// Determines the set of audio analysis operations to be performed. If unspecified, the Standard AudioAnalysisMode would be chosen.
+        /// Use AudioAnalyzerPresetMode to list values.
         /// </summary>
         /// <value>Determines the set of audio analysis operations to be performed. If unspecified, the Standard AudioAnalysisMode would be chosen.</value>
         [DataMember(Name = "mode", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "mode")]
         public string Mode { get; set; }
-
 
         /// <summary>
         /// Get the string presentation of the object

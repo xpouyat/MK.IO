@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace MK.IO
 {
-    public class BuiltInStandardEncoderPreset : EncoderPreset
+    public class BuiltInStandardEncoderPreset : TransformOutputPreset
     {
 
         public BuiltInStandardEncoderPreset(string presetName)
@@ -16,6 +16,7 @@ namespace MK.IO
         [JsonProperty("@odata.type")]
         internal string OdataType => "#Microsoft.Media.BuiltInStandardEncoderPreset";
 
+        // Use EncoderNamedPreset to list possible values for this property
         [JsonProperty("presetName")]
         public string PresetName { get; set; }
     }

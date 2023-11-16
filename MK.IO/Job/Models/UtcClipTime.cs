@@ -2,22 +2,16 @@ using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace MK.IO.Models
+namespace MK.IO
 {
 
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public class UtcClipTime
+    public class UtcClipTime : JobInputTime
     {
-        /// <summary>
-        /// The discriminator for derived types.
-        /// </summary>
-        /// <value>The discriminator for derived types.</value>
-        [DataMember(Name = "@odata.type", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "@odata.type")]
-        public string OdataType { get; set; }
+        [JsonProperty("@odata.type")]
+        internal string OdataType => "#Microsoft.Media.UtcClipTime";
 
         /// <summary>
         /// The time position on the timeline of the input media based on Utc time.
@@ -25,7 +19,7 @@ namespace MK.IO.Models
         /// <value>The time position on the timeline of the input media based on Utc time.</value>
         [DataMember(Name = "time", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "time")]
-        public TimeSpan Time { get; set; }
+        public DateTime Time { get; set; }
 
 
         /// <summary>

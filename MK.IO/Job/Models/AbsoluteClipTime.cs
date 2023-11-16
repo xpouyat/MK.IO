@@ -2,22 +2,16 @@ using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace MK.IO.Models
+namespace MK.IO
 {
 
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
-    public class AbsoluteClipTime
+    public class AbsoluteClipTime : JobInputTime
     {
-        /// <summary>
-        /// The discriminator for derived types.
-        /// </summary>
-        /// <value>The discriminator for derived types.</value>
-        [DataMember(Name = "@odata.type", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "@odata.type")]
-        public string OdataType { get; set; }
+        [JsonProperty("@odata.type")]
+        internal string OdataType => "#Microsoft.Media.AbsoluteClipTime";
 
         /// <summary>
         /// The time position on the timeline of the input media. It is usually specified as an ISO8601 period. e.g PT30S for 30 seconds.

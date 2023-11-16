@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace MK.IO
 {
@@ -23,6 +24,18 @@ namespace MK.IO
         /// <value>Base URI for HTTPS job input. It will be concatenated with provided file names. If no base uri is given, then the provided file list is assumed to be fully qualified uris.</value>
         [JsonProperty("baseUri")]
         public string BaseUri { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Start
+        /// </summary>
+        [JsonProperty("start")]
+        public JobInputTime Start { get; set; }
+
+        /// <summary>
+        /// Gets or Sets End
+        /// </summary>
+        [JsonProperty("end")]
+        public JobInputTime End { get; set; }
 
         /// <summary>
         /// List of files. Required for JobInputHttp.

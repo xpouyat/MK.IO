@@ -2,11 +2,11 @@ Classes generated from Swagger.
 
 Namespace changed with ps1 script.
 
-In TransformOutput.cs, public OneOfTransformOutputPreset Preset { get; set; } changed to public EncoderPreset Preset { get; set; }
+In TransformOutput.cs, public OneOfTransformOutputPreset Preset { get; set; } changed to public TransformOutputPreset Preset { get; set; }
 In JobProperties.cs, public OneOfJobPropertiesInput Input { get; set; } changed to public JobInput Input { get; set; }
 In JobProperties.cs, public OneOfJobPropertiesInput Input { get; set; } changed to public JobInput Input { get; set; }
 
-Deleted : OneOfTransformOutputPreset.cs, OneOfJobPropertiesInput.cs, BuiltInStandardEncoderPreset.cs, JobInputAsset.cs, JobInputHttp.cs, ContentKeyPolicyOption
+Deleted : AbsoluteClipTime, AudioAnalyzerPreset, UtcClipTime, OneOfTransformOutputPreset.cs, OneOfJobPropertiesInput.cs, BuiltInStandardEncoderPreset.cs, JobInputAsset.cs, JobInputHttp.cs, ContentKeyPolicyOption
 and all OneOfJobInput....cs
 
 In JobOutputAsset.cs, public string EndTime changed to public DateTime? EndTime, and public string StartTime changed to public DateTime? StartTime
