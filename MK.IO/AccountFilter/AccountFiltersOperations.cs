@@ -51,6 +51,8 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task<AccountFilterSchema> GetAsync(string accountFilterName)
         {
+            Argument.AssertNotNullOrEmpty(accountFilterName, nameof(accountFilterName));
+
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<AccountFilterSchema>(responseContent, ConverterLE.Settings);
@@ -66,6 +68,9 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task<AccountFilterSchema> CreateOrUpdateAsync(string accountFilterName, MediaFilterProperties properties)
         {
+            Argument.AssertNotNullOrEmpty(accountFilterName, nameof(accountFilterName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);
             AccountFilterSchema content = new()
             {
@@ -86,6 +91,8 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task DeleteAsync(string accountFilterName)
         {
+            Argument.AssertNotNullOrEmpty(accountFilterName, nameof(accountFilterName));
+
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }

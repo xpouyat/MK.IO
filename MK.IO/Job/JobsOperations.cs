@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
 using MK.IO.Models;
 using Newtonsoft.Json;
 
@@ -66,6 +65,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<List<JobSchema>> ListAsync(string transformName)
         {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+
             var url = Client.GenerateApiUrl(_jobsApiUrl, transformName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings).Value;
@@ -81,6 +82,9 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<JobSchema> GetAsync(string transformName, string jobName)
         {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings);
@@ -96,6 +100,10 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<JobSchema> CreateAsync(string transformName, string jobName, JobProperties properties)
         {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);
             // fix to make sure Odattype is set as we use the generated class
             foreach (var o in properties.Outputs)
@@ -117,6 +125,9 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task CancelAsync(string transformName, string jobName)
         {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
             var url = Client.GenerateApiUrl(_jobApiUrl + "/cancelJob", transformName, jobName);
             await Client.ObjectContentAsync(url, HttpMethod.Post);
         }
@@ -130,6 +141,9 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteAsync(string transformName, string jobName)
         {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }

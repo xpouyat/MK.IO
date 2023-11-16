@@ -64,6 +64,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<LiveEventSchema> GetAsync(string liveEventName)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
             var url = Client.GenerateApiUrl(_liveEventApiUrl, liveEventName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
@@ -79,6 +81,10 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<LiveEventSchema> UpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.UpdateObjectAsync);
         }
 
@@ -92,6 +98,10 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.CreateObjectAsync);
         }
 
@@ -113,6 +123,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteAsync(string liveEventName)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
             var url = Client.GenerateApiUrl(_liveEventApiUrl, liveEventName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
@@ -126,6 +138,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task StartAsync(string liveEventName)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
             await LiveEventOperationAsync(liveEventName, "start", HttpMethod.Post);
         }
 
@@ -137,6 +151,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task StopAsync(string liveEventName)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
             await LiveEventOperationAsync(liveEventName, "stop", HttpMethod.Post);
         }
 
@@ -149,6 +165,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task ResetAsync(string liveEventName)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
             await LiveEventOperationAsync(liveEventName, "reset", HttpMethod.Post);
         }
 
@@ -161,6 +179,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task AllocateAsync(string liveEventName)
         {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
             await LiveEventOperationAsync(liveEventName, "allocate", HttpMethod.Post);
         }
 

@@ -4,6 +4,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace MK.IO
 {
@@ -51,6 +52,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<StorageResponseSchema> CreateAsync(StorageRequestSchema storage)
         {
+            Argument.AssertNotNull(storage, nameof(storage));
+
             storage.Spec.Type = "Microsoft.Storage"; // needed
             var url = GenerateStorageApiUrl(_storageApiUrl);
             string responseContent = await Client.CreateObjectPostAsync(url, storage.ToJson());
@@ -82,6 +85,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<StorageResponseSchema> GetAsync(Guid storageAccountId)
         {
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+
             var url = GenerateStorageApiUrl(_storageSelectionApiUrl, storageAccountId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings);
@@ -96,6 +101,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteAsync(Guid storageAccountId)
         {
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+
             await StorageAccountOperationAsync(storageAccountId, HttpMethod.Delete);
         }
 
@@ -109,6 +116,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<List<CredentialResponseSchema>> ListCredentialsAsync(Guid storageAccountId)
         {
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+
             var url = GenerateStorageApiUrl(_storageListCredentialsApiUrl, storageAccountId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<CredentialListReponseSchema>(responseContent, ConverterLE.Settings).Items;
@@ -124,6 +133,9 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<CredentialResponseSchema> GetCredentialAsync(Guid storageAccountId, Guid credentialId)
         {
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+            Argument.AssertNotNull(credentialId, nameof(credentialId));
+
             var url = GenerateStorageApiUrl(_storageCredentialApiUrl, storageAccountId.ToString(), credentialId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings);
@@ -139,6 +151,9 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<CredentialResponseSchema> CreateCredentialAsync(Guid storageAccountId, CredentialSchema credential)
         {
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+            Argument.AssertNotNull(credential, nameof(credential));
+
             var url = GenerateStorageApiUrl(_storageListCredentialsApiUrl, storageAccountId.ToString());
             CredentialRequestSchema content = new()
             {
@@ -157,9 +172,11 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteCredentialAsync(Guid storageAccountId, Guid credentialId)
         {
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+            Argument.AssertNotNull(credentialId, nameof(credentialId));
+
             await CredentialOperationAsync(storageAccountId, credentialId, HttpMethod.Delete);
         }
-
 
         private async Task StorageAccountOperationAsync(Guid storageAccountId, HttpMethod httpMethod)
         {

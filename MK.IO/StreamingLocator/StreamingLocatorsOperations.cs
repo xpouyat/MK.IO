@@ -66,6 +66,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<StreamingLocatorSchema> GetAsync(string streamingLocatorName)
         {
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
+
             var url = Client.GenerateApiUrl(_streamingLocatorApiUrl, streamingLocatorName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StreamingLocatorSchema>(responseContent, ConverterLE.Settings);
@@ -81,6 +83,9 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<StreamingLocatorSchema> CreateAsync(string streamingLocatorName, StreamingLocatorProperties properties)
         {
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             var url = Client.GenerateApiUrl(_streamingLocatorApiUrl, streamingLocatorName);
             var content = new StreamingLocatorSchema { Properties = properties };
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
@@ -96,6 +101,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task DeleteAsync(string streamingLocatorName)
         {
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
+
             var url = Client.GenerateApiUrl(_streamingLocatorApiUrl, streamingLocatorName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
@@ -110,6 +117,8 @@ namespace MK.IO
         /// <inheritdoc/>
         public async Task<StreamingLocatorListPathsResponseSchema> ListUrlPathsAsync(string streamingLocatorName)
         {
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
+
             var url = Client.GenerateApiUrl(_streamingLocatorListPathsApiUrl, streamingLocatorName);
             string responseContent = await Client.ObjectContentAsync(url, HttpMethod.Post);
             return JsonConvert.DeserializeObject<StreamingLocatorListPathsResponseSchema>(responseContent, ConverterLE.Settings);

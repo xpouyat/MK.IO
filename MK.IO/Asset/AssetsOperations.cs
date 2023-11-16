@@ -107,6 +107,8 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task<AssetSchema> GetAsync(string assetName)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+
             var url = Client.GenerateApiUrl(_assetApiUrl, assetName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings);
@@ -122,6 +124,10 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string description = null)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
+
             var url = Client.GenerateApiUrl(_assetApiUrl, assetName);
             AssetSchema content = new()
             {
@@ -146,6 +152,8 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task DeleteAsync(string assetName)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+
             var url = Client.GenerateApiUrl(_assetApiUrl, assetName);
             await Client.ObjectContentAsync(url, HttpMethod.Delete);
         }
@@ -160,6 +168,8 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task<List<AssetStreamingLocator>> ListStreamingLocatorsAsync(string assetName)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+
             var url = Client.GenerateApiUrl(_assetListStreamingLocatorsApiUrl, assetName);
             string responseContent = await Client.GetObjectPostContentAsync(url);
             return AssetListStreamingLocators.FromJson(responseContent).StreamingLocators;
@@ -175,6 +185,8 @@ namespace MK.IO.Asset
         /// <inheritdoc/>
         public async Task<AssetStorageResponseSchema> ListTracksAndDirListingAsync(string assetName)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            
             var url = Client.GenerateApiUrl(_assetListTracksAndDirectoryApiUrl, assetName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<AssetStorageResponseSchema>(responseContent, ConverterLE.Settings);
