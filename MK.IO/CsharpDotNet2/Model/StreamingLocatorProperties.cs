@@ -49,7 +49,7 @@ namespace MK.IO.Models
         /// <value>The end time of the streaming locator</value>
         [DataMember(Name = "endTime", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "endTime")]
-        public string EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
         /// <summary>
         /// A list of asset or account filters to apply to the streaming locator.
@@ -65,7 +65,7 @@ namespace MK.IO.Models
         /// <value>The start time of the streaming locator</value>
         [DataMember(Name = "startTime", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "startTime")]
-        public string StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         /// <summary>
         /// The streaming locator id

@@ -13,7 +13,10 @@ namespace MK.IO
         public static readonly string H264MultipleBitrate720p = "H264MultipleBitrate720p";
         public static readonly string H264MultipleBitrateSD = "H264MultipleBitrateSD";
 
+        public static readonly string H265SingleBitrate720p = "H265SingleBitrate720p";
         public static readonly string H265SingleBitrate1080p = "H265SingleBitrate1080p";
         public static readonly string H265SingleBitrate4K = "H265SingleBitrate4K";
+
+        public static readonly string AACGoodQualityAudio = "AACGoodQualityAudio";
     }
 }

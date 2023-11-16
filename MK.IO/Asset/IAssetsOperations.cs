@@ -9,33 +9,36 @@ namespace MK.IO.Asset
         /// </summary>
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
         /// <returns></returns>
-        List<AssetSchema> List(string? orderBy = null, int? top = null);
+        List<AssetSchema> List(string? orderBy = null, int? top = null, string? filter = null);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription.
         /// </summary>
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
         /// <returns></returns>
-        Task<List<AssetSchema>> ListAsync(string? orderBy = null, int? top = null);
+        Task<List<AssetSchema>> ListAsync(string? orderBy = null, int? top = null, string? filter = null);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription using pages.
         /// </summary>
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
         /// <returns></returns>
-        PagedResult<AssetSchema> ListAsPage(string? orderBy = null, int? top = null);
+        PagedResult<AssetSchema> ListAsPage(string? orderBy = null, int? top = null, string? filter = null);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription using pages.
         /// </summary>
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
         /// <returns></returns>
-        Task<PagedResult<AssetSchema>> ListAsPageAsync(string? orderBy = null, int? top = null);
-
+        Task<PagedResult<AssetSchema>> ListAsPageAsync(string? orderBy = null, int? top = null, string? filter = null);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription using pages.

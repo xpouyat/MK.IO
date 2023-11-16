@@ -12,14 +12,6 @@ namespace MK.IO.Models
     public class LiveEventSchema
     {
         /// <summary>
-        /// The unique identifier for the live event. System-defined.
-        /// </summary>
-        /// <value>The unique identifier for the live event. System-defined.</value>
-        [DataMember(Name = "id", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
         /// The location of the live event. This must match the configured location for your account.
         /// </summary>
         /// <value>The location of the live event. This must match the configured location for your account.</value>
@@ -28,12 +20,12 @@ namespace MK.IO.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// The name of the resource. On creation, the name is provided by the URL and this field is ignored.
+        /// The name of the resource
         /// </summary>
-        /// <value>The name of the resource. On creation, the name is provided by the URL and this field is ignored.</value>
+        /// <value>The name of the resource</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets or Sets Properties
@@ -50,14 +42,6 @@ namespace MK.IO.Models
         [JsonProperty(PropertyName = "tags")]
         public Dictionary<string, string> Tags { get; set; }
 
-        /// <summary>
-        /// The resource type. System-defined.
-        /// </summary>
-        /// <value>The resource type. System-defined.</value>
-        [DataMember(Name = "type", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
 
         /// <summary>
         /// Get the string presentation of the object
@@ -67,12 +51,10 @@ namespace MK.IO.Models
         {
             var sb = new StringBuilder();
             sb.Append("class LiveEventSchema {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Location: ").Append(Location).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Properties: ").Append(Properties).Append("\n");
             sb.Append("  Tags: ").Append(Tags).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

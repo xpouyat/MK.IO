@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>The time position on the timeline of the input media based on Utc time.</value>
         [DataMember(Name = "time", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "time")]
-        public string Time { get; set; }
+        public TimeSpan Time { get; set; }
 
 
         /// <summary>
