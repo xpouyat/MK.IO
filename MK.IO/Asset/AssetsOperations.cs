@@ -1,6 +1,9 @@
 ﻿using MK.IO.Models;
 using Newtonsoft.Json;
-using System.Web;
+using System.Net;
+#if NET48
+using System.Net.Http;
+#endif
 
 namespace MK.IO.Asset
 {
@@ -69,7 +72,7 @@ namespace MK.IO.Asset
 
             return new PagedResult<AssetSchema>
             {
-                NextPageLink = HttpUtility.UrlDecode(nextPageLink),
+                NextPageLink = WebUtility.UrlDecode(nextPageLink),
                 Results = JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings).Value
             };
         }
@@ -93,7 +96,7 @@ namespace MK.IO.Asset
 
             return new PagedResult<AssetSchema>
             {
-                NextPageLink = HttpUtility.UrlDecode(nextPageLink),
+                NextPageLink = WebUtility.UrlDecode(nextPageLink),
                 Results = JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings).Value
             };
         }

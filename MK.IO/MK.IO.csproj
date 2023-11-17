@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net7.0;net48</TargetFrameworks>
+	<LangVersion>10.0</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -41,7 +42,14 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
+	<!-- Conditionally obtain references for the .NET Framework 4.0 target -->
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+		<PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
+		<Reference Include="Microsoft.CSharp"/>
+	</ItemGroup>
+
+
+	<ItemGroup>
     <Folder Include="CsharpDotNet2\Model\" />
   </ItemGroup>
 

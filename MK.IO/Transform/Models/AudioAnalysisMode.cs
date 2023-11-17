@@ -3,7 +3,6 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace MK.IO

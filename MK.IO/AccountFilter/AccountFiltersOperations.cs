@@ -1,5 +1,8 @@
 ﻿using MK.IO.Models;
 using Newtonsoft.Json;
+#if NET48
+using System.Net.Http;
+#endif
 
 namespace MK.IO.Asset
 {
@@ -72,7 +75,7 @@ namespace MK.IO.Asset
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);
-            AccountFilterSchema content = new()
+            AccountFilterSchema content = new AccountFilterSchema()
             {
                 //Name = accountFilterName,
                 Properties = properties

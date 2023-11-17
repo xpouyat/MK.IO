@@ -5,6 +5,9 @@
 using MK.IO.Models;
 using Newtonsoft.Json;
 using System.Net;
+#if NET48
+using System.Net.Http;
+#endif
 
 namespace MK.IO
 {
