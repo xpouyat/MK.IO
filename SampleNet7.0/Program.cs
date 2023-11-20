@@ -41,11 +41,11 @@ namespace Sample
             // MK/IO Client creation
             // **********************
 
-            var client = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
+            var client = new MKIOClient(config["MKIOSubscriptionName"]!, config["MKIOToken"]!);
 
             MKIOClient.GenerateUniqueName("asset");
 
-            UserInfo profile = null;
+            UserInfo profile;
             try
             {
                 profile = client.Account.GetUserProfile();
@@ -154,7 +154,7 @@ namespace Sample
             */
 
             var outputAssetName = MKIOClient.GenerateUniqueName("output");
-            var outputAsset2 = client.Assets.CreateOrUpdate(outputAssetName, "mkioasset-" + outputAssetName, config["StorageName"], "output asset for job");
+            var outputAsset2 = client.Assets.CreateOrUpdate(outputAssetName, "mkioasset-" + outputAssetName, config["StorageName"]!, "output asset for job");
 
             var jobHttp = client.Jobs.Create(tranform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
             {
@@ -312,7 +312,6 @@ namespace Sample
 
             // Get
             var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
-
 
             var creds = client.StorageAccounts.ListCredentials((Guid)storage2.Metadata.Id);
 
