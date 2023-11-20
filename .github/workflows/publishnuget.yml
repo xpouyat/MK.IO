@@ -41,7 +41,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '4.8.x'     
+        dotnet-version: '4.8.1'     
 
     # Create the NuGet package in the folder from the environment variable NuGetDirectory
     - run: dotnet build --configuration Release --output ${{ env.NuGetDirectory }}
