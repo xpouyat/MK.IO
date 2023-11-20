@@ -16,7 +16,7 @@ namespace MK.IO
         /// </summary>
         /// <value>The discriminator for derived types.</value>
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.AudioAnalyzerPreset";
+        internal override string OdataType => "#Microsoft.Media.AudioAnalyzerPreset";
 
         /// <summary>
         /// The language for the audio payload in the input using the BCP-47 format of 'language tag-region' (e.g: 'en-US')
@@ -64,7 +64,7 @@ namespace MK.IO
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
         }
 
     }

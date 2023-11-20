@@ -10,7 +10,7 @@ namespace MK.IO
     {
         public static SubscriptionResponseSchema FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<SubscriptionResponseSchema>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<SubscriptionResponseSchema>(json, ConverterLE.Settings) ?? throw new Exception("Error with subscription deserialization");
         }
 
         public string ToJson()

@@ -11,7 +11,7 @@ namespace MK.IO.Models
     {
         public static AssetListStreamingLocators FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<AssetListStreamingLocators>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<AssetListStreamingLocators>(json, ConverterLE.Settings) ?? throw new Exception("Error with asset list deserialization");
         }
 
         public string ToJson()

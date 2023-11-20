@@ -18,12 +18,12 @@ namespace MK.IO
         /// Enum Basic for value: Basic
         /// </summary>
         [EnumMember(Value = "Basic")]
-        Basic = 1,
+        Basic,
 
         /// <summary>
         /// Enum Standard for value: Standard
         /// </summary>
         [EnumMember(Value = "Standard")]
-        Standard = 2
+        Standard
     }
 }

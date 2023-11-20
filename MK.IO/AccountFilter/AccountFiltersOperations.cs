@@ -42,7 +42,9 @@ namespace MK.IO.Asset
         {
             var url = Client.GenerateApiUrl(_accountFiltersApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<AccountFilterListResponseSchema>(responseContent, ConverterLE.Settings).Value;
+
+            var objectToReturn = JsonConvert.DeserializeObject<AccountFilterListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with account filter deserialization");
         }
 
         /// <inheritdoc/>
@@ -58,7 +60,7 @@ namespace MK.IO.Asset
 
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<AccountFilterSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<AccountFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with account filter deserialization");
         }
 
         /// <inheritdoc/>
@@ -81,8 +83,8 @@ namespace MK.IO.Asset
                 Properties = properties
             };
 
-            string responseContent = await Client.CreateObjectAsync(url, JsonConvert.SerializeObject(content, Formatting.Indented));
-            return JsonConvert.DeserializeObject<AccountFilterSchema>(responseContent, ConverterLE.Settings);
+            string responseContent = await Client.CreateObjectAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
+            return JsonConvert.DeserializeObject<AccountFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with account filter deserialization");
         }
 
         /// <inheritdoc/>

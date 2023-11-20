@@ -10,7 +10,7 @@ namespace MK.IO.Models
     {
         public static ListContentKeyPolicies FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<ListContentKeyPolicies>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<ListContentKeyPolicies>(json, ConverterLE.Settings) ?? throw new Exception("Error with content key policies deserialization");
         }
 
         public string ToJson()

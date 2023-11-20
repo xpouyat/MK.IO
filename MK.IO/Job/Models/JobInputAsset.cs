@@ -15,7 +15,7 @@ namespace MK.IO
         }
 
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.JobInputAsset";
+        internal override string OdataType => "#Microsoft.Media.JobInputAsset";
 
         [JsonProperty("assetName")]
         public string AssetName { get; set; }

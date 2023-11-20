@@ -95,7 +95,7 @@ namespace MK.IO.Asset
         /// <param name="storageName"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string description = null);
+        AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null);
 
         /// <summary>
         /// Create or Update Asset.
@@ -107,7 +107,7 @@ namespace MK.IO.Asset
         /// <param name="storageName"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string description = null);
+        Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null);
 
         /// <summary>
         /// List Streaming Locators for Asset. This API call is a convenience method to retrieve

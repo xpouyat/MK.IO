@@ -10,7 +10,7 @@ namespace MK.IO
     {
         public static AccountProfile FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<AccountProfile>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<AccountProfile>(json, ConverterLE.Settings) ?? throw new Exception("Error with account profile deserialization");
         }
 
         public string ToJson()

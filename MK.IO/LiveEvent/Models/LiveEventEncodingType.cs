@@ -18,30 +18,30 @@ namespace MK.IO
         /// Enum None for value: None
         /// </summary>
         [EnumMember(Value = "None")]
-        None = 1,
+        None,
 
         /// <summary>
         /// Enum PassthroughBasic for value: PassthroughBasic
         /// </summary>
         [EnumMember(Value = "PassthroughBasic")]
-        PassthroughBasic = 2,
+        PassthroughBasic,
 
         /// <summary>
         /// Enum PassthroughStandard for value: PassthroughStandard
         /// </summary>
         [EnumMember(Value = "PassthroughStandard")]
-        PassthroughStandard = 3,
+        PassthroughStandard,
 
         /// <summary>
         /// Enum Premium1080p for value: Premium1080p
         /// </summary>
         [EnumMember(Value = "Premium1080p")]
-        Premium1080p = 4,
+        Premium1080p,
 
         /// <summary>
         /// Enum Standard for value: Standard
         /// </summary>
         [EnumMember(Value = "Standard")]
-        Standard = 5
+        Standard
     }
 }

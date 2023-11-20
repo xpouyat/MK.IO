@@ -55,8 +55,9 @@ namespace MK.IO
         {
             var url = Client.GenerateApiUrl(_transformsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<TransformListResponseSchema>(responseContent, ConverterLE.Settings).Value;
 
+            var objectToReturn = JsonConvert.DeserializeObject<TransformListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with transforms list deserialization");
         }
 
         /// <inheritdoc/>
@@ -73,7 +74,7 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with transform deserialization");
         }
 
         /// <inheritdoc/>
@@ -92,7 +93,7 @@ namespace MK.IO
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);
             var content = new TransformSchema { Properties = properties };
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
-            return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with transform deserialization");
         }
 
         /// <inheritdoc/>

@@ -64,6 +64,115 @@ namespace Sample
             var locs = await client.Account.ListAllLocationsAsync();
 
 
+            // ************************
+            // asset filter operations
+            // ************************
+
+            var assetFilters = client.AssetFilters.List("copy-ef2058b692-copy");
+
+            assetFilters.ForEach(af => client.AssetFilters.Delete("copy-ef2058b692-copy", af.Name));
+            //var assetFilter1 = client.AssetFilters.Get("liveoutput-c4debfe5", assetFilters.First().Name);
+
+            // asset filter creation
+            // Typically, you will want to select a matching Type, such as Video, and then select additional filters.
+            // For instance, to include all audio tracks with mp4a, and all video tracks that are between 0 and 1 Mbps, you would provide these FilterTrackSelection objects:
+
+            var assetFilter = client.AssetFilters.CreateOrUpdate("copy-ef2058b692-copy", MKIOClient.GenerateUniqueName("filter"), new MediaFilterProperties
+            {
+                PresentationTimeRange = new PresentationTimeRange
+                {
+                    Timescale = 10000000,
+                },
+                Tracks = new List<FilterTrackSelection>()
+                {
+                    new() {
+                        TrackSelections = new List<FilterTrackPropertyCondition>()
+                        {
+                            new() {
+                                Property = FilterTrackPropertyType.Type,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = FilterPropertyTypeValue.Video
+                            },
+                            new() {
+                                Property = FilterTrackPropertyType.Bitrate,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = "0-1048576"
+                            }
+                        },
+                    },
+                    new() {
+                        TrackSelections = new List<FilterTrackPropertyCondition>()
+                        {
+                            new() {
+                                Property = FilterTrackPropertyType.Type,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = FilterPropertyTypeValue.Audio
+                            },
+                            new() {
+                                Property = FilterTrackPropertyType.FourCC,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = "mp4a"
+                            }
+                        }
+                    }
+                }
+            });
+
+            client.AssetFilters.Delete("liveoutput-c4debfe5", assetFilter.Name);
+
+            // **************************
+            // account filter operations
+            // **************************
+
+            var acfilters = client.AccountFilters.List();
+
+            // account filter creation
+            // Typically, you will want to select a matching Type, such as Video, and then select additional filters.
+            // For instance, to include all audio tracks with mp4a, and all video tracks that are between 0 and 1 Mbps, you would provide these FilterTrackSelection objects:
+
+            var filter = client.AccountFilters.CreateOrUpdate(MKIOClient.GenerateUniqueName("acc-filter"), new MediaFilterProperties
+            {
+                PresentationTimeRange = new PresentationTimeRange
+                {
+                    Timescale = 10000000,
+                },
+                Tracks = new List<FilterTrackSelection>()
+                {
+                    new() {
+                        TrackSelections = new List<FilterTrackPropertyCondition>()
+                        {
+                            new() {
+                                Property = FilterTrackPropertyType.Type,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = FilterPropertyTypeValue.Video
+                            },
+                            new() {
+                                Property = FilterTrackPropertyType.Bitrate,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = "0-1048576"
+                            }
+                        },
+                    },
+                    new() {
+                        TrackSelections = new List<FilterTrackPropertyCondition>()
+                        {
+                            new() {
+                                Property = FilterTrackPropertyType.Type,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = FilterPropertyTypeValue.Audio
+                            },
+                            new() {
+                                Property = FilterTrackPropertyType.FourCC,
+                                Operation = FilterTrackPropertyCompareOperation.Equal,
+                                Value = "mp4a"
+                            }
+                        }
+                    }
+                }
+            });
+
+            client.AccountFilters.Delete(filter.Name);
+
 
             // *****************
             // asset operations
@@ -107,7 +216,7 @@ namespace Sample
             // transform operations
             // *********************
 
-
+                       
             var tranform = client.Transforms.CreateOrUpdate("simpleTransformSD", new TransformProperties
             {
                 Description = "desc",
@@ -119,8 +228,7 @@ namespace Sample
                     }
                 }
             });
-
-
+           
             // ***************
             // job operations
             // ***************
@@ -331,114 +439,7 @@ namespace Sample
             // client.StorageAccounts.Delete(storages.First().Metadata.Id);
 
 
-            // ************************
-            // asset filter operations
-            // ************************
-
-            var assetFilters = client.AssetFilters.List("copy-ef2058b692-copy");
-
-            assetFilters.ForEach(af => client.AssetFilters.Delete("copy-ef2058b692-copy", af.Name));
-            //var assetFilter1 = client.AssetFilters.Get("liveoutput-c4debfe5", assetFilters.First().Name);
-
-            // asset filter creation
-            // Typically, you will want to select a matching Type, such as Video, and then select additional filters.
-            // For instance, to include all audio tracks with mp4a, and all video tracks that are between 0 and 1 Mbps, you would provide these FilterTrackSelection objects:
-
-            var assetFilter = client.AssetFilters.CreateOrUpdate("copy-ef2058b692-copy", MKIOClient.GenerateUniqueName("filter"), new MediaFilterProperties
-            {
-                PresentationTimeRange = new PresentationTimeRange
-                {
-                    Timescale = 10000000,
-                },
-                Tracks = new List<FilterTrackSelection>()
-                {
-                    new() {
-                        TrackSelections = new List<FilterTrackPropertyCondition>()
-                        {
-                            new() {
-                                Property = FilterTrackPropertyType.Type,
-                                Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Video
-                            },
-                            new() {
-                                Property = FilterTrackPropertyType.Bitrate,
-                                Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = "0-1048576"
-                            }
-                        },
-                    },
-                    new() {
-                        TrackSelections = new List<FilterTrackPropertyCondition>()
-                        {
-                            new() {
-                                Property = FilterTrackPropertyType.Type,
-                                Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Audio
-                            },
-                            new() {
-                                Property = FilterTrackPropertyType.FourCC,
-                                Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = "mp4a"
-                            }
-                        }
-                    }
-                }
-            });
-
-            client.AssetFilters.Delete("liveoutput-c4debfe5", assetFilter.Name);
-
-            // **************************
-            // account filter operations
-            // **************************
-
-            var acfilters = client.AccountFilters.List();
-
-            // account filter creation
-            // Typically, you will want to select a matching Type, such as Video, and then select additional filters.
-            // For instance, to include all audio tracks with mp4a, and all video tracks that are between 0 and 1 Mbps, you would provide these FilterTrackSelection objects:
-
-            var filter = client.AccountFilters.CreateOrUpdate(MKIOClient.GenerateUniqueName("acc-filter"), new MediaFilterProperties
-            {
-                PresentationTimeRange = new PresentationTimeRange
-                {
-                    Timescale = 10000000,
-                },
-                Tracks = new List<FilterTrackSelection>()
-                {
-                    new() {
-                        TrackSelections = new List<FilterTrackPropertyCondition>()
-                        {
-                            new() {
-                                Property = FilterTrackPropertyType.Type,
-                                Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Video
-                            },
-                            new() {
-                                Property = FilterTrackPropertyType.Bitrate,
-                                Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = "0-1048576"
-                            }
-                        },
-                    },
-                    new() {
-                        TrackSelections = new List<FilterTrackPropertyCondition>()
-                        {
-                            new() {
-                                Property = FilterTrackPropertyType.Type,
-                                Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Audio
-                            },
-                            new() {
-                                Property = FilterTrackPropertyType.FourCC,
-                                Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = "mp4a"
-                            }
-                        }
-                    }
-                }
-            });
-
-            client.AccountFilters.Delete(filter.Name);
+        
 
 
 

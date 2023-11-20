@@ -48,7 +48,9 @@ namespace MK.IO.Asset
             url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
             url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings).Value;
+
+            var objectToReturn = JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with asset list deserialization");
         }
 
         /// <inheritdoc/>
@@ -70,11 +72,19 @@ namespace MK.IO.Asset
             dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
             string? nextPageLink = responseObject["@odata.nextLink"];
 
-            return new PagedResult<AssetSchema>
+            var objectToReturn = JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
             {
-                NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                Results = JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings).Value
-            };
+                throw new Exception($"Error with asset list deserialization");
+            }
+            else
+            {
+                return new PagedResult<AssetSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
         }
 
         /// <inheritdoc/>
@@ -94,11 +104,19 @@ namespace MK.IO.Asset
 
             nextPageLink = responseObject["@odata.nextLink"];
 
-            return new PagedResult<AssetSchema>
+            var objectToReturn = JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
             {
-                NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                Results = JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings).Value
-            };
+                throw new Exception($"Error with asset list deserialization");
+            }
+            else
+            {
+                return new PagedResult<AssetSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
         }
 
         /// <inheritdoc/>
@@ -114,18 +132,18 @@ namespace MK.IO.Asset
 
             var url = Client.GenerateApiUrl(_assetApiUrl, assetName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset deserialization");
         }
 
         /// <inheritdoc/>
-        public AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string description = null)
+        public AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null)
         {
             Task<AssetSchema> task = Task.Run(async () => await CreateOrUpdateAsync(assetName, containerName, storageName, description));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string description = null)
+        public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
@@ -137,13 +155,13 @@ namespace MK.IO.Asset
                 Properties = new AssetProperties
                 {
                     Container = containerName,
-                    Description = description,
+                    Description = description!,
                     StorageAccountName = storageName
                 }
             };
 
-            string responseContent = await Client.CreateObjectAsync(url, JsonConvert.SerializeObject(content, Formatting.Indented));
-            return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings);
+            string responseContent = await Client.CreateObjectAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
+            return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset deserialization");
         }
 
         /// <inheritdoc/>
@@ -192,7 +210,7 @@ namespace MK.IO.Asset
 
             var url = Client.GenerateApiUrl(_assetListTracksAndDirectoryApiUrl, assetName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<AssetStorageResponseSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<AssetStorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset storage deserialization");
         }
     }
 }

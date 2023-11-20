@@ -13,6 +13,7 @@ namespace MK.IO
         {
             MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented,
             //DateParseHandling = DateParseHandling.None,
             Converters =
             {

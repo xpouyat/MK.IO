@@ -24,7 +24,7 @@ namespace MK.IO
 
         public static ContentKeyPolicy FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<ContentKeyPolicy>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<ContentKeyPolicy>(json, ConverterLE.Settings) ?? throw new Exception("Error with content key policy deserialization");
         }
 
         public string ToJson()
