@@ -18,7 +18,7 @@ var client = new MKIOClient("mkiosubscriptionname", "mkiotoken");
 var transform = client.Transforms.CreateOrUpdate("simpletransform", new TransformProperties
             {
                 Description = "Encoding to 720p single bitrate",
-                Outputs =
+                Outputs =  new List<TransformOutput>
                 {
                     new TransformOutput
                     {

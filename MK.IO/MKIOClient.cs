@@ -308,8 +308,7 @@ namespace MK.IO
                     url += '&';
                 }
 
-                //url += WebUtility..UrlEncode(name + '=' + value);
-                url += (name + '=' + value);
+                url += Uri.EscapeUriString(name + '=' + value);
             }
 
             return url;

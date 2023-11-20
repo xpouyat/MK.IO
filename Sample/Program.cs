@@ -110,7 +110,7 @@ namespace Sample
             var tranform = client.Transforms.CreateOrUpdate("simpleTransformSD", new TransformProperties
             {
                 Description = "desc",
-                Outputs =
+                Outputs = new List<TransformOutput>
                 {
                     new TransformOutput
                     {
