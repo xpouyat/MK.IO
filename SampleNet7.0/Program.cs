@@ -45,9 +45,10 @@ namespace Sample
 
             MKIOClient.GenerateUniqueName("asset");
 
+            UserInfo profile = null;
             try
             {
-                var profile = client.Account.GetUserProfile();
+                profile = client.Account.GetUserProfile();
             }
             catch (ApiException ex)
             {
@@ -112,8 +113,7 @@ namespace Sample
                 Description = "desc",
                 Outputs = new List<TransformOutput>
                 {
-                    new TransformOutput
-                    {
+                    new() {
                         Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrateSD),
                         RelativePriority = "Normal"
                     }
@@ -167,7 +167,7 @@ namespace Sample
                     }),
                 Outputs = new List<JobOutputAsset>()
                 {
-                    new JobOutputAsset()
+                    new()
                     {
                         AssetName = outputAssetName
                     }
@@ -268,7 +268,7 @@ namespace Sample
                 "testpolcreate",
                 new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
                 {
-                    new ContentKeyPolicyOption(
+                    new(
                         "option1",
                         new ContentKeyPolicyConfigurationWidevine("{}"),
                         new ContentKeyPolicyTokenRestriction(
@@ -353,36 +353,30 @@ namespace Sample
                 },
                 Tracks = new List<FilterTrackSelection>()
                 {
-                    new FilterTrackSelection
-                    {
+                    new() {
                         TrackSelections = new List<FilterTrackPropertyCondition>()
                         {
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = FilterPropertyTypeValue.Video
                             },
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.Bitrate,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = "0-1048576"
                             }
                         },
                     },
-                    new FilterTrackSelection
-                    {
+                    new() {
                         TrackSelections = new List<FilterTrackPropertyCondition>()
                         {
-                            new FilterTrackPropertyCondition
-                             {
+                            new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = FilterPropertyTypeValue.Audio
                             },
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.FourCC,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = "mp4a"
@@ -412,36 +406,30 @@ namespace Sample
                 },
                 Tracks = new List<FilterTrackSelection>()
                 {
-                    new FilterTrackSelection
-                    {
+                    new() {
                         TrackSelections = new List<FilterTrackPropertyCondition>()
                         {
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = FilterPropertyTypeValue.Video
                             },
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.Bitrate,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = "0-1048576"
                             }
                         },
                     },
-                    new FilterTrackSelection
-                    {
+                    new() {
                         TrackSelections = new List<FilterTrackPropertyCondition>()
                         {
-                            new FilterTrackPropertyCondition
-                             {
+                            new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = FilterPropertyTypeValue.Audio
                             },
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.FourCC,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = "mp4a"

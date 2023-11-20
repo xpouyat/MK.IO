@@ -189,7 +189,7 @@ namespace MK.IO.Asset
         public async Task<AssetStorageResponseSchema> ListTracksAndDirListingAsync(string assetName)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
-            
+
             var url = Client.GenerateApiUrl(_assetListTracksAndDirectoryApiUrl, assetName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<AssetStorageResponseSchema>(responseContent, ConverterLE.Settings);

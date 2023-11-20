@@ -71,7 +71,7 @@ namespace MK.IO
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
-            
+
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName, liveOutputName);
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings);

@@ -75,7 +75,7 @@ namespace MK.IO.Asset
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);
-            AccountFilterSchema content = new AccountFilterSchema()
+            AccountFilterSchema content = new()
             {
                 //Name = accountFilterName,
                 Properties = properties

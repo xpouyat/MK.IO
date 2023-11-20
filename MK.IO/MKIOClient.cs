@@ -3,10 +3,8 @@
 
 using MK.IO.Asset;
 using Newtonsoft.Json;
-using System.Collections.Specialized;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Web;
 #if NET48
 using System.Net.Http;
 #endif
@@ -56,9 +54,11 @@ namespace MK.IO
 
         public MKIOClient(string MKIOSubscriptionName, string MKIOtoken)
         {
-            _subscriptionName = MKIOSubscriptionName ?? throw new System.ArgumentNullException(nameof(MKIOSubscriptionName));
-            _apiToken = MKIOtoken ?? throw new System.ArgumentNullException(nameof(MKIOtoken));
+            Argument.AssertNotNullOrEmpty(MKIOSubscriptionName, nameof(MKIOSubscriptionName));
+            Argument.AssertNotNullOrEmpty(MKIOtoken, nameof(MKIOtoken));
 
+            _subscriptionName = MKIOSubscriptionName;
+            _apiToken = MKIOtoken;
             _httpClient = new HttpClient();
 
             // Request headers
@@ -296,7 +296,7 @@ namespace MK.IO
         {
             if (value != null)
             {
-                UriBuilder baseUri = new UriBuilder(url);
+                UriBuilder baseUri = new(url);
                 var queryString = WebUtility.UrlDecode(baseUri.Query).Split('&');
 
                 if (queryString.Count() == 1 && string.IsNullOrEmpty(queryString[0]))

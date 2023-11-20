@@ -1,6 +1,5 @@
 ﻿using MK.IO.Models;
 using Newtonsoft.Json;
-using System.Security.Cryptography.X509Certificates;
 #if NET48
 using System.Net.Http;
 #endif
@@ -83,7 +82,7 @@ namespace MK.IO.Asset
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);
-            AssetFilterSchema content = new AssetFilterSchema()
+            AssetFilterSchema content = new()
             {
                 //Name = assetFilterName,
                 Properties = properties
