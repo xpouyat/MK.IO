@@ -56,7 +56,7 @@ namespace MK.IO
         /// <param name="autoStart"></param>
         /// <param name="tags"></param>
         /// <returns></returns>
-        StreamingEndpointSchema Create(string streamingEndpointName, string location, StreamingEndpointProperties content, bool autoStart = false, Dictionary<string, string> tags = null);
+        StreamingEndpointSchema Create(string streamingEndpointName, string location, StreamingEndpointProperties content, bool autoStart = false, Dictionary<string, string>? tags = null);
 
         /// <summary>
         /// Create a Streaming Endpoint.
@@ -67,7 +67,7 @@ namespace MK.IO
         /// <param name="autoStart"></param>
         /// <param name="tags"></param>
         /// <returns></returns>
-        Task<StreamingEndpointSchema> CreateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string> tags = null);
+        Task<StreamingEndpointSchema> CreateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string>? tags = null);
 
         /// <summary>
         /// Start Streaming Endpoints.

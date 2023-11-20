@@ -54,7 +54,8 @@ namespace MK.IO
         {
             var url = Client.GenerateApiUrl(_liveEventsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<LiveEventListResponseSchema>(responseContent, ConverterLE.Settings).Value;
+            var objectToReturn = JsonConvert.DeserializeObject<LiveEventListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with live event list deserialization");
         }
 
         /// <inheritdoc/>
@@ -71,7 +72,7 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_liveEventApiUrl, liveEventName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live event deserialization");
         }
 
 #if NET7_0_OR_GREATER
@@ -116,7 +117,7 @@ namespace MK.IO
             tags ??= new Dictionary<string, string>();
             var content = new LiveEventSchema { Location = location, Tags = tags, Properties = properties };
             string responseContent = await func(url, content.ToJson());
-            return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live event deserialization");
         }
 
         /// <inheritdoc/>

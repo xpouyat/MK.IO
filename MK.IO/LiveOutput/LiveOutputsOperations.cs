@@ -56,7 +56,8 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_liveOutputsApiUrl, liveEventName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<LiveOutputListResponseSchema>(responseContent, ConverterLE.Settings).Value;
+            var objectToReturn = JsonConvert.DeserializeObject<LiveOutputListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with live output list deserialization");
         }
 
         /// <inheritdoc/>
@@ -74,7 +75,7 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName, liveOutputName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live output deserialization");
         }
 
         /// <inheritdoc/>
@@ -95,7 +96,7 @@ namespace MK.IO
             //tags ??= new Dictionary<string, string>();
             var content = new LiveOutputSchema { Properties = properties };
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
-            return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live output deserialization");
         }
 
         /// <inheritdoc/>

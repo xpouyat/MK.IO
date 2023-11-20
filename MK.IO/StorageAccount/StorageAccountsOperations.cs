@@ -59,7 +59,7 @@ namespace MK.IO
             storage.Spec.Type = "Microsoft.Storage"; // needed
             var url = GenerateStorageApiUrl(_storageApiUrl);
             string responseContent = await Client.CreateObjectPostAsync(url, storage.ToJson());
-            return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with storage deserialization");
         }
 
         /// <inheritdoc/>
@@ -74,7 +74,8 @@ namespace MK.IO
         {
             var url = GenerateStorageApiUrl(_storageApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<StorageListResponseSchema>(responseContent, ConverterLE.Settings).Items;
+            var objectToReturn = JsonConvert.DeserializeObject<StorageListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Items : throw new Exception($"Error with storage list deserialization");
         }
 
         /// <inheritdoc/>
@@ -91,7 +92,7 @@ namespace MK.IO
 
             var url = GenerateStorageApiUrl(_storageSelectionApiUrl, storageAccountId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with storage deserialization");
         }
 
         /// <inheritdoc/>
@@ -122,7 +123,8 @@ namespace MK.IO
 
             var url = GenerateStorageApiUrl(_storageListCredentialsApiUrl, storageAccountId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<CredentialListReponseSchema>(responseContent, ConverterLE.Settings).Items;
+            var objectToReturn = JsonConvert.DeserializeObject<CredentialListReponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Items : throw new Exception($"Error with credential list deserialization");
         }
 
         /// <inheritdoc/>
@@ -140,7 +142,7 @@ namespace MK.IO
 
             var url = GenerateStorageApiUrl(_storageCredentialApiUrl, storageAccountId.ToString(), credentialId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with credential deserialization");
         }
 
         /// <inheritdoc/>
@@ -162,7 +164,7 @@ namespace MK.IO
                 Spec = credential
             };
             string responseContent = await Client.CreateObjectPostAsync(url, content.ToJson());
-            return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with credential deserialization");
         }
 
         /// <inheritdoc/>

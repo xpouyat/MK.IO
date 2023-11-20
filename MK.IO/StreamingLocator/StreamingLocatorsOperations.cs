@@ -55,8 +55,8 @@ namespace MK.IO
         {
             var url = Client.GenerateApiUrl(_streamingLocatorsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<StreamingLocatorListResponseSchema>(responseContent, ConverterLE.Settings).Value;
-
+            var objectToReturn = JsonConvert.DeserializeObject<StreamingLocatorListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with streaming locator list deserialization");
         }
 
         /// <inheritdoc/>
@@ -73,7 +73,7 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_streamingLocatorApiUrl, streamingLocatorName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<StreamingLocatorSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<StreamingLocatorSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming locator deserialization");
         }
 
         /// <inheritdoc/>
@@ -92,7 +92,7 @@ namespace MK.IO
             var url = Client.GenerateApiUrl(_streamingLocatorApiUrl, streamingLocatorName);
             var content = new StreamingLocatorSchema { Properties = properties };
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
-            return JsonConvert.DeserializeObject<StreamingLocatorSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<StreamingLocatorSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming locator deserialization");
         }
 
         /// <inheritdoc/>
@@ -124,7 +124,7 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_streamingLocatorListPathsApiUrl, streamingLocatorName);
             string responseContent = await Client.ObjectContentAsync(url, HttpMethod.Post);
-            return JsonConvert.DeserializeObject<StreamingLocatorListPathsResponseSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<StreamingLocatorListPathsResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming locator list paths deserialization");
         }
     }
 }

@@ -55,7 +55,8 @@ namespace MK.IO
         {
             var url = Client.GenerateApiUrl(_allJobsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings).Value;
+            var objectToReturn = JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with job list all deserialization");
         }
 
         /// <inheritdoc/>
@@ -72,7 +73,8 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_jobsApiUrl, transformName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings).Value;
+            var objectToReturn = JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with job list deserialization");
         }
 
         /// <inheritdoc/>
@@ -90,7 +92,7 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
         }
 
         /// <inheritdoc/>
@@ -116,7 +118,7 @@ namespace MK.IO
             var content = new JobSchema { Properties = properties };
 
             string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
-            return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
         }
 
         /// <inheritdoc/>

@@ -47,7 +47,8 @@ namespace MK.IO.Asset
 
             var url = Client.GenerateApiUrl(_assetFiltersApiUrl, assetName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<AssetFilterListResponseSchema>(responseContent, ConverterLE.Settings).Value;
+            var objectToReturn = JsonConvert.DeserializeObject<AssetFilterListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with asset filter list deserialization");
         }
 
         /// <inheritdoc/>
@@ -64,7 +65,7 @@ namespace MK.IO.Asset
 
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<AssetFilterSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<AssetFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset filter deserialization");
         }
 
         /// <inheritdoc/>
@@ -89,7 +90,7 @@ namespace MK.IO.Asset
             };
 
             string responseContent = await Client.CreateObjectAsync(url, JsonConvert.SerializeObject(content, Formatting.Indented));
-            return JsonConvert.DeserializeObject<AssetFilterSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<AssetFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset filter deserialization");
         }
 
         /// <inheritdoc/>

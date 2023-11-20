@@ -54,7 +54,8 @@ namespace MK.IO
         {
             var url = Client.GenerateApiUrl(_streamingEndpointsApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<StreamingEndpointListResponseSchema>(responseContent, ConverterLE.Settings).Value;
+            var objectToReturn = JsonConvert.DeserializeObject<StreamingEndpointListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with streaming endpoint list deserialization");
         }
 
         /// <inheritdoc/>
@@ -71,18 +72,18 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_streamingEndpointApiUrl, streamingEndpointName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
         }
 
         /// <inheritdoc/>
-        public StreamingEndpointSchema Create(string streamingEndpointName, string location, StreamingEndpointProperties content, bool autoStart = false, Dictionary<string, string> tags = null)
+        public StreamingEndpointSchema Create(string streamingEndpointName, string location, StreamingEndpointProperties content, bool autoStart = false, Dictionary<string, string>? tags = null)
         {
             var task = Task.Run<StreamingEndpointSchema>(async () => await CreateAsync(streamingEndpointName, location, content, autoStart, tags));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<StreamingEndpointSchema> CreateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string> tags = null)
+        public async Task<StreamingEndpointSchema> CreateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string>? tags = null)
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
@@ -92,7 +93,7 @@ namespace MK.IO
             tags ??= new Dictionary<string, string>();
             var content = new StreamingEndpointSchema { Location = location, Properties = properties, Tags = tags };
             string responseContent = await Client.CreateObjectAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
-            return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
         }
 
         /// <inheritdoc/>

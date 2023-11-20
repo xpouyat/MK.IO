@@ -9,7 +9,7 @@ namespace MK.IO
     {
         public static LocationListResponseSchema FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<LocationListResponseSchema>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<LocationListResponseSchema>(json, ConverterLE.Settings) ?? throw new Exception("Error with location deserialization");
         }
 
         public string ToJson()

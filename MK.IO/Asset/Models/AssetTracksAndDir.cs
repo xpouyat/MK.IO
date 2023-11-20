@@ -10,7 +10,7 @@ namespace MK.IO.Models
     {
         public static AssetTracksAndDir FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<AssetTracksAndDir>(json, ConverterLE.Settings);
+            return JsonConvert.DeserializeObject<AssetTracksAndDir>(json, ConverterLE.Settings) ?? throw new Exception("Error with asset tracks deserialization");
         }
 
         public string ToJson()
