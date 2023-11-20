@@ -18,45 +18,45 @@ namespace MK.IO
         // Summary:
         //     The job was canceled. This is a final state for the job.
         [EnumMember(Value = "Canceled")]
-        Canceled = 1,
+        Canceled,
 
         //
         // Summary:
         //     The job is in the process of being canceled. This is a transient state for the
         //     job.
         [EnumMember(Value = "Canceling")]
-        Canceling = 2,
+        Canceling,
 
         //
         // Summary:
         //     The job has encountered an error. This is a final state for the job.
         [EnumMember(Value = "Error")]
-        Error = 3,
+        Error,
 
         //
         // Summary:
         //     The job is finished. This is a final state for the job.
         [EnumMember(Value = "Finished")]
-        Finished = 4,
+        Finished,
 
         //
         // Summary:
         //     The job is processing. This is a transient state for the job.
         [EnumMember(Value = "Processing")]
-        Processing = 5,
+        Processing,
 
         //
         // Summary:
         //     The job is in a queued state, waiting for resources to become available. This
         //     is a transient state.
         [EnumMember(Value = "Queued")]
-        Queued = 6,
+        Queued,
 
         //
         // Summary:
         //     The job is being scheduled to run on an available resource. This is a transient
         //     state, between queued and processing states.
         [EnumMember(Value = "Scheduled")]
-        Scheduled = 7
+        Scheduled
     }
 }

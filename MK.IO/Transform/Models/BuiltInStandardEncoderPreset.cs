@@ -14,7 +14,7 @@ namespace MK.IO
         }
 
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.BuiltInStandardEncoderPreset";
+        internal override string OdataType => "#Microsoft.Media.BuiltInStandardEncoderPreset";
 
         [JsonProperty("presetName")]
         public EncoderNamedPreset PresetName { get; set; }

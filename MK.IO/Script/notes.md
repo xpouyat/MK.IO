@@ -31,3 +31,11 @@ same for Id, Name, Type in TransformSchema.cs
 
 
 public SystemDataSchema SystemData { get; set; } to public SystemDataSchema SystemData { get; private set; } everywhere
+
+JobState to JobState? in JobProperties.cs
+
+ public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+        }
+everywhere

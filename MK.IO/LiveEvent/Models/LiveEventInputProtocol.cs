@@ -18,12 +18,12 @@ namespace MK.IO
         /// Enum RTMP for value: RTMP
         /// </summary>
         [EnumMember(Value = "RTMP")]
-        RTMP = 1,
+        RTMP,
 
         /// <summary>
         /// Enum SRT for value: SRT
         /// </summary>
         [EnumMember(Value = "SRT")]
-        SRT = 2
+        SRT
     }
 }

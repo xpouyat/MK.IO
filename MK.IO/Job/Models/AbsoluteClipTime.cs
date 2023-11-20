@@ -16,7 +16,7 @@ namespace MK.IO
         }
 
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.AbsoluteClipTime";
+        internal override string OdataType => "#Microsoft.Media.AbsoluteClipTime";
 
         /// <summary>
         /// The time position on the timeline of the input media. It is usually specified as an ISO8601 period. e.g PT30S for 30 seconds.
@@ -47,7 +47,7 @@ namespace MK.IO
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
         }
 
     }
