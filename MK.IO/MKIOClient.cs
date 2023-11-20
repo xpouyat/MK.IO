@@ -3,9 +3,11 @@
 
 using MK.IO.Asset;
 using Newtonsoft.Json;
-using System.Collections.Specialized;
+using System.Net;
 using System.Net.Http.Headers;
-using System.Web;
+#if NET48
+using System.Net.Http;
+#endif
 
 namespace MK.IO
 {
@@ -52,9 +54,11 @@ namespace MK.IO
 
         public MKIOClient(string MKIOSubscriptionName, string MKIOtoken)
         {
-            _subscriptionName = MKIOSubscriptionName ?? throw new System.ArgumentNullException(nameof(MKIOSubscriptionName));
-            _apiToken = MKIOtoken ?? throw new System.ArgumentNullException(nameof(MKIOtoken));
+            Argument.AssertNotNullOrEmpty(MKIOSubscriptionName, nameof(MKIOSubscriptionName));
+            Argument.AssertNotNullOrEmpty(MKIOtoken, nameof(MKIOtoken));
 
+            _subscriptionName = MKIOSubscriptionName;
+            _apiToken = MKIOtoken;
             _httpClient = new HttpClient();
 
             // Request headers
@@ -164,10 +168,12 @@ namespace MK.IO
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Post);
         }
 
+#if NET7_0_OR_GREATER
         internal async Task<string> UpdateObjectAsync(string url, string amsJSONObject)
         {
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Patch);
         }
+#endif
 
         internal async Task<string> CreateObjectInternalAsync(string url, string amsJSONObject, HttpMethod httpMethod)
         {
@@ -291,9 +297,9 @@ namespace MK.IO
             if (value != null)
             {
                 UriBuilder baseUri = new(url);
-                NameValueCollection queryString = HttpUtility.ParseQueryString(baseUri.Query);
+                var queryString = WebUtility.UrlDecode(baseUri.Query).Split('&');
 
-                if (!queryString.HasKeys())
+                if (queryString.Count() == 1 && string.IsNullOrEmpty(queryString[0]))
                 {
                     url += '?';
                 }
@@ -302,7 +308,7 @@ namespace MK.IO
                     url += '&';
                 }
 
-                url += HttpUtility.UrlPathEncode(name + '=' + value);
+                url += Uri.EscapeUriString(name + '=' + value);
             }
 
             return url;
@@ -316,7 +322,9 @@ namespace MK.IO
         /// <returns></returns>
         public static string GenerateUniqueName(string prefix, int length = 8)
         {
-            return prefix + "-" + Guid.NewGuid().ToString()[..length];
+            // return a string of length "length" containing random characters
+
+            return prefix + "-" + Guid.NewGuid().ToString("N").Substring(0, length);
         }
     }
 }

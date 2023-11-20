@@ -41,13 +41,14 @@ namespace Sample
             // MK/IO Client creation
             // **********************
 
-            var client = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
+            var client = new MKIOClient(config["MKIOSubscriptionName"]!, config["MKIOToken"]!);
 
             MKIOClient.GenerateUniqueName("asset");
 
+            UserInfo profile;
             try
             {
-                var profile = client.Account.GetUserProfile();
+                profile = client.Account.GetUserProfile();
             }
             catch (ApiException ex)
             {
@@ -110,10 +111,9 @@ namespace Sample
             var tranform = client.Transforms.CreateOrUpdate("simpleTransformSD", new TransformProperties
             {
                 Description = "desc",
-                Outputs =
+                Outputs = new List<TransformOutput>
                 {
-                    new TransformOutput
-                    {
+                    new() {
                         Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrateSD),
                         RelativePriority = "Normal"
                     }
@@ -154,7 +154,7 @@ namespace Sample
             */
 
             var outputAssetName = MKIOClient.GenerateUniqueName("output");
-            var outputAsset2 = client.Assets.CreateOrUpdate(outputAssetName, "mkioasset-" + outputAssetName, config["StorageName"], "output asset for job");
+            var outputAsset2 = client.Assets.CreateOrUpdate(outputAssetName, "mkioasset-" + outputAssetName, config["StorageName"]!, "output asset for job");
 
             var jobHttp = client.Jobs.Create(tranform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
             {
@@ -167,7 +167,7 @@ namespace Sample
                     }),
                 Outputs = new List<JobOutputAsset>()
                 {
-                    new JobOutputAsset()
+                    new()
                     {
                         AssetName = outputAssetName
                     }
@@ -268,7 +268,7 @@ namespace Sample
                 "testpolcreate",
                 new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
                 {
-                    new ContentKeyPolicyOption(
+                    new(
                         "option1",
                         new ContentKeyPolicyConfigurationWidevine("{}"),
                         new ContentKeyPolicyTokenRestriction(
@@ -313,7 +313,6 @@ namespace Sample
             // Get
             var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
 
-
             var creds = client.StorageAccounts.ListCredentials((Guid)storage2.Metadata.Id);
 
             // var cred = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
@@ -353,36 +352,30 @@ namespace Sample
                 },
                 Tracks = new List<FilterTrackSelection>()
                 {
-                    new FilterTrackSelection
-                    {
+                    new() {
                         TrackSelections = new List<FilterTrackPropertyCondition>()
                         {
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = FilterPropertyTypeValue.Video
                             },
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.Bitrate,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = "0-1048576"
                             }
                         },
                     },
-                    new FilterTrackSelection
-                    {
+                    new() {
                         TrackSelections = new List<FilterTrackPropertyCondition>()
                         {
-                            new FilterTrackPropertyCondition
-                             {
+                            new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = FilterPropertyTypeValue.Audio
                             },
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.FourCC,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = "mp4a"
@@ -412,36 +405,30 @@ namespace Sample
                 },
                 Tracks = new List<FilterTrackSelection>()
                 {
-                    new FilterTrackSelection
-                    {
+                    new() {
                         TrackSelections = new List<FilterTrackPropertyCondition>()
                         {
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = FilterPropertyTypeValue.Video
                             },
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.Bitrate,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = "0-1048576"
                             }
                         },
                     },
-                    new FilterTrackSelection
-                    {
+                    new() {
                         TrackSelections = new List<FilterTrackPropertyCondition>()
                         {
-                            new FilterTrackPropertyCondition
-                             {
+                            new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = FilterPropertyTypeValue.Audio
                             },
-                            new FilterTrackPropertyCondition
-                            {
+                            new() {
                                 Property = FilterTrackPropertyType.FourCC,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
                                 Value = "mp4a"

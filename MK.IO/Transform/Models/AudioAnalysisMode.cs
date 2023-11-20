@@ -3,12 +3,11 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace MK.IO
 {
-        /// <summary>
+    /// <summary>
     /// Determines the set of audio analysis operations to be performed. If unspecified, the Standard AudioAnalysisMode would be chosen.
     /// </summary>
     /// <value>Determines the set of audio analysis operations to be performed. If unspecified, the Standard AudioAnalysisMode would be chosen.</value>

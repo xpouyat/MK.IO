@@ -4,6 +4,9 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+#if NET48
+using System.Net.Http;
+#endif
 
 namespace MK.IO
 {
@@ -71,6 +74,7 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings);
         }
 
+#if NET7_0_OR_GREATER
         /// <inheritdoc/>
         public LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null)
         {
@@ -87,6 +91,7 @@ namespace MK.IO
 
             return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.UpdateObjectAsync);
         }
+#endif
 
         /// <inheritdoc/>
         public LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null)

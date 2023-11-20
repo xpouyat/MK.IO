@@ -1,6 +1,8 @@
 ﻿using MK.IO.Models;
 using Newtonsoft.Json;
-using System.Security.Cryptography.X509Certificates;
+#if NET48
+using System.Net.Http;
+#endif
 
 namespace MK.IO.Asset
 {

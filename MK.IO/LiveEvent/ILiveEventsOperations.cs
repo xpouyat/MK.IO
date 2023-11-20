@@ -47,6 +47,7 @@ namespace MK.IO
         /// <returns></returns>
         Task<LiveEventSchema> GetAsync(string liveEventName);
 
+#if NET7_0_OR_GREATER
         /// <summary>
         /// Update a live event
         /// </summary>
@@ -66,7 +67,7 @@ namespace MK.IO
         /// <param name="tags">A dictionary of tags associated with the live event. Maximum number of tags: 16. Maximum length of a tag: 256 characters.</param>
         /// <returns></returns>
         Task<LiveEventSchema> UpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags);
-
+#endif
 
         /// <summary>
         /// Create a single live event
