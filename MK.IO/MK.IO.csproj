@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net48</TargetFrameworks>
+    <TargetFrameworks>net7.0;net48;netcoreapp3.1</TargetFrameworks>
 	<LangVersion>10.0</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -11,14 +11,15 @@
     <Description>A client library for MediaKind MK/IO.</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.0.9</Version>
+    <Version>1.0.10</Version>
     <RepositoryUrl>https://github.com/xpouyat/MK.IO</RepositoryUrl>
     <PackageProjectUrl>https://github.com/xpouyat/MK.IO/blob/master/README.md</PackageProjectUrl>
-    <AssemblyVersion>1.0.9.0</AssemblyVersion>
-    <FileVersion>1.0.9.0</FileVersion>
+    <AssemblyVersion>1.0.10.0</AssemblyVersion>
+    <FileVersion>1.0.10.0</FileVersion>
     <Title>A client library for MediaKind MK/IO.</Title>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageIcon>mkio.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,5 +53,13 @@
 	<ItemGroup>
     <Folder Include="CsharpDotNet2\Model\" />
   </ItemGroup>
+
+
+	<ItemGroup>
+	  <None Update="Icon\mkio.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 </Project>

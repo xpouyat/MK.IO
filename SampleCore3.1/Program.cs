@@ -1,16 +1,13 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using Microsoft.Extensions.Configuration;
-using MK.IO;
+﻿using Microsoft.Extensions.Configuration;
 using System;
+using MK.IO;
+using MK.IO.Models;
 using System.Linq;
 
-namespace SampleNetFramework
+namespace SampleCore
 {
     internal class Program
     {
-        // Sample app to demonstrate how to use the MK/IO SDK with .Net framework 4.8
         static void Main(string[] args)
         {
             // load settings from appsettings.json
