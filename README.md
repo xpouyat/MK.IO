@@ -64,12 +64,13 @@ var stats = client.Account.GetSubscriptionStats();
 var mkioAssets = client.Assets.List();
 
 // list assets with pages
-var mkioAssetsResult = client.Assets.ListAsPage("name desc", 10);
-do
+var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", 10);
+while (true)
 {
+    // do stuff here using mkioAssetsResult.Results
+    if (mkioAssetsResult.NextPageLink == null) break;
     mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
-    // do stuff
-} while (mkioAssetsResult.NextPageLink != null);
+}
 
 // get asset
 var mkasset = client.Assets.Get("mmyassetname");

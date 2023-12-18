@@ -63,6 +63,46 @@ namespace Sample
             var sub = await client.Account.GetSubscriptionAsync();
             var locs = await client.Account.ListAllLocationsAsync();
 
+            // *****************
+            // asset operations
+            // *****************
+
+            // list assets
+
+            var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", 10);
+            while (true)
+            {
+                foreach (var a in mkioAssetsResult.Results)
+                {
+                    Console.WriteLine(a.Name);
+                }
+                if (mkioAssetsResult.NextPageLink == null) break;
+
+                mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
+            }
+
+            var specc = client.Assets.ListTracksAndDirListing("copy-ef2058b692-copy");
+
+            // get streaming locators for asset
+            try
+            {
+                var locatorsAsset = client.Assets.ListStreamingLocators("uploaded-c9c6146a98-CustomPreset-AutoFit-57653ac7b8-autofit");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+
+            // get asset
+            var mkasset = client.Assets.Get("copy-152b839997");
+
+            // create asset
+            // var newasset = client.Assets.CreateOrUpdate("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
+
+            // delete asset
+            // client.Assets.Delete("asset-33adc1873f");
+
 
             // ************************
             // asset filter operations
@@ -174,49 +214,14 @@ namespace Sample
             client.AccountFilters.Delete(filter.Name);
 
 
-            // *****************
-            // asset operations
-            // *****************
 
-            // list assets
-            //var mkioAssets = client.Assets.List("name desc", 4);
-
-
-            var mkioAssetsResult = client.Assets.ListAsPage("name desc", 4);
-            do
-            {
-                mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
-            } while (mkioAssetsResult.NextPageLink != null);
-
-
-            var specc = client.Assets.ListTracksAndDirListing("copy-ef2058b692-copy");
-
-            // get streaming locators for asset
-            try
-            {
-                var locatorsAsset = client.Assets.ListStreamingLocators("uploaded-c9c6146a98-CustomPreset-AutoFit-57653ac7b8-autofit");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-
-            // get asset
-            var mkasset = client.Assets.Get("copy-152b839997");
-
-            // create asset
-            // var newasset = client.Assets.CreateOrUpdate("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
-
-            // delete asset
-            // client.Assets.Delete("asset-33adc1873f");
 
 
             // *********************
             // transform operations
             // *********************
 
-                       
+
             var tranform = client.Transforms.CreateOrUpdate("simpleTransformSD", new TransformProperties
             {
                 Description = "desc",
@@ -228,7 +233,7 @@ namespace Sample
                     }
                 }
             });
-           
+
             // ***************
             // job operations
             // ***************
@@ -439,7 +444,7 @@ namespace Sample
             // client.StorageAccounts.Delete(storages.First().Metadata.Id);
 
 
-        
+
 
 
 
