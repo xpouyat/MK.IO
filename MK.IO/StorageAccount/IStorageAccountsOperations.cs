@@ -64,6 +64,24 @@ namespace MK.IO
         /// <returns></returns>
         Task<StorageResponseSchema> GetAsync(Guid storageAccountId);
 
+#if NET6_0_OR_GREATER
+        /// <summary>
+        /// Update  a storage account.
+        /// Only the description and privateLinkServiceConnection details are updatable.
+        /// </summary>
+        /// <param name="storage"></param>
+        /// <returns></returns>
+        StorageResponseSchema Update(Guid storageAccountId, StorageRequestSchema storage);
+
+        /// <summary>
+        /// Update  a storage account.
+        /// Only the description and privateLinkServiceConnection details are updatable.
+        /// </summary>
+        /// <param name="storage"></param>
+        /// <returns></returns>
+        Task<StorageResponseSchema> UpdateAsync(Guid storageAccountId, StorageRequestSchema storage);
+#endif
+
         /// <summary>
         /// Returns a list of storage credentials
         /// </summary>

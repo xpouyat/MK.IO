@@ -426,6 +426,13 @@ namespace Sample
             // Get
             var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
 
+            // Update the description
+            storage2.Spec.Description = "my new description";
+            var stor3 = client.StorageAccounts.Update((Guid)storages.First().Metadata.Id, new StorageRequestSchema
+            {
+                Spec = storage2.Spec
+            });
+
             var creds = client.StorageAccounts.ListCredentials((Guid)storage2.Metadata.Id);
 
             // var cred = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
@@ -442,9 +449,6 @@ namespace Sample
 
             // Delete
             // client.StorageAccounts.Delete(storages.First().Metadata.Id);
-
-
-
 
 
 

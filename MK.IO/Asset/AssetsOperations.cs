@@ -160,7 +160,7 @@ namespace MK.IO.Asset
                 }
             };
 
-            string responseContent = await Client.CreateObjectAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
+            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
             return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset deserialization");
         }
 

@@ -117,7 +117,7 @@ namespace MK.IO
             }
             var content = new JobSchema { Properties = properties };
 
-            string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
+            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson());
             return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
         }
 

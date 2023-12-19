@@ -100,7 +100,7 @@ namespace MK.IO
             Argument.AssertNotNull(content, nameof(content));
 
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
-            string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
+            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson());
             return ContentKeyPolicy.FromJson(responseContent);
         }
 

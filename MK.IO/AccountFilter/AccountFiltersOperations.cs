@@ -83,7 +83,7 @@ namespace MK.IO.Asset
                 Properties = properties
             };
 
-            string responseContent = await Client.CreateObjectAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
+            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
             return JsonConvert.DeserializeObject<AccountFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with account filter deserialization");
         }
 

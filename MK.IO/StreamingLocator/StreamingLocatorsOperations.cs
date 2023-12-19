@@ -91,7 +91,7 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_streamingLocatorApiUrl, streamingLocatorName);
             var content = new StreamingLocatorSchema { Properties = properties };
-            string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
+            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson());
             return JsonConvert.DeserializeObject<StreamingLocatorSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming locator deserialization");
         }
 

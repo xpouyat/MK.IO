@@ -90,7 +90,7 @@ namespace MK.IO
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 
-            return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.UpdateObjectAsync);
+            return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.UpdateObjectPatchAsync);
         }
 #endif
 
@@ -108,7 +108,7 @@ namespace MK.IO
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 
-            return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.CreateObjectAsync);
+            return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.CreateObjectPutAsync);
         }
 
         internal async Task<LiveEventSchema> CreateOrUpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags, Func<string, string, Task<string>> func)
