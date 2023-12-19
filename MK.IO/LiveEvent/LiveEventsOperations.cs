@@ -75,7 +75,7 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live event deserialization");
         }
 
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
         /// <inheritdoc/>
         public LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null)
         {

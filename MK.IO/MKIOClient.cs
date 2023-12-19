@@ -168,7 +168,7 @@ namespace MK.IO
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Post);
         }
 
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
         internal async Task<string> UpdateObjectAsync(string url, string amsJSONObject)
         {
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Patch);
