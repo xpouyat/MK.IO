@@ -12,6 +12,6 @@ namespace MK.IO
         }
 
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration";
+        internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration";
     }
 }
