@@ -48,7 +48,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
-	<!-- Conditionally obtain references for the .NET Framework 4.0 target -->
+	<!-- Conditionally obtain references for the .NET Framework 4.8 target -->
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
 		<PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
 	</ItemGroup>
