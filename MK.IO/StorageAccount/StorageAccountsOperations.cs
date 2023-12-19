@@ -94,7 +94,6 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with storage deserialization");
         }
 
-#if NET6_0_OR_GREATER
         /// <inheritdoc/>
         public StorageResponseSchema Update(Guid storageAccountId, StorageRequestSchema storage)
         {
@@ -112,7 +111,6 @@ namespace MK.IO
             return await CreateOrUpdateAsync(url, storage, Client.CreateObjectPutAsync);
 
         }
-#endif
 
         /// <inheritdoc/>
         public void Delete(Guid storageAccountId)
