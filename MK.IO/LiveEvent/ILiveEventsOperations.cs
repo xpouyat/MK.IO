@@ -56,7 +56,7 @@ namespace MK.IO
         /// <param name="properties">The properties of the live event.</param>
         /// <param name="tags">A dictionary of tags associated with the live event. Maximum number of tags: 16. Maximum length of a tag: 256 characters.</param>
         /// <returns></returns>
-        LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null);
+        LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null);
 
         /// <summary>
         /// Update a live event
@@ -66,7 +66,7 @@ namespace MK.IO
         /// <param name="properties">The properties of the live event.</param>
         /// <param name="tags">A dictionary of tags associated with the live event. Maximum number of tags: 16. Maximum length of a tag: 256 characters.</param>
         /// <returns></returns>
-        Task<LiveEventSchema> UpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags);
+        Task<LiveEventSchema> UpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null);
 #endif
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace MK.IO
         /// <param name="properties">The properties of the live event.</param>
         /// <param name="tags">A dictionary of tags associated with the live event. Maximum number of tags: 16. Maximum length of a tag: 256 characters.</param>
         /// <returns></returns>
-        LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null);
+        LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null);
 
         /// <summary>
         /// Create a single live event
@@ -87,7 +87,7 @@ namespace MK.IO
         /// <param name="properties">The properties of the live event.</param>
         /// <param name="tags">A dictionary of tags associated with the live event. Maximum number of tags: 16. Maximum length of a tag: 256 characters.</param>
         /// <returns></returns>
-        Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags);
+        Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null);
 
         /// <summary>
         /// Allocates resources for a Live Event. A live event is in StandBy state after allocation completes, and is ready to start.
