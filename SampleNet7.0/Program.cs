@@ -63,6 +63,59 @@ namespace Sample
             var sub = await client.Account.GetSubscriptionAsync();
             var locs = await client.Account.ListAllLocationsAsync();
 
+            // *******************
+            // storage operations
+            // *******************
+
+            // Creation
+
+            /*
+            var storage = client.StorageAccounts.Create(new StorageRequestSchema
+            {
+                Spec = new StorageSchema
+                {
+                    Name = config["StorageName"],
+                    Location = config["StorageRegion"],
+                    Description = "my description",
+                    AzureStorageConfiguration = new BlobStorageAzureProperties
+                    {
+                        Url = config["StorageSAS"]
+                    }
+                }
+            }
+            );
+            */
+
+            // List
+            var storages = client.StorageAccounts.List();
+
+            // Get
+            var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
+
+            // Update the description
+            storage2.Spec.Description = "my new description";
+            var stor3 = client.StorageAccounts.Update((Guid)storages.First().Metadata.Id, new StorageRequestSchema
+            {
+                Spec = storage2.Spec
+            });
+
+            var creds = client.StorageAccounts.ListCredentials((Guid)storage2.Metadata.Id);
+
+            // var cred = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
+
+            // client.StorageAccounts.DeleteCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
+
+            var cred = client.StorageAccounts.CreateCredential((Guid)storage2.Metadata.Id, new CredentialSchema
+            {
+                AzureCredential = new AzureCredential
+                {
+                    SasToken = "mySasToken"
+                }
+            });
+
+            // Delete
+            // client.StorageAccounts.Delete(storages.First().Metadata.Id);
+
             // *****************
             // asset operations
             // *****************
@@ -397,58 +450,7 @@ namespace Sample
             var ckpolprop = await client.ContentKeyPolicies.GetPolicyPropertiesWithSecretsAsync("testpolcreate");
 
 
-            // *******************
-            // storage operations
-            // *******************
-
-            // Creation
-
-            /*
-            var storage = client.StorageAccounts.Create(new StorageRequestSchema
-            {
-                Spec = new StorageSchema
-                {
-                    Name = config["StorageName"],
-                    Location = config["StorageRegion"],
-                    Description = "my description",
-                    AzureStorageConfiguration = new BlobStorageAzureProperties
-                    {
-                        Url = config["StorageSAS"]
-                    }
-                }
-            }
-            );
-            */
-
-            // List
-            var storages = client.StorageAccounts.List();
-
-            // Get
-            var storage2 = client.StorageAccounts.Get((Guid)storages.First().Metadata.Id);
-
-            // Update the description
-            storage2.Spec.Description = "my new description";
-            var stor3 = client.StorageAccounts.Update((Guid)storages.First().Metadata.Id, new StorageRequestSchema
-            {
-                Spec = storage2.Spec
-            });
-
-            var creds = client.StorageAccounts.ListCredentials((Guid)storage2.Metadata.Id);
-
-            // var cred = client.StorageAccounts.GetCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
-
-            // client.StorageAccounts.DeleteCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
-
-            var cred = client.StorageAccounts.CreateCredential((Guid)storage2.Metadata.Id, new CredentialSchema
-            {
-                AzureCredential = new AzureCredential
-                {
-                    SasToken = "mySasToken"
-                }
-            });
-
-            // Delete
-            // client.StorageAccounts.Delete(storages.First().Metadata.Id);
+          
 
 
 

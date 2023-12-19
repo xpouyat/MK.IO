@@ -12,18 +12,26 @@ namespace MK.IO.Models
     public class StorageResponseSchema
     {
         /// <summary>
-        /// Gets or Sets Metadata
+        /// Metadata about the storage account
         /// </summary>
         [DataMember(Name = "metadata", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "metadata")]
         public StorageMetadataSchema Metadata { get; set; }
 
         /// <summary>
-        /// Gets or Sets Spec
+        /// The specification of the storage account
         /// </summary>
         [DataMember(Name = "spec", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "spec")]
         public StorageSchema Spec { get; set; }
+
+
+        /// <summary>
+        /// Gets or Sets Status
+        /// </summary>
+        [DataMember(Name = "status", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "status")]
+        public StorageStatusSchema Status { get; set; }
 
 
         /// <summary>
@@ -36,6 +44,7 @@ namespace MK.IO.Models
             sb.Append("class StorageResponseSchema {\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  Spec: ").Append(Spec).Append("\n");
+            sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

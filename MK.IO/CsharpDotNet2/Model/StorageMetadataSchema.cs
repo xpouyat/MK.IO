@@ -12,14 +12,6 @@ namespace MK.IO.Models
     public class StorageMetadataSchema
     {
         /// <summary>
-        /// The unique identifier of the credential that is currently active for the storage account.
-        /// </summary>
-        /// <value>The unique identifier of the credential that is currently active for the storage account.</value>
-        [DataMember(Name = "activeCredentialId", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "activeCredentialId")]
-        public Guid? ActiveCredentialId { get; set; }
-
-        /// <summary>
         /// The date and time when the storage account was created.
         /// </summary>
         /// <value>The date and time when the storage account was created.</value>
@@ -68,7 +60,6 @@ namespace MK.IO.Models
         {
             var sb = new StringBuilder();
             sb.Append("class StorageMetadataSchema {\n");
-            sb.Append("  ActiveCredentialId: ").Append(ActiveCredentialId).Append("\n");
             sb.Append("  Created: ").Append(Created).Append("\n");
             sb.Append("  CreatedById: ").Append(CreatedById).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
