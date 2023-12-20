@@ -95,7 +95,7 @@ namespace MK.IO
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName, liveOutputName);
             //tags ??= new Dictionary<string, string>();
             var content = new LiveOutputSchema { Properties = properties };
-            string responseContent = await Client.CreateObjectAsync(url, content.ToJson());
+            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson());
             return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live output deserialization");
         }
 

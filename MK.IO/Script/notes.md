@@ -28,7 +28,12 @@ same for Id and Name in StreamingLocatorSchema.cs
 same for Id, Name, Type in StreamingPolicySchema.cs
 same for Created and LastModified in TransformProperties.cs
 same for Id, Name, Type in TransformSchema.cs
+same for provisisiongState and resourceState in LiveOutputProperties.cs
+same for PrivateLinkServiceConnectionStatus in statusstorageschema.cs
 
+in LiveOutputProperties.cs, ResourceState to LiveOutputResourceState
+
+in statusstorageschema.cs PrivateLinkServiceConnectionStatus string to PrivateLinkServiceConnectionState
 
 public SystemDataSchema SystemData { get; set; } to public SystemDataSchema SystemData { get; private set; } everywhere
 
@@ -39,3 +44,6 @@ JobState to JobState? in JobProperties.cs
             return JsonConvert.SerializeObject(this, ConverterLE.Settings);
         }
 everywhere
+
+
+TO DO : implement streaming endpoint scale operations

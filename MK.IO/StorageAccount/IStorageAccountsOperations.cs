@@ -23,6 +23,7 @@ namespace MK.IO
         /// <summary>
         /// Create a storage account.
         /// The account must be in the same location as your subscription.
+        /// The SAS token in the spec.azureStorageConfiguration.url field will be used to create a related Storage Credential object for you.
         /// </summary>
         /// <param name="storage"></param>
         /// <returns></returns>
@@ -31,6 +32,7 @@ namespace MK.IO
         /// <summary>
         /// Create a storage account.
         /// The account must be in the same location as your subscription.
+        /// The SAS token in the spec.azureStorageConfiguration.url field will be used to create a related Storage Credential object for you.
         /// </summary>
         /// <param name="storage"></param>
         /// <returns></returns>
@@ -63,6 +65,22 @@ namespace MK.IO
         /// <param name="storageAccountId"></param>
         /// <returns></returns>
         Task<StorageResponseSchema> GetAsync(Guid storageAccountId);
+
+        /// <summary>
+        /// Update  a storage account.
+        /// Only the description and privateLinkServiceConnection details are updatable.
+        /// </summary>
+        /// <param name="storage"></param>
+        /// <returns></returns>
+        StorageResponseSchema Update(Guid storageAccountId, StorageRequestSchema storage);
+
+        /// <summary>
+        /// Update  a storage account.
+        /// Only the description and privateLinkServiceConnection details are updatable.
+        /// </summary>
+        /// <param name="storage"></param>
+        /// <returns></returns>
+        Task<StorageResponseSchema> UpdateAsync(Guid storageAccountId, StorageRequestSchema storage);
 
         /// <summary>
         /// Returns a list of storage credentials

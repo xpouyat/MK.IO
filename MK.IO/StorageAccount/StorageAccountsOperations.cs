@@ -58,8 +58,7 @@ namespace MK.IO
 
             storage.Spec.Type = "Microsoft.Storage"; // needed
             var url = GenerateStorageApiUrl(_storageApiUrl);
-            string responseContent = await Client.CreateObjectPostAsync(url, storage.ToJson());
-            return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with storage deserialization");
+            return await CreateOrUpdateAsync(url, storage, Client.CreateObjectPostAsync);
         }
 
         /// <inheritdoc/>
@@ -93,6 +92,24 @@ namespace MK.IO
             var url = GenerateStorageApiUrl(_storageSelectionApiUrl, storageAccountId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url);
             return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with storage deserialization");
+        }
+
+        /// <inheritdoc/>
+        public StorageResponseSchema Update(Guid storageAccountId, StorageRequestSchema storage)
+        {
+            var task = Task.Run<StorageResponseSchema>(async () => await UpdateAsync(storageAccountId, storage));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<StorageResponseSchema> UpdateAsync(Guid storageAccountId, StorageRequestSchema storage)
+        {
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+            Argument.AssertNotNull(storage, nameof(storage));
+
+            var url = GenerateStorageApiUrl(_storageSelectionApiUrl, storageAccountId.ToString());
+            return await CreateOrUpdateAsync(url, storage, Client.CreateObjectPutAsync);
+
         }
 
         /// <inheritdoc/>
@@ -180,6 +197,12 @@ namespace MK.IO
             Argument.AssertNotNull(credentialId, nameof(credentialId));
 
             await CredentialOperationAsync(storageAccountId, credentialId, HttpMethod.Delete);
+        }
+
+        internal async Task<StorageResponseSchema> CreateOrUpdateAsync(string Url, StorageRequestSchema storage, Func<string, string, Task<string>> func)
+        {
+            string responseContent = await func(Url, storage.ToJson());
+            return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with storage deserialization");
         }
 
         private async Task StorageAccountOperationAsync(Guid storageAccountId, HttpMethod httpMethod)

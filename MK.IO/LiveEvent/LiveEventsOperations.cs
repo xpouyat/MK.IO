@@ -77,41 +77,41 @@ namespace MK.IO
 
 #if NET6_0_OR_GREATER
         /// <inheritdoc/>
-        public LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null)
+        public LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null)
         {
             var task = Task.Run<LiveEventSchema>(async () => await UpdateAsync(liveEventName, location, properties, tags));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<LiveEventSchema> UpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags)
+        public async Task<LiveEventSchema> UpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags)
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 
-            return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.UpdateObjectAsync);
+            return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.UpdateObjectPatchAsync);
         }
 #endif
 
         /// <inheritdoc/>
-        public LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags = null)
+        public LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null)
         {
             var task = Task.Run<LiveEventSchema>(async () => await CreateAsync(liveEventName, location, properties, tags));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags)
+        public async Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags)
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 
-            return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.CreateObjectAsync);
+            return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.CreateObjectPutAsync);
         }
 
-        internal async Task<LiveEventSchema> CreateOrUpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string> tags, Func<string, string, Task<string>> func)
+        internal async Task<LiveEventSchema> CreateOrUpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags, Func<string, string, Task<string>> func)
         {
             var url = Client.GenerateApiUrl(_liveEventApiUrl, liveEventName);
             tags ??= new Dictionary<string, string>();

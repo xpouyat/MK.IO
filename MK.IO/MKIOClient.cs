@@ -158,7 +158,7 @@ namespace MK.IO
             return responseContent;
         }
 
-        internal async Task<string> CreateObjectAsync(string url, string amsJSONObject)
+        internal async Task<string> CreateObjectPutAsync(string url, string amsJSONObject)
         {
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Put);
         }
@@ -169,7 +169,7 @@ namespace MK.IO
         }
 
 #if NET6_0_OR_GREATER
-        internal async Task<string> UpdateObjectAsync(string url, string amsJSONObject)
+        internal async Task<string> UpdateObjectPatchAsync(string url, string amsJSONObject)
         {
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Patch);
         }

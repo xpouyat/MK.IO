@@ -22,5 +22,18 @@ namespace MK.IO
 
         [JsonProperty("files")]
         public List<string> Files { get; set; }
+
+        /// <summary>
+        /// Defines a point on the timeline of the input media at which processing will start. Defaults to the beginning of the input media.
+        /// </summary>
+        [JsonProperty("start")]
+        public JobInputTime? Start { get; set; }
+
+        /// <summary>
+        /// Defines a point on the timeline of the input media at which processing will end. Defaults to the end of the input media.
+        /// </summary>
+        [JsonProperty("end")]
+        public JobInputTime? End { get; set; }
+
     }
 }

@@ -18,7 +18,7 @@ namespace MK.IO
         }
 
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.ContentKeyPolicyConfigurationFairPlay";
+        internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyConfigurationFairPlay";
 
         [JsonProperty("ask")]
         public string Ask { get; set; }
