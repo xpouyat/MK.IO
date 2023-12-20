@@ -6,9 +6,6 @@ on:
   push:
     branches:
       - 'master'       # Run the workflow when pushing to the main branch
-  pull_request:
-    branches:
-      - '*'          # Run the workflow for all pull requests
   release:
     types:
       - published    # Run the workflow when a new GitHub release is published
