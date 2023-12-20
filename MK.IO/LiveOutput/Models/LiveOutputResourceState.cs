@@ -10,7 +10,7 @@ namespace MK.IO
     /// <summary>
     /// The resource state of the live output.
     /// </summary>
-    /// <value>The current state of the live output.</value>
+    /// <value>The current resource state of the live output.</value>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum LiveOutputResourceState
     {
