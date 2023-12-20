@@ -5,7 +5,7 @@ using MK.IO.Asset;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
-#if NET48
+#if NET45
 using System.Net.Http;
 #endif
 

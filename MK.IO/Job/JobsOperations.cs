@@ -3,7 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
-#if NET48
+#if NET45
 using System.Net.Http;
 #endif
 
