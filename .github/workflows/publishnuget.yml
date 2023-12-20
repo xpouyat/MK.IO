@@ -24,7 +24,7 @@ defaults:
 
 jobs:
   create_nuget:
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v3
@@ -57,7 +57,7 @@ jobs:
         path: ${{ env.NuGetDirectory }}/*.snupkg
 
   run_test:
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
