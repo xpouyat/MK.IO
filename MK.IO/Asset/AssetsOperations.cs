@@ -1,7 +1,7 @@
 ﻿using MK.IO.Models;
 using Newtonsoft.Json;
 using System.Net;
-#if NET48
+#if NET45
 using System.Net.Http;
 #endif
 
