@@ -16,7 +16,7 @@ on:
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
-  NuGetDirectory: ${{ github.workspace}}/nuget
+  NuGetDirectory: ${{ github.workspace}}\nuget
 
 defaults:
   run:
@@ -47,7 +47,7 @@ jobs:
         name: nuget
         if-no-files-found: error
         retention-days: 7
-        path: ${{ env.NuGetDirectory }}/*.nupkg
+        path: ${{ env.NuGetDirectory }}\*.nupkg
 
     # Publish the Symbols NuGet package as an artifact, so they can be used in the following jobs
     - uses: actions/upload-artifact@v3
@@ -55,7 +55,7 @@ jobs:
         name: nuget
         if-no-files-found: error
         retention-days: 7
-        path: ${{ env.NuGetDirectory }}/*.snupkg
+        path: ${{ env.NuGetDirectory }}\*.snupkg
 
   run_test:
     runs-on: ubuntu-latest
