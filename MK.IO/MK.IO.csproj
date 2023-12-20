@@ -61,6 +61,7 @@
 	<!-- Conditionally obtain references for the .NET Framework 4.8 target -->
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
 		<PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 	</ItemGroup>
 	
 	<!-- Conditionally obtain references for the netstandard2.0 target -->
