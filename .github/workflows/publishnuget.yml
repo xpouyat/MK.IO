@@ -13,7 +13,7 @@ on:
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
-  NuGetDirectory: ${{ github.workspace}}\nuget
+  NuGetDirectory: ${{ github.workspace}}\bin\Release
 
 defaults:
   run:
@@ -36,7 +36,7 @@ jobs:
         dotnet-version: '7.x'
       
     # Create the NuGet package in the folder from the environment variable NuGetDirectory
-    - run: dotnet build MK.IO\MK.IO.csproj --configuration Release --output ${{ env.NuGetDirectory }} /maxcpucount:1
+    - run: dotnet build MK.IO\MK.IO.csproj --configuration Release /maxcpucount:1
 
     # Publish the NuGet package as an artifact, so they can be used in the following jobs
     - uses: actions/upload-artifact@v3
