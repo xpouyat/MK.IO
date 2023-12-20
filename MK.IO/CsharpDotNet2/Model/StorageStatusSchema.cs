@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>The unique identifier of the credential that is currently active for the storage account.</value>
         [DataMember(Name = "activeCredentialId", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "activeCredentialId")]
-        public Guid? ActiveCredentialId { get; set; }
+        public Guid? ActiveCredentialId { get; private set; }
 
         /// <summary>
         /// The state of the Azure Private Connection, if enabled.
@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>The state of the Azure Private Connection, if enabled.</value>
         [DataMember(Name = "privateLinkServiceConnectionStatus", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "privateLinkServiceConnectionStatus")]
-        public string PrivateLinkServiceConnectionStatus { get; set; }
+        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionStatus { get; private set; }
 
 
         /// <summary>

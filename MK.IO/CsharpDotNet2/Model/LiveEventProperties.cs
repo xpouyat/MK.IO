@@ -77,7 +77,7 @@ namespace MK.IO.Models
         /// <value>The current provisioning state of the resource. One of 'InProgress', 'Succeeded', or 'Failed'</value>
         [DataMember(Name = "provisioningState", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
+        public LiveEventProvisioningState ProvisioningState { get; private set; }
 
         /// <summary>
         /// The current state of the resource. One of 'Stopped', 'Starting', 'Running', 'Stopping', or 'Deleting'.
@@ -85,7 +85,7 @@ namespace MK.IO.Models
         /// <value>The current state of the resource. One of 'Stopped', 'Starting', 'Running', 'Stopping', or 'Deleting'.</value>
         [DataMember(Name = "resourceState", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "resourceState")]
-        public string ResourceState { get; set; }
+        public LiveEventResourceState ResourceState { get; private set; }
 
         /// <summary>
         /// A list of streaming options for the live event. One of 'Default' or 'LowLatency'. Only one value permitted in the list.

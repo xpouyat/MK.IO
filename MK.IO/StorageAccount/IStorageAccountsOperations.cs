@@ -23,6 +23,7 @@ namespace MK.IO
         /// <summary>
         /// Create a storage account.
         /// The account must be in the same location as your subscription.
+        /// The SAS token in the spec.azureStorageConfiguration.url field will be used to create a related Storage Credential object for you.
         /// </summary>
         /// <param name="storage"></param>
         /// <returns></returns>
@@ -31,6 +32,7 @@ namespace MK.IO
         /// <summary>
         /// Create a storage account.
         /// The account must be in the same location as your subscription.
+        /// The SAS token in the spec.azureStorageConfiguration.url field will be used to create a related Storage Credential object for you.
         /// </summary>
         /// <param name="storage"></param>
         /// <returns></returns>
