@@ -4,7 +4,6 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
-using System.Net.Http;
 #if NET462
 using System.Net.Http;
 #endif

@@ -191,7 +191,7 @@ namespace MK.IO
 
             AnalyzeResponseAndThrowIfNeeded(amsRequestResult, responseContent);
 
-            if (amsRequestResult.StatusCode == System.Net.HttpStatusCode.Accepted)
+            if (amsRequestResult.StatusCode == HttpStatusCode.Accepted)
             {
                 // let's wait for the operation to complete
                 var monitorUrl = amsRequestResult.Headers.Where(h => h.Key == "Azure-AsyncOperation").FirstOrDefault().Value.FirstOrDefault();
