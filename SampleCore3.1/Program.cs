@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
 using MK.IO;
-using MK.IO.Models;
+using System;
 using System.Linq;
 
 namespace SampleCore
