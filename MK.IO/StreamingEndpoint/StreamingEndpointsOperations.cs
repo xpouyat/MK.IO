@@ -4,6 +4,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net.Http;
 #if NET462
 using System.Net.Http;
 #endif
@@ -75,10 +76,33 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
         }
 
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         /// <inheritdoc/>
-        public StreamingEndpointSchema Create(string streamingEndpointName, string location, StreamingEndpointProperties content, bool autoStart = false, Dictionary<string, string>? tags = null)
+        public StreamingEndpointSchema Update(string streamingEndpointName, string location, StreamingEndpointProperties properties, Dictionary<string, string>? tags = null)
         {
-            var task = Task.Run<StreamingEndpointSchema>(async () => await CreateAsync(streamingEndpointName, location, content, autoStart, tags));
+            var task = Task.Run<StreamingEndpointSchema>(async () => await UpdateAsync(streamingEndpointName, location, properties, tags));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<StreamingEndpointSchema> UpdateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, Dictionary<string, string>? tags = null)
+        {
+            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            var url = Client.GenerateApiUrl(_streamingEndpointApiUrl, streamingEndpointName);
+            tags ??= new Dictionary<string, string>();
+            var content = new StreamingEndpointSchema { Location = location, Properties = properties, Tags = tags };
+            string responseContent = await Client.UpdateObjectPatchAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
+            return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
+        }
+#endif
+
+        /// <inheritdoc/>
+        public StreamingEndpointSchema Create(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string>? tags = null)
+        {
+            var task = Task.Run<StreamingEndpointSchema>(async () => await CreateAsync(streamingEndpointName, location, properties, autoStart, tags));
             return task.GetAwaiter().GetResult();
         }
 
@@ -94,6 +118,21 @@ namespace MK.IO
             var content = new StreamingEndpointSchema { Location = location, Properties = properties, Tags = tags };
             string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
             return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
+        }
+
+        /// <inheritdoc/>
+        public void Scale(string streamingEndpointName, int scaleUnit)
+        {
+            Task.Run(async () => await ScaleAsync(streamingEndpointName, scaleUnit)).GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task ScaleAsync(string streamingEndpointName, int scaleUnit)
+        {
+            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            var url = Client.GenerateApiUrl(_streamingEndpointApiUrl + "/scale", streamingEndpointName);
+            var content = new StreamingEndpointScaleSchema { ScaleUnit = scaleUnit };
+            await Client.CreateObjectPostAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
         }
 
         /// <inheritdoc/>
