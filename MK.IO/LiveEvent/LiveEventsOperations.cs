@@ -4,10 +4,9 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
-#if NET45
+#if NET462
 using System.Net.Http;
 #endif
-
 namespace MK.IO
 {
     /// <summary>
@@ -75,7 +74,7 @@ namespace MK.IO
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live event deserialization");
         }
 
-#if NET6_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         /// <inheritdoc/>
         public LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null)
         {

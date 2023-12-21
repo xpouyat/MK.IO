@@ -1,84 +1,90 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net45;net6.0;netstandard2.1</TargetFrameworks>
-	<LangVersion>10.0</LangVersion>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Authors>xpouyat</Authors>
-    <Company>Microsoft</Company>
-    <Description>A client library for MediaKind MK/IO.</Description>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.0.14</Version>
-    <RepositoryUrl>https://github.com/xpouyat/MK.IO</RepositoryUrl>
-	<RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/xpouyat/MK.IO/blob/master/README.md</PackageProjectUrl>
-    <AssemblyVersion>1.0.14.0</AssemblyVersion>
-    <FileVersion>1.0.14.0</FileVersion>
-    <Title>A client library for MediaKind MK/IO.</Title>
-    <IncludeSymbols>True</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageIcon>mkio.png</PackageIcon>
-    <!-- Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-      <PublishRepositoryUrl>true</PublishRepositoryUrl>
-      <!-- Embed source files that are not tracked by the source control manager in the PDB -->
-      <EmbedUntrackedSources>true</EmbedUntrackedSources>
-      <!-- Recommended: Embed symbols containing Source Link in the main file (exe/dll) -->
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;netstandard2.1;netstandard2.0;net462</TargetFrameworks>
+		<LangVersion>10.0</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Authors>xpouyat</Authors>
+		<Company>Microsoft</Company>
+		<Description>A client library for MediaKind MK/IO.</Description>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Version>1.0.15-beta2</Version>
+		<RepositoryUrl>https://github.com/xpouyat/MK.IO</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/xpouyat/MK.IO/blob/master/README.md</PackageProjectUrl>
+		<AssemblyVersion>1.0.14.2</AssemblyVersion>
+		<FileVersion>1.0.14.2</FileVersion>
+		<Title>A client library for MediaKind MK/IO.</Title>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageIcon>mkio.png</PackageIcon>
+		<!-- Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<!-- Embed source files that are not tracked by the source control manager in the PDB -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<!-- Recommended: Embed symbols containing Source Link in the main file (exe/dll) -->
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-</PropertyGroup>
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\LICENSE.txt">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="..\mkio.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="..\SampleContentKeyPolicyOperations.md" Link="SampleContentKeyPolicyOperations.md" />
-    <None Include="..\SampleFilterOperations.md" Link="SampleFilterOperations.md" />
-    <None Include="..\SampleLiveOperations.md" Link="SampleLiveOperations.md" />
-    <None Include="..\SampleStorageOperations.md" Link="SampleStorageOperations.md" />
-    <None Include="..\SampleTransformAndJobOperations.md" Link="SampleTransformAndJobOperations.md" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\LICENSE.txt">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\mkio.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\SampleContentKeyPolicyOperations.md" Link="SampleContentKeyPolicyOperations.md" />
+		<None Include="..\SampleFilterOperations.md" Link="SampleFilterOperations.md" />
+		<None Include="..\SampleLiveOperations.md" Link="SampleLiveOperations.md" />
+		<None Include="..\SampleStorageOperations.md" Link="SampleStorageOperations.md" />
+		<None Include="..\SampleTransformAndJobOperations.md" Link="SampleTransformAndJobOperations.md" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="JsonSubTypes" Version="2.0.1" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="JsonSubTypes" Version="2.0.1" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
 
-	<!-- Conditionally obtain references for the .NET Framework 4.5 target -->
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+	<!-- Conditionally obtain references for the .NET Framework 4.6.2 target -->
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
 		<PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 	</ItemGroup>
 
-  	<!-- Conditionally obtain references for the netstandard2.1 target -->
+	<!-- Conditionally obtain references for the netstandard2.0 target -->
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+	</ItemGroup>
+
+
+	<!-- Conditionally obtain references for the netstandard2.1 target -->
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-</ItemGroup>
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+	</ItemGroup>
 
 	<ItemGroup>
-    <Folder Include="CsharpDotNet2\Model\" />
-  </ItemGroup>
+		<Folder Include="CsharpDotNet2\Model\" />
+	</ItemGroup>
 
 
 	<ItemGroup>
-	  <None Update="Icon\mkio.png">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+		<None Update="Icon\mkio.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 
 </Project>

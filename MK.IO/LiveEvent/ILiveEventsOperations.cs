@@ -47,7 +47,7 @@ namespace MK.IO
         /// <returns></returns>
         Task<LiveEventSchema> GetAsync(string liveEventName);
 
-#if NET6_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         /// <summary>
         /// Update a live event
         /// </summary>

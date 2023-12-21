@@ -5,7 +5,7 @@ using MK.IO.Asset;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
-#if NET45
+#if NET462
 using System.Net.Http;
 #endif
 
@@ -168,7 +168,7 @@ namespace MK.IO
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Post);
         }
 
-#if NET6_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         internal async Task<string> UpdateObjectPatchAsync(string url, string amsJSONObject)
         {
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Patch);
