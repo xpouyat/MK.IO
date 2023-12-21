@@ -26,7 +26,7 @@ namespace MK.IO
         /// Once the streaming locator is deleted, all future requests to the path owned by the streaming locator will fail. If content is
         /// cached in a CDN, playback may continue to work for some time until the cached content expires.
         /// </summary>
-        /// <param name="streamingLocatorName"></param>
+        /// <param name="streamingLocatorName">The name of the streaming locator.</param>
         /// /// <returns></returns>
         void Delete(string streamingLocatorName);
 
@@ -36,37 +36,37 @@ namespace MK.IO
         /// Once the streaming locator is deleted, all future requests to the path owned by the streaming locator will fail. If content is
         /// cached in a CDN, playback may continue to work for some time until the cached content expires.
         /// </summary>
-        /// <param name="streamingLocatorName"></param>
+        /// <param name="streamingLocatorName">The name of the streaming locator.</param>
         /// <returns></returns>
         Task DeleteAsync(string streamingLocatorName);
 
         /// <summary>
         /// Get a streaming locator by name.
         /// </summary>
-        /// <param name="streamingLocatorName"></param>
+        /// <param name="streamingLocatorName">The name of the streaming locator.</param>
         /// <returns></returns>
         StreamingLocatorSchema Get(string streamingLocatorName);
 
         /// <summary>
         /// Get a streaming locator by name.
         /// </summary>
-        /// <param name="streamingLocatorName"></param>
+        /// <param name="streamingLocatorName">The name of the streaming locator.</param>
         /// <returns></returns>
         Task<StreamingLocatorSchema> GetAsync(string streamingLocatorName);
 
         /// <summary>
         /// Create a streaming locator.
         /// </summary>
-        /// <param name="streamingLocatorName"></param>
-        /// <param name="properties"></param>
+        /// <param name="streamingLocatorName">The name of the streaming locator.</param>
+        /// <param name="properties">Properties for streaming locator</param>
         /// <returns></returns>
         StreamingLocatorSchema Create(string streamingLocatorName, StreamingLocatorProperties properties);
 
         /// <summary>
         /// Create a streaming locator.
         /// </summary>
-        /// <param name="streamingLocatorName"></param>
-        /// <param name="properties"></param>
+        /// <param name="streamingLocatorName">The name of the streaming locator.</param>
+        /// <param name="properties">Properties for streaming locator</param>
         /// <returns></returns>
         Task<StreamingLocatorSchema> CreateAsync(string streamingLocatorName, StreamingLocatorProperties properties);
 
@@ -74,7 +74,7 @@ namespace MK.IO
         /// Return the set of valid streaming paths for a given streaming locator. A distinct set of paths
         /// is returned for each type of DRM configured, per the 'EnabledProtocols' property of the streaming policy.
         /// </summary>
-        /// <param name="streamingLocatorName"></param>
+        /// <param name="streamingLocatorName">The name of the streaming locator.</param>
         /// <returns></returns>
         StreamingLocatorListPathsResponseSchema ListUrlPaths(string streamingLocatorName);
 
@@ -82,7 +82,7 @@ namespace MK.IO
         /// Return the set of valid streaming paths for a given streaming locator. A distinct set of paths
         /// is returned for each type of DRM configured, per the 'EnabledProtocols' property of the streaming policy.
         /// </summary>
-        /// <param name="streamingLocatorName"></param>
+        /// <param name="streamingLocatorName">The name of the streaming locator.</param>
         /// <returns></returns>
         Task<StreamingLocatorListPathsResponseSchema> ListUrlPathsAsync(string streamingLocatorName);
     }

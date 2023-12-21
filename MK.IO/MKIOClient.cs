@@ -5,7 +5,7 @@ using MK.IO.Asset;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
-#if NET45
+#if NET462
 using System.Net.Http;
 #endif
 
@@ -168,7 +168,7 @@ namespace MK.IO
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Post);
         }
 
-#if NET6_0_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         internal async Task<string> UpdateObjectPatchAsync(string url, string amsJSONObject)
         {
             return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Patch);
@@ -191,7 +191,7 @@ namespace MK.IO
 
             AnalyzeResponseAndThrowIfNeeded(amsRequestResult, responseContent);
 
-            if (amsRequestResult.StatusCode == System.Net.HttpStatusCode.Accepted)
+            if (amsRequestResult.StatusCode == HttpStatusCode.Accepted)
             {
                 // let's wait for the operation to complete
                 var monitorUrl = amsRequestResult.Headers.Where(h => h.Key == "Azure-AsyncOperation").FirstOrDefault().Value.FirstOrDefault();
