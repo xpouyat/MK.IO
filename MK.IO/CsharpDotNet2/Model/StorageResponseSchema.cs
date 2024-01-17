@@ -27,7 +27,7 @@ namespace MK.IO.Models
 
 
         /// <summary>
-        /// Gets or Sets Status
+        /// Additional status information regarding the storage account.
         /// </summary>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "status")]

@@ -34,16 +34,16 @@ namespace MK.IO
         Task DeleteAsync(string liveEventName);
 
         /// <summary>
-        /// Returns a single live event.
+        /// Returns a live event.
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         /// <returns></returns>
         LiveEventSchema Get(string liveEventName);
 
         /// <summary>
-        /// Returns a single live event.
+        /// Returns a live event.
         /// </summary>
-        /// <param name="liveEventName"></param>
+        /// <param name="liveEventName">The name of the live event.</param>
         /// <returns></returns>
         Task<LiveEventSchema> GetAsync(string liveEventName);
 
@@ -70,7 +70,7 @@ namespace MK.IO
 #endif
 
         /// <summary>
-        /// Create a single live event
+        /// Create a live event
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         /// <param name="location">The location of the live event. This must match the configured location for your account.</param>
@@ -80,7 +80,7 @@ namespace MK.IO
         LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null);
 
         /// <summary>
-        /// Create a single live event
+        /// Create a live event
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         /// <param name="location">The location of the live event. This must match the configured location for your account.</param>
@@ -115,13 +115,13 @@ namespace MK.IO
         Task ResetAsync(string liveEventName);
 
         /// <summary>
-        /// Start Live Events. This operation transitions your Live Event into a running state
+        /// Start a Live Event. This operation transitions your Live Event into a running state
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         void Start(string liveEventName);
 
         /// <summary>
-        /// Start Live Events. This operation transitions your Live Event into a running state
+        /// Start a Live Event. This operation transitions your Live Event into a running state
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         /// <returns></returns>
