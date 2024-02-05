@@ -49,7 +49,7 @@ namespace MK.IO
 
 #if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         /// <summary>
-        /// Update a live event
+        /// NOT IMPLEMENTED. Update a live event
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         /// <param name="location">The location of the live event. This must match the configured location for your account.</param>
@@ -59,7 +59,7 @@ namespace MK.IO
         LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null);
 
         /// <summary>
-        /// Update a live event
+        /// NOT IMPLEMENTED. Update a live event
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         /// <param name="location">The location of the live event. This must match the configured location for your account.</param>
@@ -90,25 +90,25 @@ namespace MK.IO
         Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null);
 
         /// <summary>
-        /// Allocates resources for a Live Event. A live event is in StandBy state after allocation completes, and is ready to start.
+        /// NOT IMPLEMENTED. Allocates resources for a Live Event. A live event is in StandBy state after allocation completes, and is ready to start.
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         void Allocate(string liveEventName);
 
         /// <summary>
-        /// Allocates resources for a Live Event. A live event is in StandBy state after allocation completes, and is ready to start.
+        /// NOT IMPLEMENTED. Allocates resources for a Live Event. A live event is in StandBy state after allocation completes, and is ready to start.
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         Task AllocateAsync(string liveEventName);
 
         /// <summary>
-        /// Resets a Live Event. All live outputs for the live event are deleted and the live event is stopped and will be started again.
+        /// NOT IMPLEMENTED. Resets a Live Event. All live outputs for the live event are deleted and the live event is stopped and will be started again.
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         void Reset(string liveEventName);
 
         /// <summary>
-        /// Resets a Live Event. All live outputs for the live event are deleted and the live event is stopped and will be started again.
+        /// NOT IMPLEMENTED. Resets a Live Event. All live outputs for the live event are deleted and the live event is stopped and will be started again.
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         /// <returns></returns>

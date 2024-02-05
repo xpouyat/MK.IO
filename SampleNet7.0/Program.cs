@@ -151,7 +151,7 @@ namespace Sample
             var mkasset = client.Assets.Get("copy-152b839997");
 
             // create asset
-            // var newasset = client.Assets.CreateOrUpdate("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
+            // var newasset = client.Assets.CreateOrUpdate("uploaded-5143a7c39a-copy-7947d5ccac", "asset-d56fa44c-c5d5-47db-aa4b-16686ffa3d3b", "amsxpfrstorage", "description of asset copy", AssetContainerDeletionPolicyType.Retain);
 
             // delete asset
             // client.Assets.Delete("asset-33adc1873f");

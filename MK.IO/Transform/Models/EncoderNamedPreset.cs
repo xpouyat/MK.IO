@@ -48,6 +48,24 @@ namespace MK.IO
         H264MultipleBitrate1080p,
 
         /// <summary>
+        /// Enum H264MultipleBitrateSDWithCVQ for value: H264MultipleBitrateSDWithCVQ
+        /// </summary>
+        [EnumMember(Value = "H264MultipleBitrateSDWithCVQ")]
+        H264MultipleBitrateSDWithCVQ,
+
+        /// <summary>
+        /// Enum H264MultipleBitrate720pWithCVQ for value: H264MultipleBitrate720pWithCVQ
+        /// </summary>
+        [EnumMember(Value = "H264MultipleBitrate720pWithCVQ")]
+        H264MultipleBitrate720pWithCVQ,
+
+        /// <summary>
+        /// Enum H264MultipleBitrate1080pWithCVQ for value: H264MultipleBitrate1080pWithCVQ
+        /// </summary>
+        [EnumMember(Value = "H264MultipleBitrate1080pWithCVQ")]
+        H264MultipleBitrate1080pWithCVQ,
+
+        /// <summary>
         /// Enum H265SingleBitrate720p for value: H265SingleBitrate720p
         /// </summary>
         [EnumMember(Value = "H265SingleBitrate720p")]
