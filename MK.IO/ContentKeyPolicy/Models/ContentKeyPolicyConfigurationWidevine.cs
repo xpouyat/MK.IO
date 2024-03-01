@@ -13,7 +13,7 @@ namespace MK.IO
         }
 
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration";
+        internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration";
 
         [JsonProperty("widevineTemplate")]
         public string WidevineTemplate { get; set; }

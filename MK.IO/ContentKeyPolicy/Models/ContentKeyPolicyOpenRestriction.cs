@@ -9,6 +9,6 @@ namespace MK.IO
         }
 
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.ContentKeyPolicyOpenRestriction";
+        internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyOpenRestriction";
     }
 }
