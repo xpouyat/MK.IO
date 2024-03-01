@@ -291,7 +291,6 @@ namespace MK.IO
                         throw new ApiException("Response was null which was not expected.", status_, null, null);
                     }
                     throw new ApiException("Internal Server Error" + errorDetail, status_, responseContent, null);
-
                 }
                 else
                 {

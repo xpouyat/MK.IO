@@ -1,4 +1,6 @@
-﻿namespace MK.IO
+﻿using Newtonsoft.Json;
+
+namespace MK.IO
 {
     public class ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader : PlayReadyContentKeyLocation
     {
@@ -6,6 +8,7 @@
         {
         }
 
-        internal string OdataType => "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader";
+        [JsonProperty("@odata.type")]
+        internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader";
     }
 }
