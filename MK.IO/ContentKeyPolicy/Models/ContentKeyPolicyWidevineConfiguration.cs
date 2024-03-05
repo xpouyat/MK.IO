@@ -5,9 +5,9 @@ using Newtonsoft.Json;
 
 namespace MK.IO
 {
-    public class ContentKeyPolicyConfigurationWidevine : ContentKeyPolicyConfiguration
+    public class ContentKeyPolicyWidevineConfiguration : ContentKeyPolicyConfiguration
     {
-        public ContentKeyPolicyConfigurationWidevine(string widevineTemplate)
+        public ContentKeyPolicyWidevineConfiguration(string widevineTemplate)
         {
             WidevineTemplate = widevineTemplate;
         }

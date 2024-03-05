@@ -12,8 +12,9 @@ namespace MK.IO.Models
     public class BlobStorageAzureProperties
     {
         /// <summary>
-        /// Gets or Sets PrivateLinkServiceConnection
+        /// Optional settings for a Private Link.
         /// </summary>
+        /// <value>Optional settings for a Private Link.</value>
         [DataMember(Name = "privateLinkServiceConnection", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "privateLinkServiceConnection")]
         public BlobStorageAzurePrivateConnection PrivateLinkServiceConnection { get; set; }

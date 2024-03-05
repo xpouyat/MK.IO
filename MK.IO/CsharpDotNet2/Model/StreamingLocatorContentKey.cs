@@ -49,7 +49,7 @@ namespace MK.IO.Models
         /// <value>The streaming locator content key type</value>
         [DataMember(Name = "type", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public StreamingLocatorContentKeyType Type { get; set; }
 
         /// <summary>
         /// The value of the content key

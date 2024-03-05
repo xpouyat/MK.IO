@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using MK.IO.Models;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
@@ -42,17 +43,5 @@ namespace MK.IO
         [JsonProperty("properties")]
         public ContentKeyPolicyProperties Properties { get; set; }
 
-    }
-
-    public class ContentKeyPolicyProperties
-    {
-        [JsonProperty("options")]
-        public List<ContentKeyPolicyOption> Options { get; set; }
-
-        [JsonProperty("description")]
-        public string Description { get; set; }
-
-        [JsonProperty("policyId")]
-        public Guid? PolicyId { get; set; }
     }
 }

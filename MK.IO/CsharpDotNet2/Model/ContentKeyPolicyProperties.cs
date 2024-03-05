@@ -1,47 +1,55 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
 using System.Text;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace MK.IO.Models
 {
 
     /// <summary>
-    /// 
+    /// The properties of the Content Key Policy.
     /// </summary>
     [DataContract]
-    public class TransformProperties
+    public class ContentKeyPolicyProperties
     {
         /// <summary>
-        /// The creation date and time of the Transform. Set by the system.
+        /// The creation date of the Policy
         /// </summary>
-        /// <value>The creation date and time of the Transform. Set by the system.</value>
+        /// <value>The creation date of the Policy</value>
         [DataMember(Name = "created", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "created")]
         public DateTime? Created { get; private set; }
 
         /// <summary>
-        /// The description of the Transform.
+        /// A description for the Policy.
         /// </summary>
-        /// <value>The description of the Transform.</value>
+        /// <value>A description for the Policy.</value>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// The last modified date and time of the Transform. Set by the system.
+        /// The last modified date of the Policy
         /// </summary>
-        /// <value>The last modified date and time of the Transform. Set by the system.</value>
+        /// <value>The last modified date of the Policy</value>
         [DataMember(Name = "lastModified", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "lastModified")]
         public DateTime? LastModified { get; private set; }
 
         /// <summary>
-        /// An array of TransformOutputs that the Transform should generate. Currently limited to one.
+        /// The Key Policy options.
         /// </summary>
-        /// <value>An array of TransformOutputs that the Transform should generate. Currently limited to one.</value>
-        [DataMember(Name = "outputs", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "outputs")]
-        public List<TransformOutput> Outputs { get; set; }
+        /// <value>The Key Policy options.</value>
+        [DataMember(Name = "options", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "options")]
+        public List<ContentKeyPolicyOption> Options { get; set; }
+
+        /// <summary>
+        /// The legacy Policy ID.
+        /// </summary>
+        /// <value>The legacy Policy ID.</value>
+        [DataMember(Name = "policyId", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "policyId")]
+        public Guid? PolicyId { get; private set; }
 
 
         /// <summary>
@@ -51,11 +59,12 @@ namespace MK.IO.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class TransformProperties {\n");
+            sb.Append("class ContentKeyPolicyProperties {\n");
             sb.Append("  Created: ").Append(Created).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  LastModified: ").Append(LastModified).Append("\n");
-            sb.Append("  Outputs: ").Append(Outputs).Append("\n");
+            sb.Append("  Options: ").Append(Options).Append("\n");
+            sb.Append("  PolicyId: ").Append(PolicyId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

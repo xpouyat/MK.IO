@@ -436,11 +436,11 @@ namespace Sample
                 {
                     new(
                         "option1",
-                        new ContentKeyPolicyConfigurationWidevine("{}"),
+                        new ContentKeyPolicyWidevineConfiguration("{}"),
                         new ContentKeyPolicyTokenRestriction(
                             "issuer",
                             "audience",
-                            "Jwt",
+                            RestrictionTokenType.Jwt,
                             new ContentKeyPolicySymmetricTokenKey(key)
                             )
                         )

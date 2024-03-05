@@ -25,17 +25,17 @@ namespace MK.IO.Models
         /// <value>The name of the resource</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Properties
+        /// The key policy
         /// </summary>
         [DataMember(Name = "properties", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "properties")]
-        public ContentKeyPolicyOptions Properties { get; set; }
+        public ContentKeyPolicyProperties Properties { get; set; }
 
         /// <summary>
-        /// Gets or Sets SystemData
+        /// Metadata pertaining to creation and last modification of the resource.
         /// </summary>
         [DataMember(Name = "systemData", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "systemData")]

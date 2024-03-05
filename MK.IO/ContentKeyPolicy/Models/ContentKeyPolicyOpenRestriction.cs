@@ -2,6 +2,9 @@
 
 namespace MK.IO
 {
+    /// <summary>
+    /// Represents an open restriction. License or key will be delivered on every request.
+    /// </summary>
     public class ContentKeyPolicyOpenRestriction : ContentKeyPolicyRestriction
     {
         public ContentKeyPolicyOpenRestriction()

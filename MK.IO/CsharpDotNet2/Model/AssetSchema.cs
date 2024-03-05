@@ -49,7 +49,6 @@ namespace MK.IO.Models
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
-
         /// <summary>
         /// Get the string presentation of the object
         /// </summary>

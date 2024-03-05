@@ -4,6 +4,8 @@
 #if NET462
 using System.Net.Http;
 #endif
+using MK.IO.Models;
+
 namespace MK.IO
 {
     /// <summary>

@@ -5,7 +5,10 @@ namespace MK.IO
 {
 
     [JsonConverter(typeof(JsonSubtypes), "@odata.type")]
+    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyRsaTokenKey), "#Microsoft.Media.ContentKeyPolicyRsaTokenKey")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicySymmetricTokenKey), "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey")]
+    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyX509CertificateTokenKey), "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey")]
+
 
     //
     // Summary:

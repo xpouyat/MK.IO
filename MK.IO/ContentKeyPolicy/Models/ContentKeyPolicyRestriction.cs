@@ -6,7 +6,7 @@ namespace MK.IO
     [JsonConverter(typeof(JsonSubtypes), "@odata.type")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyTokenRestriction), "#Microsoft.Media.ContentKeyPolicyTokenRestriction")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyOpenRestriction), "#Microsoft.Media.ContentKeyPolicyOpenRestriction")]
-
+    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyUnknownRestriction), "#Microsoft.Media.ContentKeyPolicyUnknownRestriction")]
 
     //
     // Summary:

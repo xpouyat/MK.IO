@@ -45,8 +45,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\SampleContentKeyPolicyOperations.md"
-      Link="SampleContentKeyPolicyOperations.md" />
+    <None Include="..\SampleContentKeyPolicyOperations.md" Link="SampleContentKeyPolicyOperations.md" />
     <None Include="..\SampleFilterOperations.md" Link="SampleFilterOperations.md" />
     <None Include="..\SampleLiveOperations.md" Link="SampleLiveOperations.md" />
     <None Include="..\SampleStorageOperations.md" Link="SampleStorageOperations.md" />
@@ -73,10 +72,6 @@
   <!-- Conditionally obtain references for the netstandard2.1 target -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CsharpDotNet2\Model\" />
   </ItemGroup>
 
   <ItemGroup>
