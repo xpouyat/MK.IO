@@ -5,6 +5,7 @@
 using System.Net.Http;
 #endif
 using MK.IO.Models;
+using Newtonsoft.Json;
 
 namespace MK.IO
 {
@@ -41,35 +42,36 @@ namespace MK.IO
         }
 
         /// <inheritdoc/>
-        public List<ContentKeyPolicy> List()
+        public List<ContentKeyPolicySchema> List()
         {
-            Task<List<ContentKeyPolicy>> task = Task.Run(async () => await ListAsync());
+            Task<List<ContentKeyPolicySchema>> task = Task.Run(async () => await ListAsync());
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<ContentKeyPolicy>> ListAsync()
+        public async Task<List<ContentKeyPolicySchema>> ListAsync()
         {
             var url = Client.GenerateApiUrl(_contentKeyPoliciesApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return Models.ListContentKeyPolicies.FromJson(responseContent).Value;
+            var objectToReturn = JsonConvert.DeserializeObject<ContentKeyPolicyListResponseSchema>(responseContent, ConverterLE.Settings);
+            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with content key list deserialization");
         }
 
         /// <inheritdoc/>
-        public ContentKeyPolicy Get(string contentKeyPolicyName)
+        public ContentKeyPolicySchema Get(string contentKeyPolicyName)
         {
-            Task<ContentKeyPolicy> task = Task.Run(async () => await GetAsync(contentKeyPolicyName));
+            Task<ContentKeyPolicySchema> task = Task.Run(async () => await GetAsync(contentKeyPolicyName));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<ContentKeyPolicy> GetAsync(string contentKeyPolicyName)
+        public async Task<ContentKeyPolicySchema> GetAsync(string contentKeyPolicyName)
         {
             Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
 
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             string responseContent = await Client.GetObjectContentAsync(url);
-            return ContentKeyPolicy.FromJson(responseContent);
+            return JsonConvert.DeserializeObject<ContentKeyPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with content key policy deserialization");
         }
 
         /// <inheritdoc/>
@@ -88,21 +90,22 @@ namespace MK.IO
         }
 
         /// <inheritdoc/>
-        public ContentKeyPolicy Create(string contentKeyPolicyName, ContentKeyPolicy content)
+        public ContentKeyPolicySchema Create(string contentKeyPolicyName, ContentKeyPolicyProperties properties)
         {
-            Task<ContentKeyPolicy> task = Task.Run(async () => await CreateAsync(contentKeyPolicyName, content));
+            Task<ContentKeyPolicySchema> task = Task.Run(async () => await CreateAsync(contentKeyPolicyName, properties));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<ContentKeyPolicy> CreateAsync(string contentKeyPolicyName, ContentKeyPolicy content)
+        public async Task<ContentKeyPolicySchema> CreateAsync(string contentKeyPolicyName, ContentKeyPolicyProperties properties)
         {
             Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
+            var content = new ContentKeyPolicySchema { Properties = properties };
             string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson());
-            return ContentKeyPolicy.FromJson(responseContent);
+            return JsonConvert.DeserializeObject<ContentKeyPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with content key policy deserialization");
         }
 
         /// <inheritdoc/>
@@ -119,7 +122,8 @@ namespace MK.IO
 
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl + "/getPolicyPropertiesWithSecrets", contentKeyPolicyName);
             string responseContent = await Client.GetObjectPostContentAsync(url);
-            return ContentKeyPolicy.FromJson(responseContent).Properties;
+            //return ContentKeyPolicy.FromJson(responseContent).Properties;
+            return JsonConvert.DeserializeObject<ContentKeyPolicySchema>(responseContent, ConverterLE.Settings).Properties ?? throw new Exception("Error with content key policy deserialization");
         }
     }
 }

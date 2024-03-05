@@ -29,7 +29,7 @@ var key = GenerateSymKeyAsBase64();
 // create a new content key policy
 var newpol = client.ContentKeyPolicies.Create(
     "testpolcreate",
-    new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
+    new ContentKeyPolicyProperties("My description", new List<ContentKeyPolicyOption>()
     {
         new ContentKeyPolicyOption(
             "option1",
@@ -37,7 +37,7 @@ var newpol = client.ContentKeyPolicies.Create(
             new ContentKeyPolicyTokenRestriction(
                 "issuer",
                 "audience",
-                "Jwt",
+                RestrictionTokenType.Jwt,
                 new ContentKeyPolicySymmetricTokenKey(key)
                 )
             )

@@ -1,6 +1,7 @@
 using System.Text;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.Xml.Linq;
 
 namespace MK.IO.Models
 {
@@ -11,6 +12,13 @@ namespace MK.IO.Models
     [DataContract]
     public class ContentKeyPolicyProperties
     {
+
+        public ContentKeyPolicyProperties(string description, List<ContentKeyPolicyOption> options)
+        {
+            Description = description;
+            Options = options;
+        }
+
         /// <summary>
         /// The creation date of the Policy
         /// </summary>
