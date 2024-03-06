@@ -156,6 +156,7 @@ namespace Sample
 
             // client.StorageAccounts.DeleteCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
 
+            /*
             var cred = client.StorageAccounts.CreateCredential((Guid)storage2.Metadata.Id, new CredentialSchema
             {
                 AzureCredential = new AzureCredential
@@ -163,6 +164,7 @@ namespace Sample
                     SasToken = "mySasToken"
                 }
             });
+            */
 
             // Delete
             // client.StorageAccounts.Delete(storages.First().Metadata.Id);
@@ -185,7 +187,7 @@ namespace Sample
                 mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
             }
 
-            var specc = client.Assets.ListTracksAndDirListing("copy-ef2058b692-copy");
+            var specc = client.Assets.ListTracksAndDirListing("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
 
             // get streaming locators for asset
             try
