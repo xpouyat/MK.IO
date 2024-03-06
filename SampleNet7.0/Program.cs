@@ -328,13 +328,13 @@ namespace Sample
             // *********************
 
 
-            var tranform = client.Transforms.CreateOrUpdate("simpleTransformSD", new TransformProperties
+            var tranform = client.Transforms.CreateOrUpdate("CVQ720pTransform", new TransformProperties
             {
                 Description = "desc",
                 Outputs = new List<TransformOutput>
                 {
                     new() {
-                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrateSD),
+                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264MultipleBitrate720pWithCVQ),
                         RelativePriority = "Normal"
                     }
                 }
@@ -377,7 +377,7 @@ namespace Sample
 
             var jobHttp = client.Jobs.Create(tranform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
             {
-                Description = "My SD encoding job",
+                Description = "My CVQ encoding job",
                 Priority = "Normal",
                 Input = new JobInputHttp(
                     null,
@@ -457,7 +457,7 @@ namespace Sample
             }
 
 
-    
+
 
 
 
@@ -474,18 +474,18 @@ namespace Sample
             // create streaming endpoint
 
             /*
-             var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
-             {
-                 Description = "my description",
-                 ScaleUnits = 0,
-                 CdnEnabled = false,
-                 Sku = new StreamingEndpointsCurrentSku
-                 {
-                     Name = "Standard",
-                     Capacity = 600
-                 }
-             });
-           */
+            var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
+            {
+                Description = "my description",
+                ScaleUnits = 0,
+                CdnEnabled = false,
+                Sku = new StreamingEndpointsCurrentSku
+                {
+                    Name = "Standard",
+                    Capacity = 600
+                }
+            });
+            */
 
             // start, stop, delete streaming endpoint
             //client.StreamingEndpoints.Start("streamingendpoint1");
