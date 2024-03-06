@@ -1,11 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using MK.IO.Models;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace MK.IO
 {
     public class ContentKeyPolicyTokenRestriction : ContentKeyPolicyRestriction
     {
 
-        public ContentKeyPolicyTokenRestriction(string issuer, string audience, string restrictionTokenType, ContentKeyPolicyVerificationKey primaryVerificationKey)
+        public ContentKeyPolicyTokenRestriction(string issuer, string audience, RestrictionTokenType restrictionTokenType, ContentKeyPolicyVerificationKey primaryVerificationKey)
         {
             Issuer = issuer;
             Audience = audience;
@@ -15,35 +17,57 @@ namespace MK.IO
         }
 
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.ContentKeyPolicyTokenRestriction";
+        internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyTokenRestriction";
 
+        /// <summary>
+        /// The token issuer.
+        /// </summary>
+        /// <value>The token issuer.</value>
         [JsonProperty("issuer")]
         public string Issuer { get; set; }
 
+        /// <summary>
+        /// The OpenID connect discovery document.
+        /// </summary>
+        /// <value>The OpenID connect discovery document.</value>
+        [DataMember(Name = "openIdConnectDiscoveryDocument", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "openIdConnectDiscoveryDocument")]
+        public string OpenIdConnectDiscoveryDocument { get; set; }
+
+        /// <summary>
+        /// The audience for the token.
+        /// </summary>
+        /// <value>The audience for the token.</value>
         [JsonProperty("audience")]
         public string Audience { get; set; }
 
+        /// <summary>
+        /// A list of required token claims.
+        /// </summary>
+        /// <value>A list of required token claims.</value>
         [JsonProperty("requiredClaims")]
-        public List<RequiredClaim> RequiredClaims { get; set; }
+        public List<ContentKeyPolicyTokenClaim> RequiredClaims { get; set; }
 
+        /// <summary>
+        /// The type of token.
+        /// </summary>
+        /// <value>The type of token.</value>
         [JsonProperty("restrictionTokenType")]
-        public string RestrictionTokenType { get; set; }
+        public RestrictionTokenType RestrictionTokenType { get; set; }
 
+        /// <summary>
+        /// The primary verification key.
+        /// </summary>
+        /// <value>The primary verification key.</value>
         [JsonProperty("primaryVerificationKey")]
         public ContentKeyPolicyVerificationKey PrimaryVerificationKey { get; set; }
 
+        /// <summary>
+        /// A list of alternative verification keys.
+        /// </summary>
+        /// <value>A list of alternative verification keys.</value>
         [JsonProperty("alternateVerificationKeys")]
         public List<ContentKeyPolicyVerificationKey> AlternateVerificationKeys { get; set; }
 
     }
-
-    public class RequiredClaim
-    {
-        [JsonProperty("claimType")]
-        public string ClaimType { get; set; }
-
-        [JsonProperty("claimValue")]
-        public string ClaimValue { get; set; }
-    }
-
 }

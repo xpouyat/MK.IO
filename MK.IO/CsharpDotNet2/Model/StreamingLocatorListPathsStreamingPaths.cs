@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>The encryption scheme used for the path.</value>
         [DataMember(Name = "encryptionScheme", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "encryptionScheme")]
-        public string EncryptionScheme { get; set; }
+        public StreamingPathsEncryptionScheme EncryptionScheme { get; set; }
 
         /// <summary>
         /// The paths for the locator.
@@ -33,7 +33,7 @@ namespace MK.IO.Models
         /// <value>The streaming protocol used for the path.</value>
         [DataMember(Name = "streamingProtocol", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "streamingProtocol")]
-        public string StreamingProtocol { get; set; }
+        public StreamingPathsStreamingProtocol StreamingProtocol { get; set; }
 
 
         /// <summary>

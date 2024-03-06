@@ -7,10 +7,11 @@ namespace MK.IO
 {
 
     [JsonConverter(typeof(JsonSubtypes), "@odata.type")]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyConfigurationPlayReady), "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration")]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyConfigurationWidevine), "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration")]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyConfigurationFairPlay), "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration")]
+    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyPlayReadyConfiguration), "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration")]
+    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyWidevineConfiguration), "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration")]
+    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyFairPlayConfiguration), "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyClearKeyConfiguration), "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration")]
+    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyUnknownConfiguration), "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration")]
 
     //
     // Summary:

@@ -47,8 +47,7 @@ namespace MK.IO.Models
         /// <value>The type of the resource. E.g. \"Microsoft.Media/mediaservices/assets\"</value>
         [DataMember(Name = "type", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
+        public string Type { get; private set; }
 
         /// <summary>
         /// Get the string presentation of the object

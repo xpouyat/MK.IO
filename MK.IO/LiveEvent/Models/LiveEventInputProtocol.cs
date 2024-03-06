@@ -8,9 +8,10 @@ using System.Runtime.Serialization;
 namespace MK.IO
 {
     /// <summary>
-    /// The input protocol for the live event.          This is specified at creation time and cannot be updated.         Must be one of RTMP or SRT. fmp4 smooth input is not supported.         
+    /// The input protocol for the live event.
+    /// This is specified at creation time and cannot be updated.
     /// </summary>
-    /// <value>The input protocol for the live event.          This is specified at creation time and cannot be updated.         Must be one of RTMP or SRT. fmp4 smooth input is not supported.         </value>
+    /// <value>Must be one of RTMP or SRT. fmp4 smooth input is not supported.</value>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum LiveEventInputProtocol
     {

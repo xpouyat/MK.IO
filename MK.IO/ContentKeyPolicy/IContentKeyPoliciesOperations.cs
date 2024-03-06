@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using MK.IO.Models;
+
 namespace MK.IO
 {
     public interface IContentKeyPoliciesOperations
@@ -9,13 +11,13 @@ namespace MK.IO
         /// List Content Key Policies
         /// </summary>
         /// <returns></returns>
-        List<ContentKeyPolicy> List();
+        List<ContentKeyPolicySchema> List();
 
         /// <summary>
         /// List Content Key Policies
         /// </summary>
         /// <returns></returns>
-        Task<List<ContentKeyPolicy>> ListAsync();
+        Task<List<ContentKeyPolicySchema>> ListAsync();
 
         /// <summary>
         /// Delete a Content Key Policy. If the policy does not exist, this will return a 204.
@@ -34,30 +36,30 @@ namespace MK.IO
         /// </summary>
         /// <param name="contentKeyPolicyName"></param>
         /// <returns></returns>
-        ContentKeyPolicy Get(string contentKeyPolicyName);
+        ContentKeyPolicySchema Get(string contentKeyPolicyName);
 
         /// <summary>
         /// Get one Content Key Policy
         /// </summary>
         /// <param name="contentKeyPolicyName"></param>
         /// <returns></returns>
-        Task<ContentKeyPolicy> GetAsync(string contentKeyPolicyName);
+        Task<ContentKeyPolicySchema> GetAsync(string contentKeyPolicyName);
 
         /// <summary>
         /// Create a Content Key Policy
         /// </summary>
         /// <param name="contentKeyPolicyName"></param>
-        /// <param name="content"></param>
+        /// <param name="properties"></param>
         /// <returns></returns>
-        ContentKeyPolicy Create(string contentKeyPolicyName, ContentKeyPolicy content);
+        ContentKeyPolicySchema Create(string contentKeyPolicyName, ContentKeyPolicyProperties properties);
 
         /// <summary>
         /// Create a Content Key Policy
         /// </summary>
         /// <param name="contentKeyPolicyName"></param>
-        /// <param name="content"></param>
+        /// <param name="properties"></param>
         /// <returns></returns>
-        Task<ContentKeyPolicy> CreateAsync(string contentKeyPolicyName, ContentKeyPolicy content);
+        Task<ContentKeyPolicySchema> CreateAsync(string contentKeyPolicyName, ContentKeyPolicyProperties properties);
 
         /// <summary>
         /// Get the properties of a Content Key Policy including secret values

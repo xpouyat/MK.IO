@@ -11,12 +11,12 @@
     <Description>A client library for MediaKind MK/IO.</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <RepositoryUrl>https://github.com/xpouyat/MK.IO</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/xpouyat/MK.IO/blob/master/README.md</PackageProjectUrl>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
     <Title>A client library for MediaKind MK/IO.</Title>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -45,8 +45,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\SampleContentKeyPolicyOperations.md"
-      Link="SampleContentKeyPolicyOperations.md" />
+    <None Include="..\SampleContentKeyPolicyOperations.md" Link="SampleContentKeyPolicyOperations.md" />
     <None Include="..\SampleFilterOperations.md" Link="SampleFilterOperations.md" />
     <None Include="..\SampleLiveOperations.md" Link="SampleLiveOperations.md" />
     <None Include="..\SampleStorageOperations.md" Link="SampleStorageOperations.md" />
@@ -73,10 +72,6 @@
   <!-- Conditionally obtain references for the netstandard2.1 target -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CsharpDotNet2\Model\" />
   </ItemGroup>
 
   <ItemGroup>

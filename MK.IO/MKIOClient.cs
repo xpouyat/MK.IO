@@ -275,6 +275,14 @@ namespace MK.IO
                     }
                     throw new ApiException("Not Found" + errorDetail, status_, responseContent, null);
                 }
+                if (status_ == 429)
+                {
+                    if (message == null)
+                    {
+                        throw new ApiException("Response was null which was not expected.", status_, null, null);
+                    }
+                    throw new ApiException("Too Many Requests" + errorDetail, status_, responseContent, null);
+                }
                 else
                 if (status_ == 500)
                 {
@@ -283,7 +291,6 @@ namespace MK.IO
                         throw new ApiException("Response was null which was not expected.", status_, null, null);
                     }
                     throw new ApiException("Internal Server Error" + errorDetail, status_, responseContent, null);
-
                 }
                 else
                 {

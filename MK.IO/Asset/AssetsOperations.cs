@@ -136,14 +136,14 @@ namespace MK.IO.Asset
         }
 
         /// <inheritdoc/>
-        public AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null)
+        public AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain)
         {
-            Task<AssetSchema> task = Task.Run(async () => await CreateOrUpdateAsync(assetName, containerName, storageName, description));
+            Task<AssetSchema> task = Task.Run(async () => await CreateOrUpdateAsync(assetName, containerName, storageName, description, containerDeletionPolicy));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null)
+        public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
@@ -156,7 +156,8 @@ namespace MK.IO.Asset
                 {
                     Container = containerName,
                     Description = description!,
-                    StorageAccountName = storageName
+                    StorageAccountName = storageName,
+                    ContainerDeletionPolicy = containerDeletionPolicy
                 }
             };
 

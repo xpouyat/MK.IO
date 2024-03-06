@@ -36,9 +36,9 @@ namespace MK.IO.Models
         public DateTime? LastModified { get; private set; }
 
         /// <summary>
-        /// An array of one or more TransformOutputs that the Transform should generate.
+        /// An array of TransformOutputs that the Transform should generate. Currently limited to one.
         /// </summary>
-        /// <value>An array of one or more TransformOutputs that the Transform should generate.</value>
+        /// <value>An array of TransformOutputs that the Transform should generate. Currently limited to one.</value>
         [DataMember(Name = "outputs", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "outputs")]
         public List<TransformOutput> Outputs { get; set; }

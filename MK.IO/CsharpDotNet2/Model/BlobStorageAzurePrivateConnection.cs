@@ -43,7 +43,6 @@ namespace MK.IO.Models
         [JsonProperty(PropertyName = "subscriptionId")]
         public Guid? SubscriptionId { get; set; }
 
-
         /// <summary>
         /// Get the string presentation of the object
         /// </summary>

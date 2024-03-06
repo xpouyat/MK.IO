@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>The state of the Azure Private Connection, if enabled.</value>
         [DataMember(Name = "privateLinkServiceConnectionStatus", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "privateLinkServiceConnectionStatus")]
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionStatus { get; private set; }
+        public PrivateLinkServiceConnectionState? PrivateLinkServiceConnectionStatus { get; private set; }
 
 
         /// <summary>

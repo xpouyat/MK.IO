@@ -10,7 +10,7 @@ namespace MK.IO
         }
 
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey";
+        internal override string OdataType => "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey";
 
         [JsonProperty("keyValue")]
         public string KeyValue { get; set; }

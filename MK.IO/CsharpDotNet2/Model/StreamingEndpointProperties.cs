@@ -19,28 +19,36 @@ namespace MK.IO.Models
         public StreamingEndpointAccessControl AccessControl { get; set; }
 
         /// <summary>
-        /// Not implemented. Indicates if CDN is enabled for the streaming endpoint.
+        /// If CDN is enabled, the path that must be inserted after the hostname and before the locator, e.g. https://<hostName>/<cdnBasePath>/<locator>.
         /// </summary>
-        /// <value>Not implemented. Indicates if CDN is enabled for the streaming endpoint.</value>
+        /// <value>If CDN is enabled, the path that must be inserted after the hostname and before the locator, e.g. https://<hostName>/<cdnBasePath>/<locator>.</value>
+        [DataMember(Name = "cdnBasePath", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "cdnBasePath")]
+        public string CdnBasePath { get; private set; }
+
+        /// <summary>
+        /// Indicates if CDN is enabled for the streaming endpoint.
+        /// </summary>
+        /// <value>Indicates if CDN is enabled for the streaming endpoint.</value>
         [DataMember(Name = "cdnEnabled", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "cdnEnabled")]
         public bool? CdnEnabled { get; set; }
 
         /// <summary>
-        /// Not implemented. The CDN profile name for the streaming endpoint.
+        /// If CDN is enabled, the optional CDN profile name for the streaming endpoint.
         /// </summary>
-        /// <value>Not implemented. The CDN profile name for the streaming endpoint.</value>
+        /// <value>If CDN is enabled, the optional CDN profile name for the streaming endpoint.</value>
         [DataMember(Name = "cdnProfile", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "cdnProfile")]
         public string CdnProfile { get; set; }
 
         /// <summary>
-        /// Not implemented. The CDN provider name for the streaming endpoint.
+        /// If CDN is enabled, the CDN provider name for the streaming endpoint.
         /// </summary>
-        /// <value>Not implemented. The CDN provider name for the streaming endpoint.</value>
+        /// <value>If CDN is enabled, the CDN provider name for the streaming endpoint.</value>
         [DataMember(Name = "cdnProvider", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "cdnProvider")]
-        public List<Object> CdnProvider { get; set; }
+        public StreamingEndpointCdnProvider CdnProvider { get; set; }
 
         /// <summary>
         /// The creation date and time of the streaming endpoint. Set by the system.
@@ -74,12 +82,12 @@ namespace MK.IO.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Readonly field. The fqdn of the streaming endpoint. This is the output hostname and is always configured. To set a custom hostname, use the customHostNames property.
+        /// The fqdn of the streaming endpoint. This is the output hostname and is always configured. To set a custom hostname, use the customHostNames property.
         /// </summary>
-        /// <value>Readonly field. The fqdn of the streaming endpoint. This is the output hostname and is always configured. To set a custom hostname, use the customHostNames property.</value>
+        /// <value>The fqdn of the streaming endpoint. This is the output hostname and is always configured. To set a custom hostname, use the customHostNames property.</value>
         [DataMember(Name = "hostName", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "hostName")]
-        public string HostName { get; set; }
+        public string HostName { get; private set; }
 
         /// <summary>
         /// The last modified date and time of the streaming endpoint. Set by the system.
@@ -103,7 +111,7 @@ namespace MK.IO.Models
         /// <value>The provisioning state of the streaming endpoint. Set by the system. One of InProgress,Succeeded,Failed.</value>
         [DataMember(Name = "provisioningState", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
+        public StreamingEndpointProvisioningState ProvisioningState { get; private set; }
 
         /// <summary>
         /// The runtime state of the streaming endpoint. Set by the system. One of Running,Stopped,Deleted,Creating,Starting,Stopping,Deleting,Scaling.
@@ -111,7 +119,7 @@ namespace MK.IO.Models
         /// <value>The runtime state of the streaming endpoint. Set by the system. One of Running,Stopped,Deleted,Creating,Starting,Stopping,Deleting,Scaling.</value>
         [DataMember(Name = "resourceState", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "resourceState")]
-        public string ResourceState { get; set; }
+        public StreamingEndpointResourceState ResourceState { get; private set; }
 
         /// <summary>
         /// The number of scale units for the streaming endpoint. This will determine your minimum scale. A value of 0 will result in the streaming endpoints using a Standard SKU.  A value greater than zero indicates that the 'Premium' SKUs will be provisioned.

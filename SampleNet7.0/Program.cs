@@ -63,6 +63,57 @@ namespace Sample
             var sub = await client.Account.GetSubscriptionAsync();
             var locs = await client.Account.ListAllLocationsAsync();
 
+            // ******************************
+            // content key policy operations
+            // ******************************
+
+            try
+            {
+                var ck = client.ContentKeyPolicies.Get("testpolcreate");
+            }
+
+            catch
+            {
+
+            }
+
+
+
+            try
+            {
+                await client.ContentKeyPolicies.DeleteAsync("testpolcreate");
+            }
+
+            catch
+            {
+
+            }
+            var cks = client.ContentKeyPolicies.List();
+
+            var key = GenerateSymKeyAsBase64();
+
+            var newpol = client.ContentKeyPolicies.Create(
+                "testpolcreate",
+                new ContentKeyPolicyProperties("My description", new List<ContentKeyPolicyOption>()
+                {
+                    new(
+                        "option1",
+                        new ContentKeyPolicyWidevineConfiguration("{}"),
+                        new ContentKeyPolicyTokenRestriction(
+                            "issuer",
+                            "audience",
+                            RestrictionTokenType.Jwt,
+                            new ContentKeyPolicySymmetricTokenKey(key)
+                            )
+                        )
+                })
+                );
+
+            var ckpolprop = await client.ContentKeyPolicies.GetPolicyPropertiesWithSecretsAsync("testpolcreate");
+
+
+
+
             // *******************
             // storage operations
             // *******************
@@ -105,6 +156,7 @@ namespace Sample
 
             // client.StorageAccounts.DeleteCredential((Guid)storages.First().Metadata.Id, (Guid)creds.First().Metadata.Id);
 
+            /*
             var cred = client.StorageAccounts.CreateCredential((Guid)storage2.Metadata.Id, new CredentialSchema
             {
                 AzureCredential = new AzureCredential
@@ -112,6 +164,7 @@ namespace Sample
                     SasToken = "mySasToken"
                 }
             });
+            */
 
             // Delete
             // client.StorageAccounts.Delete(storages.First().Metadata.Id);
@@ -134,12 +187,12 @@ namespace Sample
                 mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
             }
 
-            var specc = client.Assets.ListTracksAndDirListing("copy-ef2058b692-copy");
+            var specc = client.Assets.ListTracksAndDirListing("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
 
             // get streaming locators for asset
             try
             {
-                var locatorsAsset = client.Assets.ListStreamingLocators("uploaded-c9c6146a98-CustomPreset-AutoFit-57653ac7b8-autofit");
+                var locatorsAsset = client.Assets.ListStreamingLocators("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
             }
             catch (Exception ex)
             {
@@ -148,10 +201,10 @@ namespace Sample
 
 
             // get asset
-            var mkasset = client.Assets.Get("copy-152b839997");
+            var mkasset = client.Assets.Get("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
 
             // create asset
-            // var newasset = client.Assets.CreateOrUpdate("copy-ef2058b692-copy", "asset-2346d605-b4d6-4958-a80b-b4943b602ea8", "amsxpfrstorage", "description of asset copy");
+            // var newasset = client.Assets.CreateOrUpdate("uploaded-5143a7c39a-copy-7947d5ccac", "asset-d56fa44c-c5d5-47db-aa4b-16686ffa3d3b", "amsxpfrstorage", "description of asset copy", AssetContainerDeletionPolicyType.Retain);
 
             // delete asset
             // client.Assets.Delete("asset-33adc1873f");
@@ -161,16 +214,16 @@ namespace Sample
             // asset filter operations
             // ************************
 
-            var assetFilters = client.AssetFilters.List("copy-ef2058b692-copy");
+            var assetFilters = client.AssetFilters.List("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
 
-            assetFilters.ForEach(af => client.AssetFilters.Delete("copy-ef2058b692-copy", af.Name));
+            assetFilters.ForEach(af => client.AssetFilters.Delete("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252", af.Name));
             //var assetFilter1 = client.AssetFilters.Get("liveoutput-c4debfe5", assetFilters.First().Name);
 
             // asset filter creation
             // Typically, you will want to select a matching Type, such as Video, and then select additional filters.
             // For instance, to include all audio tracks with mp4a, and all video tracks that are between 0 and 1 Mbps, you would provide these FilterTrackSelection objects:
 
-            var assetFilter = client.AssetFilters.CreateOrUpdate("copy-ef2058b692-copy", MKIOClient.GenerateUniqueName("filter"), new MediaFilterProperties
+            var assetFilter = client.AssetFilters.CreateOrUpdate("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252", MKIOClient.GenerateUniqueName("filter"), new MediaFilterProperties
             {
                 PresentationTimeRange = new PresentationTimeRange
                 {
@@ -211,7 +264,7 @@ namespace Sample
                 }
             });
 
-            client.AssetFilters.Delete("liveoutput-c4debfe5", assetFilter.Name);
+            client.AssetFilters.Delete("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252", assetFilter.Name);
 
             // **************************
             // account filter operations
@@ -275,13 +328,13 @@ namespace Sample
             // *********************
 
 
-            var tranform = client.Transforms.CreateOrUpdate("simpleTransformSD", new TransformProperties
+            var tranform = client.Transforms.CreateOrUpdate("CVQ720pTransform", new TransformProperties
             {
                 Description = "desc",
                 Outputs = new List<TransformOutput>
                 {
                     new() {
-                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264SingleBitrateSD),
+                        Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264MultipleBitrate720pWithCVQ),
                         RelativePriority = "Normal"
                     }
                 }
@@ -324,7 +377,7 @@ namespace Sample
 
             var jobHttp = client.Jobs.Create(tranform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
             {
-                Description = "My SD encoding job",
+                Description = "My CVQ encoding job",
                 Priority = "Normal",
                 Input = new JobInputHttp(
                     null,
@@ -371,12 +424,15 @@ namespace Sample
                 Encoding = new LiveEventEncoding { EncodingType = LiveEventEncodingType.PassthroughBasic }
             });
 
+            /* 
+            // NOT IMPLEMENTED
             le = client.LiveEvents.Update(le.Name, "francecentral", new LiveEventProperties
             {
                 Input = new LiveEventInput { StreamingProtocol = LiveEventInputProtocol.SRT },
                 StreamOptions = new List<string> { "Default" },
                 Encoding = new LiveEventEncoding { EncodingType = LiveEventEncodingType.PassthroughBasic }
             });
+            */
 
             // **********************
             // live output operations
@@ -401,55 +457,6 @@ namespace Sample
             }
 
 
-            // ******************************
-            // content key policy operations
-            // ******************************
-
-            try
-            {
-                var ck = client.ContentKeyPolicies.Get("testpolcreate");
-            }
-
-            catch
-            {
-
-            }
-
-
-
-            try
-            {
-                await client.ContentKeyPolicies.DeleteAsync("testpolcreate");
-            }
-
-            catch
-            {
-
-            }
-            var cks = client.ContentKeyPolicies.List();
-
-            var key = GenerateSymKeyAsBase64();
-
-            var newpol = client.ContentKeyPolicies.Create(
-                "testpolcreate",
-                new ContentKeyPolicy("My description", new List<ContentKeyPolicyOption>()
-                {
-                    new(
-                        "option1",
-                        new ContentKeyPolicyConfigurationWidevine("{}"),
-                        new ContentKeyPolicyTokenRestriction(
-                            "issuer",
-                            "audience",
-                            "Jwt",
-                            new ContentKeyPolicySymmetricTokenKey(key)
-                            )
-                        )
-                })
-                );
-
-            var ckpolprop = await client.ContentKeyPolicies.GetPolicyPropertiesWithSecretsAsync("testpolcreate");
-
-
 
 
 
@@ -467,18 +474,18 @@ namespace Sample
             // create streaming endpoint
 
             /*
-             var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
-             {
-                 Description = "my description",
-                 ScaleUnits = 0,
-                 CdnEnabled = false,
-                 Sku = new StreamingEndpointsCurrentSku
-                 {
-                     Name = "Standard",
-                     Capacity = 600
-                 }
-             });
-           */
+            var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
+            {
+                Description = "my description",
+                ScaleUnits = 0,
+                CdnEnabled = false,
+                Sku = new StreamingEndpointsCurrentSku
+                {
+                    Name = "Standard",
+                    Capacity = 600
+                }
+            });
+            */
 
             // start, stop, delete streaming endpoint
             //client.StreamingEndpoints.Start("streamingendpoint1");

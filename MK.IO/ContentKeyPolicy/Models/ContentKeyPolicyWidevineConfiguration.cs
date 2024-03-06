@@ -5,15 +5,15 @@ using Newtonsoft.Json;
 
 namespace MK.IO
 {
-    public class ContentKeyPolicyConfigurationWidevine : ContentKeyPolicyConfiguration
+    public class ContentKeyPolicyWidevineConfiguration : ContentKeyPolicyConfiguration
     {
-        public ContentKeyPolicyConfigurationWidevine(string widevineTemplate)
+        public ContentKeyPolicyWidevineConfiguration(string widevineTemplate)
         {
             WidevineTemplate = widevineTemplate;
         }
 
         [JsonProperty("@odata.type")]
-        internal string OdataType => "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration";
+        internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration";
 
         [JsonProperty("widevineTemplate")]
         public string WidevineTemplate { get; set; }

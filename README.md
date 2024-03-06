@@ -31,7 +31,7 @@ In the current version, operations are supported for :
 - Streaming locators
 - Storage accounts
 - Content key policies
-- Transforms
+- Transforms, including with CVQ presets
 - Jobs
 - Live events
 - Live outputs

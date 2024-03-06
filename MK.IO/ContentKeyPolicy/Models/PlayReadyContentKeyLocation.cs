@@ -5,6 +5,8 @@ namespace MK.IO
 {
     [JsonConverter(typeof(JsonSubtypes), "@odata.type")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader), "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader")]
+    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier), "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier")]
+
     //
     // Summary:
     //     Base class for PlayReady content key location. A derived class must be used
