@@ -192,7 +192,7 @@ namespace Sample
             // get streaming locators for asset
             try
             {
-                var locatorsAsset = client.Assets.ListStreamingLocators("uploaded-c9c6146a98-CustomPreset-AutoFit-57653ac7b8-autofit");
+                var locatorsAsset = client.Assets.ListStreamingLocators("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
             }
             catch (Exception ex)
             {
@@ -201,7 +201,7 @@ namespace Sample
 
 
             // get asset
-            var mkasset = client.Assets.Get("copy-152b839997");
+            var mkasset = client.Assets.Get("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
 
             // create asset
             // var newasset = client.Assets.CreateOrUpdate("uploaded-5143a7c39a-copy-7947d5ccac", "asset-d56fa44c-c5d5-47db-aa4b-16686ffa3d3b", "amsxpfrstorage", "description of asset copy", AssetContainerDeletionPolicyType.Retain);
@@ -214,16 +214,16 @@ namespace Sample
             // asset filter operations
             // ************************
 
-            var assetFilters = client.AssetFilters.List("copy-ef2058b692-copy");
+            var assetFilters = client.AssetFilters.List("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
 
-            assetFilters.ForEach(af => client.AssetFilters.Delete("copy-ef2058b692-copy", af.Name));
+            assetFilters.ForEach(af => client.AssetFilters.Delete("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252", af.Name));
             //var assetFilter1 = client.AssetFilters.Get("liveoutput-c4debfe5", assetFilters.First().Name);
 
             // asset filter creation
             // Typically, you will want to select a matching Type, such as Video, and then select additional filters.
             // For instance, to include all audio tracks with mp4a, and all video tracks that are between 0 and 1 Mbps, you would provide these FilterTrackSelection objects:
 
-            var assetFilter = client.AssetFilters.CreateOrUpdate("copy-ef2058b692-copy", MKIOClient.GenerateUniqueName("filter"), new MediaFilterProperties
+            var assetFilter = client.AssetFilters.CreateOrUpdate("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252", MKIOClient.GenerateUniqueName("filter"), new MediaFilterProperties
             {
                 PresentationTimeRange = new PresentationTimeRange
                 {
@@ -264,7 +264,7 @@ namespace Sample
                 }
             });
 
-            client.AssetFilters.Delete("liveoutput-c4debfe5", assetFilter.Name);
+            client.AssetFilters.Delete("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252", assetFilter.Name);
 
             // **************************
             // account filter operations
@@ -424,12 +424,15 @@ namespace Sample
                 Encoding = new LiveEventEncoding { EncodingType = LiveEventEncodingType.PassthroughBasic }
             });
 
+            /* 
+            // NOT IMPLEMENTED
             le = client.LiveEvents.Update(le.Name, "francecentral", new LiveEventProperties
             {
                 Input = new LiveEventInput { StreamingProtocol = LiveEventInputProtocol.SRT },
                 StreamOptions = new List<string> { "Default" },
                 Encoding = new LiveEventEncoding { EncodingType = LiveEventEncodingType.PassthroughBasic }
             });
+            */
 
             // **********************
             // live output operations
