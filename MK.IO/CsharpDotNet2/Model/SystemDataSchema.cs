@@ -57,7 +57,7 @@ namespace MK.IO.Models
         /// <value>The type of identity that last modified the resource.</value>
         [DataMember(Name = "lastModifiedByType", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "lastModifiedByType")]
-        public string LastModifiedByType { get; set; }
+        public string LastModifiedByType { get; private set; }
 
 
         /// <summary>
