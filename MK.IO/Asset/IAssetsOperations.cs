@@ -1,4 +1,5 @@
 ﻿using MK.IO.Models;
+using System.Net.NetworkInformation;
 
 namespace MK.IO.Asset
 {
@@ -59,7 +60,7 @@ namespace MK.IO.Asset
         /// Delete Asset.
         /// When you delete an asset, the underlying storage container will be deleted too.You can control this behavior by assigning a DeletionPolicy to your asset.
         /// </summary>
-        /// <param name="assetName"></param>
+        /// <param name="assetName">The name of the asset.</param>
         /// <returns></returns>
         void Delete(string assetName);
 
@@ -67,14 +68,14 @@ namespace MK.IO.Asset
         /// Delete Asset.
         /// When you delete an asset, the underlying storage container will be deleted too.You can control this behavior by assigning a DeletionPolicy to your asset.
         /// </summary>
-        /// <param name="assetName"></param>
+        /// <param name="assetName">The name of the asset.</param>
         /// <returns></returns>
         Task DeleteAsync(string assetName);
 
         /// <summary>
         /// Get an asset by name.
         /// </summary>
-        /// <param name="assetName"></param>
+        /// <param name="assetName">The name of the asset.</param>
         /// <returns></returns>
         AssetSchema Get(string assetName);
 
@@ -90,30 +91,34 @@ namespace MK.IO.Asset
         /// When creating an asset, that asset needs to have a unique container & storage account within the project.
         /// When updating an asset, only the description column can be updated.
         /// </summary>
-        /// <param name="assetName"></param>
-        /// <param name="containerName"></param>
-        /// <param name="storageName"></param>
-        /// <param name="description"></param>
+        /// <param name="assetName">The name of the asset.</param>
+        /// <param name="containerName">The name of the asset blob container.</param>
+        /// <param name="storageName">The name of the storage account.</param>
+        /// <param name="description">The Asset description.</param>
+        /// <param name="containerDeletionPolicy">Deletion policy for the underlying storage container. This determines the behavior when an asset record is deleted. A deletion policy of 'Delete' will result in the associated storage container and all its contents being removed from storage. A deletion policy of 'Retain' will leave the content in-place in your storage account.</param>
+        /// <param name="alternateId">An alternate ID of the asset.</param>
         /// <returns></returns>
-        AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain);
+        AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null);
 
         /// <summary>
         /// Create or Update Asset.
         /// When creating an asset, that asset needs to have a unique container & storage account within the project.
         /// When updating an asset, only the description column can be updated.
         /// </summary>
-        /// <param name="assetName"></param>
-        /// <param name="containerName"></param>
-        /// <param name="storageName"></param>
-        /// <param name="description"></param>
+        /// <param name="assetName">The name of the asset.</param>
+        /// <param name="containerName">The name of the asset blob container.</param>
+        /// <param name="storageName">The name of the storage account.</param>
+        /// <param name="description">The Asset description.</param>
+        /// <param name="containerDeletionPolicy">Deletion policy for the underlying storage container. This determines the behavior when an asset record is deleted. A deletion policy of 'Delete' will result in the associated storage container and all its contents being removed from storage. A deletion policy of 'Retain' will leave the content in-place in your storage account.</param>
+        /// <param name="alternateId">An alternate ID of the asset.</param>
         /// <returns></returns>
-        Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain);
+        Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null);
 
         /// <summary>
         /// List Streaming Locators for Asset. This API call is a convenience method to retrieve
         /// any and all playback configuations, or StreamingLocators, that are assocaited with this asset.
         /// </summary>
-        /// <param name="assetName"></param>
+        /// <param name="assetName">The name of the asset.</param>
         /// <returns></returns>
         List<AssetStreamingLocator> ListStreamingLocators(string assetName);
 
@@ -121,7 +126,7 @@ namespace MK.IO.Asset
         /// List Streaming Locators for Asset. This API call is a convenience method to retrieve
         /// any and all playback configuations, or StreamingLocators, that are assocaited with this asset.
         /// </summary>
-        /// <param name="assetName"></param>
+        /// <param name="assetName">The name of the asset.</param>
         /// <returns></returns>
         Task<List<AssetStreamingLocator>> ListStreamingLocatorsAsync(string assetName);
 
@@ -140,7 +145,7 @@ namespace MK.IO.Asset
         /// which the asset resides. It is a readonly API that does not allow for any mutation or creation operations, and which cannot be used to retrieve
         /// any data from the storage account.</para>
         /// </summary>
-        /// <param name="assetName"></param>
+        /// <param name="assetName">The name of the asset.</param>
         /// <returns></returns>
         AssetStorageResponseSchema ListTracksAndDirListing(string assetName);
 
@@ -159,7 +164,7 @@ namespace MK.IO.Asset
         /// which the asset resides. It is a readonly API that does not allow for any mutation or creation operations, and which cannot be used to retrieve
         /// any data from the storage account.</para>
         /// </summary>
-        /// <param name="assetName"></param>
+        /// <param name="assetName">The name of the asset.</param>
         /// <returns></returns>
         Task<AssetStorageResponseSchema> ListTracksAndDirListingAsync(string assetName);
     }
