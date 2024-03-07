@@ -87,9 +87,9 @@ namespace MK.IO.Asset
         Task<AssetSchema> GetAsync(string assetName);
 
         /// <summary>
-        /// Create or Update Asset.
-        /// When creating an asset, that asset needs to have a unique container & storage account within the project.
-        /// When updating an asset, only the description column can be updated.
+        /// <para>Create or Update Asset.</para>
+        /// <para>When creating an asset, that asset needs to have a unique container & storage account within the project.
+        /// When updating an asset, only the description column can be updated.</para>
         /// </summary>
         /// <param name="assetName">The name of the asset.</param>
         /// <param name="containerName">The name of the asset blob container.</param>
@@ -101,9 +101,9 @@ namespace MK.IO.Asset
         AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null);
 
         /// <summary>
-        /// Create or Update Asset.
-        /// When creating an asset, that asset needs to have a unique container & storage account within the project.
-        /// When updating an asset, only the description column can be updated.
+        /// <para>Create or Update Asset.</para>
+        /// <para>When creating an asset, that asset needs to have a unique container & storage account within the project.
+        /// When updating an asset, only the description column can be updated.</para>
         /// </summary>
         /// <param name="assetName">The name of the asset.</param>
         /// <param name="containerName">The name of the asset blob container.</param>
