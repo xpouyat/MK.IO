@@ -136,14 +136,14 @@ namespace MK.IO.Asset
         }
 
         /// <inheritdoc/>
-        public AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain)
+        public AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null)
         {
-            Task<AssetSchema> task = Task.Run(async () => await CreateOrUpdateAsync(assetName, containerName, storageName, description, containerDeletionPolicy));
+            Task<AssetSchema> task = Task.Run(async () => await CreateOrUpdateAsync(assetName, containerName, storageName, description, containerDeletionPolicy, alternateId));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain)
+        public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
@@ -157,7 +157,8 @@ namespace MK.IO.Asset
                     Container = containerName,
                     Description = description!,
                     StorageAccountName = storageName,
-                    ContainerDeletionPolicy = containerDeletionPolicy
+                    ContainerDeletionPolicy = containerDeletionPolicy,
+                    AlternateId = alternateId!
                 }
             };
 
