@@ -37,6 +37,7 @@ In the current version, operations are supported for :
 - Live outputs
 - Asset filters
 - Account filters
+- Streaming policies
 
 ### Sample code
 
