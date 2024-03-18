@@ -36,9 +36,9 @@ namespace MK.IO.Models
         public string PolicyName { get; set; }
 
         /// <summary>
-        /// The tracks which use this content key
+        /// Not currently supported. The tracks which use this content key
         /// </summary>
-        /// <value>The tracks which use this content key</value>
+        /// <value>Not currently supported. The tracks which use this content key</value>
         [DataMember(Name = "tracks", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "tracks")]
         public List<TrackSelection> Tracks { get; set; }

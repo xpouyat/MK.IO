@@ -20,6 +20,14 @@ namespace MK.IO.Models
         public string Id { get; private set; }
 
         /// <summary>
+        /// A dictionary of labels associated with the resource. Maximum number of labels: 32. Maximum length of a label or value: 256 characters.
+        /// </summary>
+        /// <value>A dictionary of labels associated with the resource. Maximum number of labels: 32. Maximum length of a label or value: 256 characters.</value>
+        [DataMember(Name = "labels", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "labels")]
+        public Dictionary<string, string> Labels { get; set; }
+
+        /// <summary>
         /// The name of the resource
         /// </summary>
         /// <value>The name of the resource</value>

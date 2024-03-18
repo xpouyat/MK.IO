@@ -10,18 +10,23 @@ namespace MK.IO.Asset
         /// </summary>
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
-        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="filter">Filters the set of items returned.</param>
+        /// <param name="label_key">Filters the set to the specified label key. If multiple label_keys are specified, matching assets must have all labels.</param>
+        /// <param name="label">Filters the set to the specified label key/value pair. Supports equality, inequality, and inexact matching. If multiple values are provided for the same key, assets matching either value will be returned.</param>
         /// <returns></returns>
-        List<AssetSchema> List(string? orderBy = null, int? top = null, string? filter = null);
+        List<AssetSchema> List(string? orderBy = null, int? top = null, string? filter = null, List<string>? label_key = null, List<string>? label = null);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription.
         /// </summary>
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
-        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="filter">Filters the set of items returned.</param>
+        /// <param name="label_key">Filters the set to the specified label key. If multiple label_keys are specified, matching assets must have all labels.</param>
+        /// <param name="label">Filters the set to the specified label key/value pair. Supports equality, inequality, and inexact matching. If multiple values are provided for the same key, assets matching either value will be returned.</param>
+
         /// <returns></returns>
-        Task<List<AssetSchema>> ListAsync(string? orderBy = null, int? top = null, string? filter = null);
+        Task<List<AssetSchema>> ListAsync(string? orderBy = null, int? top = null, string? filter = null, List<string>? label_key = null, List<string>? label = null);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription using pages.
@@ -29,8 +34,10 @@ namespace MK.IO.Asset
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="label_key">Filters the set to the specified label key. If multiple label_keys are specified, matching assets must have all labels.</param>
+        /// <param name="label">Filters the set to the specified label key/value pair. Supports equality, inequality, and inexact matching. If multiple values are provided for the same key, assets matching either value will be returned.</param>
         /// <returns></returns>
-        PagedResult<AssetSchema> ListAsPage(string? orderBy = null, int? top = null, string? filter = null);
+        PagedResult<AssetSchema> ListAsPage(string? orderBy = null, int? top = null, string? filter = null, List<string>? label_key = null, List<string>? label = null);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription using pages.
@@ -38,8 +45,10 @@ namespace MK.IO.Asset
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="label_key">Filters the set to the specified label key. If multiple label_keys are specified, matching assets must have all labels.</param>
+        /// <param name="label">Filters the set to the specified label key/value pair. Supports equality, inequality, and inexact matching. If multiple values are provided for the same key, assets matching either value will be returned.</param>
         /// <returns></returns>
-        Task<PagedResult<AssetSchema>> ListAsPageAsync(string? orderBy = null, int? top = null, string? filter = null);
+        Task<PagedResult<AssetSchema>> ListAsPageAsync(string? orderBy = null, int? top = null, string? filter = null, List<string>? label_key = null, List<string>? label = null);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription using pages.
@@ -47,7 +56,6 @@ namespace MK.IO.Asset
         /// <param name="nextPageLink">Next page link.</param>
         /// <returns></returns>
         PagedResult<AssetSchema> ListAsPageNext(string? nextPageLink);
-
 
         /// <summary>
         /// Retrieves a list of assets in the subscription using pages.
@@ -98,7 +106,7 @@ namespace MK.IO.Asset
         /// <param name="containerDeletionPolicy">Deletion policy for the underlying storage container. This determines the behavior when an asset record is deleted. A deletion policy of 'Delete' will result in the associated storage container and all its contents being removed from storage. A deletion policy of 'Retain' will leave the content in-place in your storage account.</param>
         /// <param name="alternateId">An alternate ID of the asset.</param>
         /// <returns></returns>
-        AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null);
+        AssetSchema CreateOrUpdate(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null, Dictionary<string, string>? labels = null);
 
         /// <summary>
         /// <para>Create or Update Asset.</para>
@@ -112,7 +120,7 @@ namespace MK.IO.Asset
         /// <param name="containerDeletionPolicy">Deletion policy for the underlying storage container. This determines the behavior when an asset record is deleted. A deletion policy of 'Delete' will result in the associated storage container and all its contents being removed from storage. A deletion policy of 'Retain' will leave the content in-place in your storage account.</param>
         /// <param name="alternateId">An alternate ID of the asset.</param>
         /// <returns></returns>
-        Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null);
+        Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null, Dictionary<string, string>? labels = null);
 
         /// <summary>
         /// List Streaming Locators for Asset. This API call is a convenience method to retrieve

@@ -28,17 +28,17 @@ namespace MK.IO.Models
         public string AssetName { get; set; }
 
         /// <summary>
-        /// Not currently supported. The content keys used by this streaming locator
+        /// The content keys used by this streaming locator
         /// </summary>
-        /// <value>Not currently supported. The content keys used by this streaming locator</value>
+        /// <value>The content keys used by this streaming locator</value>
         [DataMember(Name = "contentKeys", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "contentKeys")]
         public List<StreamingLocatorContentKey> ContentKeys { get; set; }
 
         /// <summary>
-        /// Not currently supported. The default content key policy name used by this streaming locator.
+        /// The default content key policy name used by this streaming locator.
         /// </summary>
-        /// <value>Not currently supported. The default content key policy name used by this streaming locator.</value>
+        /// <value>The default content key policy name used by this streaming locator.</value>
         [DataMember(Name = "defaultContentKeyPolicyName", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "defaultContentKeyPolicyName")]
         public string DefaultContentKeyPolicyName { get; set; }

@@ -299,6 +299,19 @@ namespace MK.IO
             }
         }
 
+        internal static string AddParametersToUrl(string url, string name, List<string>? value = null)
+        {
+            if (value != null)
+            {
+                foreach (var v in value)
+                {
+                    url = AddParametersToUrl(url, name, v);
+                }
+            }
+
+            return url;
+        }
+
         internal static string AddParametersToUrl(string url, string name, string? value = null)
         {
             if (value != null)
@@ -320,6 +333,7 @@ namespace MK.IO
 
             return url;
         }
+ 
 
         /// <summary>
         /// Generates a unique name based on a prefix. Useful for creating unique names for assets, locators, etc.
