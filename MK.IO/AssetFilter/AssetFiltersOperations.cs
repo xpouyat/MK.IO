@@ -80,6 +80,7 @@ namespace MK.IO.Asset
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            Argument.AssertNotContainsSpace(filterName, nameof(filterName));
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);

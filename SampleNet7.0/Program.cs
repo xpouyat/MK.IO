@@ -174,7 +174,6 @@ namespace Sample
             // *****************
 
             // list assets
-
             var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", 10);
             while (true)
             {
@@ -186,6 +185,9 @@ namespace Sample
 
                 mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
             }
+
+            // list encoded assets (using labels)
+            var encodedAssets = client.Assets.List(label: new List<string> { "typeAsset=encoded" });
 
             var specc = client.Assets.ListTracksAndDirListing("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
 
@@ -320,9 +322,6 @@ namespace Sample
             client.AccountFilters.Delete(filter.Name);
 
 
-
-
-
             // *********************
             // transform operations
             // *********************
@@ -373,7 +372,12 @@ namespace Sample
             */
 
             var outputAssetName = MKIOClient.GenerateUniqueName("output");
-            var outputAsset2 = client.Assets.CreateOrUpdate(outputAssetName, "mkioasset-" + outputAssetName, config["StorageName"]!, "output asset for job");
+            var dicLabels = new Dictionary<string, string>
+            {
+                { "typeAsset", "encoded" },
+                { "audience", "public" }
+            };
+            var outputAsset2 = client.Assets.CreateOrUpdate(outputAssetName, "mkioasset-" + outputAssetName, config["StorageName"]!, "output asset for job", AssetContainerDeletionPolicyType.Retain, null, dicLabels);
 
             var jobHttp = client.Jobs.Create(tranform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
             {
@@ -401,12 +405,8 @@ namespace Sample
                 Thread.Sleep(10000);
             }
 
-
-
             //client.Jobs.Cancel("simple", "testjob2");
             client.Jobs.Delete(tranform.Name, jobHttp.Name);
-
-
 
 
             // **********************

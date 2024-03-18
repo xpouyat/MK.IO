@@ -87,6 +87,7 @@ namespace MK.IO
         public async Task<StreamingEndpointSchema> UpdateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, Dictionary<string, string>? tags = null)
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            Argument.AssertNotContainsSpace(streamingEndpointName, nameof(streamingEndpointName));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -109,6 +110,7 @@ namespace MK.IO
         public async Task<StreamingEndpointSchema> CreateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string>? tags = null)
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            Argument.AssertNotContainsSpace(streamingEndpointName, nameof(streamingEndpointName));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 

@@ -108,6 +108,7 @@ namespace MK.IO
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotContainsSpace(jobName, nameof(jobName));
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);

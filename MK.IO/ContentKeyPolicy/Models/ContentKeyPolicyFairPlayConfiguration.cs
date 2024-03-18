@@ -19,7 +19,7 @@ namespace MK.IO
         }
 
         [JsonProperty("@odata.type")]
-        internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyConfigurationFairPlay";
+        internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration";
 
         /// <summary>
         /// The key that must be used as FairPlay Application Secret key. This needs to be base64 encoded.

@@ -100,6 +100,7 @@ namespace MK.IO
         public async Task<ContentKeyPolicySchema> CreateAsync(string contentKeyPolicyName, ContentKeyPolicyProperties properties)
         {
             Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
+            Argument.AssertNotContainsSpace(contentKeyPolicyName, nameof(contentKeyPolicyName));
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
