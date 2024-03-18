@@ -88,6 +88,7 @@ namespace MK.IO
         public async Task<TransformSchema> CreateOrUpdateAsync(string transformName, TransformProperties properties)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotContainsSpace(transformName, nameof(transformName));
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);

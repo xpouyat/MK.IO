@@ -146,6 +146,7 @@ namespace MK.IO.Asset
         public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            Argument.AssertNotContainsSpace(assetName, nameof(assetName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 

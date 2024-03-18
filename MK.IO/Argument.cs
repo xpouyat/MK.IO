@@ -25,5 +25,13 @@ namespace MK.IO
                 throw new ArgumentNullException(name);
             }
         }
+
+        public static void AssertNotContainsSpace(string value, string name)
+        {
+            if (value.Contains(' '))
+            {
+                throw new ArgumentException("Value cannot contain space.", name);
+            }
+        }
     }
 }

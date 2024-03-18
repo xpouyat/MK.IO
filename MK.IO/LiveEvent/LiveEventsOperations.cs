@@ -86,6 +86,7 @@ namespace MK.IO
         public async Task<LiveEventSchema> UpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags)
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+            Argument.AssertNotContainsSpace(liveEventName, nameof(liveEventName));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -104,6 +105,7 @@ namespace MK.IO
         public async Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags)
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+            Argument.AssertNotContainsSpace(liveEventName, nameof(liveEventName));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 

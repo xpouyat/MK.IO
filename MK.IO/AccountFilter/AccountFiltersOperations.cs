@@ -74,6 +74,7 @@ namespace MK.IO.Asset
         public async Task<AccountFilterSchema> CreateOrUpdateAsync(string accountFilterName, MediaFilterProperties properties)
         {
             Argument.AssertNotNullOrEmpty(accountFilterName, nameof(accountFilterName));
+            Argument.AssertNotContainsSpace(accountFilterName, nameof(accountFilterName));
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);
