@@ -91,12 +91,10 @@ namespace MK.IO
         /// </summary>
         IAssetFiltersOperations AssetFilters { get; }
 
-        /*
+      
         /// <summary>
         /// Streaming Policies are the starting point for securing content. A default set of streaming policies is provided, which should be sufficient for most use cases.
         /// </summary>
-
-        // TODO : Streaming policies
-        */
+        IStreamingPoliciesOperations StreamingPolicies { get; }
     }
 }

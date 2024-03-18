@@ -23,6 +23,7 @@ namespace MK.IO
         internal const string _transformsApiUrl = "api/ams/{0}/transforms";
         internal const string _assetsApiUrl = "api/ams/{0}/assets";
         internal const string _streamingLocatorsApiUrl = "api/ams/{0}/streamingLocators";
+        internal const string _streamingPoliciesApiUrl = "api/ams/{0}/streamingPolicies";
         internal const string _liveEventsApiUrl = "api/ams/{0}/liveEvents";
         internal const string _contentKeyPoliciesApiUrl = "api/ams/{0}/contentKeyPolicies";
         internal const string _streamingEndpointsApiUrl = "api/ams/{0}/streamingEndpoints";
@@ -81,6 +82,7 @@ namespace MK.IO
             ContentKeyPolicies = new ContentKeyPoliciesOperations(this);
             AccountFilters = new AccountFiltersOperations(this);
             AssetFilters = new AssetFiltersOperations(this);
+            StreamingPolicies = new StreamingPoliciesOperations(this);
         }
 
         /// <inheritdoc/>
@@ -118,6 +120,9 @@ namespace MK.IO
 
         /// <inheritdoc/>
         public virtual IAssetFiltersOperations AssetFilters { get; private set; }
+
+        /// <inheritdoc/>
+        public virtual IStreamingPoliciesOperations StreamingPolicies { get; private set; }
 
         internal string GenerateApiUrl(string urlPath, string objectName1, string objectName2)
         {
