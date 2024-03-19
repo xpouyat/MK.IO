@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>The Asset ID. This can be a user-contributed UUID, or a system-generated UUID.</value>
         [DataMember(Name = "assetId", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "assetId")]
-        public Guid? AssetId { get; set; }
+        public Guid? AssetId { get; private set; }
 
         /// <summary>
         /// The name of the asset blob container.
