@@ -1,6 +1,6 @@
 ﻿using MK.IO.Models;
 
-namespace MK.IO.Asset
+namespace MK.IO.Operations
 {
     public interface IAccountFiltersOperations
     {

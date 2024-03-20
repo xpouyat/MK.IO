@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 #endif
 
-namespace MK.IO
+namespace MK.IO.Operations
 {
     /// <summary>
     /// REST Client for MKIO

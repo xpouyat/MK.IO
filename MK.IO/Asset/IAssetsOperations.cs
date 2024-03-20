@@ -1,7 +1,6 @@
 ﻿using MK.IO.Models;
-using System.Net.NetworkInformation;
 
-namespace MK.IO.Asset
+namespace MK.IO.Operations
 {
     public interface IAssetsOperations
     {

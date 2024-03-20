@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using MK.IO.Asset;
+using MK.IO.Operations;
 
 namespace MK.IO
 {
@@ -91,7 +91,6 @@ namespace MK.IO
         /// </summary>
         IAssetFiltersOperations AssetFilters { get; }
 
-      
         /// <summary>
         /// Streaming Policies are the starting point for securing content. A default set of streaming policies is provided, which should be sufficient for most use cases.
         /// </summary>

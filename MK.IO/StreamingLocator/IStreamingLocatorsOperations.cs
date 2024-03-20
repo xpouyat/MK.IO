@@ -4,7 +4,7 @@
 
 using MK.IO.Models;
 
-namespace MK.IO
+namespace MK.IO.Operations
 {
     public interface IStreamingLocatorsOperations
     {

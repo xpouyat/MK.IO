@@ -2,11 +2,13 @@
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
+    /// <summary>
+    /// Represents a token restriction. Provided token must match these requirements for successful license or key delivery.
+    /// </summary>
     public class ContentKeyPolicyTokenRestriction : ContentKeyPolicyRestriction
     {
-
         public ContentKeyPolicyTokenRestriction(string issuer, string audience, RestrictionTokenType restrictionTokenType, ContentKeyPolicyVerificationKey primaryVerificationKey)
         {
             Issuer = issuer;
@@ -18,6 +20,20 @@ namespace MK.IO
 
         [JsonProperty("@odata.type")]
         internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyTokenRestriction";
+
+        /// <summary>
+        /// A list of alternative verification keys.
+        /// </summary>
+        /// <value>A list of alternative verification keys.</value>
+        [JsonProperty("alternateVerificationKeys")]
+        public List<ContentKeyPolicyVerificationKey> AlternateVerificationKeys { get; set; }
+
+        /// <summary>
+        /// The audience for the token.
+        /// </summary>
+        /// <value>The audience for the token.</value>
+        [JsonProperty("audience")]
+        public string Audience { get; set; }
 
         /// <summary>
         /// The token issuer.
@@ -35,11 +51,11 @@ namespace MK.IO
         public string OpenIdConnectDiscoveryDocument { get; set; }
 
         /// <summary>
-        /// The audience for the token.
+        /// The primary verification key.
         /// </summary>
-        /// <value>The audience for the token.</value>
-        [JsonProperty("audience")]
-        public string Audience { get; set; }
+        /// <value>The primary verification key.</value>
+        [JsonProperty("primaryVerificationKey")]
+        public ContentKeyPolicyVerificationKey PrimaryVerificationKey { get; set; }
 
         /// <summary>
         /// A list of required token claims.
@@ -54,20 +70,5 @@ namespace MK.IO
         /// <value>The type of token.</value>
         [JsonProperty("restrictionTokenType")]
         public RestrictionTokenType RestrictionTokenType { get; set; }
-
-        /// <summary>
-        /// The primary verification key.
-        /// </summary>
-        /// <value>The primary verification key.</value>
-        [JsonProperty("primaryVerificationKey")]
-        public ContentKeyPolicyVerificationKey PrimaryVerificationKey { get; set; }
-
-        /// <summary>
-        /// A list of alternative verification keys.
-        /// </summary>
-        /// <value>A list of alternative verification keys.</value>
-        [JsonProperty("alternateVerificationKeys")]
-        public List<ContentKeyPolicyVerificationKey> AlternateVerificationKeys { get; set; }
-
     }
 }

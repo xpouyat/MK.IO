@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 #endif
 
-namespace MK.IO.Asset
+namespace MK.IO.Operations
 {
     internal class AssetsOperations : IAssetsOperations
     {

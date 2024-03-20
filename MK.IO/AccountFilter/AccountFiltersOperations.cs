@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 #endif
 
-namespace MK.IO.Asset
+namespace MK.IO.Operations
 {
     internal class AccountFiltersOperations : IAccountFiltersOperations
     {

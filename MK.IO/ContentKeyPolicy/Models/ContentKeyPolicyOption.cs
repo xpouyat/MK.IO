@@ -3,8 +3,11 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
+    /// <summary>
+    /// Represents a policy option.
+    /// </summary>
     public class ContentKeyPolicyOption
     {
         public ContentKeyPolicyOption(string name, ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
@@ -15,20 +18,6 @@ namespace MK.IO
         }
 
         /// <summary>
-        /// The Policy Option description.
-        /// </summary>
-        /// <value>The Policy Option description.</value>
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The requirements that must be met to deliver keys with this configuration
-        /// </summary>
-        /// <value>The requirements that must be met to deliver keys with this configuration</value>
-        [JsonProperty("restriction")]
-        public ContentKeyPolicyRestriction Restriction { get; set; }
-
-        /// <summary>
         /// The key delivery configuration.
         /// </summary>
         /// <value>The key delivery configuration.</value>
@@ -36,10 +25,24 @@ namespace MK.IO
         public ContentKeyPolicyConfiguration Configuration { get; set; }
 
         /// <summary>
+        /// The Policy Option description.
+        /// </summary>
+        /// <value>The Policy Option description.</value>
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        /// <summary>
         /// The legacy Policy Option ID.
         /// </summary>
         /// <value>The legacy Policy Option ID.</value>
         [JsonProperty("policyOptionId")]
         public Guid? PolicyOptionId { get; private set; }
+
+        /// <summary>
+        /// The requirements that must be met to deliver keys with this configuration
+        /// </summary>
+        /// <value>The requirements that must be met to deliver keys with this configuration</value>
+        [JsonProperty("restriction")]
+        public ContentKeyPolicyRestriction Restriction { get; set; }
     }
 }

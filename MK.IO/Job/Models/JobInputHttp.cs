@@ -3,7 +3,7 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     public class JobInputHttp : JobInput
     {
@@ -25,12 +25,6 @@ namespace MK.IO
         public string? BaseUri { get; set; }
 
         /// <summary>
-        /// Defines a point on the timeline of the input media at which processing will start. Defaults to the beginning of the input media.
-        /// </summary>
-        [JsonProperty("start")]
-        public JobInputTime? Start { get; set; }
-
-        /// <summary>
         /// Defines a point on the timeline of the input media at which processing will end. Defaults to the end of the input media.
         /// </summary>
         [JsonProperty("end")]
@@ -42,5 +36,25 @@ namespace MK.IO
         /// <value>List of files. Required for JobInputHttp.</value>
         [JsonProperty("files")]
         public List<string> Files { get; set; }
+
+        /// <summary>
+        /// Defines a list of InputDefinitions
+        /// </summary>
+        /// <value>Defines a list of InputDefinitions</value>
+        [JsonProperty(PropertyName = "inputDefinitions")]
+        public List<InputFileDiscriminator> InputDefinitions { get; set; }
+
+        /// <summary>
+        /// A label that is assigned to a JobInputClip
+        /// </summary>
+        /// <value>A label that is assigned to a JobInputClip</value>
+        [JsonProperty(PropertyName = "label")]
+        public string Label { get; set; }
+
+        /// <summary>
+        /// Defines a point on the timeline of the input media at which processing will start. Defaults to the beginning of the input media.
+        /// </summary>
+        [JsonProperty("start")]
+        public JobInputTime? Start { get; set; }
     }
 }

@@ -28,14 +28,14 @@ namespace MK.IO.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// The key policy
+        /// Gets or Sets Properties
         /// </summary>
         [DataMember(Name = "properties", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "properties")]
         public ContentKeyPolicyProperties Properties { get; set; }
 
         /// <summary>
-        /// Metadata pertaining to creation and last modification of the resource.
+        /// Gets or Sets SystemData
         /// </summary>
         [DataMember(Name = "systemData", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "systemData")]

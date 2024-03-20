@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     /// <summary>
     /// Represents an open restriction. License or key will be delivered on every request.

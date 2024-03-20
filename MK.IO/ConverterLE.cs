@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Globalization;
 
 namespace MK.IO
 {
@@ -14,11 +12,9 @@ namespace MK.IO
             MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented,
-            //DateParseHandling = DateParseHandling.None,
             Converters =
             {
                 new CustomDateTimeConverter()
-                //new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
             },
         };
     }

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     /// <summary>
     /// Specifies that the content key ID is in the PlayReady header.

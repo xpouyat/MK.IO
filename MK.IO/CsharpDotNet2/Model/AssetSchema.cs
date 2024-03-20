@@ -66,6 +66,7 @@ namespace MK.IO.Models
             var sb = new StringBuilder();
             sb.Append("class AssetSchema {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Labels: ").Append(Labels).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Properties: ").Append(Properties).Append("\n");
             sb.Append("  SystemData: ").Append(SystemData).Append("\n");

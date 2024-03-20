@@ -3,9 +3,8 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
-
     public class SubscriptionResponseSchema
     {
         public static SubscriptionResponseSchema FromJson(string json)

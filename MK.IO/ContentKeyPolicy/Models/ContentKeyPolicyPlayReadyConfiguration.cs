@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     /// <summary>
     /// Specifies a configuration for PlayReady licenses.

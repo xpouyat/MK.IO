@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 #if NET462
 using System.Net.Http;
 #endif
-namespace MK.IO
+namespace MK.IO.Operations
 {
     /// <summary>
     /// REST Client for MKIO

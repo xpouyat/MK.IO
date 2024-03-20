@@ -5,10 +5,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     /// <summary>
-    ///The PlayReady content type.
+    /// The PlayReady content type.
     /// </summary>
     /// <value>The PlayReady content type.</value>
     [JsonConverter(typeof(StringEnumConverter))]

@@ -1,8 +1,7 @@
-using System.Text;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
 
     /// <summary>
