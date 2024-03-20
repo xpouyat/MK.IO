@@ -33,5 +33,13 @@ namespace MK.IO
                 throw new ArgumentException("Value cannot contain space.", name);
             }
         }
+
+        public static void AssertNotMoreThanLength(string value, string name, int length)
+        {
+            if (value.Length > length)
+            {
+                throw new ArgumentException($"Value length cannot exceed {length}.", name);
+            }
+        }
     }
 }

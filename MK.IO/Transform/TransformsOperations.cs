@@ -89,6 +89,7 @@ namespace MK.IO.Operations
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
             Argument.AssertNotContainsSpace(transformName, nameof(transformName));
+            Argument.AssertNotMoreThanLength(transformName, nameof(transformName), 260);
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);

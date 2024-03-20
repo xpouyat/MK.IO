@@ -526,5 +526,23 @@ namespace Sample
             rng.GetBytes(TokenSigningKey);
             return Convert.ToBase64String(TokenSigningKey);
         }
+        /// <summary>
+        /// Generate a random string of a given length.
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string RandomString(int length)
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[length];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            return new String(stringChars);
+        }
     }
 }
