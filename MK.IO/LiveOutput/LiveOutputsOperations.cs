@@ -89,6 +89,7 @@ namespace MK.IO.Operations
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+            Argument.AssertNotMoreThanLength(liveOutputName, nameof(liveOutputName), 260);
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName, liveOutputName);

@@ -75,6 +75,8 @@ namespace MK.IO.Operations
         {
             Argument.AssertNotNullOrEmpty(accountFilterName, nameof(accountFilterName));
             Argument.AssertNotContainsSpace(accountFilterName, nameof(accountFilterName));
+            Argument.AssertNotMoreThanLength(accountFilterName, nameof(accountFilterName), 260);
+            Argument.AssertRespectRegex(accountFilterName, nameof(accountFilterName), @"^[a-zA-Z0-9\-_.~]+$");
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);

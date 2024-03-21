@@ -153,7 +153,10 @@ namespace MK.IO.Operations
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotContainsSpace(assetName, nameof(assetName));
+            Argument.AssertNotMoreThanLength(assetName, nameof(assetName), 260);
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotMoreThanLength(containerName, nameof(containerName), 63);
+            Argument.AssertRespectRegex(containerName, nameof(containerName), @"^(?=.{3,63}$)[a-z0-9]+(-[a-z0-9]+)*$");
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             var url = Client.GenerateApiUrl(_assetApiUrl, assetName);

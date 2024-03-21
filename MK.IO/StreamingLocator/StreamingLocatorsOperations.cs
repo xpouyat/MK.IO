@@ -87,6 +87,7 @@ namespace MK.IO.Operations
         public async Task<StreamingLocatorSchema> CreateAsync(string streamingLocatorName, StreamingLocatorProperties properties)
         {
             Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
+            Argument.AssertNotMoreThanLength(streamingLocatorName, nameof(streamingLocatorName), 260);
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_streamingLocatorApiUrl, streamingLocatorName);

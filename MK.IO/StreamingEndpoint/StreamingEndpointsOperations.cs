@@ -111,6 +111,8 @@ namespace MK.IO.Operations
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
             Argument.AssertNotContainsSpace(streamingEndpointName, nameof(streamingEndpointName));
+            Argument.AssertNotMoreThanLength(streamingEndpointName, nameof(streamingEndpointName), 24);
+            Argument.AssertRespectRegex(streamingEndpointName, nameof(streamingEndpointName), @"^[a-zA-Z0-9]+$");
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 

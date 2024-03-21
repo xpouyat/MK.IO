@@ -121,17 +121,14 @@ namespace Sample
             // Creation
 
             /*
-            var storage = client.StorageAccounts.Create(new StorageRequestSchema
+            var storage = client.StorageAccounts.Create(new StorageSchema
             {
-                Spec = new StorageSchema
+                Name = config["StorageName"],
+                Location = config["StorageRegion"],
+                Description = "my description",
+                AzureStorageConfiguration = new BlobStorageAzureProperties
                 {
-                    Name = config["StorageName"],
-                    Location = config["StorageRegion"],
-                    Description = "my description",
-                    AzureStorageConfiguration = new BlobStorageAzureProperties
-                    {
-                        Url = config["StorageSAS"]
-                    }
+                    Url = config["StorageSAS"]
                 }
             }
             );
@@ -145,10 +142,7 @@ namespace Sample
 
             // Update the description
             storage2.Spec.Description = "my new description";
-            var stor3 = client.StorageAccounts.Update((Guid)storages.First().Metadata.Id, new StorageRequestSchema
-            {
-                Spec = storage2.Spec
-            });
+            var stor3 = client.StorageAccounts.Update((Guid)storage2.Metadata.Id, storage2.Spec);
 
             var creds = client.StorageAccounts.ListCredentials((Guid)storage2.Metadata.Id);
 

@@ -86,6 +86,7 @@ namespace MK.IO.Operations
         public async Task<StreamingPolicySchema> CreateAsync(string streamingPolicyName, StreamingPolicyProperties properties)
         {
             Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
+            Argument.AssertNotMoreThanLength(streamingPolicyName, nameof(streamingPolicyName), 260);
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_streamingPolicyApiUrl, streamingPolicyName);

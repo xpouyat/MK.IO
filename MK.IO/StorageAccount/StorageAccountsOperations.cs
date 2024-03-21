@@ -45,20 +45,23 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public StorageResponseSchema Create(StorageRequestSchema storage)
+        public StorageResponseSchema Create(StorageSchema storage)
         {
             var task = Task.Run<StorageResponseSchema>(async () => await CreateAsync(storage));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<StorageResponseSchema> CreateAsync(StorageRequestSchema storage)
+        public async Task<StorageResponseSchema> CreateAsync(StorageSchema storage)
         {
             Argument.AssertNotNull(storage, nameof(storage));
-
-            storage.Spec.Type = "Microsoft.Storage"; // needed
+            var storageSchema = new StorageRequestSchema()
+            {
+                Spec = storage
+            };
+            storageSchema.Spec.Type = "Microsoft.Storage"; // needed
             var url = GenerateStorageApiUrl(_storageApiUrl);
-            return await CreateOrUpdateAsync(url, storage, Client.CreateObjectPostAsync);
+            return await CreateOrUpdateAsync(url, storageSchema, Client.CreateObjectPostAsync);
         }
 
         /// <inheritdoc/>
@@ -95,20 +98,25 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public StorageResponseSchema Update(Guid storageAccountId, StorageRequestSchema storage)
+        public StorageResponseSchema Update(Guid storageAccountId, StorageSchema storage)
         {
             var task = Task.Run<StorageResponseSchema>(async () => await UpdateAsync(storageAccountId, storage));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<StorageResponseSchema> UpdateAsync(Guid storageAccountId, StorageRequestSchema storage)
+        public async Task<StorageResponseSchema> UpdateAsync(Guid storageAccountId, StorageSchema storage)
         {
             Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
             Argument.AssertNotNull(storage, nameof(storage));
 
+            var storageSchema = new StorageRequestSchema()
+            {
+                Spec = storage
+            };
+
             var url = GenerateStorageApiUrl(_storageSelectionApiUrl, storageAccountId.ToString());
-            return await CreateOrUpdateAsync(url, storage, Client.CreateObjectPutAsync);
+            return await CreateOrUpdateAsync(url, storageSchema, Client.CreateObjectPutAsync);
 
         }
 
