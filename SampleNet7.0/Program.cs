@@ -200,7 +200,17 @@ namespace Sample
             var mkasset = client.Assets.Get("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
 
             // create asset
-            // var newasset = client.Assets.CreateOrUpdate("uploaded-5143a7c39a-copy-7947d5ccac", "asset-d56fa44c-c5d5-47db-aa4b-16686ffa3d3b", "amsxpfrstorage", "description of asset copy", AssetContainerDeletionPolicyType.Retain);
+            /*
+            var newasset = client.Assets.CreateOrUpdate(
+                "uploaded-5143a7c39a-copy-7947d5ccac",
+                "asset-d56fa44c-c5d5-47db-aa4b-16686ffa3d3b",
+                "amsxpfrstorage",
+                "description of asset copy",
+                AssetContainerDeletionPolicyType.Retain,
+                null,
+                new Dictionary<string, string>() { { "typeAsset", "source" } }
+                );
+            */
 
             // delete asset
             // client.Assets.Delete("asset-33adc1873f");
