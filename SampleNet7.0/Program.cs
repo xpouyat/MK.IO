@@ -448,7 +448,7 @@ namespace Sample
 
             var lo = client.LiveOutputs.Create(le.Name, MKIOClient.GenerateUniqueName("liveOutput"), new LiveOutputProperties
             {
-                ArchiveWindowLength = "PT5M",
+                ArchiveWindowLength = new TimeSpan(0,5,0),
                 AssetName = nameasset
             });
 
