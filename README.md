@@ -131,7 +131,7 @@ var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentra
 // start, stop, delete streaming endpoint
 client.StreamingEndpoints.Start("streamingendpoint1");
 client.StreamingEndpoints.Stop("streamingendpoint1");
-client.StreamingEndpoints.Delete("streamingendpoint2");
+client.StreamingEndpoints.Delete("streamingendpoint1");
 ```
 
 Additional samples are available :
