@@ -83,7 +83,7 @@ namespace MK.IO.Models
         /// <value>The last modified date of the Asset.</value>
         [DataMember(Name = "lastModified", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "lastModified")]
-        public DateTime? LastModified { get; set; }
+        public DateTime? LastModified { get; private set; }
 
         /// <summary>
         /// The name of the storage account.

@@ -11,7 +11,7 @@ namespace MK.IO.Models
         public Guid CustomerId { get; set; }
 
         [JsonProperty("createdById")]
-        public Guid CreatedById { get; set; }
+        public Guid CreatedById { get; private set; }
 
         [JsonProperty("locationId")]
         public Guid LocationId { get; set; }
