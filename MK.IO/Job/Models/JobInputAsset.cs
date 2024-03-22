@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
 
 namespace MK.IO.Models
 {

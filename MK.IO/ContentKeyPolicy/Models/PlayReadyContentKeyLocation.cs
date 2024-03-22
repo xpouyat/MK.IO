@@ -1,4 +1,7 @@
-﻿using JsonSubTypes;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using JsonSubTypes;
 using Newtonsoft.Json;
 
 namespace MK.IO.Models

@@ -17,10 +17,10 @@ namespace MK.IO.Models
         public Guid LocationId { get; set; }
 
         [JsonProperty("azureSubscriptionName")]
-        public string AzureSubscriptionName { get; set; }
+        public string? AzureSubscriptionName { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonProperty("isActive")]
         public bool IsActive { get; set; }
@@ -32,15 +32,15 @@ namespace MK.IO.Models
         public Guid ProductPublicationId { get; set; }
 
         [JsonProperty("azureSubscriptionStatus")]
-        public string AzureSubscriptionStatus { get; set; }
+        public string? AzureSubscriptionStatus { get; set; }
 
         [JsonProperty("azureSubscriptionId")]
         public Guid AzureSubscriptionId { get; set; }
 
         [JsonProperty("azureSubscriptionOfferId")]
-        public string AzureSubscriptionOfferId { get; set; }
+        public string? AzureSubscriptionOfferId { get; set; }
 
         [JsonProperty("azureSubscriptionPlanId")]
-        public string AzureSubscriptionPlanId { get; set; }
+        public string? AzureSubscriptionPlanId { get; set; }
     }
 }
