@@ -3,9 +3,8 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
-
     public partial class AccountStats
     {
         public static AccountStats FromJson(string json)
@@ -43,7 +42,6 @@ namespace MK.IO
         [JsonProperty("streamingPolicies")]
         public StreamingPolicies StreamingPolicies { get; set; }
     }
-
 
     public class Assets
     {

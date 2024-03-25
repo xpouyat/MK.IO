@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
 using MK.IO.Models;
 using Newtonsoft.Json;
 #if NET462
 using System.Net.Http;
 #endif
 
-namespace MK.IO
+namespace MK.IO.Operations
 {
     /// <summary>
     /// REST Client for MKIO
@@ -87,6 +86,7 @@ namespace MK.IO
         public async Task<StreamingLocatorSchema> CreateAsync(string streamingLocatorName, StreamingLocatorProperties properties)
         {
             Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
+            Argument.AssertNotMoreThanLength(streamingLocatorName, nameof(streamingLocatorName), 260);
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_streamingLocatorApiUrl, streamingLocatorName);

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.RegularExpressions;
+
 namespace MK.IO
 {
     internal class Argument
@@ -31,6 +33,23 @@ namespace MK.IO
             if (value.Contains(' '))
             {
                 throw new ArgumentException("Value cannot contain space.", name);
+            }
+        }
+
+        public static void AssertNotMoreThanLength(string value, string name, int length)
+        {
+            if (value.Length > length)
+            {
+                throw new ArgumentException($"Value length cannot exceed {length}.", name);
+            }
+        }
+
+        public static void AssertRespectRegex(string value, string name, string regexPattern)
+        {
+            // check if value respects regex pattern
+            if (!Regex.IsMatch(value, regexPattern))
+            {
+                throw new ArgumentException($"Value does not respect regex pattern {regexPattern}.", name);
             }
         }
     }

@@ -64,7 +64,7 @@ var stats = client.Account.GetSubscriptionStats();
 // list assets
 var mkioAssets = client.Assets.List();
 
-// list assets with pages
+// list assets with pages, 10 assets per page, sorted by creation date
 var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", 10);
 while (true)
 {
@@ -74,10 +74,26 @@ while (true)
 }
 
 // get asset
-var mkasset = client.Assets.Get("mmyassetname");
+var mkasset = client.Assets.Get("myassetname");
 
 // create asset
-var newasset = client.Assets.CreateOrUpdate(MKIOClient.GenerateUniqueName("asset"), "asset-67c25a02-a672-40cd-a4da-dcc48b89acae", "description of asset", "storagename");
+var newAssetName = MKIOClient.GenerateUniqueName("asset");
+var newasset = client.Assets.CreateOrUpdate(newAssetName, newAssetName, "storagename", "description of my asset");
+
+// create asset and use labels to tag it
+newAssetName = MKIOClient.GenerateUniqueName("asset");
+newasset = client.Assets.CreateOrUpdate(
+    newAssetName,
+    newAssetName,
+    "storagename",
+    "description of asset using labels",
+    AssetContainerDeletionPolicyType.Retain,
+    null,
+    new Dictionary<string, string>() { { "typeAsset", "source" } }
+    );
+
+// list assets using labels filtering
+var sourceEncodedAssets = client.Assets.List(label: new List<string> { "typeAsset=source" });
 
 // delete asset
 client.Assets.Delete(newsasset.Name);
@@ -115,7 +131,7 @@ var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentra
 // start, stop, delete streaming endpoint
 client.StreamingEndpoints.Start("streamingendpoint1");
 client.StreamingEndpoints.Stop("streamingendpoint1");
-client.StreamingEndpoints.Delete("streamingendpoint2");
+client.StreamingEndpoints.Delete("streamingendpoint1");
 ```
 
 Additional samples are available :

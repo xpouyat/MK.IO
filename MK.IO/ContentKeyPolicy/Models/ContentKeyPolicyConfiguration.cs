@@ -3,7 +3,8 @@
 
 using JsonSubTypes;
 using Newtonsoft.Json;
-namespace MK.IO
+
+namespace MK.IO.Models
 {
 
     [JsonConverter(typeof(JsonSubtypes), "@odata.type")]

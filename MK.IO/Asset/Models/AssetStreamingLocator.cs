@@ -23,7 +23,7 @@ namespace MK.IO.Models
         public string? DefaultContentKeyPolicyName { get; set; }
 
         [JsonProperty("created")]
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; private set; }
 
         [JsonProperty("endTime")]
         public DateTime? EndTime { get; set; }

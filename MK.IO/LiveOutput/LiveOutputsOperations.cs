@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 #endif
 
-namespace MK.IO
+namespace MK.IO.Operations
 {
     /// <summary>
     /// REST Client for MKIO
@@ -89,6 +89,7 @@ namespace MK.IO
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+            Argument.AssertNotMoreThanLength(liveOutputName, nameof(liveOutputName), 260);
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName, liveOutputName);

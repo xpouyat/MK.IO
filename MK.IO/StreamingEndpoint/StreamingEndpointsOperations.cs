@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
 using MK.IO.Models;
 using Newtonsoft.Json;
 #if NET462
 using System.Net.Http;
 #endif
 
-namespace MK.IO
+namespace MK.IO.Operations
 {
     /// <summary>
     /// REST Client for MKIO
@@ -111,6 +110,8 @@ namespace MK.IO
         {
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
             Argument.AssertNotContainsSpace(streamingEndpointName, nameof(streamingEndpointName));
+            Argument.AssertNotMoreThanLength(streamingEndpointName, nameof(streamingEndpointName), 24);
+            Argument.AssertRespectRegex(streamingEndpointName, nameof(streamingEndpointName), @"^[a-zA-Z0-9]+$");
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 

@@ -30,7 +30,7 @@ var liveOutputAsset = client.Assets.CreateOrUpdate(nameOutputAsset, "asset-" + n
 
 var lo = client.LiveOutputs.Create(liveEvent.Name, MKIOClient.GenerateUniqueName("liveOutput"), new LiveOutputProperties
 {
-    ArchiveWindowLength = "PT5M",
+    ArchiveWindowLength = new TimeSpan(0,5,0),
     AssetName = nameOutputAsset
 });
 

@@ -3,8 +3,11 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
+    /// <summary>
+    /// Represents a ContentKeyPolicyRestriction that is unavailable in the current API version.
+    /// </summary>
     public class ContentKeyPolicyUnknownRestriction : ContentKeyPolicyRestriction
     {
         public ContentKeyPolicyUnknownRestriction()

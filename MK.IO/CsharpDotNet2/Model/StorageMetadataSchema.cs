@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>The date and time when the storage account was created.</value>
         [DataMember(Name = "created", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "created")]
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; private set; }
 
         /// <summary>
         /// The unique identifier of the user who created the storage account.
@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>The unique identifier of the user who created the storage account.</value>
         [DataMember(Name = "createdById", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "createdById")]
-        public Guid? CreatedById { get; set; }
+        public Guid? CreatedById { get; private set; }
 
         /// <summary>
         /// The unique identifier of the storage account.
@@ -41,7 +41,7 @@ namespace MK.IO.Models
         /// <value>The date and time when the storage account was last updated.</value>
         [DataMember(Name = "updated", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "updated")]
-        public DateTime? Updated { get; set; }
+        public DateTime? Updated { get; private set; }
 
         /// <summary>
         /// The unique identifier of the user who last updated the storage account.
@@ -49,7 +49,7 @@ namespace MK.IO.Models
         /// <value>The unique identifier of the user who last updated the storage account.</value>
         [DataMember(Name = "updatedById", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "updatedById")]
-        public Guid? UpdatedById { get; set; }
+        public Guid? UpdatedById { get; private set; }
 
 
         /// <summary>

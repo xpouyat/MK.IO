@@ -3,7 +3,7 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     public class SubscriptionSchema
     {
@@ -11,16 +11,16 @@ namespace MK.IO
         public Guid CustomerId { get; set; }
 
         [JsonProperty("createdById")]
-        public Guid CreatedById { get; set; }
+        public Guid CreatedById { get; private set; }
 
         [JsonProperty("locationId")]
         public Guid LocationId { get; set; }
 
         [JsonProperty("azureSubscriptionName")]
-        public string AzureSubscriptionName { get; set; }
+        public string? AzureSubscriptionName { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonProperty("isActive")]
         public bool IsActive { get; set; }
@@ -32,15 +32,15 @@ namespace MK.IO
         public Guid ProductPublicationId { get; set; }
 
         [JsonProperty("azureSubscriptionStatus")]
-        public string AzureSubscriptionStatus { get; set; }
+        public string? AzureSubscriptionStatus { get; set; }
 
         [JsonProperty("azureSubscriptionId")]
         public Guid AzureSubscriptionId { get; set; }
 
         [JsonProperty("azureSubscriptionOfferId")]
-        public string AzureSubscriptionOfferId { get; set; }
+        public string? AzureSubscriptionOfferId { get; set; }
 
         [JsonProperty("azureSubscriptionPlanId")]
-        public string AzureSubscriptionPlanId { get; set; }
+        public string? AzureSubscriptionPlanId { get; set; }
     }
 }

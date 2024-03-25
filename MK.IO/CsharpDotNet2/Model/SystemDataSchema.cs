@@ -33,7 +33,7 @@ namespace MK.IO.Models
         /// <value>The type of identity that created the resource.</value>
         [DataMember(Name = "createdByType", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "createdByType")]
-        public string CreatedByType { get; set; }
+        public string CreatedByType { get; private set; }
 
         /// <summary>
         /// The timestamp of resource last modification (UTC).

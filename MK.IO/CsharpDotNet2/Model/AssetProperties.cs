@@ -20,12 +20,12 @@ namespace MK.IO.Models
         public string AlternateId { get; set; }
 
         /// <summary>
-        /// The Asset ID. This can be a user-contributed UUID, or a system-generated UUID.
+        /// The Asset ID.
         /// </summary>
-        /// <value>The Asset ID. This can be a user-contributed UUID, or a system-generated UUID.</value>
+        /// <value>The Asset ID.</value>
         [DataMember(Name = "assetId", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "assetId")]
-        public Guid? AssetId { get; set; }
+        public Guid? AssetId { get; private set; }
 
         /// <summary>
         /// The name of the asset blob container.
@@ -54,6 +54,14 @@ namespace MK.IO.Models
         public AssetContainerDeletionPolicyType? ContainerDeletionPolicy { get; set; }
 
         /// <summary>
+        /// The creation date of the Asset.
+        /// </summary>
+        /// <value>The creation date of the Asset.</value>
+        [DataMember(Name = "created", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "created")]
+        public DateTime? Created { get; private set; }
+
+        /// <summary>
         /// The Asset description.
         /// </summary>
         /// <value>The Asset description.</value>
@@ -68,6 +76,14 @@ namespace MK.IO.Models
         [DataMember(Name = "encryptionScope", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "encryptionScope")]
         public string EncryptionScope { get; set; }
+
+        /// <summary>
+        /// The last modified date of the Asset.
+        /// </summary>
+        /// <value>The last modified date of the Asset.</value>
+        [DataMember(Name = "lastModified", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "lastModified")]
+        public DateTime? LastModified { get; private set; }
 
         /// <summary>
         /// The name of the storage account.
@@ -98,8 +114,10 @@ namespace MK.IO.Models
             sb.Append("  AssetId: ").Append(AssetId).Append("\n");
             sb.Append("  Container: ").Append(Container).Append("\n");
             sb.Append("  ContainerDeletionPolicy: ").Append(ContainerDeletionPolicy).Append("\n");
+            sb.Append("  Created: ").Append(Created).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  EncryptionScope: ").Append(EncryptionScope).Append("\n");
+            sb.Append("  LastModified: ").Append(LastModified).Append("\n");
             sb.Append("  StorageAccountName: ").Append(StorageAccountName).Append("\n");
             sb.Append("  StorageEncryptionFormat: ").Append(StorageEncryptionFormat).Append("\n");
             sb.Append("}\n");

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     /// <summary>
     /// The rental and lease key type.

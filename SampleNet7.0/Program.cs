@@ -121,17 +121,14 @@ namespace Sample
             // Creation
 
             /*
-            var storage = client.StorageAccounts.Create(new StorageRequestSchema
+            var storage = client.StorageAccounts.Create(new StorageSchema
             {
-                Spec = new StorageSchema
+                Name = config["StorageName"],
+                Location = config["StorageRegion"],
+                Description = "my description",
+                AzureStorageConfiguration = new BlobStorageAzureProperties
                 {
-                    Name = config["StorageName"],
-                    Location = config["StorageRegion"],
-                    Description = "my description",
-                    AzureStorageConfiguration = new BlobStorageAzureProperties
-                    {
-                        Url = config["StorageSAS"]
-                    }
+                    Url = config["StorageSAS"]
                 }
             }
             );
@@ -145,10 +142,7 @@ namespace Sample
 
             // Update the description
             storage2.Spec.Description = "my new description";
-            var stor3 = client.StorageAccounts.Update((Guid)storages.First().Metadata.Id, new StorageRequestSchema
-            {
-                Spec = storage2.Spec
-            });
+            var stor3 = client.StorageAccounts.Update((Guid)storage2.Metadata.Id, storage2.Spec);
 
             var creds = client.StorageAccounts.ListCredentials((Guid)storage2.Metadata.Id);
 
@@ -206,7 +200,17 @@ namespace Sample
             var mkasset = client.Assets.Get("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
 
             // create asset
-            // var newasset = client.Assets.CreateOrUpdate("uploaded-5143a7c39a-copy-7947d5ccac", "asset-d56fa44c-c5d5-47db-aa4b-16686ffa3d3b", "amsxpfrstorage", "description of asset copy", AssetContainerDeletionPolicyType.Retain);
+            /*
+            var newasset = client.Assets.CreateOrUpdate(
+                "uploaded-5143a7c39a-copy-7947d5ccac",
+                "asset-d56fa44c-c5d5-47db-aa4b-16686ffa3d3b",
+                "amsxpfrstorage",
+                "description of asset copy",
+                AssetContainerDeletionPolicyType.Retain,
+                null,
+                new Dictionary<string, string>() { { "typeAsset", "source" } }
+                );
+            */
 
             // delete asset
             // client.Assets.Delete("asset-33adc1873f");
@@ -444,7 +448,7 @@ namespace Sample
 
             var lo = client.LiveOutputs.Create(le.Name, MKIOClient.GenerateUniqueName("liveOutput"), new LiveOutputProperties
             {
-                ArchiveWindowLength = "PT5M",
+                ArchiveWindowLength = new TimeSpan(0,5,0),
                 AssetName = nameasset
             });
 
@@ -525,6 +529,24 @@ namespace Sample
             var rng = RandomNumberGenerator.Create();
             rng.GetBytes(TokenSigningKey);
             return Convert.ToBase64String(TokenSigningKey);
+        }
+        /// <summary>
+        /// Generate a random string of a given length.
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string RandomString(int length)
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[length];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            return new String(stringChars);
         }
     }
 }

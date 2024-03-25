@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using MK.IO.Models;
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     public class ContentKeyPolicyFairPlayConfiguration : ContentKeyPolicyConfiguration
     {
-
         public ContentKeyPolicyFairPlayConfiguration(string ask, string fairPlayPfx, string fairPlayPfxPassword, long rentalDuration, RentalAndLeaseKeyType rentalAndLeaseKeyType)
         {
             Ask = ask;
@@ -36,13 +34,6 @@ namespace MK.IO
         public string FairPlayPfx { get; set; }
 
         /// <summary>
-        /// The rental duration. Must be greater than or equal to 0.
-        /// </summary>
-        /// <value>The rental duration. Must be greater than or equal to 0.</value>
-        [JsonProperty("rentalDuration")]
-        public long RentalDuration { get; set; }
-
-        /// <summary>
         /// The password encrypting FairPlay certificate in PKCS 12 (pfx) format.
         /// </summary>
         /// <value>The password encrypting FairPlay certificate in PKCS 12 (pfx) format.</value>
@@ -61,5 +52,12 @@ namespace MK.IO
         /// <value>The rental and lease key type.</value>
         [JsonProperty("rentalAndLeaseKeyType")]
         public RentalAndLeaseKeyType RentalAndLeaseKeyType { get; set; }
+
+        /// <summary>
+        /// The rental duration. Must be greater than or equal to 0.
+        /// </summary>
+        /// <value>The rental duration. Must be greater than or equal to 0.</value>
+        [JsonProperty("rentalDuration")]
+        public long RentalDuration { get; set; }
     }
 }

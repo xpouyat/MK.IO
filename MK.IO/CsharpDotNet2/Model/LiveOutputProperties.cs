@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>ISO 8601 timespan duration of the archive window length. This is duration that customer want to retain the recorded content.</value>
         [DataMember(Name = "archiveWindowLength", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "archiveWindowLength")]
-        public string ArchiveWindowLength { get; set; }
+        public TimeSpan ArchiveWindowLength { get; set; }
 
         /// <summary>
         /// The name of the asset that the live output will write to.
@@ -98,7 +98,7 @@ namespace MK.IO.Models
         /// <value>Not supported.          ISO 8601 timespan duration of the rewind window length during live playback.          This is the amount of time that the live output will be able to rewind.</value>
         [DataMember(Name = "rewindWindowLength", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "rewindWindowLength")]
-        public string RewindWindowLength { get; set; }
+        public TimeSpan RewindWindowLength { get; set; }
 
 
         /// <summary>

@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace MK.IO
+using MK.IO.Models;
+
+namespace MK.IO.Operations
 {
     public interface IAccountOperations
     {

@@ -62,7 +62,7 @@ namespace MK.IO.Models
         /// <value>The last time the live event was modified.</value>
         [DataMember(Name = "lastModified", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "lastModified")]
-        public string LastModified { get; private set; }
+        public DateTime? LastModified { get; private set; }
 
         /// <summary>
         /// Gets or Sets Preview

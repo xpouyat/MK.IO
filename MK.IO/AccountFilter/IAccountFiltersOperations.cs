@@ -1,6 +1,9 @@
-﻿using MK.IO.Models;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-namespace MK.IO.Asset
+using MK.IO.Models;
+
+namespace MK.IO.Operations
 {
     public interface IAccountFiltersOperations
     {

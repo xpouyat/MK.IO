@@ -42,7 +42,7 @@ var outputAsset = client.Assets.CreateOrUpdate(outputAssetName, outputAssetName,
 // create a job with the output asset created and with an asset as a source
 var newJob = client.Jobs.Create(transform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
     {
-        Description = "My job",
+        Description = $"My Job using an asset source with transform {transform.Name}",
         Priority = "Normal",
         Input = new JobInputAsset(
             "copy-ef2058b692-copy",
@@ -62,7 +62,7 @@ var newJob = client.Jobs.Create(transform.Name, MKIOClient.GenerateUniqueName("j
 // job with http source as a source
 var newJobH = client.Jobs.Create(transform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
     {
-        Description = "My job",
+        Description = $"My job using a https source with transform {transform.Name}",
         Priority = "Normal",
         Input = new JobInputHttp(
             null,

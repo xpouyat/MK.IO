@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     /// <summary> The built-in preset to be used for encoding videos. </summary>
     [JsonConverter(typeof(StringEnumConverter))]

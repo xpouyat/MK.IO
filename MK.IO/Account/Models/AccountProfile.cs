@@ -4,7 +4,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     public partial class AccountProfile
     {
@@ -54,7 +54,6 @@ namespace MK.IO
         [JsonProperty("by_permission")]
         public ByPermission ByPermission { get; set; }
     }
-
 
 
     public class UserInfo

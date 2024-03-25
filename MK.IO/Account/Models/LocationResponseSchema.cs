@@ -3,7 +3,7 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     public partial class LocationResponseSchema
     {
@@ -21,7 +21,6 @@ namespace MK.IO
         [JsonProperty("metadata")]
         public MetadataLocation Metadata { get; set; }
     }
-
 
     public class MetadataLocation
     {

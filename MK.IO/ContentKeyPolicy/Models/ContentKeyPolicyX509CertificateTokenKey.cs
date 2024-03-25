@@ -1,8 +1,10 @@
-using System.Text;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-namespace MK.IO
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
+
+namespace MK.IO.Models
 {
 
     /// <summary>

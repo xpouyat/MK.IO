@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>The date and time when the credential was created.</value>
         [DataMember(Name = "created", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "created")]
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; private set; }
 
         /// <summary>
         /// The unique identifier of the user who created the credential.
@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>The unique identifier of the user who created the credential.</value>
         [DataMember(Name = "createdById", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "createdById")]
-        public Guid? CreatedById { get; set; }
+        public Guid? CreatedById { get; private set; }
 
         /// <summary>
         /// The unique identifier of the credential.

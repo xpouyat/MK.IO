@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
 using MK.IO.Models;
 using Newtonsoft.Json;
 #if NET462
 using System.Net.Http;
 #endif
-namespace MK.IO
+namespace MK.IO.Operations
 {
     /// <summary>
     /// REST Client for MKIO
@@ -106,6 +105,7 @@ namespace MK.IO
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
             Argument.AssertNotContainsSpace(liveEventName, nameof(liveEventName));
+            Argument.AssertNotMoreThanLength(liveEventName, nameof(liveEventName), 260);
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
 

@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
 using MK.IO.Models;
 
-namespace MK.IO
+namespace MK.IO.Operations
 {
 
     public interface IStorageAccountsOperations
@@ -28,7 +27,7 @@ namespace MK.IO
         /// </summary>
         /// <param name="storage">The specification of the Storage Account to be created.</param>
         /// <returns></returns>
-        StorageResponseSchema Create(StorageRequestSchema storage);
+        StorageResponseSchema Create(StorageSchema storage);
 
         /// <summary>
         /// Create a Storage Account.
@@ -37,7 +36,7 @@ namespace MK.IO
         /// </summary>
         /// <param name="storage">The specification of the Storage Account to be created.</param>
         /// <returns></returns>
-        Task<StorageResponseSchema> CreateAsync(StorageRequestSchema storage);
+        Task<StorageResponseSchema> CreateAsync(StorageSchema storage);
 
         /// <summary>
         /// Delete our record of your Storage Account. This operation does not delete the Storage Account itself.
@@ -74,7 +73,7 @@ namespace MK.IO
         /// <param name="storageAccountId">The Storage Account Id.</param>
         /// <param name="storage">The specification of the Storage Account to be updated.</param>
         /// <returns></returns>
-        StorageResponseSchema Update(Guid storageAccountId, StorageRequestSchema storage);
+        StorageResponseSchema Update(Guid storageAccountId, StorageSchema storage);
 
         /// <summary>
         /// Update a Storage Account.
@@ -83,7 +82,7 @@ namespace MK.IO
         /// <param name="storageAccountId">The Storage Account Id.</param>
         /// <param name="storage">The specification of the Storage Account to be updated.</param>
         /// <returns></returns>
-        Task<StorageResponseSchema> UpdateAsync(Guid storageAccountId, StorageRequestSchema storage);
+        Task<StorageResponseSchema> UpdateAsync(Guid storageAccountId, StorageSchema storage);
 
         /// <summary>
         /// Returns a list of Storage Credentials

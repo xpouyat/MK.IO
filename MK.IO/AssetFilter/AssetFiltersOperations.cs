@@ -1,10 +1,13 @@
-﻿using MK.IO.Models;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using MK.IO.Models;
 using Newtonsoft.Json;
 #if NET462
 using System.Net.Http;
 #endif
 
-namespace MK.IO.Asset
+namespace MK.IO.Operations
 {
     internal class AssetFiltersOperations : IAssetFiltersOperations
     {
@@ -81,6 +84,8 @@ namespace MK.IO.Asset
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
             Argument.AssertNotContainsSpace(filterName, nameof(filterName));
+            Argument.AssertNotMoreThanLength(filterName, nameof(filterName), 260);
+            Argument.AssertRespectRegex(filterName, nameof(filterName), @"^[a-zA-Z0-9\-_.~]+$");
             Argument.AssertNotNull(properties, nameof(properties));
 
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);

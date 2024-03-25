@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     /// <summary> The built-in properties to be used with asset and account filter. </summary>
     public readonly partial struct FilterTrackPropertyType

@@ -3,8 +3,11 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
+    /// <summary>
+    /// Specifies a configuration for Widevine licenses.
+    /// </summary>
     public class ContentKeyPolicyWidevineConfiguration : ContentKeyPolicyConfiguration
     {
         public ContentKeyPolicyWidevineConfiguration(string widevineTemplate)
@@ -15,6 +18,10 @@ namespace MK.IO
         [JsonProperty("@odata.type")]
         internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration";
 
+        /// <summary>
+        /// The Widevine template.
+        /// </summary>
+        /// <value>The Widevine template.</value>
         [JsonProperty("widevineTemplate")]
         public string WidevineTemplate { get; set; }
     }

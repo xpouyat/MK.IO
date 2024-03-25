@@ -1,6 +1,8 @@
-using Newtonsoft.Json;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Runtime.Serialization;
-using System.Text;
+using Newtonsoft.Json;
 
 namespace MK.IO.Models
 {
@@ -9,15 +11,21 @@ namespace MK.IO.Models
     /// 
     /// </summary>
     [DataContract]
-    public class SelectVideoTrackByAttribute
+    public class SelectVideoTrackByAttribute : TrackDiscriminator
     {
+        public SelectVideoTrackByAttribute(string attribute, string filter, string filterValue)
+        {
+            Attribute = attribute;
+            Filter = filter;
+            FilterValue = filterValue;
+        }
+
         /// <summary>
         /// The discriminator for derived types.
         /// </summary>
         /// <value>The discriminator for derived types.</value>
-        [DataMember(Name = "@odata.type", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "@odata.type")]
-        public string OdataType { get; set; }
+        internal override string OdataType => "SelectVideoTrackByAttribute";
 
         /// <summary>
         /// The TrackAttribute to filter the tracks by.
@@ -42,32 +50,5 @@ namespace MK.IO.Models
         [DataMember(Name = "filterValue", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "filterValue")]
         public string FilterValue { get; set; }
-
-
-        /// <summary>
-        /// Get the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("class SelectVideoTrackByAttribute {\n");
-            sb.Append("  OdataType: ").Append(OdataType).Append("\n");
-            sb.Append("  Attribute: ").Append(Attribute).Append("\n");
-            sb.Append("  Filter: ").Append(Filter).Append("\n");
-            sb.Append("  FilterValue: ").Append(FilterValue).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Get the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
-        }
-
     }
 }

@@ -15,17 +15,14 @@ var client = new MKIOClient("mkiosubscriptionname", "mkiotoken");
 // *******************
 
 // Creation
-var storage = client.StorageAccounts.Create(new StorageRequestSchema
+var storage = client.StorageAccounts.Create(new StorageSchema
             {
-                Spec = new StorageSchema
+                Name = "amsxpfrstorage",
+                Location = "francecentral",
+                Description = "my description",
+                AzureStorageConfiguration = new BlobStorageAzureProperties
                 {
-                    Name = "amsxpfrstorage",
-                    Location = "francecentral",
-                    Description = "my description",
-                    AzureStorageConfiguration = new BlobStorageAzureProperties
-                    {
-                        Url = "https://insertyoursasuri"
-                    }
+                    Url = "https://insertyoursasuri"
                 }
             }
             );

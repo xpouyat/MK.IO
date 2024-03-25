@@ -1,6 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-namespace MK.IO
+using Newtonsoft.Json;
+
+namespace MK.IO.Models
 {
     /// <summary>
     /// Represents an open restriction. License or key will be delivered on every request.

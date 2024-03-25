@@ -3,9 +3,8 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
-
     public class SubscriptionResponseSchema
     {
         public static SubscriptionResponseSchema FromJson(string json)
@@ -31,7 +30,7 @@ namespace MK.IO
         public Guid Id { get; set; }
 
         [JsonProperty("created")]
-        public DateTime Created { get; set; }
+        public DateTime? Created { get; private set; }
 
         [JsonProperty("updated")]
         public DateTime Updated { get; set; }

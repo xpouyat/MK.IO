@@ -3,7 +3,7 @@
 
 using Newtonsoft.Json;
 
-namespace MK.IO
+namespace MK.IO.Models
 {
     public partial class LocationListResponseSchema
     {
@@ -16,7 +16,6 @@ namespace MK.IO
         {
             return JsonConvert.SerializeObject(this, ConverterLE.Settings);
         }
-
 
         [JsonProperty("kind")]
         public string Kind { get; set; }
