@@ -386,7 +386,7 @@ namespace Sample
             var jobHttp = client.Jobs.Create(tranform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
             {
                 Description = "My CVQ encoding job",
-                Priority = "Normal",
+                Priority = JobPriorityType.Normal,
                 Input = new JobInputHttp(
                     null,
                     new List<string> {

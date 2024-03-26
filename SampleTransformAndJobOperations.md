@@ -43,7 +43,7 @@ var outputAsset = client.Assets.CreateOrUpdate(outputAssetName, outputAssetName,
 var newJob = client.Jobs.Create(transform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
     {
         Description = $"My Job using an asset source with transform {transform.Name}",
-        Priority = "Normal",
+        Priority = JobPriorityType.Normal,
         Input = new JobInputAsset(
             "copy-ef2058b692-copy",
             new List<string> {

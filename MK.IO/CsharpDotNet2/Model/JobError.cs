@@ -16,14 +16,14 @@ namespace MK.IO.Models
         /// </summary>
         [DataMember(Name = "category", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "category")]
-        public string Category { get; set; }
+        public JobErrorCategoryType Category { get; set; }
 
         /// <summary>
         /// Gets or Sets Code
         /// </summary>
         [DataMember(Name = "code", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public JobErrorCodeType Code { get; set; }
 
         /// <summary>
         /// Gets or Sets Message
@@ -37,7 +37,7 @@ namespace MK.IO.Models
         /// </summary>
         [DataMember(Name = "retry", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "retry")]
-        public string Retry { get; set; }
+        public JobErrorRetryType Retry { get; set; }
 
 
         /// <summary>
