@@ -8,18 +8,18 @@ using System.Runtime.Serialization;
 namespace MK.IO.Models
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum FilterTrackPropertyCompareOperation
+    public enum TrackAttributeType
     {
         /// <summary>
-        /// Enum FilterTrackOperationType for value: Equal
+        /// Enum TrackAttributeType for value: Bitrate
         /// </summary>
-        [EnumMember(Value = "Equal")]
-        Equal,
+        [EnumMember(Value = "Bitrate")]
+        Bitrate,
 
         /// <summary>
-        /// Enum FilterTrackOperationType for value: NotEqual
+        /// Enum TrackAttributeType for value: Language
         /// </summary>
-        [EnumMember(Value = "NotEqual")]
-        NotEqual
+        [EnumMember(Value = "Language")]
+        Language
     }
 }

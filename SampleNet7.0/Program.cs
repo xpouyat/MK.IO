@@ -243,7 +243,7 @@ namespace Sample
                             new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Video
+                                Value = FilterTrackPropertyTypeValue.Video
                             },
                             new() {
                                 Property = FilterTrackPropertyType.Bitrate,
@@ -258,7 +258,7 @@ namespace Sample
                             new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Audio
+                                Value = FilterTrackPropertyTypeValue.Audio
                             },
                             new() {
                                 Property = FilterTrackPropertyType.FourCC,
@@ -296,7 +296,7 @@ namespace Sample
                             new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Video
+                                Value = FilterTrackPropertyTypeValue.Video
                             },
                             new() {
                                 Property = FilterTrackPropertyType.Bitrate,
@@ -311,12 +311,12 @@ namespace Sample
                             new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Audio
+                                Value = FilterTrackPropertyTypeValue.Audio
                             },
                             new() {
                                 Property = FilterTrackPropertyType.FourCC,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = "mp4a"
+                                Value = FilterTrackPropertyFourCCValue.mp4a
                             }
                         }
                     }
@@ -516,6 +516,7 @@ namespace Sample
             var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
 
             // client.StreamingLocators.Delete("locator-25452");
+                   
 
         }
 

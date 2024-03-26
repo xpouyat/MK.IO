@@ -123,8 +123,7 @@ var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentra
                 CdnEnabled = false,
                 Sku = new StreamingEndpointsCurrentSku
                 {
-                    Name = "Standard",
-                    Capacity = 600
+                    Name = StreamingEndpointSkuType.Standard
                 }
             });
 

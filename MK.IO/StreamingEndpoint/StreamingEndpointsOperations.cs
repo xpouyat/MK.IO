@@ -117,7 +117,12 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_streamingEndpointApiUrl + "?autoStart=" + autoStart.ToString(), streamingEndpointName);
             tags ??= new Dictionary<string, string>();
-            var content = new StreamingEndpointSchema { Location = location, Properties = properties, Tags = tags };
+            var content = new StreamingEndpointSchema
+            {
+                Location = location,
+                Properties = properties,
+                Tags = tags
+            };
             string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
             return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
         }

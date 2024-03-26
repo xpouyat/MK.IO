@@ -1,34 +1,49 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
+
 namespace MK.IO.Models
 {
-    /// <summary> The built-in properties to be used with asset and account filter. </summary>
-    public readonly partial struct FilterTrackPropertyType
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum FilterTrackPropertyType
     {
-        //
-        // Summary:
-        //     The type.
-        public static readonly string Type = "Type";
+        /// <summary>
+        /// Enum FilterTrackPropertyType for value: Unknown
+        /// </summary>
+        [EnumMember(Value = "Unknown")]
+        Unknown,
 
-        //
-        // Summary:
-        //     The name.
-        public static readonly string Name = "Name";
+        /// <summary>
+        /// Enum FilterTrackPropertyType for value: Type
+        /// </summary>
+        [EnumMember(Value = "Type")]
+        Type,
 
-        //
-        // Summary:
-        //     The language.
-        public static readonly string Language = "Language";
+        /// <summary>
+        /// Enum FilterTrackPropertyType for value: Name
+        /// </summary>
+        [EnumMember(Value = "Name")]
+        Name,
 
-        //
-        // Summary:
-        //     The fourCC.
-        public static readonly string FourCC = "FourCC";
+        /// <summary>
+        /// Enum FilterTrackPropertyType for value: Language
+        /// </summary>
+        [EnumMember(Value = "Language")]
+        Language,
 
-        //
-        // Summary:
-        //     The bitrate.
-        public static readonly string Bitrate = "Bitrate";
+        /// <summary>
+        /// Enum FilterTrackPropertyType for value: FourCC
+        /// </summary>
+        [EnumMember(Value = "FourCC")]
+        FourCC,
+
+        /// <summary>
+        /// Enum FilterTrackPropertyType for value: Bitrate
+        /// </summary>
+        [EnumMember(Value = "Bitrate")]
+        Bitrate
     }
 }

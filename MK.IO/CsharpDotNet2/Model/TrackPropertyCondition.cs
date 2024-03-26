@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>Track property operation. Only equality is supported.</value>
         [DataMember(Name = "operation", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; set; }
+        public TrackPropertyConditionOperationType Operation { get; set; }
 
         /// <summary>
         /// Track property type
@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>Track property type</value>
         [DataMember(Name = "property", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "property")]
-        public string Property { get; set; }
+        public TrackPropertyConditionPropertyType Property { get; set; }
 
         /// <summary>
         /// Track property value

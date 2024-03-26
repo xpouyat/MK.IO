@@ -53,13 +53,13 @@ var assetFilter = client.AssetFilters.CreateOrUpdate("liveoutput-c4debfe5", MKIO
                     {
                     Property = FilterTrackPropertyType.Type,
                     Operation = FilterTrackPropertyCompareOperation.Equal,
-                    Value = FilterPropertyTypeValue.Audio
+                    Value = FilterTrackPropertyTypeValue.Audio
                 },
                 new FilterTrackPropertyCondition
                 {
                     Property = FilterTrackPropertyType.FourCC,
                     Operation = FilterTrackPropertyCompareOperation.Equal,
-                    Value = "mp4a"
+                    Value = FilterTrackPropertyFourCCValue.mp4a
                 }
             }
         }
@@ -92,7 +92,7 @@ var accountFilter = client.AccountFilters.CreateOrUpdate("filter123", new MediaF
                 {
                     Property = FilterTrackPropertyType.Type,
                     Operation = FilterTrackPropertyCompareOperation.Equal,
-                    Value = FilterPropertyTypeValue.Video
+                    Value = FilterTrackPropertyTypeValue.Video
                 },
                 new FilterTrackPropertyCondition
                 {
@@ -110,13 +110,13 @@ var accountFilter = client.AccountFilters.CreateOrUpdate("filter123", new MediaF
                     {
                     Property = FilterTrackPropertyType.Type,
                     Operation = FilterTrackPropertyCompareOperation.Equal,
-                    Value = FilterPropertyTypeValue.Audio
+                    Value = FilterTrackPropertyTypeValue.Audio
                 },
                 new FilterTrackPropertyCondition
                 {
                     Property = FilterTrackPropertyType.FourCC,
                     Operation = FilterTrackPropertyCompareOperation.Equal,
-                    Value = "mp4a"
+                    Value = FilterTrackPropertyFourCCValue.mp4a
                 }
             }
         }

@@ -4,7 +4,7 @@
 namespace MK.IO.Models
 {
     /// <summary> The built-in properties to be used with asset and account filter. </summary>
-    public readonly partial struct FilterPropertyTypeValue
+    public readonly partial struct FilterTrackPropertyTypeValue
     {
         public static readonly string Audio = "Audio";
         public static readonly string Video = "Video";
