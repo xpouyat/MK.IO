@@ -78,7 +78,6 @@ namespace Sample
             }
 
 
-
             try
             {
                 await client.ContentKeyPolicies.DeleteAsync("testpolcreate");
@@ -110,8 +109,6 @@ namespace Sample
                 );
 
             var ckpolprop = await client.ContentKeyPolicies.GetPolicyPropertiesWithSecretsAsync("testpolcreate");
-
-
 
 
             // *******************
@@ -330,7 +327,6 @@ namespace Sample
             // transform operations
             // *********************
 
-
             var tranform = client.Transforms.CreateOrUpdate("CVQ720pTransform", new TransformProperties
             {
                 Description = "desc",
@@ -461,10 +457,6 @@ namespace Sample
             }
 
 
-
-
-
-
             // ******************************
             // Streaming endpoint operations
             // ******************************
@@ -476,7 +468,7 @@ namespace Sample
             var mkses = client.StreamingEndpoints.List();
 
             // create streaming endpoint
-
+            
             /*
             var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
@@ -485,8 +477,7 @@ namespace Sample
                 CdnEnabled = false,
                 Sku = new StreamingEndpointsCurrentSku
                 {
-                    Name = "Standard",
-                    Capacity = 600
+                    Name = StreamingEndpointSkuType.Standard
                 }
             });
             */
@@ -497,9 +488,9 @@ namespace Sample
             //client.StreamingEndpoints.Delete("streamingendpoint2");
 
 
-            // ******************************
+            // *****************************
             // Streaming locator operations
-            // ******************************
+            // *****************************
 
             var mklocators = client.StreamingLocators.List();
 
@@ -516,8 +507,6 @@ namespace Sample
             var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
 
             // client.StreamingLocators.Delete("locator-25452");
-                   
-
         }
 
         /// <summary>
