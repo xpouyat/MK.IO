@@ -112,6 +112,11 @@ namespace MK.IO.Operations
             Argument.AssertNotMoreThanLength(jobName, nameof(jobName), 63);
             Argument.AssertNotNull(properties, nameof(properties));
 
+            return await CreateOrUpdateAsync(transformName, jobName, properties, Client.CreateObjectPutAsync);
+        }
+
+        internal async Task<JobSchema> CreateOrUpdateAsync(string transformName, string jobName, JobProperties properties, Func<string, string, Task<string>> func)
+        {
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);
             // fix to make sure Odattype is set as we use the generated class
             foreach (var o in properties.Outputs)
@@ -120,9 +125,30 @@ namespace MK.IO.Operations
             }
             var content = new JobSchema { Properties = properties };
 
-            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson());
+            string responseContent = await func(url, content.ToJson());
             return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
         }
+
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
+        /// <inheritdoc/>
+        public JobSchema Update(string transformName, string jobName, JobProperties properties)
+        {
+            var task = Task.Run<JobSchema>(async () => await UpdateAsync(transformName, jobName, properties));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<JobSchema> UpdateAsync(string transformName, string jobName, JobProperties properties)
+        {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotContainsSpace(jobName, nameof(jobName));
+            Argument.AssertNotMoreThanLength(jobName, nameof(jobName), 63);
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            return await CreateOrUpdateAsync(transformName, jobName, properties, Client.UpdateObjectPatchAsync);
+        }
+#endif
 
         /// <inheritdoc/>
         public void Cancel(string transformName, string jobName)

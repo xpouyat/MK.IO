@@ -82,6 +82,28 @@ namespace MK.IO.Operations
         /// <returns></returns>
         Task<JobSchema> CreateAsync(string transformName, string jobName, JobProperties properties);
 
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
+        /// <summary>
+        /// Update an existing Job.
+        /// Update is only supported for description and priority.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <param name="jobName"></param>
+        /// <param name="properties"></param>
+        /// <returns></returns>
+        JobSchema Update(string transformName, string jobName, JobProperties properties);
+
+        /// <summary>
+        /// Update an existing Job.
+        /// Update is only supported for description and priority.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <param name="jobName"></param>
+        /// <param name="properties"></param>
+        /// <returns></returns>
+        Task<JobSchema> UpdateAsync(string transformName, string jobName, JobProperties properties);
+#endif
+
         /// <summary>
         /// Cancel an already running Job.
         /// </summary>
@@ -97,6 +119,5 @@ namespace MK.IO.Operations
         /// <returns></returns>
         Task CancelAsync(string transformName, string jobName);
 
-        // TODO : implement update the job
     }
 }
