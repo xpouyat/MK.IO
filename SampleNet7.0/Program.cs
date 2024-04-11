@@ -492,7 +492,24 @@ namespace Sample
             // Streaming locator operations
             // *****************************
 
+            // list using pages of 10
+            var mkioSLocsResult = client.StreamingLocators.ListAsPage("properties/created desc", 10);
+            while (true)
+            {
+                foreach (var a in mkioSLocsResult.Results)
+                {
+                    Console.WriteLine(a.Name);
+                }
+                if (mkioSLocsResult.NextPageLink == null) break;
+
+                mkioSLocsResult = client.StreamingLocators.ListAsPageNext(mkioSLocsResult.NextPageLink);
+            }
+
+            // standard list
             var mklocators = client.StreamingLocators.List();
+
+            // listing using a filter and sorting
+            var mklocatorsf = client.StreamingLocators.List("properties/created desc", null, "name eq 'clear'");
 
             //var mklocator1 = client.StreamingLocators.Get("locator-25452");
 

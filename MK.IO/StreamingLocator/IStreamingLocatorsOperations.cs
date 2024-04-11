@@ -10,14 +10,52 @@ namespace MK.IO.Operations
         /// <summary>
         /// Returns a list of Streaming Locators for the subscription.
         /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <param name="filter">Filters the set of items returned.</param>
         /// <returns></returns>
-        List<StreamingLocatorSchema> List();
+        List<StreamingLocatorSchema> List(string? orderBy = null, int? top = null, string? filter = null);
 
         /// <summary>
         /// Returns a list of Streaming Locators for the subscription.
         /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <param name="filter">Filters the set of items returned.</param>
         /// <returns></returns>
-        Task<List<StreamingLocatorSchema>> ListAsync();
+        Task<List<StreamingLocatorSchema>> ListAsync(string? orderBy = null, int? top = null, string? filter = null);
+
+        /// <summary>
+        /// Returns a list of Streaming Locators for the subscription using pages.
+        /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <returns></returns>
+        PagedResult<StreamingLocatorSchema> ListAsPage(string? orderBy = null, int? top = null, string? filter = null);
+
+        /// <summary>
+        /// Returns a list of Streaming Locators for the subscription using pages.
+        /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <returns></returns>
+        Task<PagedResult<StreamingLocatorSchema>> ListAsPageAsync(string? orderBy = null, int? top = null, string? filter = null);
+
+        /// <summary>
+        /// Returns a list of Streaming Locators for the subscription using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        PagedResult<StreamingLocatorSchema> ListAsPageNext(string? nextPageLink);
+
+        /// <summary>
+        /// Returns a list of Streaming Locators for the subscription using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        Task<PagedResult<StreamingLocatorSchema>> ListAsPageNextAsync(string? nextPageLink);
 
         /// <summary>
         /// Delete a Streaming Locator.

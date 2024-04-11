@@ -3,6 +3,8 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
+
 #if NET462
 using System.Net.Http;
 #endif
@@ -43,20 +45,91 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<StreamingLocatorSchema> List()
+        public List<StreamingLocatorSchema> List(string? orderBy = null, int? top = null, string? filter = null)
         {
-            var task = Task.Run(async () => await ListAsync());
+            var task = Task.Run(async () => await ListAsync(orderBy, top, filter));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<StreamingLocatorSchema>> ListAsync()
+        public async Task<List<StreamingLocatorSchema>> ListAsync(string? orderBy = null, int? top = null, string? filter = null)
         {
             var url = Client.GenerateApiUrl(_streamingLocatorsApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+
             string responseContent = await Client.GetObjectContentAsync(url);
             var objectToReturn = JsonConvert.DeserializeObject<StreamingLocatorListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with streaming locator list deserialization");
         }
+
+        public PagedResult<StreamingLocatorSchema> ListAsPage(string? orderBy = null, int? top = null, string? filter = null)
+        {
+            Task<PagedResult<StreamingLocatorSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, top, filter));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<StreamingLocatorSchema>> ListAsPageAsync(string? orderBy = null, int? top = null, string? filter = null)
+        {
+            var url = Client.GenerateApiUrl(_streamingLocatorsApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+
+            string responseContent = await Client.GetObjectContentAsync(url);
+
+            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+            string? nextPageLink = responseObject["@odata.nextLink"];
+
+            var objectToReturn = JsonConvert.DeserializeObject<StreamingLocatorListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
+            {
+                throw new Exception($"Error with streaming locator list deserialization");
+            }
+            else
+            {
+                return new PagedResult<StreamingLocatorSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<StreamingLocatorSchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<StreamingLocatorSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<StreamingLocatorSchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            var url = Client._baseUrl.Substring(0, Client._baseUrl.Length - 1) + nextPageLink;
+            string responseContent = await Client.GetObjectContentAsync(url);
+
+            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+
+            nextPageLink = responseObject["@odata.nextLink"];
+
+            var objectToReturn = JsonConvert.DeserializeObject<StreamingLocatorListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
+            {
+                throw new Exception($"Error with streaming locator list deserialization");
+            }
+            else
+            {
+                return new PagedResult<StreamingLocatorSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
+        }
+
 
         /// <inheritdoc/>
         public StreamingLocatorSchema Get(string streamingLocatorName)
