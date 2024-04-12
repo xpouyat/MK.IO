@@ -44,19 +44,19 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<StreamingPolicySchema> List(string? orderBy = null, int? top = null, string? filter = null)
+        public List<StreamingPolicySchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run(async () => await ListAsync(orderBy, top, filter));
+            var task = Task.Run(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<StreamingPolicySchema>> ListAsync(string? orderBy = null, int? top = null, string? filter = null)
+        public async Task<List<StreamingPolicySchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_streamingPoliciesApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
             url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
 
             string responseContent = await Client.GetObjectContentAsync(url);
             var objectToReturn = JsonConvert.DeserializeObject<StreamingPolicyListResponseSchema>(responseContent, ConverterLE.Settings);
@@ -64,19 +64,19 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public PagedResult<StreamingPolicySchema> ListAsPage(string? orderBy = null, int? top = null, string? filter = null)
+        public PagedResult<StreamingPolicySchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
         {
-            Task<PagedResult<StreamingPolicySchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, top, filter));
+            Task<PagedResult<StreamingPolicySchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<StreamingPolicySchema>> ListAsPageAsync(string? orderBy = null, int? top = null, string? filter = null)
+        public async Task<PagedResult<StreamingPolicySchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_streamingPoliciesApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
             url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
 
             string responseContent = await Client.GetObjectContentAsync(url);
 

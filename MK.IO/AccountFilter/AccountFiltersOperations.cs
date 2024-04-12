@@ -3,6 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
 #if NET462
 using System.Net.Http;
 #endif
@@ -34,20 +35,91 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<AccountFilterSchema> List()
+        public List<AccountFilterSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            Task<List<AccountFilterSchema>> task = Task.Run(async () => await ListAsync());
+            Task<List<AccountFilterSchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<AccountFilterSchema>> ListAsync()
+        public async Task<List<AccountFilterSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_accountFiltersApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
 
             var objectToReturn = JsonConvert.DeserializeObject<AccountFilterListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with account filter deserialization");
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<AccountFilterSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            Task<PagedResult<AccountFilterSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<AccountFilterSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_accountFiltersApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
+            string responseContent = await Client.GetObjectContentAsync(url);
+
+            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+            string? nextPageLink = responseObject["@odata.nextLink"];
+
+            var objectToReturn = JsonConvert.DeserializeObject<AccountFilterListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
+            {
+                throw new Exception($"Error with account filter deserialization");
+            }
+            else
+            {
+                return new PagedResult<AccountFilterSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<AccountFilterSchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<AccountFilterSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<AccountFilterSchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            var url = Client._baseUrl.Substring(0, Client._baseUrl.Length - 1) + nextPageLink;
+            string responseContent = await Client.GetObjectContentAsync(url);
+
+            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+
+            nextPageLink = responseObject["@odata.nextLink"];
+
+            var objectToReturn = JsonConvert.DeserializeObject<AccountFilterListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
+            {
+                throw new Exception($"Error with account filter deserialization");
+            }
+            else
+            {
+                return new PagedResult<AccountFilterSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
         }
 
         /// <inheritdoc/>

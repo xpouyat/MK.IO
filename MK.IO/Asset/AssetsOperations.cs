@@ -37,21 +37,21 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<AssetSchema> List(string? orderBy = null, int? top = null, string? filter = null, List<string>? label_key = null, List<string>? label = null)
+        public List<AssetSchema> List(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null)
         {
-            Task<List<AssetSchema>> task = Task.Run(async () => await ListAsync(orderBy, top, filter, label_key, label));
+            Task<List<AssetSchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, label_key, label, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<AssetSchema>> ListAsync(string? orderBy = null, int? top = null, string? filter = null, List<string>? label_key = null, List<string>? label = null)
+        public async Task<List<AssetSchema>> ListAsync(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_assetsApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
             url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
             url = MKIOClient.AddParametersToUrl(url, "$label_key", label_key);
             url = MKIOClient.AddParametersToUrl(url, "$label", label);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
 
             string responseContent = await Client.GetObjectContentAsync(url);
 
@@ -60,21 +60,21 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public PagedResult<AssetSchema> ListAsPage(string? orderBy = null, int? top = null, string? filter = null, List<string>? label_key = null, List<string>? label = null)
+        public PagedResult<AssetSchema> ListAsPage(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null)
         {
-            Task<PagedResult<AssetSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, top, filter, label_key, label));
+            Task<PagedResult<AssetSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, label_key, label, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<AssetSchema>> ListAsPageAsync(string? orderBy = null, int? top = null, string? filter = null, List<string>? label_key = null, List<string>? label = null)
+        public async Task<PagedResult<AssetSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_assetsApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
             url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
             url = MKIOClient.AddParametersToUrl(url, "$label_key", label_key);
             url = MKIOClient.AddParametersToUrl(url, "$label", label);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
 
             string responseContent = await Client.GetObjectContentAsync(url);
 

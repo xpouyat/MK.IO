@@ -11,37 +11,37 @@ namespace MK.IO.Operations
         /// Returns a list of Streaming Policies for the subscription.
         /// </summary>
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
-        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <param name="filter">Filters the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        List<StreamingPolicySchema> List(string? orderBy = null, int? top = null, string? filter = null);
+        List<StreamingPolicySchema> List(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Returns a list of Streaming Policies for the subscription.
         /// </summary>
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
-        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <param name="filter">Filters the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        Task<List<StreamingPolicySchema>> ListAsync(string? orderBy = null, int? top = null, string? filter = null);
+        Task<List<StreamingPolicySchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Returns a list of Streaming Policies for the subscription using pages.
         /// </summary>
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
-        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        PagedResult<StreamingPolicySchema> ListAsPage(string? orderBy = null, int? top = null, string? filter = null);
+        PagedResult<StreamingPolicySchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Returns a list of Streaming Policies for the subscription using pages.
         /// </summary>
         /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
-        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        Task<PagedResult<StreamingPolicySchema>> ListAsPageAsync(string? orderBy = null, int? top = null, string? filter = null);
+        Task<PagedResult<StreamingPolicySchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Returns a list of Streaming Policies for the subscription using pages.

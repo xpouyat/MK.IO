@@ -10,14 +10,52 @@ namespace MK.IO.Operations
         /// <summary>
         /// Retrieves a list of account filters in the subscription.
         /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Filters the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        List<AccountFilterSchema> List();
+        List<AccountFilterSchema> List(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Retrieves a list of account filters in the subscription.
         /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Filters the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        Task<List<AccountFilterSchema>> ListAsync();
+        Task<List<AccountFilterSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of account filters in the subscription using pages.
+        /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <returns></returns>
+        PagedResult<AccountFilterSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of account filters in the subscription using pages.
+        /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <returns></returns>
+        Task<PagedResult<AccountFilterSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of account filters in the subscription using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        PagedResult<AccountFilterSchema> ListAsPageNext(string? nextPageLink);
+
+        /// <summary>
+        /// Retrieves a list of account filters in the subscription using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        Task<PagedResult<AccountFilterSchema>> ListAsPageNextAsync(string? nextPageLink);
 
         /// <summary>
         /// Delete the account filter.

@@ -77,7 +77,7 @@ namespace Sample
             }
 
             // list using pages of 10
-            var mkioSLocsResult = client.StreamingLocators.ListAsPage("properties/created desc", 10);
+            var mkioSLocsResult = client.StreamingLocators.ListAsPage("properties/created desc", null, 10);
             while (true)
             {
                 foreach (var a in mkioSLocsResult.Results)
@@ -93,7 +93,7 @@ namespace Sample
             var mklocators = client.StreamingLocators.List();
 
             // listing using a filter and sorting
-            var mklocatorsf = client.StreamingLocators.List("properties/created desc", null, "name eq 'clear'");
+            var mklocatorsf = client.StreamingLocators.List("properties/created desc", "name eq 'clear'");
 
             //var mklocator1 = client.StreamingLocators.Get("locator-25452");
 
@@ -114,7 +114,7 @@ namespace Sample
             // ****************************
 
             // list using pages of 10
-            var mkioSPolsResult = client.StreamingPolicies.ListAsPage("properties/created desc", 2);
+            var mkioSPolsResult = client.StreamingPolicies.ListAsPage("properties/created desc", null, 2);
             while (true)
             {
                 foreach (var a in mkioSPolsResult.Results)
@@ -129,7 +129,7 @@ namespace Sample
             var mkstreampol = client.StreamingPolicies.List();
 
             // listing using a filter and sorting
-            var mkstreampolf = client.StreamingPolicies.List("properties/created desc", null, "name eq 'Predefined_ClearKey'");
+            var mkstreampolf = client.StreamingPolicies.List("properties/created desc", "name eq 'Predefined_ClearKey'");
 
             //var mklocator1 = client.StreamingPolicies.Get("locator-25452");
 
@@ -236,7 +236,7 @@ namespace Sample
             // *****************
 
             // list assets
-            var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", 10);
+            var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", null, null, null, 10);
             while (true)
             {
                 foreach (var a in mkioAssetsResult.Results)

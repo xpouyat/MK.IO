@@ -65,7 +65,7 @@ var stats = client.Account.GetSubscriptionStats();
 var mkioAssets = client.Assets.List();
 
 // list assets with pages, 10 assets per page, sorted by creation date
-var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", 10);
+var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", null, 10);
 while (true)
 {
     // do stuff here using mkioAssetsResult.Results

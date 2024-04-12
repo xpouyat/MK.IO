@@ -3,6 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
 #if NET462
 using System.Net.Http;
 #endif
@@ -37,22 +38,94 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<AssetFilterSchema> List(string assetName)
+        public List<AssetFilterSchema> List(string assetName, string? orderBy = null, string? filter = null, int? top = null)
         {
-            Task<List<AssetFilterSchema>> task = Task.Run(async () => await ListAsync(assetName));
+            Task<List<AssetFilterSchema>> task = Task.Run(async () => await ListAsync(assetName, orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<AssetFilterSchema>> ListAsync(string assetName)
+        public async Task<List<AssetFilterSchema>> ListAsync(string assetName, string? orderBy = null, string? filter = null, int? top = null)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             var url = Client.GenerateApiUrl(_assetFiltersApiUrl, assetName);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
             var objectToReturn = JsonConvert.DeserializeObject<AssetFilterListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with asset filter list deserialization");
         }
+
+        /// <inheritdoc/>
+        public PagedResult<AssetFilterSchema> ListAsPage(string assetName, string? orderBy = null, string? filter = null, int? top = null)
+        {
+            Task<PagedResult<AssetFilterSchema>> task = Task.Run(async () => await ListAsPageAsync(assetName, orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<AssetFilterSchema>> ListAsPageAsync(string assetName, string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_assetFiltersApiUrl, assetName);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
+            string responseContent = await Client.GetObjectContentAsync(url);
+
+            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+            string? nextPageLink = responseObject["@odata.nextLink"];
+
+            var objectToReturn = JsonConvert.DeserializeObject<AssetFilterListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
+            {
+                throw new Exception($"Error with asset filter deserialization");
+            }
+            else
+            {
+                return new PagedResult<AssetFilterSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<AssetFilterSchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<AssetFilterSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<AssetFilterSchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            var url = Client._baseUrl.Substring(0, Client._baseUrl.Length - 1) + nextPageLink;
+            string responseContent = await Client.GetObjectContentAsync(url);
+
+            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+
+            nextPageLink = responseObject["@odata.nextLink"];
+
+            var objectToReturn = JsonConvert.DeserializeObject<AssetFilterListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
+            {
+                throw new Exception($"Error with asset filter deserialization");
+            }
+            else
+            {
+                return new PagedResult<AssetFilterSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
+        }
+
 
         /// <inheritdoc/>
         public AssetFilterSchema Get(string assetName, string filterName)
