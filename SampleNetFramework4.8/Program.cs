@@ -10,7 +10,7 @@ namespace SampleNetFramework
 {
     internal class Program
     {
-        // Sample app to demonstrate how to use the MK/IO SDK with .Net framework 4.8
+        // Sample app to demonstrate how to use the MK.IO SDK with .Net framework 4.8
         static void Main(string[] args)
         {
             // load settings from appsettings.json
@@ -18,10 +18,10 @@ namespace SampleNetFramework
              .AddJsonFile("appsettings.json")
              .Build();
 
-            Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK/IO subscription.");
+            Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK.IO subscription.");
 
             // **********************
-            // MK/IO Client creation
+            // MK.IO Client creation
             // **********************
 
             var client = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
@@ -47,7 +47,7 @@ namespace SampleNetFramework
             var locs = client.Account.ListAllLocations();
 
             var currentLocation = locs.Where(l => l.Metadata.Id == sub.Spec.LocationId).FirstOrDefault();
-            Console.WriteLine($"Connected to '{sub.Spec.Name}' MK/IO instance in region '{currentLocation.Metadata.Name}'.");
+            Console.WriteLine($"Connected to '{sub.Spec.Name}' MK.IO instance in region '{currentLocation.Metadata.Name}'.");
 
             // pause the command line
             Console.ReadLine();

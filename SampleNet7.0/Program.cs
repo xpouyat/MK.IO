@@ -20,7 +20,7 @@ namespace Sample
 
         static async Task MainAsync()
         {
-            Console.WriteLine("Sample that operates MK/IO.");
+            Console.WriteLine("Sample that operates MK.IO.");
 
             /* you need to add an appsettings.json file with the following content:
              {
@@ -35,10 +35,10 @@ namespace Sample
                 .AddEnvironmentVariables()
                 .Build();
 
-            Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK/IO subscription.");
+            Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK.IO subscription.");
 
             // **********************
-            // MK/IO Client creation
+            // MK.IO Client creation
             // **********************
 
             var client = new MKIOClient(config["MKIOSubscriptionName"]!, config["MKIOToken"]!);
@@ -62,6 +62,77 @@ namespace Sample
             var subs = await client.Account.ListAllSubscriptionsAsync();
             var sub = await client.Account.GetSubscriptionAsync();
             var locs = await client.Account.ListAllLocationsAsync();
+
+            // *****************************
+            // Streaming locator operations
+            // *****************************
+
+
+            // standard list
+            var mkioLocators = await client.StreamingLocators.ListAsync();
+            var locator = mkioLocators.Where(l => l.Properties.StreamingLocatorId == new Guid("{e879fe57-6354-46fc-b817-11a16ffd1672}")).FirstOrDefault();
+            if (locator != null)
+            {
+                // locator was found
+            }
+
+            // list using pages of 10
+            var mkioSLocsResult = client.StreamingLocators.ListAsPage("properties/created desc", 10);
+            while (true)
+            {
+                foreach (var a in mkioSLocsResult.Results)
+                {
+                    Console.WriteLine(a.Name);
+                }
+                if (mkioSLocsResult.NextPageLink == null) break;
+
+                mkioSLocsResult = client.StreamingLocators.ListAsPageNext(mkioSLocsResult.NextPageLink);
+            }
+
+            // standard list
+            var mklocators = client.StreamingLocators.List();
+
+            // listing using a filter and sorting
+            var mklocatorsf = client.StreamingLocators.List("properties/created desc", null, "name eq 'clear'");
+
+            //var mklocator1 = client.StreamingLocators.Get("locator-25452");
+
+            var mklocator2 = client.StreamingLocators.Create(
+               MKIOClient.GenerateUniqueName("locator"),
+               new StreamingLocatorProperties
+               {
+                   AssetName = "ignite-truncated-out123-encodedmkio",
+                   StreamingPolicyName = PredefinedStreamingPolicy.ClearStreamingOnly
+               });
+
+            var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
+
+            // client.StreamingLocators.Delete("locator-25452");
+
+            // ****************************
+            // Streaming policy operations
+            // ****************************
+
+            // list using pages of 10
+            var mkioSPolsResult = client.StreamingPolicies.ListAsPage("properties/created desc", 2);
+            while (true)
+            {
+                foreach (var a in mkioSPolsResult.Results)
+                {
+                    Console.WriteLine(a.Name);
+                }
+                if (mkioSPolsResult.NextPageLink == null) break;
+
+                mkioSPolsResult = client.StreamingPolicies.ListAsPageNext(mkioSPolsResult.NextPageLink);
+            }
+            // standard list
+            var mkstreampol = client.StreamingPolicies.List();
+
+            // listing using a filter and sorting
+            var mkstreampolf = client.StreamingPolicies.List("properties/created desc", null, "name eq 'Predefined_ClearKey'");
+
+            //var mklocator1 = client.StreamingPolicies.Get("locator-25452");
+
 
             // ******************************
             // content key policy operations
@@ -488,42 +559,6 @@ namespace Sample
             //client.StreamingEndpoints.Delete("streamingendpoint2");
 
 
-            // *****************************
-            // Streaming locator operations
-            // *****************************
-
-            // list using pages of 10
-            var mkioSLocsResult = client.StreamingLocators.ListAsPage("properties/created desc", 10);
-            while (true)
-            {
-                foreach (var a in mkioSLocsResult.Results)
-                {
-                    Console.WriteLine(a.Name);
-                }
-                if (mkioSLocsResult.NextPageLink == null) break;
-
-                mkioSLocsResult = client.StreamingLocators.ListAsPageNext(mkioSLocsResult.NextPageLink);
-            }
-
-            // standard list
-            var mklocators = client.StreamingLocators.List();
-
-            // listing using a filter and sorting
-            var mklocatorsf = client.StreamingLocators.List("properties/created desc", null, "name eq 'clear'");
-
-            //var mklocator1 = client.StreamingLocators.Get("locator-25452");
-
-            var mklocator2 = client.StreamingLocators.Create(
-               MKIOClient.GenerateUniqueName("locator"),
-               new StreamingLocatorProperties
-               {
-                   AssetName = "copy-ef2058b692-copy",
-                   StreamingPolicyName = PredefinedStreamingPolicy.ClearStreamingOnly
-               });
-
-            var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
-
-            // client.StreamingLocators.Delete("locator-25452");
         }
 
         /// <summary>

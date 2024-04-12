@@ -8,7 +8,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>xpouyat</Authors>
     <Company>Microsoft</Company>
-    <Description>A client library for MediaKind MK/IO.</Description>
+    <Description>A client library for MediaKind MK.IO.</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Version>1.4.0</Version>
@@ -17,7 +17,7 @@
     <PackageProjectUrl>https://github.com/xpouyat/MK.IO/blob/master/README.md</PackageProjectUrl>
     <AssemblyVersion>1.4.0.0</AssemblyVersion>
     <FileVersion>1.4.0.0</FileVersion>
-    <Title>A client library for MediaKind MK/IO.</Title>
+    <Title>A client library for MediaKind MK.IO.</Title>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageIcon>mkio.png</PackageIcon>

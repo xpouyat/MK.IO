@@ -73,7 +73,7 @@ namespace MK.IO.Models
         /// <value>The streaming locator id</value>
         [DataMember(Name = "streamingLocatorId", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "streamingLocatorId")]
-        public string StreamingLocatorId { get; set; }
+        public Guid? StreamingLocatorId { get; set; }
 
         /// <summary>
         /// The name of the streaming policy used by this streaming locator.          You may specify a custom policy by name, or used one of the predifined policies:          Supported: Predefined_DownloadOnly, Predefined_ClearStreamingOnly, Predefined_DownloadAndClearStreaming         Not Currently Supported: Predefined_ClearKey, Predefined_MultiDrmCencStreaming, Predefined_MultiDrmStreaming
