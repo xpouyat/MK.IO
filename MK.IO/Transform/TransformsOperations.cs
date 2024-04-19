@@ -3,6 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
 #if NET462
 using System.Net.Http;
 #endif
@@ -43,20 +44,91 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<TransformSchema> List()
+        public List<TransformSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<TransformSchema>>(async () => await ListAsync());
+            var task = Task.Run<List<TransformSchema>>(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<TransformSchema>> ListAsync()
+        public async Task<List<TransformSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_transformsApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
 
             var objectToReturn = JsonConvert.DeserializeObject<TransformListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with transforms list deserialization");
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<TransformSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            Task<PagedResult<TransformSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<TransformSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_transformsApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
+            string responseContent = await Client.GetObjectContentAsync(url);
+
+            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+            string? nextPageLink = responseObject["@odata.nextLink"];
+
+            var objectToReturn = JsonConvert.DeserializeObject<TransformListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
+            {
+                throw new Exception($"Error with streaming policy list deserialization");
+            }
+            else
+            {
+                return new PagedResult<TransformSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<TransformSchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<TransformSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<TransformSchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            var url = Client._baseUrl.Substring(0, Client._baseUrl.Length - 1) + nextPageLink;
+            string responseContent = await Client.GetObjectContentAsync(url);
+
+            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+
+            nextPageLink = responseObject["@odata.nextLink"];
+
+            var objectToReturn = JsonConvert.DeserializeObject<TransformListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
+            {
+                throw new Exception($"Error with streaming policy list deserialization");
+            }
+            else
+            {
+                return new PagedResult<TransformSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
         }
 
         /// <inheritdoc/>
