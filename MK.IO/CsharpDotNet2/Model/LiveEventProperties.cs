@@ -65,6 +65,14 @@ namespace MK.IO.Models
         public DateTime? LastModified { get; private set; }
 
         /// <summary>
+        /// Not currently supported. The name of the pipeline the LiveEvent will execute.
+        /// </summary>
+        /// <value>Not currently supported. The name of the pipeline the LiveEvent will execute.</value>
+        [DataMember(Name = "pipeline", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "pipeline")]
+        [Obsolete] public string Pipeline { get; set; }
+
+        /// <summary>
         /// Gets or Sets Preview
         /// </summary>
         [DataMember(Name = "preview", EmitDefaultValue = false)]
@@ -127,6 +135,7 @@ namespace MK.IO.Models
             sb.Append("  HostnamePrefix: ").Append(HostnamePrefix).Append("\n");
             sb.Append("  Input: ").Append(Input).Append("\n");
             sb.Append("  LastModified: ").Append(LastModified).Append("\n");
+            sb.Append("  Pipeline: ").Append(Pipeline).Append("\n");
             sb.Append("  Preview: ").Append(Preview).Append("\n");
             sb.Append("  ProvisioningState: ").Append(ProvisioningState).Append("\n");
             sb.Append("  ResourceState: ").Append(ResourceState).Append("\n");

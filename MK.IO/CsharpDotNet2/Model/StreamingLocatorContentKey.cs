@@ -41,7 +41,7 @@ namespace MK.IO.Models
         /// <value>Not currently supported. The tracks which use this content key</value>
         [DataMember(Name = "tracks", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "tracks")]
-        public List<TrackSelection> Tracks { get; set; }
+        [Obsolete] public List<TrackSelection> Tracks { get; set; }
 
         /// <summary>
         /// The streaming locator content key type

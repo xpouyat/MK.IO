@@ -75,7 +75,7 @@ namespace MK.IO.Models
         /// <value>Accepted, not supported. The name of the encryption scope to use within your storage container. Errors may be cryptic.</value>
         [DataMember(Name = "encryptionScope", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "encryptionScope")]
-        public string EncryptionScope { get; set; }
+        [Obsolete] public string EncryptionScope { get; set; }
 
         /// <summary>
         /// The last modified date of the Asset.
@@ -99,7 +99,7 @@ namespace MK.IO.Models
         /// <value>This field was deprecated in the v3 API. Accepted, not supported. Use an encryption scope instead.</value>
         [DataMember(Name = "storageEncryptionFormat", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "storageEncryptionFormat")]
-        public string StorageEncryptionFormat { get; set; }
+        [Obsolete] public string StorageEncryptionFormat { get; set; }
 
 
         /// <summary>

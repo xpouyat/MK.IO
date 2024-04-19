@@ -41,7 +41,7 @@ namespace MK.IO.Models
         /// <value>Smooth streaming is not supported and the value of this field is ignored.</value>
         [DataMember(Name = "smoothStreaming", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "smoothStreaming")]
-        public bool? SmoothStreaming { get; set; }
+        [Obsolete] public bool? SmoothStreaming { get; set; }
 
 
         /// <summary>

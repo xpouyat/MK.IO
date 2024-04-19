@@ -72,7 +72,7 @@ namespace MK.IO.Models
         /// <value>Not supported. The output snapshot time. This is the wall clock time, in unix epoch seconds, that the live output will begin recording from.</value>
         [DataMember(Name = "outputSnapTime", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "outputSnapTime")]
-        public int? OutputSnapTime { get; set; }
+        [Obsolete] public int? OutputSnapTime { get; set; }
 
         /// <summary>
         /// The provisioning state of the live output.
@@ -98,7 +98,7 @@ namespace MK.IO.Models
         /// <value>Not supported.          ISO 8601 timespan duration of the rewind window length during live playback.          This is the amount of time that the live output will be able to rewind.</value>
         [DataMember(Name = "rewindWindowLength", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "rewindWindowLength")]
-        public TimeSpan RewindWindowLength { get; set; }
+        [Obsolete] public TimeSpan RewindWindowLength { get; set; }
 
 
         /// <summary>
