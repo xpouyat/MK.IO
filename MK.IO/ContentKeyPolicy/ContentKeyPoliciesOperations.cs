@@ -73,28 +73,7 @@ namespace MK.IO.Operations
         public async Task<PagedResult<ContentKeyPolicySchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_contentKeyPoliciesApiUrl);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
-
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string? nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<ContentKeyPolicyListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with content key list deserialization");
-            }
-            else
-            {
-                return new PagedResult<ContentKeyPolicySchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageGenericAsync<ContentKeyPolicySchema>(url, typeof(ContentKeyPolicyListResponseSchema), "content key", orderBy, filter, top);
         }
 
         /// <inheritdoc/>

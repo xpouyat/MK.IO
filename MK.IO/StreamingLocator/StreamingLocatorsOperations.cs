@@ -74,28 +74,7 @@ namespace MK.IO.Operations
         public async Task<PagedResult<StreamingLocatorSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_streamingLocatorsApiUrl);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
-
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string? nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<StreamingLocatorListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with streaming locator list deserialization");
-            }
-            else
-            {
-                return new PagedResult<StreamingLocatorSchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageGenericAsync<StreamingLocatorSchema>(url, typeof(StreamingLocatorListResponseSchema), "streaming locator", orderBy, filter, top);
         }
 
         /// <inheritdoc/>

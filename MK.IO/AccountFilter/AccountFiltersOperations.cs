@@ -66,28 +66,7 @@ namespace MK.IO.Operations
         public async Task<PagedResult<AccountFilterSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_accountFiltersApiUrl);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
-
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string? nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<AccountFilterListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with account filter deserialization");
-            }
-            else
-            {
-                return new PagedResult<AccountFilterSchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageGenericAsync<AccountFilterSchema>(url, typeof(AccountFilterListResponseSchema), "account filter", orderBy, filter, top);
         }
 
         /// <inheritdoc/>

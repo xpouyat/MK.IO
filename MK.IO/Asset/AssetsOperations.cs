@@ -70,30 +70,9 @@ namespace MK.IO.Operations
         public async Task<PagedResult<AssetSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_assetsApiUrl);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
             url = MKIOClient.AddParametersToUrl(url, "$label_key", label_key);
             url = MKIOClient.AddParametersToUrl(url, "$label", label);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
-
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string? nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with asset list deserialization");
-            }
-            else
-            {
-                return new PagedResult<AssetSchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageGenericAsync<AssetSchema>(url, typeof(AssetListResponseSchema), "asset", orderBy, filter, top);
         }
 
         /// <inheritdoc/>

@@ -76,28 +76,7 @@ namespace MK.IO.Operations
         public async Task<PagedResult<JobSchema>> ListAllAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_allJobsApiUrl);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
-
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string? nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with job list all deserialization");
-            }
-            else
-            {
-                return new PagedResult<JobSchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageGenericAsync<JobSchema>(url, typeof(JobListResponseSchema), "all job", orderBy, filter, top);
         }
 
         /// <inheritdoc/>
@@ -110,7 +89,7 @@ namespace MK.IO.Operations
         /// <inheritdoc/>
         public async Task<PagedResult<JobSchema>> ListAllAsPageNextAsync(string? nextPageLink)
         {
-            return await Client.ListAsPageNextGenericAsync<JobSchema>(nextPageLink, typeof(JobListResponseSchema), "job");
+            return await Client.ListAsPageNextGenericAsync<JobSchema>(nextPageLink, typeof(JobListResponseSchema), "all job");
         }
 
         /// <inheritdoc/>
@@ -146,28 +125,7 @@ namespace MK.IO.Operations
         public async Task<PagedResult<JobSchema>> ListAsPageAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_jobsApiUrl, transformName);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
-
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string? nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with job list deserialization");
-            }
-            else
-            {
-                return new PagedResult<JobSchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageGenericAsync<JobSchema>(url, typeof(JobListResponseSchema), "job", orderBy, filter, top);
         }
 
         /// <inheritdoc/>
@@ -180,26 +138,7 @@ namespace MK.IO.Operations
         /// <inheritdoc/>
         public async Task<PagedResult<JobSchema>> ListAsPageNextAsync(string? nextPageLink)
         {
-            var url = Client._baseUrl.Substring(0, Client._baseUrl.Length - 1) + nextPageLink;
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-
-            nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with job list deserialization");
-            }
-            else
-            {
-                return new PagedResult<JobSchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageNextGenericAsync<JobSchema>(nextPageLink, typeof(JobListResponseSchema), "job");
         }
 
         /// <inheritdoc/>

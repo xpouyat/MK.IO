@@ -68,7 +68,7 @@ namespace Sample
             // *****************
 
             // list assets
-            var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", null, null, null, 5);
+            var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", null, null, null, 10);
             while (true)
             {
                 foreach (var a in mkioAssetsResult.Results)

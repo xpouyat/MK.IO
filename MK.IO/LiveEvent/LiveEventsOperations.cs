@@ -72,28 +72,7 @@ namespace MK.IO.Operations
         public async Task<PagedResult<LiveEventSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_liveEventsApiUrl);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
-
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string? nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<LiveEventListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with live event deserialization");
-            }
-            else
-            {
-                return new PagedResult<LiveEventSchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageGenericAsync<LiveEventSchema>(url, typeof(LiveEventListResponseSchema), "live event", orderBy, filter, top);
         }
 
         /// <inheritdoc/>
