@@ -3,6 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
 #if NET462
 using System.Net.Http;
 #endif
@@ -41,19 +42,71 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<LiveEventSchema> List()
+        public List<LiveEventSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<LiveEventSchema>>(async () => await ListAsync());
+            var task = Task.Run<List<LiveEventSchema>>(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<LiveEventSchema>> ListAsync()
+        public async Task<List<LiveEventSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_liveEventsApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
             var objectToReturn = JsonConvert.DeserializeObject<LiveEventListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with live event list deserialization");
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<LiveEventSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            Task<PagedResult<LiveEventSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<LiveEventSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_liveEventsApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
+            string responseContent = await Client.GetObjectContentAsync(url);
+
+            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+            string? nextPageLink = responseObject["@odata.nextLink"];
+
+            var objectToReturn = JsonConvert.DeserializeObject<LiveEventListResponseSchema>(responseContent, ConverterLE.Settings);
+            if (objectToReturn == null)
+            {
+                throw new Exception($"Error with live event deserialization");
+            }
+            else
+            {
+                return new PagedResult<LiveEventSchema>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = objectToReturn.Value
+                };
+            }
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<LiveEventSchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<LiveEventSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<LiveEventSchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            return await Client.ListAsPageNextGenericAsync<LiveEventSchema>(nextPageLink, typeof(LiveEventListResponseSchema), "live event");
         }
 
         /// <inheritdoc/>

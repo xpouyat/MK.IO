@@ -10,14 +10,52 @@ namespace MK.IO.Operations
         /// <summary>
         /// Returns a complete list of all live events.
         /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        List<LiveEventSchema> List();
+        List<LiveEventSchema> List(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Returns a complete list of all live events.
         /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        Task<List<LiveEventSchema>> ListAsync();
+        Task<List<LiveEventSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Returns a complete list of all live events using pages.
+        /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <returns></returns>
+        PagedResult<LiveEventSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Returns a complete list of all live events using pages.
+        /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <returns></returns>
+        Task<PagedResult<LiveEventSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Returns a complete list of all live events using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        PagedResult<LiveEventSchema> ListAsPageNext(string? nextPageLink);
+
+        /// <summary>
+        /// Returns a complete list of all live events using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        Task<PagedResult<LiveEventSchema>> ListAsPageNextAsync(string? nextPageLink);
 
         /// <summary>
         /// Delete a live event.

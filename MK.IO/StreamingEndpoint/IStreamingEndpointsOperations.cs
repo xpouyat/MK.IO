@@ -10,14 +10,52 @@ namespace MK.IO.Operations
         /// <summary>
         /// Retrieves a list of Streaming Endpoints for the specified subscription.
         /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        List<StreamingEndpointSchema> List();
+        List<StreamingEndpointSchema> List(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Retrieves a list of Streaming Endpoints for the specified subscription.
         /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        Task<List<StreamingEndpointSchema>> ListAsync();
+        Task<List<StreamingEndpointSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of Streaming Endpoints for the specified subscription using pages.
+        /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <returns></returns>
+        PagedResult<StreamingEndpointSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of Streaming Endpoints for the specified subscription using pages.
+        /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <returns></returns>
+        Task<PagedResult<StreamingEndpointSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of Streaming Endpoints for the specified subscription using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        PagedResult<StreamingEndpointSchema> ListAsPageNext(string? nextPageLink);
+
+        /// <summary>
+        /// Retrieves a list of Streaming Endpoints for the specified subscription using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        Task<PagedResult<StreamingEndpointSchema>> ListAsPageNextAsync(string? nextPageLink);
 
         /// <summary>
         /// Delete a Streaming Endpoint. If the Streaming Endpoint does not exist, this API will return a 204.
