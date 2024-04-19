@@ -25,11 +25,11 @@ namespace MK.IO.Models
         public string AssetName { get; set; }
 
         /// <summary>
-        /// Defines a point on the timeline of the input media at which processing will end. Defaults to the end of the input media.
+        /// (NOT IMPLEMENTED) Defines a point on the timeline of the input media at which processing will end. Defaults to the end of the input media.
         /// </summary>
-        /// <value>Defines a point on the timeline of the input media at which processing will end. Defaults to the end of the input media.</value>
+        /// <value>(NOT IMPLEMENTED) Defines a point on the timeline of the input media at which processing will end. Defaults to the end of the input media.</value>
         [JsonProperty(PropertyName = "end")]
-        public JobInputTime? End { get; set; }
+        [Obsolete] public JobInputTime? End { get; set; }
 
         /// <summary>
         /// List of files. Required for JobInputAsset.
@@ -53,9 +53,10 @@ namespace MK.IO.Models
         public string Label { get; set; }
 
         /// <summary>
-        /// Defines a point on the timeline of the input media at which processing will start. Defaults to the beginning of the input media.
+        /// (NOT IMPLEMENTED) Defines a point on the timeline of the input media at which processing will start. Defaults to the beginning of the input media.
         /// </summary>
+        /// <value>(NOT IMPLEMENTED) Defines a point on the timeline of the input media at which processing will start. Defaults to the beginning of the input media.</value>
         [JsonProperty("start")]
-        public JobInputTime? Start { get; set; }
+        [Obsolete] public JobInputTime? Start { get; set; }
     }
 }

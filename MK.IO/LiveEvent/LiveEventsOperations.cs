@@ -105,6 +105,7 @@ namespace MK.IO.Operations
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live event deserialization");
         }
 
+        /*
 #if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         /// <inheritdoc/>
         public LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null)
@@ -124,6 +125,7 @@ namespace MK.IO.Operations
             return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.UpdateObjectPatchAsync);
         }
 #endif
+        */
 
         /// <inheritdoc/>
         public LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null)
@@ -195,6 +197,7 @@ namespace MK.IO.Operations
             await LiveEventOperationAsync(liveEventName, "stop", HttpMethod.Post);
         }
 
+        /*
         /// <inheritdoc/>
         public void Reset(string liveEventName)
         {
@@ -208,7 +211,7 @@ namespace MK.IO.Operations
 
             await LiveEventOperationAsync(liveEventName, "reset", HttpMethod.Post);
         }
-
+        
         /// <inheritdoc/>
         public void Allocate(string liveEventName)
         {
@@ -222,6 +225,7 @@ namespace MK.IO.Operations
 
             await LiveEventOperationAsync(liveEventName, "allocate", HttpMethod.Post);
         }
+        */
 
         private async Task LiveEventOperationAsync(string liveEventName, string? operation, HttpMethod httpMethod)
         {

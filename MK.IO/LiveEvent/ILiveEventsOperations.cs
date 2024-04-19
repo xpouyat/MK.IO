@@ -84,6 +84,7 @@ namespace MK.IO.Operations
         /// <returns></returns>
         Task<LiveEventSchema> GetAsync(string liveEventName);
 
+        /*
 #if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         /// <summary>
         /// NOT IMPLEMENTED. Update a live event
@@ -93,6 +94,7 @@ namespace MK.IO.Operations
         /// <param name="properties">The properties of the live event.</param>
         /// <param name="tags">A dictionary of tags associated with the live event. Maximum number of tags: 16. Maximum length of a tag: 256 characters.</param>
         /// <returns></returns>
+        [Obsolete]
         LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null);
 
         /// <summary>
@@ -103,8 +105,10 @@ namespace MK.IO.Operations
         /// <param name="properties">The properties of the live event.</param>
         /// <param name="tags">A dictionary of tags associated with the live event. Maximum number of tags: 16. Maximum length of a tag: 256 characters.</param>
         /// <returns></returns>
+        [Obsolete]
         Task<LiveEventSchema> UpdateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null);
 #endif
+        */
 
         /// <summary>
         /// Create a live event
@@ -126,6 +130,7 @@ namespace MK.IO.Operations
         /// <returns></returns>
         Task<LiveEventSchema> CreateAsync(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null);
 
+        /*
         /// <summary>
         /// NOT IMPLEMENTED. Allocates resources for a Live Event. A live event is in StandBy state after allocation completes, and is ready to start.
         /// </summary>
@@ -137,7 +142,7 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         Task AllocateAsync(string liveEventName);
-
+        
         /// <summary>
         /// NOT IMPLEMENTED. Resets a Live Event. All live outputs for the live event are deleted and the live event is stopped and will be started again.
         /// </summary>
@@ -150,6 +155,7 @@ namespace MK.IO.Operations
         /// <param name="liveEventName">The name of the live event.</param>
         /// <returns></returns>
         Task ResetAsync(string liveEventName);
+        */
 
         /// <summary>
         /// Start a Live Event. This operation transitions your Live Event into a running state
