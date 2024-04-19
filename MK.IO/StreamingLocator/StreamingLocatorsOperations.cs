@@ -108,28 +108,8 @@ namespace MK.IO.Operations
         /// <inheritdoc/>
         public async Task<PagedResult<StreamingLocatorSchema>> ListAsPageNextAsync(string? nextPageLink)
         {
-            var url = Client._baseUrl.Substring(0, Client._baseUrl.Length - 1) + nextPageLink;
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-
-            nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<StreamingLocatorListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with streaming locator list deserialization");
-            }
-            else
-            {
-                return new PagedResult<StreamingLocatorSchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageNextGenericAsync<StreamingLocatorSchema>(nextPageLink, typeof(StreamingLocatorListResponseSchema), "streaming locator");
         }
-
 
         /// <inheritdoc/>
         public StreamingLocatorSchema Get(string streamingLocatorName)

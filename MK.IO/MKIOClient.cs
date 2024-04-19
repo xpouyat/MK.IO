@@ -215,6 +215,31 @@ namespace MK.IO
             return responseContent;
         }
 
+        internal async Task<PagedResult<T>> ListAsPageNextGenericAsync<T>(string? nextPageLink, Type responseSchema, string entityName)
+        {
+            var url = _baseUrl.Substring(0, _baseUrl.Length - 1) + nextPageLink;
+            string responseContent = await GetObjectContentAsync(url);
+
+            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+
+            nextPageLink = responseObject["@odata.nextLink"];
+
+            var objectToReturn = JsonConvert.DeserializeObject(responseContent, responseSchema, ConverterLE.Settings);
+            if (objectToReturn == null)
+            {
+                throw new Exception($"Error with {entityName} list deserialization");
+            }
+            else
+            {
+                return new PagedResult<T>
+                {
+                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    Results = (objectToReturn).GetType().GetProperty("Value").GetValue(objectToReturn) as List<T>
+                };
+            }
+        }
+
+
         private static void AnalyzeResponseAndThrowIfNeeded(HttpResponseMessage amsRequestResult, string responseContent)
         {
             var status_ = (int)amsRequestResult.StatusCode;

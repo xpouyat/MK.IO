@@ -106,26 +106,7 @@ namespace MK.IO.Operations
         /// <inheritdoc/>
         public async Task<PagedResult<AssetSchema>> ListAsPageNextAsync(string? nextPageLink)
         {
-            var url = Client._baseUrl.Substring(0, Client._baseUrl.Length - 1) + nextPageLink;
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-
-            nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<AssetListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with asset list deserialization");
-            }
-            else
-            {
-                return new PagedResult<AssetSchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageNextGenericAsync<AssetSchema>(nextPageLink, typeof(AssetListResponseSchema), "asset");
         }
 
         /// <inheritdoc/>

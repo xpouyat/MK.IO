@@ -109,27 +109,9 @@ namespace MK.IO.Operations
         /// <inheritdoc/>
         public async Task<PagedResult<TransformSchema>> ListAsPageNextAsync(string? nextPageLink)
         {
-            var url = Client._baseUrl.Substring(0, Client._baseUrl.Length - 1) + nextPageLink;
-            string responseContent = await Client.GetObjectContentAsync(url);
-
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-
-            nextPageLink = responseObject["@odata.nextLink"];
-
-            var objectToReturn = JsonConvert.DeserializeObject<TransformListResponseSchema>(responseContent, ConverterLE.Settings);
-            if (objectToReturn == null)
-            {
-                throw new Exception($"Error with streaming policy list deserialization");
-            }
-            else
-            {
-                return new PagedResult<TransformSchema>
-                {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = objectToReturn.Value
-                };
-            }
+            return await Client.ListAsPageNextGenericAsync<TransformSchema> (nextPageLink, typeof(TransformListResponseSchema), "transform");
         }
+
 
         /// <inheritdoc/>
         public TransformSchema Get(string transformName)
