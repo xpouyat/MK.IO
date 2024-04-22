@@ -31,7 +31,7 @@ namespace MK.IO.Models
         /// <value>Optional designation for single channel audio tracks.</value>
         [DataMember(Name = "channelMapping", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "channelMapping")]
-        public string ChannelMapping { get; set; }
+        public AudioTrackChannelMappingType ChannelMapping { get; set; }
 
         /// <summary>
         /// Track indentifer to select

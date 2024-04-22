@@ -3,6 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
 
 #if NET462
 using System.Net.Http;
@@ -45,37 +46,99 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<JobSchema> ListAll()
+        public List<JobSchema> ListAll(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<JobSchema>>(async () => await ListAllAsync());
+            var task = Task.Run<List<JobSchema>>(async () => await ListAllAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<JobSchema>> ListAllAsync()
+        public async Task<List<JobSchema>> ListAllAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_allJobsApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
             var objectToReturn = JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with job list all deserialization");
         }
 
         /// <inheritdoc/>
-        public List<JobSchema> List(string transformName)
+        public PagedResult<JobSchema> ListAllAsPage(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<JobSchema>>(async () => await ListAsync(transformName));
+            Task<PagedResult<JobSchema>> task = Task.Run(async () => await ListAllAsPageAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<JobSchema>> ListAsync(string transformName)
+        public async Task<PagedResult<JobSchema>> ListAllAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_allJobsApiUrl);
+            return await Client.ListAsPageGenericAsync<JobSchema>(url, typeof(JobListResponseSchema), "all job", orderBy, filter, top);
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<JobSchema> ListAllAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<JobSchema>> task = Task.Run(async () => await ListAllAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<JobSchema>> ListAllAsPageNextAsync(string? nextPageLink)
+        {
+            return await Client.ListAsPageNextGenericAsync<JobSchema>(nextPageLink, typeof(JobListResponseSchema), "all job");
+        }
+
+        /// <inheritdoc/>
+        public List<JobSchema> List(string transformName, string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var task = Task.Run<List<JobSchema>>(async () => await ListAsync(transformName, orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<List<JobSchema>> ListAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             var url = Client.GenerateApiUrl(_jobsApiUrl, transformName);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
             var objectToReturn = JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with job list deserialization");
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<JobSchema> ListAsPage(string transformName, string? orderBy = null, string? filter = null, int? top = null)
+        {
+            Task<PagedResult<JobSchema>> task = Task.Run(async () => await ListAllAsPageAsync(orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<JobSchema>> ListAsPageAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_jobsApiUrl, transformName);
+            return await Client.ListAsPageGenericAsync<JobSchema>(url, typeof(JobListResponseSchema), "job", orderBy, filter, top);
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<JobSchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<JobSchema>> task = Task.Run(async () => await ListAllAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<JobSchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            return await Client.ListAsPageNextGenericAsync<JobSchema>(nextPageLink, typeof(JobListResponseSchema), "job");
         }
 
         /// <inheritdoc/>
@@ -112,6 +175,11 @@ namespace MK.IO.Operations
             Argument.AssertNotMoreThanLength(jobName, nameof(jobName), 63);
             Argument.AssertNotNull(properties, nameof(properties));
 
+            return await CreateOrUpdateAsync(transformName, jobName, properties, Client.CreateObjectPutAsync);
+        }
+
+        internal async Task<JobSchema> CreateOrUpdateAsync(string transformName, string jobName, JobProperties properties, Func<string, string, Task<string>> func)
+        {
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);
             // fix to make sure Odattype is set as we use the generated class
             foreach (var o in properties.Outputs)
@@ -120,9 +188,30 @@ namespace MK.IO.Operations
             }
             var content = new JobSchema { Properties = properties };
 
-            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson());
+            string responseContent = await func(url, content.ToJson());
             return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
         }
+
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
+        /// <inheritdoc/>
+        public JobSchema Update(string transformName, string jobName, JobProperties properties)
+        {
+            var task = Task.Run<JobSchema>(async () => await UpdateAsync(transformName, jobName, properties));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<JobSchema> UpdateAsync(string transformName, string jobName, JobProperties properties)
+        {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotContainsSpace(jobName, nameof(jobName));
+            Argument.AssertNotMoreThanLength(jobName, nameof(jobName), 63);
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            return await CreateOrUpdateAsync(transformName, jobName, properties, Client.UpdateObjectPatchAsync);
+        }
+#endif
 
         /// <inheritdoc/>
         public void Cancel(string transformName, string jobName)

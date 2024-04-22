@@ -3,6 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
 #if NET462
 using System.Net.Http;
 #endif
@@ -34,20 +35,51 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<AccountFilterSchema> List()
+        public List<AccountFilterSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            Task<List<AccountFilterSchema>> task = Task.Run(async () => await ListAsync());
+            Task<List<AccountFilterSchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<AccountFilterSchema>> ListAsync()
+        public async Task<List<AccountFilterSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_accountFiltersApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
 
             var objectToReturn = JsonConvert.DeserializeObject<AccountFilterListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with account filter deserialization");
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<AccountFilterSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            Task<PagedResult<AccountFilterSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<AccountFilterSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_accountFiltersApiUrl);
+            return await Client.ListAsPageGenericAsync<AccountFilterSchema>(url, typeof(AccountFilterListResponseSchema), "account filter", orderBy, filter, top);
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<AccountFilterSchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<AccountFilterSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<AccountFilterSchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            return await Client.ListAsPageNextGenericAsync<AccountFilterSchema>(nextPageLink, typeof(AccountFilterListResponseSchema), "account filter");
         }
 
         /// <inheritdoc/>

@@ -1,11 +1,11 @@
-# Sample for content key policy operations with MK/IO SDK
+# Sample for content key policy operations with MK.IO SDK
 
 ```csharp
 using MK.IO;
 using MK.IO.Models;
 
 // **********************
-// MK/IO Client creation
+// MK.IO Client creation
 // **********************
 
 var client = new MKIOClient("mkiosubscriptionname", "mkiotoken");

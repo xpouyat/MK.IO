@@ -3,6 +3,8 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
+
 #if NET462
 using System.Net.Http;
 #endif
@@ -42,19 +44,50 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<StreamingPolicySchema> List()
+        public List<StreamingPolicySchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run(async () => await ListAsync());
+            var task = Task.Run(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<StreamingPolicySchema>> ListAsync()
+        public async Task<List<StreamingPolicySchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_streamingPoliciesApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
             var objectToReturn = JsonConvert.DeserializeObject<StreamingPolicyListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with streaming policy list deserialization");
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<StreamingPolicySchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            Task<PagedResult<StreamingPolicySchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<StreamingPolicySchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_streamingPoliciesApiUrl);
+            return await Client.ListAsPageGenericAsync<StreamingPolicySchema>(url, typeof(StreamingPolicyListResponseSchema), "streaming policy", orderBy, filter, top);
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<StreamingPolicySchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<StreamingPolicySchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<StreamingPolicySchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            return await Client.ListAsPageNextGenericAsync<StreamingPolicySchema>(nextPageLink, typeof(StreamingPolicyListResponseSchema), "streaming policy");
         }
 
         /// <inheritdoc/>

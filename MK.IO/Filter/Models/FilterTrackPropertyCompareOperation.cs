@@ -1,19 +1,25 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
+
 namespace MK.IO.Models
 {
-    /// <summary> The built-in properties to be used with asset and account filter. </summary>
-    public readonly partial struct FilterTrackPropertyCompareOperation
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum FilterTrackPropertyCompareOperation
     {
-        //
-        // Summary:
-        //     The equal operation.
-        public static readonly string Equal = "Equal";
+        /// <summary>
+        /// Enum FilterTrackOperationType for value: Equal
+        /// </summary>
+        [EnumMember(Value = "Equal")]
+        Equal,
 
-        //
-        // Summary:
-        //     The not equal operation.
-        public static readonly string NotEqual = "NotEqual";
+        /// <summary>
+        /// Enum FilterTrackOperationType for value: NotEqual
+        /// </summary>
+        [EnumMember(Value = "NotEqual")]
+        NotEqual
     }
 }

@@ -3,6 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
 #if NET462
 using System.Net.Http;
 #endif
@@ -41,19 +42,50 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<LiveEventSchema> List()
+        public List<LiveEventSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<LiveEventSchema>>(async () => await ListAsync());
+            var task = Task.Run<List<LiveEventSchema>>(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<LiveEventSchema>> ListAsync()
+        public async Task<List<LiveEventSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_liveEventsApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
             var objectToReturn = JsonConvert.DeserializeObject<LiveEventListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with live event list deserialization");
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<LiveEventSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            Task<PagedResult<LiveEventSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<LiveEventSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_liveEventsApiUrl);
+            return await Client.ListAsPageGenericAsync<LiveEventSchema>(url, typeof(LiveEventListResponseSchema), "live event", orderBy, filter, top);
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<LiveEventSchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<LiveEventSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<LiveEventSchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            return await Client.ListAsPageNextGenericAsync<LiveEventSchema>(nextPageLink, typeof(LiveEventListResponseSchema), "live event");
         }
 
         /// <inheritdoc/>
@@ -73,6 +105,7 @@ namespace MK.IO.Operations
             return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live event deserialization");
         }
 
+        /*
 #if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         /// <inheritdoc/>
         public LiveEventSchema Update(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null)
@@ -92,6 +125,7 @@ namespace MK.IO.Operations
             return await CreateOrUpdateAsync(liveEventName, location, properties, tags, Client.UpdateObjectPatchAsync);
         }
 #endif
+        */
 
         /// <inheritdoc/>
         public LiveEventSchema Create(string liveEventName, string location, LiveEventProperties properties, Dictionary<string, string>? tags = null)
@@ -163,6 +197,7 @@ namespace MK.IO.Operations
             await LiveEventOperationAsync(liveEventName, "stop", HttpMethod.Post);
         }
 
+        /*
         /// <inheritdoc/>
         public void Reset(string liveEventName)
         {
@@ -176,7 +211,7 @@ namespace MK.IO.Operations
 
             await LiveEventOperationAsync(liveEventName, "reset", HttpMethod.Post);
         }
-
+        
         /// <inheritdoc/>
         public void Allocate(string liveEventName)
         {
@@ -190,6 +225,7 @@ namespace MK.IO.Operations
 
             await LiveEventOperationAsync(liveEventName, "allocate", HttpMethod.Post);
         }
+        */
 
         private async Task LiveEventOperationAsync(string liveEventName, string? operation, HttpMethod httpMethod)
         {

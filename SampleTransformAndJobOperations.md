@@ -1,11 +1,11 @@
-# Sample for transform and job operations with MK/IO SDK
+# Sample for transform and job operations with MK.IO SDK
 
 ```csharp
 using MK.IO;
 using MK.IO.Models;
 
 // **********************
-// MK/IO Client creation
+// MK.IO Client creation
 // **********************
 
 var client = new MKIOClient("mkiosubscriptionname", "mkiotoken");
@@ -43,7 +43,7 @@ var outputAsset = client.Assets.CreateOrUpdate(outputAssetName, outputAssetName,
 var newJob = client.Jobs.Create(transform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
     {
         Description = $"My Job using an asset source with transform {transform.Name}",
-        Priority = "Normal",
+        Priority = JobPriorityType.Normal,
         Input = new JobInputAsset(
             "copy-ef2058b692-copy",
             new List<string> {

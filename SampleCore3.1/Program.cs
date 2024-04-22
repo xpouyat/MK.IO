@@ -17,10 +17,10 @@ namespace SampleCore
              .AddJsonFile("appsettings.json")
              .Build();
 
-            Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK/IO subscription.");
+            Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK.IO subscription.");
 
             // **********************
-            // MK/IO Client creation
+            // MK.IO Client creation
             // **********************
 
             var client = new MKIOClient(config["MKIOSubscriptionName"], config["MKIOToken"]);
@@ -46,7 +46,7 @@ namespace SampleCore
             var locs = client.Account.ListAllLocations();
 
             var currentLocation = locs.Where(l => l.Metadata.Id == sub.Spec.LocationId).FirstOrDefault();
-            Console.WriteLine($"Connected to '{sub.Spec.Name}' MK/IO instance in region '{currentLocation.Metadata.Name}'.");
+            Console.WriteLine($"Connected to '{sub.Spec.Name}' MK.IO instance in region '{currentLocation.Metadata.Name}'.");
 
             // pause the command line
             Console.ReadLine();

@@ -73,7 +73,7 @@ namespace MK.IO.Models
         /// <value>Priority with which the job should be processed. Higher priority jobs are processed before lower priority jobs. If not set, the default is normal.</value>
         [DataMember(Name = "priority", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "priority")]
-        public string Priority { get; set; }
+        public JobPriorityType Priority { get; set; } = JobPriorityType.Normal;
 
         /// <summary>
         /// The UTC date and time at which this Job started processing

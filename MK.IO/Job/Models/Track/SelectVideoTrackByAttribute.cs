@@ -13,7 +13,7 @@ namespace MK.IO.Models
     [DataContract]
     public class SelectVideoTrackByAttribute : TrackDiscriminator
     {
-        public SelectVideoTrackByAttribute(string attribute, string filter, string filterValue)
+        public SelectVideoTrackByAttribute(TrackAttributeType attribute, TrackFilterType filter, string filterValue)
         {
             Attribute = attribute;
             Filter = filter;
@@ -33,7 +33,7 @@ namespace MK.IO.Models
         /// <value>The TrackAttribute to filter the tracks by.</value>
         [DataMember(Name = "attribute", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "attribute")]
-        public string Attribute { get; set; }
+        public TrackAttributeType Attribute { get; set; }
 
         /// <summary>
         /// The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks.
@@ -41,7 +41,7 @@ namespace MK.IO.Models
         /// <value>The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks.</value>
         [DataMember(Name = "filter", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "filter")]
-        public string Filter { get; set; }
+        public TrackFilterType Filter { get; set; }
 
         /// <summary>
         /// The value to filter the tracks by.

@@ -3,6 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
 #if NET462
 using System.Net.Http;
 #endif
@@ -42,19 +43,50 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<StreamingEndpointSchema> List()
+        public List<StreamingEndpointSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<StreamingEndpointSchema>>(async () => await ListAsync());
+            var task = Task.Run<List<StreamingEndpointSchema>>(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<StreamingEndpointSchema>> ListAsync()
+        public async Task<List<StreamingEndpointSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_streamingEndpointsApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
             var objectToReturn = JsonConvert.DeserializeObject<StreamingEndpointListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with streaming endpoint list deserialization");
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<StreamingEndpointSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            Task<PagedResult<StreamingEndpointSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<StreamingEndpointSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_streamingEndpointsApiUrl);
+            return await Client.ListAsPageGenericAsync<StreamingEndpointSchema>(url, typeof(StreamingEndpointListResponseSchema), "streaming endpoint", orderBy, filter, top);
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<StreamingEndpointSchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<StreamingEndpointSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<StreamingEndpointSchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            return await Client.ListAsPageNextGenericAsync<StreamingEndpointSchema>(nextPageLink, typeof(StreamingEndpointListResponseSchema), "streaming endpoint");
         }
 
         /// <inheritdoc/>
@@ -117,7 +149,12 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_streamingEndpointApiUrl + "?autoStart=" + autoStart.ToString(), streamingEndpointName);
             tags ??= new Dictionary<string, string>();
-            var content = new StreamingEndpointSchema { Location = location, Properties = properties, Tags = tags };
+            var content = new StreamingEndpointSchema
+            {
+                Location = location,
+                Properties = properties,
+                Tags = tags
+            };
             string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
             return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
         }

@@ -20,7 +20,7 @@ namespace Sample
 
         static async Task MainAsync()
         {
-            Console.WriteLine("Sample that operates MK/IO.");
+            Console.WriteLine("Sample that operates MK.IO.");
 
             /* you need to add an appsettings.json file with the following content:
              {
@@ -35,10 +35,10 @@ namespace Sample
                 .AddEnvironmentVariables()
                 .Build();
 
-            Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK/IO subscription.");
+            Console.WriteLine($"Using '{config["MKIOSubscriptionName"]}' MK.IO subscription.");
 
             // **********************
-            // MK/IO Client creation
+            // MK.IO Client creation
             // **********************
 
             var client = new MKIOClient(config["MKIOSubscriptionName"]!, config["MKIOToken"]!);
@@ -63,6 +63,129 @@ namespace Sample
             var sub = await client.Account.GetSubscriptionAsync();
             var locs = await client.Account.ListAllLocationsAsync();
 
+            // *****************
+            // asset operations
+            // *****************
+
+            // list assets
+            var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", null, null, null, 10);
+            while (true)
+            {
+                foreach (var a in mkioAssetsResult.Results)
+                {
+                    Console.WriteLine(a.Name);
+                }
+                if (mkioAssetsResult.NextPageLink == null) break;
+
+                mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
+            }
+
+            // list encoded assets (using labels)
+            var encodedAssets = client.Assets.List(label: new List<string> { "typeAsset=encoded" });
+
+            var specc = client.Assets.ListTracksAndDirListing("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
+
+            // get streaming locators for asset
+            try
+            {
+                var locatorsAsset = client.Assets.ListStreamingLocators("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+
+            // get asset
+            var mkasset = client.Assets.Get("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
+
+            // create asset
+            /*
+            var newasset = client.Assets.CreateOrUpdate(
+                "uploaded-5143a7c39a-copy-7947d5ccac",
+                "asset-d56fa44c-c5d5-47db-aa4b-16686ffa3d3b",
+                "amsxpfrstorage",
+                "description of asset copy",
+                AssetContainerDeletionPolicyType.Retain,
+                null,
+                new Dictionary<string, string>() { { "typeAsset", "source" } }
+                );
+            */
+
+            // delete asset
+            // client.Assets.Delete("asset-33adc1873f");
+
+            // *****************************
+            // Streaming locator operations
+            // *****************************
+
+
+            // standard list
+            var mkioLocators = await client.StreamingLocators.ListAsync();
+            var locator = mkioLocators.Where(l => l.Properties.StreamingLocatorId == new Guid("{e879fe57-6354-46fc-b817-11a16ffd1672}")).FirstOrDefault();
+            if (locator != null)
+            {
+                // locator was found
+            }
+
+            // list using pages of 10
+            var mkioSLocsResult = client.StreamingLocators.ListAsPage("properties/created desc", null, 10);
+            while (true)
+            {
+                foreach (var a in mkioSLocsResult.Results)
+                {
+                    Console.WriteLine(a.Name);
+                }
+                if (mkioSLocsResult.NextPageLink == null) break;
+
+                mkioSLocsResult = client.StreamingLocators.ListAsPageNext(mkioSLocsResult.NextPageLink);
+            }
+
+            // standard list
+            var mklocators = client.StreamingLocators.List();
+
+            // listing using a filter and sorting
+            var mklocatorsf = client.StreamingLocators.List("properties/created desc", "name eq 'clear'");
+
+            //var mklocator1 = client.StreamingLocators.Get("locator-25452");
+
+            var mklocator2 = client.StreamingLocators.Create(
+               MKIOClient.GenerateUniqueName("locator"),
+               new StreamingLocatorProperties
+               {
+                   AssetName = "ignite-truncated-out123-encodedmkio",
+                   StreamingPolicyName = PredefinedStreamingPolicy.ClearStreamingOnly
+               });
+
+            var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
+
+            // client.StreamingLocators.Delete("locator-25452");
+
+            // ****************************
+            // Streaming policy operations
+            // ****************************
+
+            // list using pages of 10
+            var mkioSPolsResult = client.StreamingPolicies.ListAsPage("properties/created desc", null, 2);
+            while (true)
+            {
+                foreach (var a in mkioSPolsResult.Results)
+                {
+                    Console.WriteLine(a.Name);
+                }
+                if (mkioSPolsResult.NextPageLink == null) break;
+
+                mkioSPolsResult = client.StreamingPolicies.ListAsPageNext(mkioSPolsResult.NextPageLink);
+            }
+            // standard list
+            var mkstreampol = client.StreamingPolicies.List();
+
+            // listing using a filter and sorting
+            var mkstreampolf = client.StreamingPolicies.List("properties/created desc", "name eq 'Predefined_ClearKey'");
+
+            //var mklocator1 = client.StreamingPolicies.Get("locator-25452");
+
+
             // ******************************
             // content key policy operations
             // ******************************
@@ -76,7 +199,6 @@ namespace Sample
             {
 
             }
-
 
 
             try
@@ -110,8 +232,6 @@ namespace Sample
                 );
 
             var ckpolprop = await client.ContentKeyPolicies.GetPolicyPropertiesWithSecretsAsync("testpolcreate");
-
-
 
 
             // *******************
@@ -163,57 +283,7 @@ namespace Sample
             // Delete
             // client.StorageAccounts.Delete(storages.First().Metadata.Id);
 
-            // *****************
-            // asset operations
-            // *****************
-
-            // list assets
-            var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", 10);
-            while (true)
-            {
-                foreach (var a in mkioAssetsResult.Results)
-                {
-                    Console.WriteLine(a.Name);
-                }
-                if (mkioAssetsResult.NextPageLink == null) break;
-
-                mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
-            }
-
-            // list encoded assets (using labels)
-            var encodedAssets = client.Assets.List(label: new List<string> { "typeAsset=encoded" });
-
-            var specc = client.Assets.ListTracksAndDirListing("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
-
-            // get streaming locators for asset
-            try
-            {
-                var locatorsAsset = client.Assets.ListStreamingLocators("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-
-            // get asset
-            var mkasset = client.Assets.Get("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
-
-            // create asset
-            /*
-            var newasset = client.Assets.CreateOrUpdate(
-                "uploaded-5143a7c39a-copy-7947d5ccac",
-                "asset-d56fa44c-c5d5-47db-aa4b-16686ffa3d3b",
-                "amsxpfrstorage",
-                "description of asset copy",
-                AssetContainerDeletionPolicyType.Retain,
-                null,
-                new Dictionary<string, string>() { { "typeAsset", "source" } }
-                );
-            */
-
-            // delete asset
-            // client.Assets.Delete("asset-33adc1873f");
+      
 
 
             // ************************
@@ -243,7 +313,7 @@ namespace Sample
                             new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Video
+                                Value = FilterTrackPropertyTypeValue.Video
                             },
                             new() {
                                 Property = FilterTrackPropertyType.Bitrate,
@@ -258,7 +328,7 @@ namespace Sample
                             new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Audio
+                                Value = FilterTrackPropertyTypeValue.Audio
                             },
                             new() {
                                 Property = FilterTrackPropertyType.FourCC,
@@ -296,7 +366,7 @@ namespace Sample
                             new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Video
+                                Value = FilterTrackPropertyTypeValue.Video
                             },
                             new() {
                                 Property = FilterTrackPropertyType.Bitrate,
@@ -311,12 +381,12 @@ namespace Sample
                             new() {
                                 Property = FilterTrackPropertyType.Type,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = FilterPropertyTypeValue.Audio
+                                Value = FilterTrackPropertyTypeValue.Audio
                             },
                             new() {
                                 Property = FilterTrackPropertyType.FourCC,
                                 Operation = FilterTrackPropertyCompareOperation.Equal,
-                                Value = "mp4a"
+                                Value = FilterTrackPropertyFourCCValue.mp4a
                             }
                         }
                     }
@@ -329,7 +399,6 @@ namespace Sample
             // *********************
             // transform operations
             // *********************
-
 
             var tranform = client.Transforms.CreateOrUpdate("CVQ720pTransform", new TransformProperties
             {
@@ -386,7 +455,7 @@ namespace Sample
             var jobHttp = client.Jobs.Create(tranform.Name, MKIOClient.GenerateUniqueName("job"), new JobProperties
             {
                 Description = "My CVQ encoding job",
-                Priority = "Normal",
+                Priority = JobPriorityType.Normal,
                 Input = new JobInputHttp(
                     null,
                     new List<string> {
@@ -461,10 +530,6 @@ namespace Sample
             }
 
 
-
-
-
-
             // ******************************
             // Streaming endpoint operations
             // ******************************
@@ -476,7 +541,7 @@ namespace Sample
             var mkses = client.StreamingEndpoints.List();
 
             // create streaming endpoint
-
+            
             /*
             var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {
@@ -485,8 +550,7 @@ namespace Sample
                 CdnEnabled = false,
                 Sku = new StreamingEndpointsCurrentSku
                 {
-                    Name = "Standard",
-                    Capacity = 600
+                    Name = StreamingEndpointSkuType.Standard
                 }
             });
             */
@@ -496,26 +560,6 @@ namespace Sample
             //client.StreamingEndpoints.Stop("streamingendpoint1");
             //client.StreamingEndpoints.Delete("streamingendpoint2");
 
-
-            // ******************************
-            // Streaming locator operations
-            // ******************************
-
-            var mklocators = client.StreamingLocators.List();
-
-            //var mklocator1 = client.StreamingLocators.Get("locator-25452");
-
-            var mklocator2 = client.StreamingLocators.Create(
-               MKIOClient.GenerateUniqueName("locator"),
-               new StreamingLocatorProperties
-               {
-                   AssetName = "copy-ef2058b692-copy",
-                   StreamingPolicyName = PredefinedStreamingPolicy.ClearStreamingOnly
-               });
-
-            var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);
-
-            // client.StreamingLocators.Delete("locator-25452");
 
         }
 

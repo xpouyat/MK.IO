@@ -17,7 +17,7 @@ namespace MK.IO.Models
         /// <value>This is the bandwidth capacity of current streaming unit configuration. Readonly field.</value>
         [DataMember(Name = "capacity", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "capacity")]
-        public int? Capacity { get; set; }
+        public int? Capacity { get; private set; } = 600;
 
         /// <summary>
         /// The name of the SKU. Will default to 'Standard' if the sku configuration is not provided.
@@ -25,7 +25,7 @@ namespace MK.IO.Models
         /// <value>The name of the SKU. Will default to 'Standard' if the sku configuration is not provided.</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public StreamingEndpointSkuType Name { get; set; } = StreamingEndpointSkuType.Standard;
 
 
         /// <summary>

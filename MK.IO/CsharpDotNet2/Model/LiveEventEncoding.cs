@@ -41,7 +41,7 @@ namespace MK.IO.Models
         /// <value>Determines how aspect ratio will be preserved when there is a mismatch between the input and output aspect ratios. Autofit to pad the output. Autosize to ignore the output ratio and pick the largest dimension that fits, and None to clip the content.</value>
         [DataMember(Name = "stretchMode", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "stretchMode")]
-        public string StretchMode { get; set; }
+        public LiveStretchModeType StretchMode { get; set; } = LiveStretchModeType.AutoSize;
 
 
         /// <summary>

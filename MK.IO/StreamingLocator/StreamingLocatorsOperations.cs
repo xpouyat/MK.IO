@@ -3,6 +3,8 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Net;
+
 #if NET462
 using System.Net.Http;
 #endif
@@ -43,19 +45,49 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<StreamingLocatorSchema> List()
+        public List<StreamingLocatorSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run(async () => await ListAsync());
+            var task = Task.Run(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<StreamingLocatorSchema>> ListAsync()
+        public async Task<List<StreamingLocatorSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_streamingLocatorsApiUrl);
+            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
+            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
+            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+
             string responseContent = await Client.GetObjectContentAsync(url);
             var objectToReturn = JsonConvert.DeserializeObject<StreamingLocatorListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with streaming locator list deserialization");
+        }
+
+        public PagedResult<StreamingLocatorSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            Task<PagedResult<StreamingLocatorSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, top));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<StreamingLocatorSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        {
+            var url = Client.GenerateApiUrl(_streamingLocatorsApiUrl);
+            return await Client.ListAsPageGenericAsync<StreamingLocatorSchema>(url, typeof(StreamingLocatorListResponseSchema), "streaming locator", orderBy, filter, top);
+        }
+
+        /// <inheritdoc/>
+        public PagedResult<StreamingLocatorSchema> ListAsPageNext(string? nextPageLink)
+        {
+            Task<PagedResult<StreamingLocatorSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
+            return task.GetAwaiter().GetResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<PagedResult<StreamingLocatorSchema>> ListAsPageNextAsync(string? nextPageLink)
+        {
+            return await Client.ListAsPageNextGenericAsync<StreamingLocatorSchema>(nextPageLink, typeof(StreamingLocatorListResponseSchema), "streaming locator");
         }
 
         /// <inheritdoc/>

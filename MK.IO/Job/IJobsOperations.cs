@@ -10,28 +10,106 @@ namespace MK.IO.Operations
         /// <summary>
         /// Retrieves a list of all Jobs in a subscription.
         /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        List<JobSchema> ListAll();
+        List<JobSchema> ListAll(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Retrieves a list of all Jobs in a subscription.
         /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        Task<List<JobSchema>> ListAllAsync();
+        Task<List<JobSchema>> ListAllAsync(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of all Jobs in a subscription using pages.
+        /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <returns></returns>
+        PagedResult<JobSchema> ListAllAsPage(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of all Jobs in a subscription using pages.
+        /// </summary>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <returns></returns>
+        Task<PagedResult<JobSchema>> ListAllAsPageAsync(string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of all Jobs in a subscription using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        PagedResult<JobSchema> ListAllAsPageNext(string? nextPageLink);
+
+        /// <summary>
+        /// Retrieves a list of all Jobs in a subscription using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        Task<PagedResult<JobSchema>> ListAllAsPageNextAsync(string? nextPageLink);
 
         /// <summary>
         /// Retrieves a list of Jobs for a Transform.
         /// </summary>
         /// <param name="transformName"></param>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        List<JobSchema> List(string transformName);
+        List<JobSchema> List(string transformName, string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Retrieves a list of Jobs for a Transform.
         /// </summary>
         /// <param name="transformName"></param>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        Task<List<JobSchema>> ListAsync(string transformName);
+        Task<List<JobSchema>> ListAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of Jobs for a Transform using pages.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <returns></returns>
+        PagedResult<JobSchema> ListAsPage(string transformName, string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of Jobs for a Transform using pages.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <param name="orderBy">Specifies the key by which the result collection should be ordered.</param>
+        /// <param name="filter">Restricts the set of items returned.</param>
+        /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
+        /// <returns></returns>
+        Task<PagedResult<JobSchema>> ListAsPageAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null);
+
+        /// <summary>
+        /// Retrieves a list of Jobs for a Transform using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        PagedResult<JobSchema> ListAsPageNext(string? nextPageLink);
+
+        /// <summary>
+        /// Retrieves a list of Jobs for a Transform using pages.
+        /// </summary>
+        /// <param name="nextPageLink">Next page link.</param>
+        /// <returns></returns>
+        Task<PagedResult<JobSchema>> ListAsPageNextAsync(string? nextPageLink);
 
         /// <summary>
         /// Delete a Job.
@@ -82,6 +160,28 @@ namespace MK.IO.Operations
         /// <returns></returns>
         Task<JobSchema> CreateAsync(string transformName, string jobName, JobProperties properties);
 
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
+        /// <summary>
+        /// Update an existing Job.
+        /// Update is only supported for description and priority.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <param name="jobName"></param>
+        /// <param name="properties"></param>
+        /// <returns></returns>
+        JobSchema Update(string transformName, string jobName, JobProperties properties);
+
+        /// <summary>
+        /// Update an existing Job.
+        /// Update is only supported for description and priority.
+        /// </summary>
+        /// <param name="transformName"></param>
+        /// <param name="jobName"></param>
+        /// <param name="properties"></param>
+        /// <returns></returns>
+        Task<JobSchema> UpdateAsync(string transformName, string jobName, JobProperties properties);
+#endif
+
         /// <summary>
         /// Cancel an already running Job.
         /// </summary>
@@ -97,6 +197,5 @@ namespace MK.IO.Operations
         /// <returns></returns>
         Task CancelAsync(string transformName, string jobName);
 
-        // TODO : implement update the job
     }
 }

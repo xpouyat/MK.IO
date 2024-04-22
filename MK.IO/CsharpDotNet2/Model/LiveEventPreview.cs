@@ -24,7 +24,7 @@ namespace MK.IO.Models
         /// <value>Not currently supported. Will be used to support DRM license aquisition for preview content.</value>
         [DataMember(Name = "alternativeMediaId", EmitDefaultValue = false)]
         [JsonProperty(PropertyName = "alternativeMediaId")]
-        public string AlternativeMediaId { get; set; }
+        [Obsolete] public string AlternativeMediaId { get; set; }
 
         /// <summary>
         /// Populated server-side. The endpoints that are used for previewing the live event.
