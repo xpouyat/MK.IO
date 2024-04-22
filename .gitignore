@@ -361,6 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/SampleNet7.0/appsettings.json
+
+# Appsettings files
 /SampleNetFramework4.8/appsettings.json
 /SampleCore3.1/appsettings.json
+/SampleNet8.0/appsettings.json
