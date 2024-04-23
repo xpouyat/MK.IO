@@ -5,6 +5,8 @@ using MK.IO.Operations;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Threading;
+
 #if NET462
 using System.Net.Http;
 #endif
@@ -137,9 +139,9 @@ namespace MK.IO
             return _baseUrl + string.Format(urlPath, _subscriptionName);
         }
 
-        internal async Task<string> GetObjectContentAsync(string url)
+        internal async Task<string> GetObjectContentAsync(string url, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await ObjectContentAsync(url, HttpMethod.Get);
+            return await ObjectContentAsync(url, HttpMethod.Get, cancellationToken);
         }
 
         internal async Task<string> GetObjectPostContentAsync(string url)
@@ -147,7 +149,7 @@ namespace MK.IO
             return await ObjectContentAsync(url, HttpMethod.Post);
         }
 
-        internal async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod)
+        internal async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod, CancellationToken cancellationToken = default(CancellationToken))
         {
             using HttpRequestMessage request = new()
             {
@@ -156,7 +158,7 @@ namespace MK.IO
             };
             request.Headers.Add("x-mkio-token", _apiToken);
 
-            using HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead).ConfigureAwait(false);
+            using HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
             string responseContent = await amsRequestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             AnalyzeResponseAndThrowIfNeeded(amsRequestResult, responseContent);
@@ -215,13 +217,13 @@ namespace MK.IO
             return responseContent;
         }
 
-        internal async Task<PagedResult<T>> ListAsPageGenericAsync<T>(string url, Type responseSchema, string entityName, string? orderBy = null, string? filter = null, int? top = null)
+        internal async Task<PagedResult<T>> ListAsPageGenericAsync<T>(string url, Type responseSchema, string entityName, string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
             url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
             url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
 
-            string responseContent = await GetObjectContentAsync(url);
+            string responseContent = await GetObjectContentAsync(url, cancellationToken);
 
             dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
             string? nextPageLink = responseObject["@odata.nextLink"];
@@ -241,10 +243,10 @@ namespace MK.IO
             }
         }
 
-        internal async Task<PagedResult<T>> ListAsPageNextGenericAsync<T>(string? nextPageLink, Type responseSchema, string entityName)
+        internal async Task<PagedResult<T>> ListAsPageNextGenericAsync<T>(string? nextPageLink, Type responseSchema, string entityName, CancellationToken cancellationToken = default)
         {
             var url = _baseUrl.Substring(0, _baseUrl.Length - 1) + nextPageLink;
-            string responseContent = await GetObjectContentAsync(url);
+            string responseContent = await GetObjectContentAsync(url, cancellationToken);
 
             dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
 

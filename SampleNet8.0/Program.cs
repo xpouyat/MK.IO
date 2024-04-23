@@ -68,6 +68,9 @@ namespace Sample
             // *****************
 
             // list assets
+
+            var mkioAssetsResult2 = client.Assets.List("properties/created desc", null, null, null);
+
             var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", null, null, null, 10);
             while (true)
             {
@@ -76,7 +79,6 @@ namespace Sample
                     Console.WriteLine(a.Name);
                 }
                 if (mkioAssetsResult.NextPageLink == null) break;
-
                 mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
             }
 
@@ -407,7 +409,7 @@ namespace Sample
                 {
                     new() {
                         Preset = new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264MultipleBitrate720pWithCVQ),
-                        RelativePriority = "Normal"
+                        RelativePriority = TransformOutputPriorityType.Normal
                     }
                 }
             });

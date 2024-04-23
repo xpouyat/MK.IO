@@ -65,10 +65,11 @@ var stats = client.Account.GetSubscriptionStats();
 var mkioAssets = client.Assets.List();
 
 // list assets with pages, 10 assets per page, sorted by creation date
-var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", null, 10);
+var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", null, null, null, 10);
 while (true)
 {
     // do stuff here using mkioAssetsResult.Results
+
     if (mkioAssetsResult.NextPageLink == null) break;
     mkioAssetsResult = client.Assets.ListAsPageNext(mkioAssetsResult.NextPageLink);
 }
@@ -150,13 +151,15 @@ Async operations are also supported. For example :
 // asset operations
 // *****************
 
-// Retrieve assets with pages for better performances
-var mkioAssetsResult = await client.Assets.ListAsPageAsync("name desc", 10);
-        do
-        {
-            mkioAssetsResult = await client.Assets.ListAsPageNextAsync(mkioAssetsResult.NextPageLink);
-            // do stuff
-        } while (mkioAssetsResult.NextPageLink != null);
+// Retrieve assets with pages for better performances, sorted by names, with a batch of 10 assets in each page
+var mkioAssetsResult = await client.Assets.ListAsPageAsync("name desc", null, null, null, 10);
+while (true)
+{
+    // do stuff here using mkioAssetsResult.Results
+
+    if (mkioAssetsResult.NextPageLink == null) break;
+    mkioAssetsResult = await client.Assets.ListAsPageNextAsync(mkioAssetsResult.NextPageLink);
+}
 
 
 // ******************************
