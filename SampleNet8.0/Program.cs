@@ -69,7 +69,8 @@ namespace Sample
 
             // list assets
 
-            var mkioAssetsResult2 = client.Assets.List("properties/created desc", null, null, null);
+
+            var mkioAssetsResult2 = client.Assets.List(null, "name gt 'ignite-t'", null, null);
 
             var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", null, null, null, 10);
             while (true)

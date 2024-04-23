@@ -53,16 +53,24 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<JobSchema>> ListAllAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<JobSchema>> ListAllAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            var url = Client.GenerateApiUrl(_allJobsApiUrl);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+            List<JobSchema> objectsSchema = [];
+            var objectsResult = await ListAllAsPageAsync(orderBy, filter, top, cancellationToken);
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                objectsSchema.AddRange(objectsResult.Results);
+                if (objectsResult.NextPageLink == null || (top != null && objectsSchema.Count >= top)) break;
+                objectsResult = await ListAllAsPageNextAsync(objectsResult.NextPageLink, cancellationToken);
+            }
 
-            string responseContent = await Client.GetObjectContentAsync(url);
-            var objectToReturn = JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings);
-            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with job list all deserialization");
+            if (top != null && top < objectsSchema.Count)
+            {
+                return objectsSchema.Take((int)top);
+            }
+
+            return objectsSchema;
         }
 
         /// <inheritdoc/>
@@ -73,10 +81,10 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<JobSchema>> ListAllAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<PagedResult<JobSchema>> ListAllAsPageAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             var url = Client.GenerateApiUrl(_allJobsApiUrl);
-            return await Client.ListAsPageGenericAsync<JobSchema>(url, typeof(JobListResponseSchema), "all job", orderBy, filter, top);
+            return await Client.ListAsPageGenericAsync<JobSchema>(url, typeof(JobListResponseSchema), "all job", cancellationToken, orderBy, filter, top);
         }
 
         /// <inheritdoc/>
@@ -87,9 +95,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<JobSchema>> ListAllAsPageNextAsync(string? nextPageLink)
+        public async Task<PagedResult<JobSchema>> ListAllAsPageNextAsync(string? nextPageLink, CancellationToken cancellationToken = default)
         {
-            return await Client.ListAsPageNextGenericAsync<JobSchema>(nextPageLink, typeof(JobListResponseSchema), "all job");
+            return await Client.ListAsPageNextGenericAsync<JobSchema>(nextPageLink, typeof(JobListResponseSchema), "all job", cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -100,18 +108,24 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<JobSchema>> ListAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<JobSchema>> ListAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            List<JobSchema> objectsSchema = [];
+            var objectsResult = await ListAsPageAsync(transformName, orderBy, filter, top, cancellationToken);
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                objectsSchema.AddRange(objectsResult.Results);
+                if (objectsResult.NextPageLink == null || (top != null && objectsSchema.Count >= top)) break;
+                objectsResult = await ListAsPageNextAsync(objectsResult.NextPageLink, cancellationToken);
+            }
 
-            var url = Client.GenerateApiUrl(_jobsApiUrl, transformName);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+            if (top != null && top < objectsSchema.Count)
+            {
+                return objectsSchema.Take((int)top);
+            }
 
-            string responseContent = await Client.GetObjectContentAsync(url);
-            var objectToReturn = JsonConvert.DeserializeObject<JobListResponseSchema>(responseContent, ConverterLE.Settings);
-            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with job list deserialization");
+            return objectsSchema;
         }
 
         /// <inheritdoc/>
@@ -122,10 +136,10 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<JobSchema>> ListAsPageAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<PagedResult<JobSchema>> ListAsPageAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             var url = Client.GenerateApiUrl(_jobsApiUrl, transformName);
-            return await Client.ListAsPageGenericAsync<JobSchema>(url, typeof(JobListResponseSchema), "job", orderBy, filter, top);
+            return await Client.ListAsPageGenericAsync<JobSchema>(url, typeof(JobListResponseSchema), "job", cancellationToken, orderBy, filter, top);
         }
 
         /// <inheritdoc/>
@@ -136,9 +150,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<JobSchema>> ListAsPageNextAsync(string? nextPageLink)
+        public async Task<PagedResult<JobSchema>> ListAsPageNextAsync(string? nextPageLink, CancellationToken cancellationToken = default)
         {
-            return await Client.ListAsPageNextGenericAsync<JobSchema>(nextPageLink, typeof(JobListResponseSchema), "job");
+            return await Client.ListAsPageNextGenericAsync<JobSchema>(nextPageLink, typeof(JobListResponseSchema), "job", cancellationToken);
         }
 
         /// <inheritdoc/>

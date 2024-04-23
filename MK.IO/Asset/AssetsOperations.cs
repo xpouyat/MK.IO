@@ -38,9 +38,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public IEnumerable<AssetSchema> List(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null, CancellationToken cancellationToken = default)
+        public IEnumerable<AssetSchema> List(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null)
         {
-            Task<IEnumerable<AssetSchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, label_key, label, top, cancellationToken));
+            Task<IEnumerable<AssetSchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, label_key, label, top));
             return task.GetAwaiter().GetResult();
         }
 
@@ -66,9 +66,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public PagedResult<AssetSchema> ListAsPage(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null, CancellationToken cancellationToken = default)
+        public PagedResult<AssetSchema> ListAsPage(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null)
         {
-            Task<PagedResult<AssetSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, label_key, label, top, cancellationToken));
+            Task<PagedResult<AssetSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, label_key, label, top));
             return task.GetAwaiter().GetResult();
         }
 
@@ -78,13 +78,13 @@ namespace MK.IO.Operations
             var url = Client.GenerateApiUrl(_assetsApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$label_key", label_key);
             url = MKIOClient.AddParametersToUrl(url, "$label", label);
-            return await Client.ListAsPageGenericAsync<AssetSchema>(url, typeof(AssetListResponseSchema), "asset", orderBy, filter, top, cancellationToken);
+            return await Client.ListAsPageGenericAsync<AssetSchema>(url, typeof(AssetListResponseSchema), "asset", cancellationToken, orderBy, filter, top);
         }
 
         /// <inheritdoc/>
-        public PagedResult<AssetSchema> ListAsPageNext(string? nextPageLink, CancellationToken cancellationToken = default)
+        public PagedResult<AssetSchema> ListAsPageNext(string? nextPageLink)
         {
-            Task<PagedResult<AssetSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink, cancellationToken));
+            Task<PagedResult<AssetSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
             return task.GetAwaiter().GetResult();
         }
 

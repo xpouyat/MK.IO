@@ -78,9 +78,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<SubscriptionResponseSchema>> ListAllSubscriptionsAsync()
+        public async Task<IEnumerable<SubscriptionResponseSchema>> ListAllSubscriptionsAsync(CancellationToken cancellationToken = default)
         {
-            string responseContent = await Client.GetObjectContentAsync(GenerateAccountApiUrl(_accountSubscriptionsUrl));
+            string responseContent = await Client.GetObjectContentAsync(GenerateAccountApiUrl(_accountSubscriptionsUrl), cancellationToken);
             return SubscriptionListResponseSchema.FromJson(responseContent).Items;
         }
 
@@ -106,9 +106,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<LocationResponseSchema>> ListAllLocationsAsync()
+        public async Task<IEnumerable<LocationResponseSchema>> ListAllLocationsAsync(CancellationToken cancellationToken = default)
         {
-            string responseContent = await Client.GetObjectContentAsync(Client._baseUrl + _locationsApiUrl);
+            string responseContent = await Client.GetObjectContentAsync(Client._baseUrl + _locationsApiUrl, cancellationToken);
             return LocationListResponseSchema.FromJson(responseContent).Items;
         }
 

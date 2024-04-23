@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Net;
 #if NET462
 using System.Net.Http;
+using System.Threading;
 #endif
 
 namespace MK.IO.Operations
@@ -50,16 +51,24 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<StreamingEndpointSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<StreamingEndpointSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            var url = Client.GenerateApiUrl(_streamingEndpointsApiUrl);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+            List<StreamingEndpointSchema> objectsSchema = [];
+            var objectsResult = await ListAsPageAsync(orderBy, filter, top, cancellationToken);
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                objectsSchema.AddRange(objectsResult.Results);
+                if (objectsResult.NextPageLink == null || (top != null && objectsSchema.Count >= top)) break;
+                objectsResult = await ListAsPageNextAsync(objectsResult.NextPageLink, cancellationToken);
+            }
 
-            string responseContent = await Client.GetObjectContentAsync(url);
-            var objectToReturn = JsonConvert.DeserializeObject<StreamingEndpointListResponseSchema>(responseContent, ConverterLE.Settings);
-            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with streaming endpoint list deserialization");
+            if (top != null && top < objectsSchema.Count)
+            {
+                return objectsSchema.Take((int)top);
+            }
+
+            return objectsSchema;
         }
 
         /// <inheritdoc/>
@@ -70,10 +79,10 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<StreamingEndpointSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<PagedResult<StreamingEndpointSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             var url = Client.GenerateApiUrl(_streamingEndpointsApiUrl);
-            return await Client.ListAsPageGenericAsync<StreamingEndpointSchema>(url, typeof(StreamingEndpointListResponseSchema), "streaming endpoint", orderBy, filter, top);
+            return await Client.ListAsPageGenericAsync<StreamingEndpointSchema>(url, typeof(StreamingEndpointListResponseSchema), "streaming endpoint", cancellationToken, orderBy, filter, top);
         }
 
         /// <inheritdoc/>
@@ -84,9 +93,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<StreamingEndpointSchema>> ListAsPageNextAsync(string? nextPageLink)
+        public async Task<PagedResult<StreamingEndpointSchema>> ListAsPageNextAsync(string? nextPageLink, CancellationToken cancellationToken = default)
         {
-            return await Client.ListAsPageNextGenericAsync<StreamingEndpointSchema>(nextPageLink, typeof(StreamingEndpointListResponseSchema), "streaming endpoint");
+            return await Client.ListAsPageNextGenericAsync<StreamingEndpointSchema>(nextPageLink, typeof(StreamingEndpointListResponseSchema), "streaming endpoint", cancellationToken);
         }
 
         /// <inheritdoc/>

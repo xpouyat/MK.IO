@@ -36,7 +36,7 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public IEnumerable<AccountFilterSchema> List(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public IEnumerable<AccountFilterSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
             Task<IEnumerable<AccountFilterSchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
@@ -64,7 +64,7 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public PagedResult<AccountFilterSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public PagedResult<AccountFilterSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
         {
             Task<PagedResult<AccountFilterSchema>> task = Task.Run(async () => await ListAsPageAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
@@ -74,11 +74,11 @@ namespace MK.IO.Operations
         public async Task<PagedResult<AccountFilterSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             var url = Client.GenerateApiUrl(_accountFiltersApiUrl);
-            return await Client.ListAsPageGenericAsync<AccountFilterSchema>(url, typeof(AccountFilterListResponseSchema), "account filter", orderBy, filter, top);
+            return await Client.ListAsPageGenericAsync<AccountFilterSchema>(url, typeof(AccountFilterListResponseSchema), "account filter", cancellationToken, orderBy, filter, top);
         }
 
         /// <inheritdoc/>
-        public PagedResult<AccountFilterSchema> ListAsPageNext(string? nextPageLink, CancellationToken cancellationToken = default)
+        public PagedResult<AccountFilterSchema> ListAsPageNext(string? nextPageLink)
         {
             Task<PagedResult<AccountFilterSchema>> task = Task.Run(async () => await ListAsPageNextAsync(nextPageLink));
             return task.GetAwaiter().GetResult();
@@ -87,7 +87,7 @@ namespace MK.IO.Operations
         /// <inheritdoc/>
         public async Task<PagedResult<AccountFilterSchema>> ListAsPageNextAsync(string? nextPageLink, CancellationToken cancellationToken = default)
         {
-            return await Client.ListAsPageNextGenericAsync<AccountFilterSchema>(nextPageLink, typeof(AccountFilterListResponseSchema), "account filter");
+            return await Client.ListAsPageNextGenericAsync<AccountFilterSchema>(nextPageLink, typeof(AccountFilterListResponseSchema), "account filter", cancellationToken);
         }
 
         /// <inheritdoc/>

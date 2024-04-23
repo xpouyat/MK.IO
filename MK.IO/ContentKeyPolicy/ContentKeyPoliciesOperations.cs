@@ -50,16 +50,24 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<ContentKeyPolicySchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<ContentKeyPolicySchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            var url = Client.GenerateApiUrl(_contentKeyPoliciesApiUrl);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+            List<ContentKeyPolicySchema> objectsSchema = [];
+            var objectsResult = await ListAsPageAsync(orderBy, filter, top, cancellationToken);
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                objectsSchema.AddRange(objectsResult.Results);
+                if (objectsResult.NextPageLink == null || (top != null && objectsSchema.Count >= top)) break;
+                objectsResult = await ListAsPageNextAsync(objectsResult.NextPageLink, cancellationToken);
+            }
 
-            string responseContent = await Client.GetObjectContentAsync(url);
-            var objectToReturn = JsonConvert.DeserializeObject<ContentKeyPolicyListResponseSchema>(responseContent, ConverterLE.Settings);
-            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with content key list deserialization");
+            if (top != null && top < objectsSchema.Count)
+            {
+                return objectsSchema.Take((int)top);
+            }
+
+            return objectsSchema;
         }
 
         /// <inheritdoc/>
@@ -70,10 +78,10 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<ContentKeyPolicySchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<PagedResult<ContentKeyPolicySchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             var url = Client.GenerateApiUrl(_contentKeyPoliciesApiUrl);
-            return await Client.ListAsPageGenericAsync<ContentKeyPolicySchema>(url, typeof(ContentKeyPolicyListResponseSchema), "content key", orderBy, filter, top);
+            return await Client.ListAsPageGenericAsync<ContentKeyPolicySchema>(url, typeof(ContentKeyPolicyListResponseSchema), "content key", cancellationToken, orderBy, filter, top);
         }
 
         /// <inheritdoc/>
@@ -84,9 +92,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<ContentKeyPolicySchema>> ListAsPageNextAsync(string? nextPageLink)
+        public async Task<PagedResult<ContentKeyPolicySchema>> ListAsPageNextAsync(string? nextPageLink, CancellationToken cancellationToken = default)
         {
-            return await Client.ListAsPageNextGenericAsync<ContentKeyPolicySchema>(nextPageLink, typeof(ContentKeyPolicyListResponseSchema), "content key");
+            return await Client.ListAsPageNextGenericAsync<ContentKeyPolicySchema>(nextPageLink, typeof(ContentKeyPolicyListResponseSchema), "content key", cancellationToken);
         }
 
         /// <inheritdoc/>

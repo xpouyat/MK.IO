@@ -50,18 +50,24 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<LiveOutputSchema>> ListAsync(string liveEventName, string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<LiveOutputSchema>> ListAsync(string liveEventName, string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+            List<LiveOutputSchema> objectsSchema = [];
+            var objectsResult = await ListAsPageAsync(liveEventName, orderBy, filter, top, cancellationToken);
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                objectsSchema.AddRange(objectsResult.Results);
+                if (objectsResult.NextPageLink == null || (top != null && objectsSchema.Count >= top)) break;
+                objectsResult = await ListAsPageNextAsync(objectsResult.NextPageLink, cancellationToken);
+            }
 
-            var url = Client.GenerateApiUrl(_liveOutputsApiUrl, liveEventName);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+            if (top != null && top < objectsSchema.Count)
+            {
+                return objectsSchema.Take((int)top);
+            }
 
-            string responseContent = await Client.GetObjectContentAsync(url);
-            var objectToReturn = JsonConvert.DeserializeObject<LiveOutputListResponseSchema>(responseContent, ConverterLE.Settings);
-            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with live output list deserialization");
+            return objectsSchema;
         }
 
         /// <inheritdoc/>
@@ -72,11 +78,11 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<LiveOutputSchema>> ListAsPageAsync(string liveEventName, string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<PagedResult<LiveOutputSchema>> ListAsPageAsync(string liveEventName, string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
 
             var url = Client.GenerateApiUrl(_liveOutputsApiUrl, liveEventName);
-            return await Client.ListAsPageGenericAsync<LiveOutputSchema>(url, typeof(LiveOutputListResponseSchema), "live output", orderBy, filter, top);
+            return await Client.ListAsPageGenericAsync<LiveOutputSchema>(url, typeof(LiveOutputListResponseSchema), "live output", cancellationToken, orderBy, filter, top);
         }
 
         /// <inheritdoc/>
@@ -87,9 +93,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<LiveOutputSchema>> ListAsPageNextAsync(string? nextPageLink)
+        public async Task<PagedResult<LiveOutputSchema>> ListAsPageNextAsync(string? nextPageLink, CancellationToken cancellationToken = default)
         {
-            return await Client.ListAsPageNextGenericAsync<LiveOutputSchema>(nextPageLink, typeof(LiveOutputListResponseSchema), "live output");
+            return await Client.ListAsPageNextGenericAsync<LiveOutputSchema>(nextPageLink, typeof(LiveOutputListResponseSchema), "live output", cancellationToken);
         }
 
         /// <inheritdoc/>

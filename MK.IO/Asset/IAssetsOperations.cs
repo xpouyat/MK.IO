@@ -16,9 +16,8 @@ namespace MK.IO.Operations
         /// <param name="label_key">Filters the set to the specified label key. If multiple label_keys are specified, matching assets must have all labels.</param>
         /// <param name="label">Filters the set to the specified label key/value pair. Supports equality, inequality, and inexact matching. If multiple values are provided for the same key, assets matching either value will be returned.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
-        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        IEnumerable<AssetSchema> List(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null, CancellationToken cancellationToken = default);
+        IEnumerable<AssetSchema> List(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription.
@@ -40,9 +39,8 @@ namespace MK.IO.Operations
         /// <param name="label_key">Filters the set to the specified label key. If multiple label_keys are specified, matching assets must have all labels.</param>
         /// <param name="label">Filters the set to the specified label key/value pair. Supports equality, inequality, and inexact matching. If multiple values are provided for the same key, assets matching either value will be returned.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
-        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        PagedResult<AssetSchema> ListAsPage(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null, CancellationToken cancellationToken = default);
+        PagedResult<AssetSchema> ListAsPage(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription using pages.
@@ -60,9 +58,8 @@ namespace MK.IO.Operations
         /// Retrieves a list of assets in the subscription using pages.
         /// </summary>
         /// <param name="nextPageLink">Next page link.</param>
-        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        PagedResult<AssetSchema> ListAsPageNext(string? nextPageLink, CancellationToken cancellationToken = default);
+        PagedResult<AssetSchema> ListAsPageNext(string? nextPageLink);
 
         /// <summary>
         /// Retrieves a list of assets in the subscription using pages.

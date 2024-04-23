@@ -217,7 +217,7 @@ namespace MK.IO
             return responseContent;
         }
 
-        internal async Task<PagedResult<T>> ListAsPageGenericAsync<T>(string url, Type responseSchema, string entityName, string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
+        internal async Task<PagedResult<T>> ListAsPageGenericAsync<T>(string url, Type responseSchema, string entityName, CancellationToken cancellationToken, string? orderBy = null, string? filter = null, int? top = null)
         {
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
             url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
@@ -243,7 +243,7 @@ namespace MK.IO
             }
         }
 
-        internal async Task<PagedResult<T>> ListAsPageNextGenericAsync<T>(string? nextPageLink, Type responseSchema, string entityName, CancellationToken cancellationToken = default)
+        internal async Task<PagedResult<T>> ListAsPageNextGenericAsync<T>(string? nextPageLink, Type responseSchema, string entityName, CancellationToken cancellationToken)
         {
             var url = _baseUrl.Substring(0, _baseUrl.Length - 1) + nextPageLink;
             string responseContent = await GetObjectContentAsync(url, cancellationToken);

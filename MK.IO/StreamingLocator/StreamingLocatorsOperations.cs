@@ -52,16 +52,24 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<StreamingLocatorSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<StreamingLocatorSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            var url = Client.GenerateApiUrl(_streamingLocatorsApiUrl);
-            url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
-            url = MKIOClient.AddParametersToUrl(url, "$filter", filter);
-            url = MKIOClient.AddParametersToUrl(url, "$top", top != null ? ((int)top).ToString() : null);
+            List<StreamingLocatorSchema> objectsSchema = [];
+            var objectsResult = await ListAsPageAsync(orderBy, filter, top, cancellationToken);
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                objectsSchema.AddRange(objectsResult.Results);
+                if (objectsResult.NextPageLink == null || (top != null && objectsSchema.Count >= top)) break;
+                objectsResult = await ListAsPageNextAsync(objectsResult.NextPageLink, cancellationToken);
+            }
 
-            string responseContent = await Client.GetObjectContentAsync(url);
-            var objectToReturn = JsonConvert.DeserializeObject<StreamingLocatorListResponseSchema>(responseContent, ConverterLE.Settings);
-            return objectToReturn != null ? objectToReturn.Value : throw new Exception($"Error with streaming locator list deserialization");
+            if (top != null && top < objectsSchema.Count)
+            {
+                return objectsSchema.Take((int)top);
+            }
+
+            return objectsSchema;
         }
 
         public PagedResult<StreamingLocatorSchema> ListAsPage(string? orderBy = null, string? filter = null, int? top = null)
@@ -71,10 +79,10 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<StreamingLocatorSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<PagedResult<StreamingLocatorSchema>> ListAsPageAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             var url = Client.GenerateApiUrl(_streamingLocatorsApiUrl);
-            return await Client.ListAsPageGenericAsync<StreamingLocatorSchema>(url, typeof(StreamingLocatorListResponseSchema), "streaming locator", orderBy, filter, top);
+            return await Client.ListAsPageGenericAsync<StreamingLocatorSchema>(url, typeof(StreamingLocatorListResponseSchema), "streaming locator", cancellationToken, orderBy, filter, top);
         }
 
         /// <inheritdoc/>
@@ -85,9 +93,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<PagedResult<StreamingLocatorSchema>> ListAsPageNextAsync(string? nextPageLink)
+        public async Task<PagedResult<StreamingLocatorSchema>> ListAsPageNextAsync(string? nextPageLink, CancellationToken cancellationToken = default)
         {
-            return await Client.ListAsPageNextGenericAsync<StreamingLocatorSchema>(nextPageLink, typeof(StreamingLocatorListResponseSchema), "streaming locator");
+            return await Client.ListAsPageNextGenericAsync<StreamingLocatorSchema>(nextPageLink, typeof(StreamingLocatorListResponseSchema), "streaming locator", cancellationToken);
         }
 
         /// <inheritdoc/>
