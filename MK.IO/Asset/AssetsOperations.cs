@@ -3,6 +3,7 @@
 
 using MK.IO.Models;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 using System.Net;
 #if NET462
 using System.Net.Http;
@@ -37,14 +38,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<AssetSchema> List(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null, CancellationToken cancellationToken = default)
+        public IEnumerable<AssetSchema> List(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Task<List<AssetSchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, label_key, label, top, cancellationToken));
+            Task<IEnumerable<AssetSchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, label_key, label, top, cancellationToken));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<AssetSchema>> ListAsync(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<AssetSchema>> ListAsync(string? orderBy = null, string? filter = null, List<string>? label_key = null, List<string>? label = null, int? top = null, CancellationToken cancellationToken = default)
         {
             List<AssetSchema> objectsSchema = [];
             var objectsResult = await ListAsPageAsync(orderBy, filter, label_key, label, top, cancellationToken);
@@ -58,7 +59,7 @@ namespace MK.IO.Operations
 
             if (top != null && top < objectsSchema.Count)
             {
-                objectsSchema = objectsSchema.Take((int)top).ToList();
+                return objectsSchema.Take((int)top);
             }
 
             return objectsSchema;

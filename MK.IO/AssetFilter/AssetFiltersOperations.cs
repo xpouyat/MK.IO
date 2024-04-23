@@ -38,14 +38,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<AssetFilterSchema> List(string assetName, string? orderBy = null, string? filter = null, int? top = null)
+        public IEnumerable<AssetFilterSchema> List(string assetName, string? orderBy = null, string? filter = null, int? top = null)
         {
-            Task<List<AssetFilterSchema>> task = Task.Run(async () => await ListAsync(assetName, orderBy, filter, top));
+            Task<IEnumerable<AssetFilterSchema>> task = Task.Run(async () => await ListAsync(assetName, orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<AssetFilterSchema>> ListAsync(string assetName, string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<AssetFilterSchema>> ListAsync(string assetName, string? orderBy = null, string? filter = null, int? top = null)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 

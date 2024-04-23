@@ -36,14 +36,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<AccountFilterSchema> List(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public IEnumerable<AccountFilterSchema> List(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Task<List<AccountFilterSchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, top));
+            Task<IEnumerable<AccountFilterSchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<AccountFilterSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<AccountFilterSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             List<AccountFilterSchema> objectsSchema = [];
             var objectsResult = await ListAsPageAsync(orderBy, filter, top, cancellationToken);
@@ -57,7 +57,7 @@ namespace MK.IO.Operations
 
             if (top != null && top < objectsSchema.Count)
             {
-                objectsSchema = objectsSchema.Take((int)top).ToList();
+                return objectsSchema.Take((int)top);
             }
 
             return objectsSchema;

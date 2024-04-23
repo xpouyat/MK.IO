@@ -44,14 +44,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<TransformSchema> List(string? orderBy = null, string? filter = null, int? top = null)
+        public IEnumerable<TransformSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<TransformSchema>>(async () => await ListAsync(orderBy, filter, top));
+            var task = Task.Run<IEnumerable<TransformSchema>>(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<TransformSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<TransformSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_transformsApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);

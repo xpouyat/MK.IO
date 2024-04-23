@@ -294,7 +294,7 @@ namespace Sample
 
             var assetFilters = client.AssetFilters.List("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252");
 
-            assetFilters.ForEach(af => client.AssetFilters.Delete("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252", af.Name));
+            assetFilters.ToList().ForEach(af => client.AssetFilters.Delete("ignite-truncated-StandardEncoder-H264SingleBitrate720p-98b7c74252", af.Name));
             //var assetFilter1 = client.AssetFilters.Get("liveoutput-c4debfe5", assetFilters.First().Name);
 
             // asset filter creation
@@ -526,7 +526,7 @@ namespace Sample
             // live outputs listing
             var los = client.LiveOutputs.List(le.Name);
 
-            if (los.Count == 1)
+            if (los.ToList().Count == 1)
             {
                 var looo = client.LiveOutputs.Get(le.Name, los.First().Name);
             }

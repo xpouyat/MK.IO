@@ -14,7 +14,7 @@ namespace MK.IO.Operations
         /// <param name="filter">Filters the set of items returned.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        List<TransformSchema> List(string? orderBy = null, string? filter = null, int? top = null);
+        IEnumerable<TransformSchema> List(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Retrieves a list of transforms for the subscription.
@@ -23,7 +23,7 @@ namespace MK.IO.Operations
         /// <param name="filter">Filters the set of items returned.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        Task<List<TransformSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null);
+        Task<IEnumerable<TransformSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Retrieves a list of transforms for the subscription using pages.

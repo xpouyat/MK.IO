@@ -46,14 +46,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<JobSchema> ListAll(string? orderBy = null, string? filter = null, int? top = null)
+        public IEnumerable<JobSchema> ListAll(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<JobSchema>>(async () => await ListAllAsync(orderBy, filter, top));
+            var task = Task.Run<IEnumerable<JobSchema>>(async () => await ListAllAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<JobSchema>> ListAllAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<JobSchema>> ListAllAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_allJobsApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);
@@ -93,14 +93,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<JobSchema> List(string transformName, string? orderBy = null, string? filter = null, int? top = null)
+        public IEnumerable<JobSchema> List(string transformName, string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<JobSchema>>(async () => await ListAsync(transformName, orderBy, filter, top));
+            var task = Task.Run<IEnumerable<JobSchema>>(async () => await ListAsync(transformName, orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<JobSchema>> ListAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<JobSchema>> ListAsync(string transformName, string? orderBy = null, string? filter = null, int? top = null)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 

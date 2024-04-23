@@ -64,14 +64,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<StorageResponseSchema> List()
+        public IEnumerable<StorageResponseSchema> List()
         {
-            var task = Task.Run<List<StorageResponseSchema>>(async () => await ListAsync());
+            var task = Task.Run<IEnumerable<StorageResponseSchema>>(async () => await ListAsync());
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<StorageResponseSchema>> ListAsync()
+        public async Task<IEnumerable<StorageResponseSchema>> ListAsync()
         {
             var url = GenerateStorageApiUrl(_storageApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url);

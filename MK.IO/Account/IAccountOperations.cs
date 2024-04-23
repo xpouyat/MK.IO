@@ -35,13 +35,13 @@ namespace MK.IO.Operations
         /// Get the list of all MK.IO subscriptions for the account.
         /// </summary>
         /// <returns></returns>
-        List<SubscriptionResponseSchema> ListAllSubscriptions();
+        IEnumerable<SubscriptionResponseSchema> ListAllSubscriptions();
 
         /// <summary>
         /// Get the list of all MK.IO subscriptions for the account.
         /// </summary>
         /// <returns></returns>
-        Task<List<SubscriptionResponseSchema>> ListAllSubscriptionsAsync();
+        Task<IEnumerable<SubscriptionResponseSchema>> ListAllSubscriptionsAsync();
 
         /// <summary>
         /// Get the current MK.IO subscription.
@@ -59,12 +59,12 @@ namespace MK.IO.Operations
         /// List all possible locations for MK.IO (Ids and names).
         /// </summary>
         /// <returns></returns>
-        List<LocationResponseSchema> ListAllLocations();
+        IEnumerable<LocationResponseSchema> ListAllLocations();
 
         /// <summary>
         /// List all possible locations for MK.IO (Ids and names).
         /// </summary>
         /// <returns></returns>
-        Task<List<LocationResponseSchema>> ListAllLocationsAsync();
+        Task<IEnumerable<LocationResponseSchema>> ListAllLocationsAsync();
     }
 }

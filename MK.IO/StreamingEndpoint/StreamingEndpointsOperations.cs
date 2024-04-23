@@ -43,14 +43,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<StreamingEndpointSchema> List(string? orderBy = null, string? filter = null, int? top = null)
+        public IEnumerable<StreamingEndpointSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<StreamingEndpointSchema>>(async () => await ListAsync(orderBy, filter, top));
+            var task = Task.Run<IEnumerable<StreamingEndpointSchema>>(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<StreamingEndpointSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<StreamingEndpointSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_streamingEndpointsApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);

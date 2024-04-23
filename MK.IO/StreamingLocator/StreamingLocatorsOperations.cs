@@ -45,14 +45,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<StreamingLocatorSchema> List(string? orderBy = null, string? filter = null, int? top = null)
+        public IEnumerable<StreamingLocatorSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
             var task = Task.Run(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<StreamingLocatorSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<StreamingLocatorSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_streamingLocatorsApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);

@@ -12,13 +12,13 @@ namespace MK.IO.Operations
         /// List Storage Accounts
         /// </summary>
         /// <returns></returns>
-        List<StorageResponseSchema> List();
+        IEnumerable<StorageResponseSchema> List();
 
         /// <summary>
         /// List Storage Accounts
         /// </summary>
         /// <returns></returns>
-        Task<List<StorageResponseSchema>> ListAsync();
+        Task<IEnumerable<StorageResponseSchema>> ListAsync();
 
         /// <summary>
         /// Create a Storage Account.

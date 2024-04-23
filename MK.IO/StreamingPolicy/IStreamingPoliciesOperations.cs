@@ -14,7 +14,7 @@ namespace MK.IO.Operations
         /// <param name="filter">Filters the set of items returned.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        List<StreamingPolicySchema> List(string? orderBy = null, string? filter = null, int? top = null);
+        IEnumerable<StreamingPolicySchema> List(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Returns a list of Streaming Policies for the subscription.
@@ -23,7 +23,7 @@ namespace MK.IO.Operations
         /// <param name="filter">Filters the set of items returned.</param>
         /// <param name="top">Specifies a non-negative integer that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value top.</param>
         /// <returns></returns>
-        Task<List<StreamingPolicySchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null);
+        Task<IEnumerable<StreamingPolicySchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null);
 
         /// <summary>
         /// Returns a list of Streaming Policies for the subscription using pages.

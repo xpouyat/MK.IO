@@ -43,14 +43,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<LiveOutputSchema> List(string liveEventName, string? orderBy = null, string? filter = null, int? top = null)
+        public IEnumerable<LiveOutputSchema> List(string liveEventName, string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<LiveOutputSchema>>(async () => await ListAsync(liveEventName, orderBy, filter, top));
+            var task = Task.Run<IEnumerable<LiveOutputSchema>>(async () => await ListAsync(liveEventName, orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<LiveOutputSchema>> ListAsync(string liveEventName, string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<LiveOutputSchema>> ListAsync(string liveEventName, string? orderBy = null, string? filter = null, int? top = null)
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
 

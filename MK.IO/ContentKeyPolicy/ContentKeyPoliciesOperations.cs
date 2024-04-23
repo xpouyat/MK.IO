@@ -43,14 +43,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<ContentKeyPolicySchema> List(string? orderBy = null, string? filter = null, int? top = null)
+        public IEnumerable<ContentKeyPolicySchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            Task<List<ContentKeyPolicySchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, top));
+            Task<IEnumerable<ContentKeyPolicySchema>> task = Task.Run(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<ContentKeyPolicySchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<ContentKeyPolicySchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_contentKeyPoliciesApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);

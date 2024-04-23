@@ -42,14 +42,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<LiveEventSchema> List(string? orderBy = null, string? filter = null, int? top = null)
+        public IEnumerable<LiveEventSchema> List(string? orderBy = null, string? filter = null, int? top = null)
         {
-            var task = Task.Run<List<LiveEventSchema>>(async () => await ListAsync(orderBy, filter, top));
+            var task = Task.Run<IEnumerable<LiveEventSchema>>(async () => await ListAsync(orderBy, filter, top));
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<LiveEventSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
+        public async Task<IEnumerable<LiveEventSchema>> ListAsync(string? orderBy = null, string? filter = null, int? top = null)
         {
             var url = Client.GenerateApiUrl(_liveEventsApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$orderby", orderBy);

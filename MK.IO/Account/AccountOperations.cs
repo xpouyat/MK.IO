@@ -71,14 +71,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<SubscriptionResponseSchema> ListAllSubscriptions()
+        public IEnumerable<SubscriptionResponseSchema> ListAllSubscriptions()
         {
             var task = Task.Run(async () => await ListAllSubscriptionsAsync());
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<SubscriptionResponseSchema>> ListAllSubscriptionsAsync()
+        public async Task<IEnumerable<SubscriptionResponseSchema>> ListAllSubscriptionsAsync()
         {
             string responseContent = await Client.GetObjectContentAsync(GenerateAccountApiUrl(_accountSubscriptionsUrl));
             return SubscriptionListResponseSchema.FromJson(responseContent).Items;
@@ -99,14 +99,14 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public List<LocationResponseSchema> ListAllLocations()
+        public IEnumerable<LocationResponseSchema> ListAllLocations()
         {
             var task = Task.Run(async () => await ListAllLocationsAsync());
             return task.GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<List<LocationResponseSchema>> ListAllLocationsAsync()
+        public async Task<IEnumerable<LocationResponseSchema>> ListAllLocationsAsync()
         {
             string responseContent = await Client.GetObjectContentAsync(Client._baseUrl + _locationsApiUrl);
             return LocationListResponseSchema.FromJson(responseContent).Items;
