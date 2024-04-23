@@ -127,12 +127,12 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<TransformSchema> GetAsync(string transformName)
+        public async Task<TransformSchema> GetAsync(string transformName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);
-            string responseContent = await Client.GetObjectContentAsync(url);
+            string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
             return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with transform deserialization");
         }
 
@@ -144,7 +144,7 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<TransformSchema> CreateOrUpdateAsync(string transformName, TransformProperties properties)
+        public async Task<TransformSchema> CreateOrUpdateAsync(string transformName, TransformProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
             Argument.AssertNotContainsSpace(transformName, nameof(transformName));
@@ -153,7 +153,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);
             var content = new TransformSchema { Properties = properties };
-            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson());
+            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson(), cancellationToken);
             return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with transform deserialization");
         }
 
@@ -164,12 +164,12 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task DeleteAsync(string transformName)
+        public async Task DeleteAsync(string transformName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);
-            await Client.ObjectContentAsync(url, HttpMethod.Delete);
+            await Client.ObjectContentAsync(url, HttpMethod.Delete, cancellationToken);
         }
     }
 }

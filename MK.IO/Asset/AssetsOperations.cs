@@ -101,12 +101,12 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<AssetSchema> GetAsync(string assetName)
+        public async Task<AssetSchema> GetAsync(string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             var url = Client.GenerateApiUrl(_assetApiUrl, assetName);
-            string responseContent = await Client.GetObjectContentAsync(url);
+            string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
             return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset deserialization");
         }
 
@@ -118,7 +118,7 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null, Dictionary<string, string>? labels = null)
+        public async Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null, Dictionary<string, string>? labels = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotContainsSpace(assetName, nameof(assetName));
@@ -142,7 +142,7 @@ namespace MK.IO.Operations
                 }
             };
 
-            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
+            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings), cancellationToken);
             return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset deserialization");
         }
 
@@ -153,12 +153,12 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task DeleteAsync(string assetName)
+        public async Task DeleteAsync(string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             var url = Client.GenerateApiUrl(_assetApiUrl, assetName);
-            await Client.ObjectContentAsync(url, HttpMethod.Delete);
+            await Client.ObjectContentAsync(url, HttpMethod.Delete, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -169,12 +169,12 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<List<AssetStreamingLocator>> ListStreamingLocatorsAsync(string assetName)
+        public async Task<List<AssetStreamingLocator>> ListStreamingLocatorsAsync(string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             var url = Client.GenerateApiUrl(_assetListStreamingLocatorsApiUrl, assetName);
-            string responseContent = await Client.GetObjectPostContentAsync(url);
+            string responseContent = await Client.GetObjectPostContentAsync(url, cancellationToken);
             return AssetListStreamingLocators.FromJson(responseContent).StreamingLocators;
         }
 
@@ -186,12 +186,12 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<AssetStorageResponseSchema> ListTracksAndDirListingAsync(string assetName)
+        public async Task<AssetStorageResponseSchema> ListTracksAndDirListingAsync(string assetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             var url = Client.GenerateApiUrl(_assetListTracksAndDirectoryApiUrl, assetName);
-            string responseContent = await Client.GetObjectContentAsync(url);
+            string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
             return JsonConvert.DeserializeObject<AssetStorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset storage deserialization");
         }
     }

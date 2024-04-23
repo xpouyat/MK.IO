@@ -102,13 +102,13 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<AssetFilterSchema> GetAsync(string assetName, string filterName)
+        public async Task<AssetFilterSchema> GetAsync(string assetName, string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);
-            string responseContent = await Client.GetObjectContentAsync(url);
+            string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
             return JsonConvert.DeserializeObject<AssetFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset filter deserialization");
         }
 
@@ -120,7 +120,7 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<AssetFilterSchema> CreateOrUpdateAsync(string assetName, string filterName, MediaFilterProperties properties)
+        public async Task<AssetFilterSchema> CreateOrUpdateAsync(string assetName, string filterName, MediaFilterProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
@@ -132,11 +132,10 @@ namespace MK.IO.Operations
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);
             AssetFilterSchema content = new()
             {
-                //Name = assetFilterName,
                 Properties = properties
             };
 
-            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
+            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings), cancellationToken);
             return JsonConvert.DeserializeObject<AssetFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset filter deserialization");
         }
 
@@ -147,13 +146,13 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task DeleteAsync(string assetName, string filterName)
+        public async Task DeleteAsync(string assetName, string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);
-            await Client.ObjectContentAsync(url, HttpMethod.Delete);
+            await Client.ObjectContentAsync(url, HttpMethod.Delete, cancellationToken);
         }
     }
 }

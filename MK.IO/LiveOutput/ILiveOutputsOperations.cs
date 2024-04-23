@@ -76,8 +76,9 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         /// <param name="liveOutputName">The name of the live output.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task DeleteAsync(string liveEventName, string liveOutputName);
+        Task DeleteAsync(string liveEventName, string liveOutputName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns a single Live Output.
@@ -92,8 +93,9 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="liveEventName">The name of the live event.</param>
         /// <param name="liveOutputName">The name of the live output.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<LiveOutputSchema> GetAsync(string liveEventName, string liveOutputName);
+        Task<LiveOutputSchema> GetAsync(string liveEventName, string liveOutputName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a Live Output
@@ -110,7 +112,8 @@ namespace MK.IO.Operations
         /// <param name="liveEventName">The name of the live event.</param>
         /// <param name="liveOutputName">The name of the live output.</param>
         /// <param name="properties">The properties of the live output.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<LiveOutputSchema> CreateAsync(string liveEventName, string liveOutputName, LiveOutputProperties properties);
+        Task<LiveOutputSchema> CreateAsync(string liveEventName, string liveOutputName, LiveOutputProperties properties, CancellationToken cancellationToken = default);
     }
 }

@@ -73,8 +73,9 @@ namespace MK.IO.Operations
         /// If the policy does not exist, this will return a 204.
         /// </summary>
         /// <param name="streamingPolicyName">The name of the Streaming Policy.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task DeleteAsync(string streamingPolicyName);
+        Task DeleteAsync(string streamingPolicyName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a Streaming Policy by name.
@@ -87,8 +88,9 @@ namespace MK.IO.Operations
         /// Get a Streaming Policy by name.
         /// </summary>
         /// <param name="streamingPolicyName">The name of the Streaming Policy.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<StreamingPolicySchema> GetAsync(string streamingPolicyName);
+        Task<StreamingPolicySchema> GetAsync(string streamingPolicyName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a Streaming Policy.
@@ -103,7 +105,8 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="streamingPolicyName">The name of the Streaming Policy.</param>
         /// <param name="properties">Properties for Streaming Policy</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<StreamingPolicySchema> CreateAsync(string streamingPolicyName, StreamingPolicyProperties properties);
+        Task<StreamingPolicySchema> CreateAsync(string streamingPolicyName, StreamingPolicyProperties properties, CancellationToken cancellationToken = default);
     }
 }

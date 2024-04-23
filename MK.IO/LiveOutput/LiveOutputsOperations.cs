@@ -106,13 +106,13 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<LiveOutputSchema> GetAsync(string liveEventName, string liveOutputName)
+        public async Task<LiveOutputSchema> GetAsync(string liveEventName, string liveOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
 
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName, liveOutputName);
-            string responseContent = await Client.GetObjectContentAsync(url);
+            string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
             return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live output deserialization");
         }
 
@@ -124,7 +124,7 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<LiveOutputSchema> CreateAsync(string liveEventName, string liveOutputName, LiveOutputProperties properties)
+        public async Task<LiveOutputSchema> CreateAsync(string liveEventName, string liveOutputName, LiveOutputProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
@@ -134,7 +134,7 @@ namespace MK.IO.Operations
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName, liveOutputName);
             //tags ??= new Dictionary<string, string>();
             var content = new LiveOutputSchema { Properties = properties };
-            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson());
+            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson(), cancellationToken);
             return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live output deserialization");
         }
 
@@ -145,13 +145,13 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task DeleteAsync(string liveEventName, string liveOutputName)
+        public async Task DeleteAsync(string liveEventName, string liveOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
             Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
 
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName);
-            await Client.ObjectContentAsync(url, HttpMethod.Delete);
+            await Client.ObjectContentAsync(url, HttpMethod.Delete, cancellationToken);
         }
     }
 }

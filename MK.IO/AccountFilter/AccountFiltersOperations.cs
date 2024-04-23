@@ -97,12 +97,12 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<AccountFilterSchema> GetAsync(string accountFilterName)
+        public async Task<AccountFilterSchema> GetAsync(string accountFilterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountFilterName, nameof(accountFilterName));
 
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);
-            string responseContent = await Client.GetObjectContentAsync(url);
+            string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
             return JsonConvert.DeserializeObject<AccountFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with account filter deserialization");
         }
 
@@ -114,7 +114,7 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<AccountFilterSchema> CreateOrUpdateAsync(string accountFilterName, MediaFilterProperties properties)
+        public async Task<AccountFilterSchema> CreateOrUpdateAsync(string accountFilterName, MediaFilterProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountFilterName, nameof(accountFilterName));
             Argument.AssertNotContainsSpace(accountFilterName, nameof(accountFilterName));
@@ -129,7 +129,7 @@ namespace MK.IO.Operations
                 Properties = properties
             };
 
-            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings));
+            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings), cancellationToken);
             return JsonConvert.DeserializeObject<AccountFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with account filter deserialization");
         }
 
@@ -140,12 +140,12 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task DeleteAsync(string accountFilterName)
+        public async Task DeleteAsync(string accountFilterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountFilterName, nameof(accountFilterName));
 
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);
-            await Client.ObjectContentAsync(url, HttpMethod.Delete);
+            await Client.ObjectContentAsync(url, HttpMethod.Delete, cancellationToken);
         }
     }
 }

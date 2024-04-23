@@ -82,8 +82,9 @@ namespace MK.IO.Operations
         /// When you delete an asset, the underlying storage container will be deleted too.You can control this behavior by assigning a DeletionPolicy to your asset.
         /// </summary>
         /// <param name="assetName">The name of the asset.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task DeleteAsync(string assetName);
+        Task DeleteAsync(string assetName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get an asset by name.
@@ -96,8 +97,9 @@ namespace MK.IO.Operations
         /// Get an asset by name.
         /// </summary>
         /// <param name="assetName"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<AssetSchema> GetAsync(string assetName);
+        Task<AssetSchema> GetAsync(string assetName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>Create or Update Asset.</para>
@@ -124,8 +126,9 @@ namespace MK.IO.Operations
         /// <param name="description">The Asset description.</param>
         /// <param name="containerDeletionPolicy">Deletion policy for the underlying storage container. This determines the behavior when an asset record is deleted. A deletion policy of 'Delete' will result in the associated storage container and all its contents being removed from storage. A deletion policy of 'Retain' will leave the content in-place in your storage account.</param>
         /// <param name="alternateId">An alternate ID of the asset.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null, Dictionary<string, string>? labels = null);
+        Task<AssetSchema> CreateOrUpdateAsync(string assetName, string containerName, string storageName, string? description = null, AssetContainerDeletionPolicyType containerDeletionPolicy = AssetContainerDeletionPolicyType.Retain, string? alternateId = null, Dictionary<string, string>? labels = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List Streaming Locators for Asset. This API call is a convenience method to retrieve
@@ -140,8 +143,9 @@ namespace MK.IO.Operations
         /// any and all playback configuations, or StreamingLocators, that are assocaited with this asset.
         /// </summary>
         /// <param name="assetName">The name of the asset.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<List<AssetStreamingLocator>> ListStreamingLocatorsAsync(string assetName);
+        Task<List<AssetStreamingLocator>> ListStreamingLocatorsAsync(string assetName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>The Azure Storage Data Retrieval API is designed to provide restricted information about data stored in Azure Storage containers.
@@ -178,7 +182,8 @@ namespace MK.IO.Operations
         /// any data from the storage account.</para>
         /// </summary>
         /// <param name="assetName">The name of the asset.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<AssetStorageResponseSchema> ListTracksAndDirListingAsync(string assetName);
+        Task<AssetStorageResponseSchema> ListTracksAndDirListingAsync(string assetName, CancellationToken cancellationToken = default);
     }
 }

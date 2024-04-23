@@ -77,8 +77,9 @@ namespace MK.IO.Operations
         /// cached in a CDN, playback may continue to work for some time until the cached content expires.
         /// </summary>
         /// <param name="streamingLocatorName">The name of the Streaming Locator.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task DeleteAsync(string streamingLocatorName);
+        Task DeleteAsync(string streamingLocatorName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a Streaming Locator by name.
@@ -91,8 +92,9 @@ namespace MK.IO.Operations
         /// Get a Streaming Locator by name.
         /// </summary>
         /// <param name="streamingLocatorName">The name of the Streaming Locator.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<StreamingLocatorSchema> GetAsync(string streamingLocatorName);
+        Task<StreamingLocatorSchema> GetAsync(string streamingLocatorName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a Streaming Locator.
@@ -107,8 +109,9 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="streamingLocatorName">The name of the Streaming Locator.</param>
         /// <param name="properties">Properties for Streaming Locator</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<StreamingLocatorSchema> CreateAsync(string streamingLocatorName, StreamingLocatorProperties properties);
+        Task<StreamingLocatorSchema> CreateAsync(string streamingLocatorName, StreamingLocatorProperties properties, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// ListPaths returns the set of valid streaming paths for a given Streaming Locator. A distinct set of paths
@@ -123,7 +126,8 @@ namespace MK.IO.Operations
         /// is returned for each type of DRM configured, per the 'EnabledProtocols' property of the streaming policy.
         /// </summary>
         /// <param name="streamingLocatorName">The name of the Streaming Locator.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<StreamingLocatorListPathsResponseSchema> ListUrlPathsAsync(string streamingLocatorName);
+        Task<StreamingLocatorListPathsResponseSchema> ListUrlPathsAsync(string streamingLocatorName, CancellationToken cancellationToken = default);
     }
 }

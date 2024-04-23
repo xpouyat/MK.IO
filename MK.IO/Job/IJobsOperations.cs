@@ -129,8 +129,9 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="transformName"></param>
         /// <param name="jobName"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task DeleteAsync(string transformName, string jobName);
+        Task DeleteAsync(string transformName, string jobName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get an transform by name.
@@ -145,8 +146,9 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="transformName"></param>
         /// <param name="jobName"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<JobSchema> GetAsync(string transformName, string jobName);
+        Task<JobSchema> GetAsync(string transformName, string jobName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new Job.
@@ -163,8 +165,9 @@ namespace MK.IO.Operations
         /// <param name="transformName"></param>
         /// <param name="jobName"></param>
         /// <param name="properties"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<JobSchema> CreateAsync(string transformName, string jobName, JobProperties properties);
+        Task<JobSchema> CreateAsync(string transformName, string jobName, JobProperties properties, CancellationToken cancellationToken = default);
 
 #if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         /// <summary>
@@ -185,7 +188,7 @@ namespace MK.IO.Operations
         /// <param name="jobName"></param>
         /// <param name="properties"></param>
         /// <returns></returns>
-        Task<JobSchema> UpdateAsync(string transformName, string jobName, JobProperties properties);
+        Task<JobSchema> UpdateAsync(string transformName, string jobName, JobProperties properties, CancellationToken cancellationToken = default);
 #endif
 
         /// <summary>
@@ -200,8 +203,9 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="transformName"></param>
         /// <param name="jobName"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task CancelAsync(string transformName, string jobName);
+        Task CancelAsync(string transformName, string jobName, CancellationToken cancellationToken = default);
 
     }
 }

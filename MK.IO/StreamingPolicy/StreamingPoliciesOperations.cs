@@ -106,12 +106,12 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<StreamingPolicySchema> GetAsync(string streamingPolicyName)
+        public async Task<StreamingPolicySchema> GetAsync(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
 
             var url = Client.GenerateApiUrl(_streamingPolicyApiUrl, streamingPolicyName);
-            string responseContent = await Client.GetObjectContentAsync(url);
+            string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
             return JsonConvert.DeserializeObject<StreamingPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming policy deserialization");
         }
 
@@ -123,7 +123,7 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<StreamingPolicySchema> CreateAsync(string streamingPolicyName, StreamingPolicyProperties properties)
+        public async Task<StreamingPolicySchema> CreateAsync(string streamingPolicyName, StreamingPolicyProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
             Argument.AssertNotMoreThanLength(streamingPolicyName, nameof(streamingPolicyName), 260);
@@ -131,7 +131,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_streamingPolicyApiUrl, streamingPolicyName);
             var content = new StreamingPolicySchema { Properties = properties };
-            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson());
+            string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson(), cancellationToken);
             return JsonConvert.DeserializeObject<StreamingPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming policy deserialization");
         }
 
@@ -142,12 +142,12 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task DeleteAsync(string streamingPolicyName)
+        public async Task DeleteAsync(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
 
             var url = Client.GenerateApiUrl(_streamingPolicyApiUrl, streamingPolicyName);
-            await Client.ObjectContentAsync(url, HttpMethod.Delete);
+            await Client.ObjectContentAsync(url, HttpMethod.Delete, cancellationToken);
         }
     }
 }

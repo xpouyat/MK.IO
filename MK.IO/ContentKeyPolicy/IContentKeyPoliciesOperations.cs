@@ -70,7 +70,9 @@ namespace MK.IO.Operations
         /// Delete a Content Key Policy. If the policy does not exist, this will return a 204.
         /// </summary>
         /// <param name="contentKeyPolicyName"></param>
-        Task DeleteAsync(string contentKeyPolicyName);
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
+        /// <returns></returns>
+        Task DeleteAsync(string contentKeyPolicyName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get one Content Key Policy
@@ -83,8 +85,9 @@ namespace MK.IO.Operations
         /// Get one Content Key Policy
         /// </summary>
         /// <param name="contentKeyPolicyName"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<ContentKeyPolicySchema> GetAsync(string contentKeyPolicyName);
+        Task<ContentKeyPolicySchema> GetAsync(string contentKeyPolicyName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a Content Key Policy
@@ -99,8 +102,9 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="contentKeyPolicyName"></param>
         /// <param name="properties"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<ContentKeyPolicySchema> CreateAsync(string contentKeyPolicyName, ContentKeyPolicyProperties properties);
+        Task<ContentKeyPolicySchema> CreateAsync(string contentKeyPolicyName, ContentKeyPolicyProperties properties, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the properties of a Content Key Policy including secret values
@@ -113,7 +117,8 @@ namespace MK.IO.Operations
         /// Get the properties of a Content Key Policy including secret values
         /// </summary>
         /// <param name="contentKeyPolicyName"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<ContentKeyPolicyProperties> GetPolicyPropertiesWithSecretsAsync(string contentKeyPolicyName);
+        Task<ContentKeyPolicyProperties> GetPolicyPropertiesWithSecretsAsync(string contentKeyPolicyName, CancellationToken cancellationToken = default);
     }
 }

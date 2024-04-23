@@ -70,8 +70,9 @@ namespace MK.IO.Operations
         /// Delete a Transform.
         /// </summary>
         /// <param name="transformName">The name of the transform.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task DeleteAsync(string transformName);
+        Task DeleteAsync(string transformName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a Transform by name.
@@ -84,8 +85,9 @@ namespace MK.IO.Operations
         /// Get a Transform by name.
         /// </summary>
         /// <param name="transformName">The name of the transform.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<TransformSchema> GetAsync(string transformName);
+        Task<TransformSchema> GetAsync(string transformName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create or Update a new Transform.
@@ -100,7 +102,8 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="transformName">The name of the transform.</param>
         /// <param name="properties">he properties of the transform</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<TransformSchema> CreateOrUpdateAsync(string transformName, TransformProperties properties);
+        Task<TransformSchema> CreateOrUpdateAsync(string transformName, TransformProperties properties, CancellationToken cancellationToken = default);
     }
 }

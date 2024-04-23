@@ -67,35 +67,42 @@ namespace MK.IO.Operations
         /// <summary>
         /// Delete the asset filter.
         /// </summary>
-        /// <param name="assetFilterName"></param>
+        /// <param name="assetName"></param>
+        /// <param name="filterName"></param>
         /// <returns></returns>
         void Delete(string assetName, string filterName);
 
         /// <summary>
         /// Delete the asset filter.
         /// </summary>
-        /// <param name="assetFilterName"></param>
+        /// <param name="assetName"></param>
+        /// <param name="filterName"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task DeleteAsync(string assetName, string filterName);
+        Task DeleteAsync(string assetName, string filterName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get an asset filter by name.
         /// </summary>
-        /// <param name="assetFilterName"></param>
+        /// <param name="assetName"></param>
+        /// <param name="filterName"></param>
         /// <returns></returns>
         AssetFilterSchema Get(string assetName, string filterName);
 
         /// <summary>
         /// Get an asset filter by name.
         /// </summary>
-        /// <param name="assetFilterName"></param>
+        /// <param name="assetName"></param>
+        /// <param name="filterName"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<AssetFilterSchema> GetAsync(string assetName, string filterName);
+        Task<AssetFilterSchema> GetAsync(string assetName, string filterName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create or Update an asset filter.
         /// </summary>
-        /// <param name="assetFilterName"></param>
+        /// <param name="assetName"></param>
+        /// <param name="filterName"></param>
         /// <param name="properties"></param>
         /// <returns></returns>
         AssetFilterSchema CreateOrUpdate(string assetName, string filterName, MediaFilterProperties properties);
@@ -103,9 +110,11 @@ namespace MK.IO.Operations
         /// <summary>
         /// Create or Update an asset filter.
         /// </summary>
-        /// <param name="assetFilterName"></param>
+        /// <param name="assetName"></param>
+        /// <param name="filterName"></param>
         /// <param name="properties"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<AssetFilterSchema> CreateOrUpdateAsync(string assetName, string filterName, MediaFilterProperties properties);
+        Task<AssetFilterSchema> CreateOrUpdateAsync(string assetName, string filterName, MediaFilterProperties properties, CancellationToken cancellationToken = default);
     }
 }

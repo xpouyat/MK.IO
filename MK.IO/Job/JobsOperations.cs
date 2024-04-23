@@ -163,13 +163,13 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<JobSchema> GetAsync(string transformName, string jobName)
+        public async Task<JobSchema> GetAsync(string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);
-            string responseContent = await Client.GetObjectContentAsync(url);
+            string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
             return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
         }
 
@@ -181,7 +181,7 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<JobSchema> CreateAsync(string transformName, string jobName, JobProperties properties)
+        public async Task<JobSchema> CreateAsync(string transformName, string jobName, JobProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
@@ -189,10 +189,10 @@ namespace MK.IO.Operations
             Argument.AssertNotMoreThanLength(jobName, nameof(jobName), 63);
             Argument.AssertNotNull(properties, nameof(properties));
 
-            return await CreateOrUpdateAsync(transformName, jobName, properties, Client.CreateObjectPutAsync);
+            return await CreateOrUpdateAsync(transformName, jobName, properties, Client.CreateObjectPutAsync, cancellationToken);
         }
 
-        internal async Task<JobSchema> CreateOrUpdateAsync(string transformName, string jobName, JobProperties properties, Func<string, string, Task<string>> func)
+        internal async Task<JobSchema> CreateOrUpdateAsync(string transformName, string jobName, JobProperties properties, Func<string, string, CancellationToken, Task<string>> func, CancellationToken cancellationToken)
         {
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);
             // fix to make sure Odattype is set as we use the generated class
@@ -202,7 +202,7 @@ namespace MK.IO.Operations
             }
             var content = new JobSchema { Properties = properties };
 
-            string responseContent = await func(url, content.ToJson());
+            string responseContent = await func(url, content.ToJson(), cancellationToken);
             return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
         }
 
@@ -215,7 +215,7 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<JobSchema> UpdateAsync(string transformName, string jobName, JobProperties properties)
+        public async Task<JobSchema> UpdateAsync(string transformName, string jobName, JobProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
@@ -223,7 +223,7 @@ namespace MK.IO.Operations
             Argument.AssertNotMoreThanLength(jobName, nameof(jobName), 63);
             Argument.AssertNotNull(properties, nameof(properties));
 
-            return await CreateOrUpdateAsync(transformName, jobName, properties, Client.UpdateObjectPatchAsync);
+            return await CreateOrUpdateAsync(transformName, jobName, properties, Client.UpdateObjectPatchAsync, cancellationToken);
         }
 #endif
 
@@ -234,13 +234,13 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task CancelAsync(string transformName, string jobName)
+        public async Task CancelAsync(string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             var url = Client.GenerateApiUrl(_jobApiUrl + "/cancelJob", transformName, jobName);
-            await Client.ObjectContentAsync(url, HttpMethod.Post);
+            await Client.ObjectContentAsync(url, HttpMethod.Post, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -250,13 +250,13 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task DeleteAsync(string transformName, string jobName)
+        public async Task DeleteAsync(string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);
-            await Client.ObjectContentAsync(url, HttpMethod.Delete);
+            await Client.ObjectContentAsync(url, HttpMethod.Delete, cancellationToken);
         }
     }
 }

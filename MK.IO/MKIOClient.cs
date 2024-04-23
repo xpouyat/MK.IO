@@ -139,17 +139,17 @@ namespace MK.IO
             return _baseUrl + string.Format(urlPath, _subscriptionName);
         }
 
-        internal async Task<string> GetObjectContentAsync(string url, CancellationToken cancellationToken = default(CancellationToken))
+        internal async Task<string> GetObjectContentAsync(string url, CancellationToken cancellationToken)
         {
             return await ObjectContentAsync(url, HttpMethod.Get, cancellationToken);
         }
 
-        internal async Task<string> GetObjectPostContentAsync(string url)
+        internal async Task<string> GetObjectPostContentAsync(string url, CancellationToken cancellationToken)
         {
-            return await ObjectContentAsync(url, HttpMethod.Post);
+            return await ObjectContentAsync(url, HttpMethod.Post, cancellationToken);
         }
 
-        internal async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod, CancellationToken cancellationToken = default(CancellationToken))
+        internal async Task<string> ObjectContentAsync(string url, HttpMethod httpMethod, CancellationToken cancellationToken)
         {
             using HttpRequestMessage request = new()
             {
@@ -165,24 +165,24 @@ namespace MK.IO
             return responseContent;
         }
 
-        internal async Task<string> CreateObjectPutAsync(string url, string amsJSONObject)
+        internal async Task<string> CreateObjectPutAsync(string url, string amsJSONObject, CancellationToken cancellationToken)
         {
-            return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Put);
+            return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Put, cancellationToken);
         }
 
-        internal async Task<string> CreateObjectPostAsync(string url, string amsJSONObject)
+        internal async Task<string> CreateObjectPostAsync(string url, string amsJSONObject, CancellationToken cancellationToken)
         {
-            return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Post);
+            return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Post, cancellationToken);
         }
 
 #if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
-        internal async Task<string> UpdateObjectPatchAsync(string url, string amsJSONObject)
+        internal async Task<string> UpdateObjectPatchAsync(string url, string amsJSONObject, CancellationToken cancellationToken)
         {
-            return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Patch);
+            return await CreateObjectInternalAsync(url, amsJSONObject, HttpMethod.Patch, cancellationToken);
         }
 #endif
 
-        internal async Task<string> CreateObjectInternalAsync(string url, string amsJSONObject, HttpMethod httpMethod)
+        internal async Task<string> CreateObjectInternalAsync(string url, string amsJSONObject, HttpMethod httpMethod, CancellationToken cancellationToken)
         {
             using HttpRequestMessage request = new()
             {
@@ -192,7 +192,7 @@ namespace MK.IO
             request.Headers.Add("x-mkio-token", _apiToken);
             request.Content = new StringContent(amsJSONObject, System.Text.Encoding.UTF8, "application/json");
 
-            using HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request).ConfigureAwait(false);
+            using HttpResponseMessage amsRequestResult = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
             string responseContent = await amsRequestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
@@ -207,7 +207,7 @@ namespace MK.IO
                 do
                 {
                     await Task.Delay(monitorDelay);
-                    HttpResponseMessage amsRequestResultWait = await _httpClient.GetAsync(monitorUrl).ConfigureAwait(false);
+                    HttpResponseMessage amsRequestResultWait = await _httpClient.GetAsync(monitorUrl, cancellationToken).ConfigureAwait(false);
                     string responseContentWait = await amsRequestResultWait.Content.ReadAsStringAsync().ConfigureAwait(false);
                     dynamic data = JsonConvert.DeserializeObject(responseContentWait);
                     notComplete = data.status == "InProgress";

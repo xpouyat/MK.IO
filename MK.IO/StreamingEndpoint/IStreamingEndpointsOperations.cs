@@ -70,8 +70,9 @@ namespace MK.IO.Operations
         /// Delete a Streaming Endpoint. If the Streaming Endpoint does not exist, this API will return a 204.
         /// </summary>
         /// <param name="streamingEndpointName">The name of the Streaming Endpoint.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task DeleteAsync(string streamingEndpointName);
+        Task DeleteAsync(string streamingEndpointName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves a single Streaming Endpoint.
@@ -84,8 +85,9 @@ namespace MK.IO.Operations
         /// Retrieves a single Streaming Endpoint.
         /// </summary>
         /// <param name="streamingEndpointName">The name of the Streaming Endpoint.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<StreamingEndpointSchema> GetAsync(string streamingEndpointName);
+        Task<StreamingEndpointSchema> GetAsync(string streamingEndpointName, CancellationToken cancellationToken = default);
 
 #if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
         /// <summary>
@@ -107,8 +109,9 @@ namespace MK.IO.Operations
         /// <param name="location">The name of the location in which the Streaming Endpoint is located. This field must match the location in which the user's subscription is provisioned.</param>
         /// <param name="properties">The properties of the Streaming Endpoint.</param>
         /// <param name="tags">A dictionary of key:value pairs describing the resource. Search may be implemented against tags in the future.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<StreamingEndpointSchema> UpdateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, Dictionary<string, string>? tags = null);
+        Task<StreamingEndpointSchema> UpdateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, Dictionary<string, string>? tags = null, CancellationToken cancellationToken = default);
 #endif
 
         /// <summary>
@@ -130,8 +133,9 @@ namespace MK.IO.Operations
         /// <param name="properties">The properties of the Streaming Endpoint.</param>
         /// <param name="autoStart"></param>
         /// <param name="tags">A dictionary of key:value pairs describing the resource. Search may be implemented against tags in the future.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<StreamingEndpointSchema> CreateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string>? tags = null);
+        Task<StreamingEndpointSchema> CreateAsync(string streamingEndpointName, string location, StreamingEndpointProperties properties, bool autoStart = false, Dictionary<string, string>? tags = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Changes the scale of the Streaming Endpoint.
@@ -145,7 +149,9 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="streamingEndpointName">The name of the Streaming Endpoint.</param>
         /// <param name="scaleUnit">The scale unit count for this Streaming Endpoint.</param>
-        Task ScaleAsync(string streamingEndpointName, int scaleUnit);
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
+        /// <returns></returns>
+        Task ScaleAsync(string streamingEndpointName, int scaleUnit, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Start a Streaming Endpoint.
@@ -159,7 +165,9 @@ namespace MK.IO.Operations
         /// This operation transitions your Streaming Endpoint into a running state.
         /// </summary>
         /// <param name="streamingEndpointName">The name of the Streaming Endpoint.</param>
-        Task StartAsync(string streamingEndpointName);
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
+        /// <returns></returns>
+        Task StartAsync(string streamingEndpointName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Stop a Streaming Endpoint. Any active playback sessions will be interrupted.
@@ -171,7 +179,8 @@ namespace MK.IO.Operations
         /// Stop a Streaming Endpoint. Any active playback sessions will be interrupted.
         /// </summary>
         /// <param name="streamingEndpointName">The name of the Streaming Endpoint.</param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task StopAsync(string streamingEndpointName);
+        Task StopAsync(string streamingEndpointName, CancellationToken cancellationToken = default);
     }
 }

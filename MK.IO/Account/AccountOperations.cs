@@ -49,10 +49,10 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<AccountStats> GetSubscriptionStatsAsync()
+        public async Task<AccountStats> GetSubscriptionStatsAsync(CancellationToken cancellationToken = default)
         {
             var url = Client.GenerateApiUrl(_accountStatsApiUrl);
-            string responseContent = await Client.GetObjectContentAsync(url);
+            string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
             return AccountStats.FromJson(responseContent);
         }
 
@@ -64,9 +64,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<UserInfo> GetUserProfileAsync()
+        public async Task<UserInfo> GetUserProfileAsync(CancellationToken cancellationToken = default)
         {
-            string responseContent = await Client.GetObjectContentAsync(Client._baseUrl + _accountProfileApiUrl);
+            string responseContent = await Client.GetObjectContentAsync(Client._baseUrl + _accountProfileApiUrl, cancellationToken);
             return AccountProfile.FromJson(responseContent).Spec;
         }
 
@@ -92,9 +92,9 @@ namespace MK.IO.Operations
         }
 
         /// <inheritdoc/>
-        public async Task<SubscriptionResponseSchema> GetSubscriptionAsync()
+        public async Task<SubscriptionResponseSchema> GetSubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            string responseContent = await Client.GetObjectContentAsync(GenerateSubscriptionApiUrl(_accountSubscriptionUrl));
+            string responseContent = await Client.GetObjectContentAsync(GenerateSubscriptionApiUrl(_accountSubscriptionUrl), cancellationToken);
             return SubscriptionResponseSchema.FromJson(responseContent);
         }
 

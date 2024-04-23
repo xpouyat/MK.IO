@@ -71,8 +71,9 @@ namespace MK.IO.Operations
         /// Delete the account filter.
         /// </summary>
         /// <param name="accountFilterName"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task DeleteAsync(string accountFilterName);
+        Task DeleteAsync(string accountFilterName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get an account filter by name.
@@ -85,8 +86,9 @@ namespace MK.IO.Operations
         /// Get an account filter by name.
         /// </summary>
         /// <param name="accountFilterName"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<AccountFilterSchema> GetAsync(string accountFilterName);
+        Task<AccountFilterSchema> GetAsync(string accountFilterName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create or Update an account filter.
@@ -101,8 +103,9 @@ namespace MK.IO.Operations
         /// </summary>
         /// <param name="accountFilterName"></param>
         /// <param name="properties"></param>
+        /// <param name="cancellationToken">Optional System.Threading.CancellationToken to propagate notifications that the operation should be cancelled.</param>
         /// <returns></returns>
-        Task<AccountFilterSchema> CreateOrUpdateAsync(string accountFilterName, MediaFilterProperties properties);
+        Task<AccountFilterSchema> CreateOrUpdateAsync(string accountFilterName, MediaFilterProperties properties, CancellationToken cancellationToken = default);
 
     }
 }
