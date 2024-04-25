@@ -180,8 +180,7 @@ var newSe = await client.StreamingEndpoints.CreateAsync("streamingendpoint2", "f
                 CdnEnabled = false,
                 Sku = new StreamingEndpointsCurrentSku
                 {
-                    Name = "Standard",
-                    Capacity = 600
+                    Name = StreamingEndpointSkuType.Standard
                 }
             });
 
