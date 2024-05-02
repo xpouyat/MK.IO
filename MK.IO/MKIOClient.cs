@@ -15,12 +15,12 @@ namespace MK.IO
 {
     /// <summary>
     /// REST Base Client for MKIO
-    /// https://io.mediakind.com
+    /// https://mk.io/
     /// 
     /// </summary>
     public class MKIOClient : IMKIOClient
     {
-        internal readonly string _baseUrl = "https://api.io.mediakind.com/";
+        internal readonly string _baseUrl = "https://api.mk.io/";
         internal const string _allJobsApiUrl = "api/ams/{0}/jobs";
         internal const string _transformsApiUrl = "api/ams/{0}/transforms";
         internal const string _assetsApiUrl = "api/ams/{0}/assets";
