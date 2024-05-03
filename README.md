@@ -1,6 +1,6 @@
 # MK.IO Client Library
 
-A client library for [MediaKind MK.IO](https://mk.io/).
+A client library for [MediaKind MK.IO](https://mk.io).
 
 [Link to MK.IO Nuget package](https://www.nuget.org/packages/MK.IO).
 
@@ -12,7 +12,7 @@ You need the MK.IO API token `mkiotoken` to connect to the API.
 
 To do so,
 
-1. Open a web browser and log into https://mk.io/ (sign in with Microsoft SSO).
+1. Open a web browser and log into https://mk.io (sign in with Microsoft SSO).
 1. Once you are logged in, open a second tab on the same browser and open this link in the new tab: https://api.mk.io/auth/token/
 
 This should provide you with your user_id and token. Note that this token is valid for 1 year.
