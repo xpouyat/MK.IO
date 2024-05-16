@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,30 +9,26 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class IPAcl
     {
         /// <summary>
         /// Gets or Sets Address
         /// </summary>
-        [DataMember(Name = "address", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "address")]
         public string Address { get; set; }
 
         /// <summary>
         /// The name of the IP ACL.
         /// </summary>
         /// <value>The name of the IP ACL.</value>
-        [DataMember(Name = "name", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "name")]
+
+
         public string Name { get; set; }
 
         /// <summary>
         /// The subnet prefix length (see CIDR notation).
         /// </summary>
         /// <value>The subnet prefix length (see CIDR notation).</value>
-        [DataMember(Name = "subnetPrefixLength", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "subnetPrefixLength")]
         public int? SubnetPrefixLength { get; set; }
 
 
@@ -56,7 +53,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

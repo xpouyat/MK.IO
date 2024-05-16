@@ -1,6 +1,8 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -8,23 +10,20 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class AzureCredential
     {
         /// <summary>
         /// SAS Token for Azure Storage Account, including leading ?
         /// </summary>
         /// <value>SAS Token for Azure Storage Account, including leading ?</value>
-        [DataMember(Name = "sasToken", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "sasToken")]
         public string SasToken { get; set; }
 
         /// <summary>
         /// Sanitized token returned in responses from the server. This is the same as the sasToken, but with the signature removed.
         /// </summary>
         /// <value>Sanitized token returned in responses from the server. This is the same as the sasToken, but with the signature removed.</value>
-        [DataMember(Name = "sasTokenSanitized", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "sasTokenSanitized")]
+        [JsonInclude]
         public string SasTokenSanitized { get; private set; }
 
 
@@ -48,7 +47,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

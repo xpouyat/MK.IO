@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,42 +9,32 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class AudioSchema
     {
         /// <summary>
         /// Gets or Sets Src
         /// </summary>
-        [DataMember(Name = "src", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "src")]
         public string Src { get; set; }
 
         /// <summary>
         /// Gets or Sets SystemBitrate
         /// </summary>
-        [DataMember(Name = "systemBitrate", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "systemBitrate")]
         public string SystemBitrate { get; set; }
 
         /// <summary>
         /// Gets or Sets SystemLanguage
         /// </summary>
-        [DataMember(Name = "systemLanguage", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "systemLanguage")]
         public string SystemLanguage { get; set; }
 
         /// <summary>
         /// Gets or Sets TrackID
         /// </summary>
-        [DataMember(Name = "trackID", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "trackID")]
         public string TrackID { get; set; }
 
         /// <summary>
         /// Gets or Sets TrackName
         /// </summary>
-        [DataMember(Name = "trackName", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "trackName")]
         public string TrackName { get; set; }
 
 
@@ -70,7 +61,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

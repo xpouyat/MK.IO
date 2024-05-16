@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,22 +9,18 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class StorageListResponseSchema
     {
         /// <summary>
         /// A list of storage accounts
         /// </summary>
         /// <value>A list of storage accounts</value>
-        [DataMember(Name = "items", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "items")]
         public List<StorageResponseSchema> Items { get; set; }
 
         /// <summary>
         /// Gets or Sets Kind
         /// </summary>
-        [DataMember(Name = "kind", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
 
 
@@ -47,7 +44,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

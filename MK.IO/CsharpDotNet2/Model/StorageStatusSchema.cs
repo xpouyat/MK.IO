@@ -1,6 +1,8 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -8,23 +10,21 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class StorageStatusSchema
     {
         /// <summary>
         /// The unique identifier of the credential that is currently active for the storage account.
         /// </summary>
         /// <value>The unique identifier of the credential that is currently active for the storage account.</value>
-        [DataMember(Name = "activeCredentialId", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "activeCredentialId")]
+        [JsonInclude]
         public Guid? ActiveCredentialId { get; private set; }
 
         /// <summary>
         /// The state of the Azure Private Connection, if enabled.
         /// </summary>
         /// <value>The state of the Azure Private Connection, if enabled.</value>
-        [DataMember(Name = "privateLinkServiceConnectionStatus", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "privateLinkServiceConnectionStatus")]
+        [JsonInclude]
         public PrivateLinkServiceConnectionState? PrivateLinkServiceConnectionStatus { get; private set; }
 
 
@@ -48,7 +48,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

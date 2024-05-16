@@ -1,6 +1,8 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -8,22 +10,19 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class LiveOutputSchema
     {
         /// <summary>
         /// The name of the resource
         /// </summary>
         /// <value>The name of the resource</value>
-        [DataMember(Name = "name", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "name")]
+        [JsonInclude]
         public string Name { get; private set; }
 
         /// <summary>
         /// Gets or Sets Properties
         /// </summary>
-        [DataMember(Name = "properties", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "properties")]
         public LiveOutputProperties Properties { get; set; }
 
 
@@ -47,7 +46,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

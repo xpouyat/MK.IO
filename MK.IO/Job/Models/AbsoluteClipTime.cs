@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -18,15 +18,13 @@ namespace MK.IO.Models
             Time = time;
         }
 
-        [JsonProperty("@odata.type")]
+        [JsonPropertyName("@odata.type")]
         internal override string OdataType => "#Microsoft.Media.AbsoluteClipTime";
 
         /// <summary>
         /// The time position on the timeline of the input media. It is usually specified as an ISO8601 period. e.g PT30S for 30 seconds.
         /// </summary>
         /// <value>The time position on the timeline of the input media. It is usually specified as an ISO8601 period. e.g PT30S for 30 seconds.</value>
-        [DataMember(Name = "time", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "time")]
         public TimeSpan Time { get; set; }
 
 
@@ -50,7 +48,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

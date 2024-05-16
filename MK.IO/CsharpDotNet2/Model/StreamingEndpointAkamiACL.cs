@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,15 +9,13 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class StreamingEndpointAkamiACL
     {
         /// <summary>
         /// The Akamai access control configuration for the streaming endpoint. Learn more: https://techdocs.akamai.com/netstorage-usage/reference/example-authentication-headers
         /// </summary>
         /// <value>The Akamai access control configuration for the streaming endpoint. Learn more: https://techdocs.akamai.com/netstorage-usage/reference/example-authentication-headers</value>
-        [DataMember(Name = "akamaiSignatureHeaderAuthenticationKeyList", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "akamaiSignatureHeaderAuthenticationKeyList")]
         public List<AkamiHeaderAuthKey> AkamaiSignatureHeaderAuthenticationKeyList { get; set; }
 
 
@@ -39,7 +38,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using MK.IO.Models;
-using Newtonsoft.Json;
+
 using System.Net;
+using System.Text.Json;
 #if NET462
 using System.Net.Http;
 using System.Threading;
@@ -112,7 +113,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_streamingEndpointApiUrl, streamingEndpointName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
+            return JsonSerializer.Deserialize<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
         }
 
 #if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
@@ -134,8 +135,8 @@ namespace MK.IO.Operations
             var url = Client.GenerateApiUrl(_streamingEndpointApiUrl, streamingEndpointName);
             tags ??= new Dictionary<string, string>();
             var content = new StreamingEndpointSchema { Location = location, Properties = properties, Tags = tags };
-            string responseContent = await Client.UpdateObjectPatchAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings), cancellationToken);
-            return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
+            string responseContent = await Client.UpdateObjectPatchAsync(url, JsonSerializer.Serialize(content, ConverterLE.Settings), cancellationToken);
+            return JsonSerializer.Deserialize<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
         }
 #endif
 
@@ -164,8 +165,8 @@ namespace MK.IO.Operations
                 Properties = properties,
                 Tags = tags
             };
-            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings), cancellationToken);
-            return JsonConvert.DeserializeObject<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
+            string responseContent = await Client.CreateObjectPutAsync(url, JsonSerializer.Serialize(content, ConverterLE.Settings), cancellationToken);
+            return JsonSerializer.Deserialize<StreamingEndpointSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming endpoint deserialization");
         }
 
         /// <inheritdoc/>
@@ -180,7 +181,7 @@ namespace MK.IO.Operations
             Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
             var url = Client.GenerateApiUrl(_streamingEndpointApiUrl + "/scale", streamingEndpointName);
             var content = new StreamingEndpointScaleSchema { ScaleUnit = scaleUnit };
-            await Client.CreateObjectPostAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings), cancellationToken);
+            await Client.CreateObjectPostAsync(url, JsonSerializer.Serialize(content, ConverterLE.Settings), cancellationToken);
         }
 
         /// <inheritdoc/>

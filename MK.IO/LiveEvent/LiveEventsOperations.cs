@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using MK.IO.Models;
-using Newtonsoft.Json;
+
 using System.Net;
+using System.Text.Json;
 #if NET462
 using System.Net.Http;
 #endif
@@ -110,7 +111,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_liveEventApiUrl, liveEventName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live event deserialization");
+            return JsonSerializer.Deserialize<LiveEventSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live event deserialization");
         }
 
         /*
@@ -160,7 +161,7 @@ namespace MK.IO.Operations
             tags ??= new Dictionary<string, string>();
             var content = new LiveEventSchema { Location = location, Tags = tags, Properties = properties };
             string responseContent = await func(url, content.ToJson(), cancellationToken);
-            return JsonConvert.DeserializeObject<LiveEventSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live event deserialization");
+            return JsonSerializer.Deserialize<LiveEventSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live event deserialization");
         }
 
         /// <inheritdoc/>

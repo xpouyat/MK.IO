@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using JsonSubTypes;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
-    [JsonConverter(typeof(JsonSubtypes), "@odata.type")]
+    [JsonConverter(typeof(JsonSubtypes))]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader), "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier), "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier")]
 
@@ -16,7 +16,7 @@ namespace MK.IO.Models
     //     to specify a location.
     public class PlayReadyContentKeyLocation
     {
-        [JsonProperty("@odata.type")]
+        [JsonPropertyName("@odata.type")]
         internal virtual string OdataType { get; set; }
     }
 }

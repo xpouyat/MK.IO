@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using MK.IO.Models;
-using Newtonsoft.Json;
+
 using System.Net;
+using System.Text.Json;
 #if NET462
 using System.Net.Http;
 using System.Reflection.Emit;
@@ -103,7 +104,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_accountFilterApiUrl, accountFilterName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<AccountFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with account filter deserialization");
+            return JsonSerializer.Deserialize<AccountFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with account filter deserialization");
         }
 
         /// <inheritdoc/>
@@ -129,8 +130,8 @@ namespace MK.IO.Operations
                 Properties = properties
             };
 
-            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings), cancellationToken);
-            return JsonConvert.DeserializeObject<AccountFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with account filter deserialization");
+            string responseContent = await Client.CreateObjectPutAsync(url, JsonSerializer.Serialize(content, ConverterLE.Settings), cancellationToken);
+            return JsonSerializer.Deserialize<AccountFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with account filter deserialization");
         }
 
         /// <inheritdoc/>

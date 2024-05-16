@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using MK.IO.Models;
-using Newtonsoft.Json;
+
 using System.Net;
+using System.Text.Json;
 
 #if NET462
 using System.Net.Http;
@@ -112,7 +113,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_streamingPolicyApiUrl, streamingPolicyName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<StreamingPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming policy deserialization");
+            return JsonSerializer.Deserialize<StreamingPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming policy deserialization");
         }
 
         /// <inheritdoc/>
@@ -132,7 +133,7 @@ namespace MK.IO.Operations
             var url = Client.GenerateApiUrl(_streamingPolicyApiUrl, streamingPolicyName);
             var content = new StreamingPolicySchema { Properties = properties };
             string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson(), cancellationToken);
-            return JsonConvert.DeserializeObject<StreamingPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming policy deserialization");
+            return JsonSerializer.Deserialize<StreamingPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with streaming policy deserialization");
         }
 
         /// <inheritdoc/>

@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -11,22 +9,17 @@ namespace MK.IO.Models
     /// The rental and lease key type.
     /// </summary>
     /// <value>The rental and lease key type.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum RentalAndLeaseKeyType
     {
-        [EnumMember(Value = "Unknown")]
         Unknown,
 
-        [EnumMember(Value = "Undefined")]
         Undefined,
 
-        [EnumMember(Value = "DualExpiry")]
         DualExpiry,
 
-        [EnumMember(Value = "PersistentUnlimited")]
         PersistentUnlimited,
 
-        [EnumMember(Value = "PersistentLimited")]
         PersistentLimited
     }
 }

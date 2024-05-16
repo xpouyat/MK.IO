@@ -1,9 +1,10 @@
 using System;
 using System.Text;
+using System.Text.Json;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
+
+
 
 namespace MK.IO.Models
 {
@@ -11,23 +12,19 @@ namespace MK.IO.Models
     /// <summary>
     /// Configures the Explicit Analog Television Output Restriction control bits. For further details see the PlayReady Compliance Rules.
     /// </summary>
-    [DataContract]
+
     public class ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction
     {
         /// <summary>
         /// Indicates whether this restriction is enforced on a Best Effort basis.
         /// </summary>
         /// <value>Indicates whether this restriction is enforced on a Best Effort basis.</value>
-        [DataMember(Name = "bestEffort", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "bestEffort")]
         public bool? BestEffort { get; set; }
 
         /// <summary>
         /// Configures the restriction control bits. Must be between 0 and 3 inclusive.
         /// </summary>
         /// <value>Configures the restriction control bits. Must be between 0 and 3 inclusive.</value>
-        [DataMember(Name = "configurationData", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "configurationData")]
         public int? ConfigurationData { get; set; }
 
 
@@ -51,7 +48,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

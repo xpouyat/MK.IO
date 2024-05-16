@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,21 +9,17 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class AssetStorageResponseSchema
     {
         /// <summary>
         /// Gets or Sets Metadata
         /// </summary>
-        [DataMember(Name = "metadata", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "metadata")]
         public AssetStorageDataMetadataSchema Metadata { get; set; }
 
         /// <summary>
         /// Gets or Sets Spec
         /// </summary>
-        [DataMember(Name = "spec", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "spec")]
         public AssetStorageDataSpecSchema Spec { get; set; }
 
 
@@ -46,7 +43,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

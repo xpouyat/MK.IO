@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -11,13 +9,11 @@ namespace MK.IO.Models
     /// The type of the SKU. Will default to 'Standard' if the sku configuration is not provided.
     /// </summary>
     /// <value>The type of the SKU. Will default to 'Standard' if the sku configuration is not provided.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum StreamingEndpointSkuType
     {
-        [EnumMember(Value = "Standard")]
         Standard,
 
-        [EnumMember(Value = "Premium")]
         Premium
     }
 }

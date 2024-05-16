@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,15 +9,13 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class StreamingLocatorListResponse
     {
         /// <summary>
         /// List of Streaming Locators
         /// </summary>
         /// <value>List of Streaming Locators</value>
-        [DataMember(Name = "streamingLocators", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "streamingLocators")]
         public List<StreamingLocatorSchema> StreamingLocators { get; set; }
 
 
@@ -39,7 +38,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,23 +9,19 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class ErrorDetail
     {
         /// <summary>
         /// The error code.
         /// </summary>
         /// <value>The error code.</value>
-        [DataMember(Name = "code", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// The error message.
         /// </summary>
         /// <value>The error message.</value>
-        [DataMember(Name = "detail", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "detail")]
         public string Detail { get; set; }
 
 
@@ -48,7 +45,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

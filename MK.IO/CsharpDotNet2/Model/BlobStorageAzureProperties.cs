@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,22 +9,18 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class BlobStorageAzureProperties
     {
         /// <summary>
         /// Gets or Sets PrivateLinkServiceConnection
         /// </summary>
-        [DataMember(Name = "privateLinkServiceConnection", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "privateLinkServiceConnection")]
         public BlobStorageAzurePrivateConnection PrivateLinkServiceConnection { get; set; }
 
         /// <summary>
         /// HTTP(S) URL required for access to the storage.
         /// </summary>
         /// <value>HTTP(S) URL required for access to the storage.</value>
-        [DataMember(Name = "url", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
 
@@ -47,7 +44,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -11,19 +9,15 @@ namespace MK.IO.Models
     /// The PlayReady security level.
     /// </summary>
     /// <value>The PlayReady security level.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum PlayReadySecurityLevel
     {
-        [EnumMember(Value = "Unknown")]
         Unknown,
 
-        [EnumMember(Value = "SL150")]
         SL150,
 
-        [EnumMember(Value = "SL2000")]
         SL2000,
 
-        [EnumMember(Value = "SL3000")]
-        SL3000,
+        SL3000
     }
 }

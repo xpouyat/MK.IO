@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,21 +9,17 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class TrackSchema
     {
         /// <summary>
         /// Gets or Sets Body
         /// </summary>
-        [DataMember(Name = "body", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "body")]
         public BodySchema Body { get; set; }
 
         /// <summary>
         /// Gets or Sets Head
         /// </summary>
-        [DataMember(Name = "head", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "head")]
         public HeadSchema Head { get; set; }
 
 
@@ -46,7 +43,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

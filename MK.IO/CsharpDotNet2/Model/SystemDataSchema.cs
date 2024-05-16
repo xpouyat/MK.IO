@@ -1,6 +1,8 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -8,55 +10,49 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class SystemDataSchema
     {
         /// <summary>
         /// The timestamp of resource creation (UTC).
         /// </summary>
         /// <value>The timestamp of resource creation (UTC).</value>
-        [DataMember(Name = "createdAt", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "createdAt")]
+        [JsonInclude]
         public DateTime? CreatedAt { get; private set; }
 
         /// <summary>
         /// The identity that created the resource.
         /// </summary>
         /// <value>The identity that created the resource.</value>
-        [DataMember(Name = "createdBy", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "createdBy")]
+        [JsonInclude]
         public string CreatedBy { get; private set; }
 
         /// <summary>
         /// The type of identity that created the resource.
         /// </summary>
         /// <value>The type of identity that created the resource.</value>
-        [DataMember(Name = "createdByType", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "createdByType")]
+        [JsonInclude]
         public string CreatedByType { get; private set; }
 
         /// <summary>
         /// The timestamp of resource last modification (UTC).
         /// </summary>
         /// <value>The timestamp of resource last modification (UTC).</value>
-        [DataMember(Name = "lastModifiedAt", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "lastModifiedAt")]
+        [JsonInclude]
         public DateTime? LastModifiedAt { get; private set; }
 
         /// <summary>
         /// The identity that last modified the resource.
         /// </summary>
         /// <value>The identity that last modified the resource.</value>
-        [DataMember(Name = "lastModifiedBy", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "lastModifiedBy")]
+        [JsonInclude]
         public string LastModifiedBy { get; private set; }
 
         /// <summary>
         /// The type of identity that last modified the resource.
         /// </summary>
         /// <value>The type of identity that last modified the resource.</value>
-        [DataMember(Name = "lastModifiedByType", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "lastModifiedByType")]
+        [JsonInclude]
         public string LastModifiedByType { get; private set; }
 
 
@@ -84,7 +80,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

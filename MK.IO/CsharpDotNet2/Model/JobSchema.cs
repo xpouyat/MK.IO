@@ -1,6 +1,8 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -8,45 +10,39 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class JobSchema
     {
         /// <summary>
         /// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
         /// <value>Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</value>
-        [DataMember(Name = "id", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "id")]
+        [JsonInclude]
         public string Id { get; private set; }
 
         /// <summary>
         /// The name of the resource
         /// </summary>
         /// <value>The name of the resource</value>
-        [DataMember(Name = "name", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "name")]
+        [JsonInclude]
         public string Name { get; private set; }
 
         /// <summary>
         /// Gets or Sets Properties
         /// </summary>
-        [DataMember(Name = "properties", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "properties")]
         public JobProperties Properties { get; set; }
 
         /// <summary>
         /// Gets or Sets SystemData
         /// </summary>
-        [DataMember(Name = "systemData", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "systemData")]
+        [JsonInclude]
         public SystemDataSchema SystemData { get; private set; }
 
         /// <summary>
         /// The type of the resource. E.g. \"Microsoft.Media/mediaservices/assets\"
         /// </summary>
         /// <value>The type of the resource. E.g. \"Microsoft.Media/mediaservices/assets\"</value>
-        [DataMember(Name = "type", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "type")]
+        [JsonInclude]
         public string Type { get; private set; }
 
 
@@ -73,7 +69,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,15 +9,13 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class AssetFilterListResponseSchema
     {
         /// <summary>
         /// A list of asset filters
         /// </summary>
         /// <value>A list of asset filters</value>
-        [DataMember(Name = "value", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "value")]
         public List<AssetFilterSchema> Value { get; set; }
 
 
@@ -39,7 +38,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

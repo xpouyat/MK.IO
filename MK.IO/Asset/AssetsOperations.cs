@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using MK.IO.Models;
-using Newtonsoft.Json;
+
 using System.Collections.ObjectModel;
 using System.Net;
+using System.Text.Json;
 #if NET462
 using System.Net.Http;
 #endif
@@ -78,6 +79,7 @@ namespace MK.IO.Operations
             var url = Client.GenerateApiUrl(_assetsApiUrl);
             url = MKIOClient.AddParametersToUrl(url, "$label_key", label_key);
             url = MKIOClient.AddParametersToUrl(url, "$label", label);
+            var ccc = await Client.ListAsPageGenericAsync<AssetSchema>(url, typeof(AssetListResponseSchema), "asset", cancellationToken, orderBy, filter, top); ;
             return await Client.ListAsPageGenericAsync<AssetSchema>(url, typeof(AssetListResponseSchema), "asset", cancellationToken, orderBy, filter, top);
         }
 
@@ -107,7 +109,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_assetApiUrl, assetName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset deserialization");
+            return JsonSerializer.Deserialize<AssetSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset deserialization");
         }
 
         /// <inheritdoc/>
@@ -142,8 +144,8 @@ namespace MK.IO.Operations
                 }
             };
 
-            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings), cancellationToken);
-            return JsonConvert.DeserializeObject<AssetSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset deserialization");
+            string responseContent = await Client.CreateObjectPutAsync(url, JsonSerializer.Serialize(content, ConverterLE.Settings), cancellationToken);
+            return JsonSerializer.Deserialize<AssetSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset deserialization");
         }
 
         /// <inheritdoc/>
@@ -192,7 +194,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_assetListTracksAndDirectoryApiUrl, assetName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<AssetStorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset storage deserialization");
+            return JsonSerializer.Deserialize<AssetStorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset storage deserialization");
         }
     }
 }

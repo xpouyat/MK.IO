@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using JsonSubTypes;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+
 namespace MK.IO.Models
 {
-
-    [JsonConverter(typeof(JsonSubtypes), "@odata.type")]
+    [JsonConverter(typeof(JsonSubtypes))]
     [JsonSubtypes.KnownSubType(typeof(JobInputAsset), "#Microsoft.Media.JobInputAsset")]
     [JsonSubtypes.KnownSubType(typeof(JobInputHttp), "#Microsoft.Media.JobInputHttp")]
 
@@ -16,7 +16,7 @@ namespace MK.IO.Models
     //     to create a configuration.
     public class JobInput
     {
-        [JsonProperty("@odata.type")]
+        [JsonPropertyName("@odata.type")]
         internal virtual string OdataType { get; set; }
     }
 }

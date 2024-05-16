@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -11,31 +9,23 @@ namespace MK.IO.Models
     /// The resource state of the streaming endpoint.
     /// </summary>
     /// <value>The resource state of the streaming endpoint.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum StreamingEndpointResourceState
     {
-        [EnumMember(Value = "Running")]
         Running,
 
-        [EnumMember(Value = "Stopped")]
         Stopped,
 
-        [EnumMember(Value = "Deleted")]
         Deleted,
 
-        [EnumMember(Value = "Starting")]
         Starting,
 
-        [EnumMember(Value = "Stopping")]
         Stopping,
 
-        [EnumMember(Value = "Deleting")]
         Deleting,
 
-        [EnumMember(Value = "Scaling")]
         Scaling,
 
-        [EnumMember(Value = "Creating")]
         Creating
     }
 }

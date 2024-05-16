@@ -1,6 +1,7 @@
 using System.Text;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
+using System.Text.Json;
+
+
 
 namespace MK.IO.Models
 {
@@ -8,23 +9,19 @@ namespace MK.IO.Models
     /// <summary>
     /// Offline rental policy
     /// </summary>
-    [DataContract]
+
     public class ContentKeyPolicyFairPlayOfflineRentalConfiguration
     {
         /// <summary>
         /// Playback duration
         /// </summary>
         /// <value>Playback duration</value>
-        [DataMember(Name = "playbackDurationSeconds", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "playbackDurationSeconds")]
         public long? PlaybackDurationSeconds { get; set; }
 
         /// <summary>
         /// Storage duration
         /// </summary>
         /// <value>Storage duration</value>
-        [DataMember(Name = "storageDurationSeconds", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "storageDurationSeconds")]
         public long? StorageDurationSeconds { get; set; }
 
         /// <summary>
@@ -47,7 +44,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
     }
 }

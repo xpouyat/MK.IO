@@ -1,6 +1,8 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -8,39 +10,33 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class TransformProperties
     {
         /// <summary>
         /// The creation date and time of the Transform. Set by the system.
         /// </summary>
         /// <value>The creation date and time of the Transform. Set by the system.</value>
-        [DataMember(Name = "created", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "created")]
+        [JsonInclude]
         public DateTime? Created { get; private set; }
 
         /// <summary>
         /// The description of the Transform.
         /// </summary>
         /// <value>The description of the Transform.</value>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// The last modified date and time of the Transform. Set by the system.
         /// </summary>
         /// <value>The last modified date and time of the Transform. Set by the system.</value>
-        [DataMember(Name = "lastModified", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "lastModified")]
+        [JsonInclude]
         public DateTime? LastModified { get; private set; }
 
         /// <summary>
         /// An array of TransformOutputs that the Transform should generate. Currently limited to one.
         /// </summary>
         /// <value>An array of TransformOutputs that the Transform should generate. Currently limited to one.</value>
-        [DataMember(Name = "outputs", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "outputs")]
         public List<TransformOutput> Outputs { get; set; }
 
 
@@ -66,7 +62,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

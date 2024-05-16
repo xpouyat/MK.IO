@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,31 +9,25 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class StreamingLocatorListPathsStreamingPaths
     {
         /// <summary>
         /// The encryption scheme used for the path.
         /// </summary>
         /// <value>The encryption scheme used for the path.</value>
-        [DataMember(Name = "encryptionScheme", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "encryptionScheme")]
         public StreamingPathsEncryptionScheme EncryptionScheme { get; set; }
 
         /// <summary>
         /// The paths for the locator.
         /// </summary>
         /// <value>The paths for the locator.</value>
-        [DataMember(Name = "paths", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "paths")]
         public List<string> Paths { get; set; }
 
         /// <summary>
         /// The streaming protocol used for the path.
         /// </summary>
         /// <value>The streaming protocol used for the path.</value>
-        [DataMember(Name = "streamingProtocol", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "streamingProtocol")]
         public StreamingPathsStreamingProtocol StreamingProtocol { get; set; }
 
 
@@ -57,7 +52,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using MK.IO.Models;
-using Newtonsoft.Json;
+
 using System.Net;
+using System.Text.Json;
 #if NET462
 using System.Net.Http;
 using System.Threading;
@@ -109,7 +110,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_assetFilterApiUrl, assetName, filterName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<AssetFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset filter deserialization");
+            return JsonSerializer.Deserialize<AssetFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset filter deserialization");
         }
 
         /// <inheritdoc/>
@@ -135,8 +136,8 @@ namespace MK.IO.Operations
                 Properties = properties
             };
 
-            string responseContent = await Client.CreateObjectPutAsync(url, JsonConvert.SerializeObject(content, ConverterLE.Settings), cancellationToken);
-            return JsonConvert.DeserializeObject<AssetFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset filter deserialization");
+            string responseContent = await Client.CreateObjectPutAsync(url, JsonSerializer.Serialize(content, ConverterLE.Settings), cancellationToken);
+            return JsonSerializer.Deserialize<AssetFilterSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with asset filter deserialization");
         }
 
         /// <inheritdoc/>

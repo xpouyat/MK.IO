@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,23 +9,19 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class StreamingLocatorDrm
     {
         /// <summary>
         /// The URL for obtaining the streaming certificate.
         /// </summary>
         /// <value>The URL for obtaining the streaming certificate.</value>
-        [DataMember(Name = "certificateUrl", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "certificateUrl")]
         public string CertificateUrl { get; set; }
 
         /// <summary>
         /// The license acquisition URL for the DRM.
         /// </summary>
         /// <value>The license acquisition URL for the DRM.</value>
-        [DataMember(Name = "licenseAcquisitionUrl", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "licenseAcquisitionUrl")]
         public string LicenseAcquisitionUrl { get; set; }
 
 
@@ -48,7 +45,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

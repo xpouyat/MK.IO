@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,28 +9,22 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class AkamiHeaderAuthKey
     {
         /// <summary>
         /// Gets or Sets Base64Key
         /// </summary>
-        [DataMember(Name = "base64Key", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "base64Key")]
         public string Base64Key { get; set; }
 
         /// <summary>
         /// Gets or Sets Expiration
         /// </summary>
-        [DataMember(Name = "expiration", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "expiration")]
         public string Expiration { get; set; }
 
         /// <summary>
         /// Gets or Sets Identifier
         /// </summary>
-        [DataMember(Name = "identifier", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "identifier")]
         public string Identifier { get; set; }
 
 
@@ -54,7 +49,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

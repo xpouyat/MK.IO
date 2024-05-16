@@ -1,6 +1,8 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -8,47 +10,43 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class StorageMetadataSchema
     {
         /// <summary>
         /// The date and time when the storage account was created.
         /// </summary>
         /// <value>The date and time when the storage account was created.</value>
-        [DataMember(Name = "created", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "created")]
+        [JsonInclude]
         public DateTime? Created { get; private set; }
 
         /// <summary>
         /// The unique identifier of the user who created the storage account.
         /// </summary>
         /// <value>The unique identifier of the user who created the storage account.</value>
-        [DataMember(Name = "createdById", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "createdById")]
+        [JsonInclude]
         public Guid? CreatedById { get; private set; }
 
         /// <summary>
         /// The unique identifier of the storage account.
         /// </summary>
         /// <value>The unique identifier of the storage account.</value>
-        [DataMember(Name = "id", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "id")]
+
+
         public Guid? Id { get; set; }
 
         /// <summary>
         /// The date and time when the storage account was last updated.
         /// </summary>
         /// <value>The date and time when the storage account was last updated.</value>
-        [DataMember(Name = "updated", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "updated")]
+        [JsonInclude]
         public DateTime? Updated { get; private set; }
 
         /// <summary>
         /// The unique identifier of the user who last updated the storage account.
         /// </summary>
         /// <value>The unique identifier of the user who last updated the storage account.</value>
-        [DataMember(Name = "updatedById", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "updatedById")]
+        [JsonInclude]
         public Guid? UpdatedById { get; private set; }
 
 
@@ -75,7 +73,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

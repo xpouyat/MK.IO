@@ -41,7 +41,7 @@ JobState to JobState? in JobProperties.cs
 
  public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 everywhere
 

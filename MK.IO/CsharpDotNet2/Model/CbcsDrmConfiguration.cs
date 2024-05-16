@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,28 +9,22 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class CbcsDrmConfiguration
     {
         /// <summary>
         /// Gets or Sets FairPlay
         /// </summary>
-        [DataMember(Name = "fairPlay", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "fairPlay")]
         public StreamingPolicyFairPlayConfiguration FairPlay { get; set; }
 
         /// <summary>
         /// Gets or Sets PlayReady
         /// </summary>
-        [DataMember(Name = "playReady", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "playReady")]
         public StreamingPolicyPlayReadyConfiguration PlayReady { get; set; }
 
         /// <summary>
         /// Gets or Sets Widevine
         /// </summary>
-        [DataMember(Name = "widevine", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "widevine")]
         public StreamingPolicyWidevineConfiguration Widevine { get; set; }
 
 
@@ -54,7 +49,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

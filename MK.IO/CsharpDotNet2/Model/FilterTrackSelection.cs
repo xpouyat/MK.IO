@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,15 +9,13 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class FilterTrackSelection
     {
         /// <summary>
         /// Defines the tracks to include in the output. Multiple entries here will be AND'd together.                  Typically, you will want to select a matching Type, such as video, and then select additional filters.          For instance, to include all audio tracks that are not English, and all video tracks that are between 3 and 5 Mbps, you would provide three FilterTrackSelection objects:         [             {\"property\": \"Type\", \"operation\": \"Equal\", \"value\": \"Audio\"},             {\"property\": \"Bitrate\", \"operation\": \"Equal\", \"value\": \"3000000-5000000\"},             {\"property\": \"Language\", \"operation\": \"NotEqual\", \"value\": \"en\"},         ]         
         /// </summary>
         /// <value>Defines the tracks to include in the output. Multiple entries here will be AND'd together.                  Typically, you will want to select a matching Type, such as video, and then select additional filters.          For instance, to include all audio tracks that are not English, and all video tracks that are between 3 and 5 Mbps, you would provide three FilterTrackSelection objects:         [             {\"property\": \"Type\", \"operation\": \"Equal\", \"value\": \"Audio\"},             {\"property\": \"Bitrate\", \"operation\": \"Equal\", \"value\": \"3000000-5000000\"},             {\"property\": \"Language\", \"operation\": \"NotEqual\", \"value\": \"en\"},         ]         </value>
-        [DataMember(Name = "trackSelections", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "trackSelections")]
         public List<FilterTrackPropertyCondition> TrackSelections { get; set; }
 
 
@@ -39,7 +38,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

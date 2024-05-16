@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,22 +9,18 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class StreamingPolicyContentKeys
     {
         /// <summary>
         /// Gets or Sets DefaultKey
         /// </summary>
-        [DataMember(Name = "defaultKey", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "defaultKey")]
         public DefaultKey DefaultKey { get; set; }
 
         /// <summary>
         /// List of content keys used by the key. Used to assign different keys to different tracks. For instance, using widevine L3 for SD and L1 for HD.
         /// </summary>
         /// <value>List of content keys used by the key. Used to assign different keys to different tracks. For instance, using widevine L3 for SD and L1 for HD.</value>
-        [DataMember(Name = "keyToTrackMappings", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "keyToTrackMappings")]
         public List<StreamingPolicyContentKey> KeyToTrackMappings { get; set; }
 
 
@@ -47,7 +44,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -15,14 +15,13 @@ namespace MK.IO.Models
             KeyValue = keyValue;
         }
 
-        [JsonProperty("@odata.type")]
+        [JsonPropertyName("@odata.type")]
         internal override string OdataType => "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey";
 
         /// <summary>
         /// The key value of the key
         /// </summary>
         /// <value>The key value of the key</value>
-        [JsonProperty("keyValue")]
         public string KeyValue { get; set; }
     }
 }

@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using JsonSubTypes;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
 
-    [JsonConverter(typeof(JsonSubtypes), "@odata.type")]
+    [JsonConverter(typeof(JsonSubtypes))]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyRsaTokenKey), "#Microsoft.Media.ContentKeyPolicyRsaTokenKey")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicySymmetricTokenKey), "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey")]
     [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyX509CertificateTokenKey), "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey")]
@@ -18,7 +18,7 @@ namespace MK.IO.Models
     //     to specify the key.
     public abstract class ContentKeyPolicyVerificationKey
     {
-        [JsonProperty("@odata.type")]
+        [JsonPropertyName("@odata.type")]
         internal virtual string OdataType { get; set; }
     }
 }

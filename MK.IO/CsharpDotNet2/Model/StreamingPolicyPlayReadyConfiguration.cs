@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,23 +9,19 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class StreamingPolicyPlayReadyConfiguration
     {
         /// <summary>
         /// The custom license acquisition URL template for a PlayReady license delivery service.
         /// </summary>
         /// <value>The custom license acquisition URL template for a PlayReady license delivery service.</value>
-        [DataMember(Name = "customLicenseAcquisitionUrlTemplate", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "customLicenseAcquisitionUrlTemplate")]
         public string CustomLicenseAcquisitionUrlTemplate { get; set; }
 
         /// <summary>
         /// The custom attributes for PlayReady.
         /// </summary>
         /// <value>The custom attributes for PlayReady.</value>
-        [DataMember(Name = "playReadyCustomAttributes", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "playReadyCustomAttributes")]
         public string PlayReadyCustomAttributes { get; set; }
 
 
@@ -48,7 +45,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

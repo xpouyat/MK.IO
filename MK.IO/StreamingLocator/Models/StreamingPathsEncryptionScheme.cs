@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -11,19 +9,15 @@ namespace MK.IO.Models
     /// The encryption scheme used for the path.
     /// </summary>
     /// <value>The encryption scheme used for the path.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum StreamingPathsEncryptionScheme
     {
-        [EnumMember(Value = "NoEncryption")]
         NoEncryption,
 
-        [EnumMember(Value = "CommonEncryptionCenc")]
         CommonEncryptionCenc,
 
-        [EnumMember(Value = "CommonEncryptionCbcs")]
         CommonEncryptionCbcs,
 
-        [EnumMember(Value = "EnvelopeEncryption")]
-        EnvelopeEncryption,
+        EnvelopeEncryption
     }
 }

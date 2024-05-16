@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 using MK.IO.Models;
-using Newtonsoft.Json;
+using System.Text.Json;
+
 #if NET462
 using System.Net.Http;
 #endif
@@ -75,7 +76,7 @@ namespace MK.IO.Operations
         {
             var url = GenerateStorageApiUrl(_storageApiUrl);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            var objectToReturn = JsonConvert.DeserializeObject<StorageListResponseSchema>(responseContent, ConverterLE.Settings);
+            var objectToReturn = JsonSerializer.Deserialize<StorageListResponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Items : throw new Exception($"Error with storage list deserialization");
         }
 
@@ -93,7 +94,7 @@ namespace MK.IO.Operations
 
             var url = GenerateStorageApiUrl(_storageSelectionApiUrl, storageAccountId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with storage deserialization");
+            return JsonSerializer.Deserialize<StorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with storage deserialization");
         }
 
         /// <inheritdoc/>
@@ -147,7 +148,7 @@ namespace MK.IO.Operations
 
             var url = GenerateStorageApiUrl(_storageListCredentialsApiUrl, storageAccountId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            var objectToReturn = JsonConvert.DeserializeObject<CredentialListReponseSchema>(responseContent, ConverterLE.Settings);
+            var objectToReturn = JsonSerializer.Deserialize<CredentialListReponseSchema>(responseContent, ConverterLE.Settings);
             return objectToReturn != null ? objectToReturn.Items : throw new Exception($"Error with credential list deserialization");
         }
 
@@ -166,7 +167,7 @@ namespace MK.IO.Operations
 
             var url = GenerateStorageApiUrl(_storageCredentialApiUrl, storageAccountId.ToString(), credentialId.ToString());
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with credential deserialization");
+            return JsonSerializer.Deserialize<CredentialResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with credential deserialization");
         }
 
         /// <inheritdoc/>
@@ -188,7 +189,7 @@ namespace MK.IO.Operations
                 Spec = credential
             };
             string responseContent = await Client.CreateObjectPostAsync(url, content.ToJson(), cancellationToken);
-            return JsonConvert.DeserializeObject<CredentialResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with credential deserialization");
+            return JsonSerializer.Deserialize<CredentialResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with credential deserialization");
         }
 
         /// <inheritdoc/>
@@ -209,7 +210,7 @@ namespace MK.IO.Operations
         internal async Task<StorageResponseSchema> CreateOrUpdateAsync(string Url, StorageRequestSchema storage, Func<string, string, CancellationToken, Task<string>> func, CancellationToken cancellationToken = default)
         {
             string responseContent = await func(Url, storage.ToJson(), cancellationToken);
-            return JsonConvert.DeserializeObject<StorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with storage deserialization");
+            return JsonSerializer.Deserialize<StorageResponseSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with storage deserialization");
         }
 
         private async Task StorageAccountOperationAsync(Guid storageAccountId, HttpMethod httpMethod, CancellationToken cancellationToken)

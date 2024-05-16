@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -8,31 +9,26 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class AssetProperties
     {
         /// <summary>
         /// An alternate ID of the asset.
         /// </summary>
         /// <value>An alternate ID of the asset.</value>
-        [DataMember(Name = "alternateId", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "alternateId")]
         public string AlternateId { get; set; }
 
         /// <summary>
         /// The Asset ID.
         /// </summary>
         /// <value>The Asset ID.</value>
-        [DataMember(Name = "assetId", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "assetId")]
+        [JsonInclude]
         public Guid? AssetId { get; private set; }
 
         /// <summary>
         /// The name of the asset blob container.
         /// </summary>
         /// <value>The name of the asset blob container.</value>
-        [DataMember(Name = "container", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "container")]
         public string Container { get; set; }
 
         /// <summary>
@@ -49,56 +45,44 @@ namespace MK.IO.Models
         /// from storage. A deletion policy of 'Retain' will leave the content in-place in your storage account.
         /// If left blank, the default behavior of the system will be to retain content. Once set by the user, this value
         /// can be modified, but not un-set.</value>
-        [DataMember(Name = "containerDeletionPolicy", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "containerDeletionPolicy")]
         public AssetContainerDeletionPolicyType? ContainerDeletionPolicy { get; set; }
 
         /// <summary>
         /// The creation date of the Asset.
         /// </summary>
         /// <value>The creation date of the Asset.</value>
-        [DataMember(Name = "created", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "created")]
+        [JsonInclude]
         public DateTime? Created { get; private set; }
 
         /// <summary>
         /// The Asset description.
         /// </summary>
         /// <value>The Asset description.</value>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Accepted, not supported. The name of the encryption scope to use within your storage container. Errors may be cryptic.
         /// </summary>
         /// <value>Accepted, not supported. The name of the encryption scope to use within your storage container. Errors may be cryptic.</value>
-        [DataMember(Name = "encryptionScope", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "encryptionScope")]
         [Obsolete] public string EncryptionScope { get; set; }
 
         /// <summary>
         /// The last modified date of the Asset.
         /// </summary>
         /// <value>The last modified date of the Asset.</value>
-        [DataMember(Name = "lastModified", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "lastModified")]
+        [JsonInclude]
         public DateTime? LastModified { get; private set; }
 
         /// <summary>
         /// The name of the storage account.
         /// </summary>
         /// <value>The name of the storage account.</value>
-        [DataMember(Name = "storageAccountName", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "storageAccountName")]
         public string StorageAccountName { get; set; }
 
         /// <summary>
         /// This field was deprecated in the v3 API. Accepted, not supported. Use an encryption scope instead.
         /// </summary>
         /// <value>This field was deprecated in the v3 API. Accepted, not supported. Use an encryption scope instead.</value>
-        [DataMember(Name = "storageEncryptionFormat", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "storageEncryptionFormat")]
         [Obsolete] public string StorageEncryptionFormat { get; set; }
 
 
@@ -130,7 +114,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

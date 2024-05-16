@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,23 +9,19 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class ContentKeyPolicyOptions
     {
         /// <summary>
         /// An optional description of the streaming policy.
         /// </summary>
         /// <value>An optional description of the streaming policy.</value>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// The key policy options
         /// </summary>
         /// <value>The key policy options</value>
-        [DataMember(Name = "options", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "options")]
         public List<ContentKeyPolicyOption> Options { get; set; }
 
 
@@ -48,7 +45,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

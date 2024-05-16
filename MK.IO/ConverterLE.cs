@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using System.Xml;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO
 {
     internal static class ConverterLE
     {
+        /*
         public static readonly JsonSerializerSettings Settings = new()
         {
             MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
@@ -19,8 +20,21 @@ namespace MK.IO
                 new CustomTimeSpanConverter()
             },
         };
+        */
+
+        public static readonly JsonSerializerOptions Settings = new JsonSerializerOptions
+        {
+
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true,
+            //IncludeFields = true,
+            Converters = { new JsonStringEnumConverter() },
+
+
+        };
     }
 
+    /*
     internal class CustomDateTimeConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
@@ -90,4 +104,5 @@ namespace MK.IO
             }
         }
     }
+    */
 }

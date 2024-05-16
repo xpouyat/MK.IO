@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,14 +9,12 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class PreviewAccessControl
     {
         /// <summary>
         /// Gets or Sets Ip
         /// </summary>
-        [DataMember(Name = "ip", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "ip")]
         public IPAccessControl Ip { get; set; }
 
 
@@ -38,7 +37,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

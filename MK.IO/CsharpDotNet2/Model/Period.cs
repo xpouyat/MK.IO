@@ -1,6 +1,8 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -8,42 +10,37 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class Period
     {
         /// <summary>
         /// Gets or Sets AdaptationSet
         /// </summary>
-        [DataMember(Name = "adaptation_set", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "adaptation_set")]
+        [JsonPropertyName("adaptation_set")]
         public List<AdaptationSet> AdaptationSet { get; set; }
 
         /// <summary>
         /// Gets or Sets AssetIdentifier
         /// </summary>
-        [DataMember(Name = "asset_identifier", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "asset_identifier")]
+        [JsonPropertyName("asset_identifier")]
         public AssetIdentifier AssetIdentifier { get; set; }
 
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
-        [DataMember(Name = "id", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "id")]
+
+
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or Sets ResourceType
         /// </summary>
-        [DataMember(Name = "resource_type", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "resource_type")]
+        [JsonPropertyName("resource_type")]
         public string ResourceType { get; set; }
 
         /// <summary>
         /// Gets or Sets Start
         /// </summary>
-        [DataMember(Name = "start", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "start")]
         public string Start { get; set; }
 
 
@@ -70,7 +67,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,23 +9,23 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class AssetStorageDataMetadataSchema
     {
         /// <summary>
         /// The unique identifier for the asset.
         /// </summary>
         /// <value>The unique identifier for the asset.</value>
-        [DataMember(Name = "id", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "id")]
+
+
         public Guid? Id { get; set; }
 
         /// <summary>
         /// The name of the asset.
         /// </summary>
         /// <value>The name of the asset.</value>
-        [DataMember(Name = "name", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "name")]
+
+
         public string Name { get; set; }
 
 
@@ -48,7 +49,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

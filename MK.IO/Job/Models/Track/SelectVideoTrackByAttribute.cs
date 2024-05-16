@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -10,7 +9,7 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class SelectVideoTrackByAttribute : TrackDiscriminator
     {
         public SelectVideoTrackByAttribute(TrackAttributeType attribute, TrackFilterType filter, string filterValue)
@@ -24,31 +23,25 @@ namespace MK.IO.Models
         /// The discriminator for derived types.
         /// </summary>
         /// <value>The discriminator for derived types.</value>
-        [JsonProperty(PropertyName = "@odata.type")]
+        [JsonPropertyName("@odata.type")]
         internal override string OdataType => "SelectVideoTrackByAttribute";
 
         /// <summary>
         /// The TrackAttribute to filter the tracks by.
         /// </summary>
         /// <value>The TrackAttribute to filter the tracks by.</value>
-        [DataMember(Name = "attribute", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "attribute")]
         public TrackAttributeType Attribute { get; set; }
 
         /// <summary>
         /// The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks.
         /// </summary>
         /// <value>The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks.</value>
-        [DataMember(Name = "filter", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "filter")]
         public TrackFilterType Filter { get; set; }
 
         /// <summary>
         /// The value to filter the tracks by.
         /// </summary>
         /// <value>The value to filter the tracks by.</value>
-        [DataMember(Name = "filterValue", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "filterValue")]
         public string FilterValue { get; set; }
     }
 }

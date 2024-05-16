@@ -1,6 +1,6 @@
 using System.Text;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Xml.Linq;
 
 namespace MK.IO.Models
@@ -9,7 +9,7 @@ namespace MK.IO.Models
     /// <summary>
     /// The properties of the Content Key Policy.
     /// </summary>
-    [DataContract]
+
     public class ContentKeyPolicyProperties
     {
 
@@ -23,40 +23,33 @@ namespace MK.IO.Models
         /// The creation date of the Policy
         /// </summary>
         /// <value>The creation date of the Policy</value>
-        [DataMember(Name = "created", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "created")]
+        [JsonInclude]
         public DateTime? Created { get; private set; }
 
         /// <summary>
         /// A description for the Policy.
         /// </summary>
         /// <value>A description for the Policy.</value>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// The last modified date of the Policy
         /// </summary>
         /// <value>The last modified date of the Policy</value>
-        [DataMember(Name = "lastModified", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "lastModified")]
+        [JsonInclude]
         public DateTime? LastModified { get; private set; }
 
         /// <summary>
         /// The Key Policy options.
         /// </summary>
         /// <value>The Key Policy options.</value>
-        [DataMember(Name = "options", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "options")]
         public List<ContentKeyPolicyOption> Options { get; set; }
 
         /// <summary>
         /// The legacy Policy ID.
         /// </summary>
         /// <value>The legacy Policy ID.</value>
-        [DataMember(Name = "policyId", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "policyId")]
+        [JsonInclude]
         public Guid? PolicyId { get; private set; }
 
 
@@ -83,7 +76,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

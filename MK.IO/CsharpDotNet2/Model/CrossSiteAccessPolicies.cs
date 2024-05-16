@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,23 +9,19 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class CrossSiteAccessPolicies
     {
         /// <summary>
         /// The XML content of the client access policy file. Search 'clientaccesspolicy.xml' to learn more.
         /// </summary>
         /// <value>The XML content of the client access policy file. Search 'clientaccesspolicy.xml' to learn more.</value>
-        [DataMember(Name = "clientAccessPolicy", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "clientAccessPolicy")]
         public string ClientAccessPolicy { get; set; }
 
         /// <summary>
         /// The XML content of the cross-domain policy file. Search 'crossdomain.xml' to learn more.
         /// </summary>
         /// <value>The XML content of the cross-domain policy file. Search 'crossdomain.xml' to learn more.</value>
-        [DataMember(Name = "crossDomainPolicy", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "crossDomainPolicy")]
         public string CrossDomainPolicy { get; set; }
 
 
@@ -48,7 +45,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

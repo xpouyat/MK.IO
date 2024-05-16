@@ -69,8 +69,7 @@ namespace Sample
 
             // list assets
 
-
-            var mkioAssetsResult2 = client.Assets.List(null, "name gt 'ignite-t'", null, null);
+            var mkioAssetsResult2 = client.Assets.List(null, "name gt 'ignite-t'", null, top: 3);
 
             var mkioAssetsResult = client.Assets.ListAsPage("properties/created desc", null, null, null, 10);
             while (true)
@@ -286,7 +285,7 @@ namespace Sample
             // Delete
             // client.StorageAccounts.Delete(storages.First().Metadata.Id);
 
-      
+
 
 
             // ************************
@@ -520,7 +519,7 @@ namespace Sample
 
             var lo = client.LiveOutputs.Create(le.Name, MKIOClient.GenerateUniqueName("liveOutput"), new LiveOutputProperties
             {
-                ArchiveWindowLength = new TimeSpan(0,5,0),
+                ArchiveWindowLength = new TimeSpan(0, 5, 0),
                 AssetName = nameasset
             });
 
@@ -544,7 +543,7 @@ namespace Sample
             var mkses = client.StreamingEndpoints.List();
 
             // create streaming endpoint
-            
+
             /*
             var newSe = client.StreamingEndpoints.Create("streamingendpoint2", "francecentral", new StreamingEndpointProperties
             {

@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using MK.IO.Operations;
-using Newtonsoft.Json;
+
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading;
 
 #if NET462
@@ -209,8 +210,8 @@ namespace MK.IO
                     await Task.Delay(monitorDelay);
                     HttpResponseMessage amsRequestResultWait = await _httpClient.GetAsync(monitorUrl, cancellationToken).ConfigureAwait(false);
                     string responseContentWait = await amsRequestResultWait.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    dynamic data = JsonConvert.DeserializeObject(responseContentWait);
-                    notComplete = data.status == "InProgress";
+                    JsonDocument data = JsonSerializer.Deserialize<JsonDocument>(responseContentWait, ConverterLE.Settings);
+                    notComplete = data.RootElement.GetProperty("status").ToString() == "InProgress";
                 }
                 while (notComplete);
             }
@@ -225,10 +226,17 @@ namespace MK.IO
 
             string responseContent = await GetObjectContentAsync(url, cancellationToken);
 
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string? nextPageLink = responseObject["@odata.nextLink"];
+            // next page            
+            JsonDocument responseObject = JsonSerializer.Deserialize<JsonDocument>(responseContent);
+            JsonElement nextPageLinkElement;
+            string nextLink = null;
+            if (responseObject.RootElement.TryGetProperty("@odata.nextLink", out nextPageLinkElement))
+            {
+                nextLink = nextPageLinkElement.ToString();
+            }
 
-            var objectToReturn = JsonConvert.DeserializeObject(responseContent, responseSchema, ConverterLE.Settings);
+            var objectToReturn = JsonSerializer.Deserialize(responseContent, responseSchema, ConverterLE.Settings);
+
             if (objectToReturn == null)
             {
                 throw new Exception($"Error with {entityName} list deserialization");
@@ -237,8 +245,8 @@ namespace MK.IO
             {
                 return new PagedResult<T>
                 {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = (objectToReturn).GetType().GetProperty("Value").GetValue(objectToReturn) as List<T>
+                    NextPageLink = WebUtility.UrlDecode(nextLink),
+                    Results = objectToReturn.GetType().GetProperty("Value").GetValue(objectToReturn) as List<T>
                 };
             }
         }
@@ -248,11 +256,17 @@ namespace MK.IO
             var url = _baseUrl.Substring(0, _baseUrl.Length - 1) + nextPageLink;
             string responseContent = await GetObjectContentAsync(url, cancellationToken);
 
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
+            // next page            
+            JsonDocument responseObject = JsonSerializer.Deserialize<JsonDocument>(responseContent);
+            JsonElement nextPageLinkElement;
+            string nextLink = null;
+            if (responseObject.RootElement.TryGetProperty("@odata.nextLink", out nextPageLinkElement))
+            {
+                nextLink = nextPageLinkElement.ToString();
+            }
 
-            nextPageLink = responseObject["@odata.nextLink"];
+            var objectToReturn = JsonSerializer.Deserialize(responseContent, responseSchema, ConverterLE.Settings);
 
-            var objectToReturn = JsonConvert.DeserializeObject(responseContent, responseSchema, ConverterLE.Settings);
             if (objectToReturn == null)
             {
                 throw new Exception($"Error with {entityName} list deserialization");
@@ -261,18 +275,17 @@ namespace MK.IO
             {
                 return new PagedResult<T>
                 {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
-                    Results = (objectToReturn).GetType().GetProperty("Value").GetValue(objectToReturn) as List<T>
+                    NextPageLink = WebUtility.UrlDecode(nextLink),
+                    Results = objectToReturn.GetType().GetProperty("Value").GetValue(objectToReturn) as List<T>
                 };
             }
         }
-
 
         private static void AnalyzeResponseAndThrowIfNeeded(HttpResponseMessage amsRequestResult, string responseContent)
         {
             var status_ = (int)amsRequestResult.StatusCode;
 
-            var message = JsonConvert.DeserializeObject<dynamic>(responseContent);
+            var message = JsonSerializer.Deserialize<JsonDocument>(responseContent, ConverterLE.Settings);
 
             if (amsRequestResult.IsSuccessStatusCode)
             {
@@ -285,11 +298,16 @@ namespace MK.IO
             else
             {
                 string? errorDetail = null;
-                if (message != null && message.ContainsKey("error"))
+                JsonElement errorElement;
+                if (message != null && message.RootElement.TryGetProperty("error", out errorElement))
                 {
                     try
                     {
-                        errorDetail = (string)message.error.detail;
+                        JsonElement errorDetailElement;
+                        if (errorElement.TryGetProperty("detail", out errorDetailElement))
+                        {
+                            errorDetail += errorDetailElement.ToString();
+                        }
                     }
                     catch
                     {
@@ -299,7 +317,7 @@ namespace MK.IO
                     if (string.IsNullOrEmpty(errorDetail))
                     {
 
-                        errorDetail = (string)message.error;
+                        errorDetail = (string)errorElement.ToString();
                     }
                 }
                 if (errorDetail != null)

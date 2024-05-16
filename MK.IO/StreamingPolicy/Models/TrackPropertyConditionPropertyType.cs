@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -11,13 +9,11 @@ namespace MK.IO.Models
     /// Track property type
     /// </summary>
     /// <value>Track property type</value>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum TrackPropertyConditionPropertyType
     {
-        [EnumMember(Value = "Unknown")]
         Unknown,
 
-        [EnumMember(Value = "FourCC")]
         FourCC
     }
 }

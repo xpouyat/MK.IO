@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using MK.IO.Models;
-using Newtonsoft.Json;
+
 using System.Net;
+using System.Text.Json;
 #if NET462
 using System.Net.Http;
 #endif
@@ -113,7 +114,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_liveOutputApiUrl, liveEventName, liveOutputName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live output deserialization");
+            return JsonSerializer.Deserialize<LiveOutputSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live output deserialization");
         }
 
         /// <inheritdoc/>
@@ -135,7 +136,7 @@ namespace MK.IO.Operations
             //tags ??= new Dictionary<string, string>();
             var content = new LiveOutputSchema { Properties = properties };
             string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson(), cancellationToken);
-            return JsonConvert.DeserializeObject<LiveOutputSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live output deserialization");
+            return JsonSerializer.Deserialize<LiveOutputSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with live output deserialization");
         }
 
         /// <inheritdoc/>

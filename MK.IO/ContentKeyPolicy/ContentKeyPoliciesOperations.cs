@@ -5,8 +5,9 @@
 using System.Net.Http;
 #endif
 using MK.IO.Models;
-using Newtonsoft.Json;
+
 using System.Net;
+using System.Text.Json;
 
 namespace MK.IO.Operations
 {
@@ -111,7 +112,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<ContentKeyPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with content key policy deserialization");
+            return JsonSerializer.Deserialize<ContentKeyPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with content key policy deserialization");
         }
 
         /// <inheritdoc/>
@@ -146,7 +147,7 @@ namespace MK.IO.Operations
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             var content = new ContentKeyPolicySchema { Properties = properties };
             string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson(), cancellationToken);
-            return JsonConvert.DeserializeObject<ContentKeyPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with content key policy deserialization");
+            return JsonSerializer.Deserialize<ContentKeyPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with content key policy deserialization");
         }
 
         /// <inheritdoc/>
@@ -164,7 +165,7 @@ namespace MK.IO.Operations
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl + "/getPolicyPropertiesWithSecrets", contentKeyPolicyName);
             string responseContent = await Client.GetObjectPostContentAsync(url, cancellationToken);
             //return ContentKeyPolicy.FromJson(responseContent).Properties;
-            return JsonConvert.DeserializeObject<ContentKeyPolicySchema>(responseContent, ConverterLE.Settings).Properties ?? throw new Exception("Error with content key policy deserialization");
+            return JsonSerializer.Deserialize<ContentKeyPolicySchema>(responseContent, ConverterLE.Settings).Properties ?? throw new Exception("Error with content key policy deserialization");
         }
     }
 }

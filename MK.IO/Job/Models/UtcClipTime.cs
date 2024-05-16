@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -18,17 +18,14 @@ namespace MK.IO.Models
             Time = time;
         }
 
-        [JsonProperty("@odata.type")]
+        [JsonPropertyName("@odata.type")]
         internal override string OdataType => "#Microsoft.Media.UtcClipTime";
 
         /// <summary>
         /// The time position on the timeline of the input media based on Utc time.
         /// </summary>
         /// <value>The time position on the timeline of the input media based on Utc time.</value>
-        [DataMember(Name = "time", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "time")]
         public DateTime Time { get; set; }
-
 
         /// <summary>
         /// Get the string presentation of the object
@@ -50,7 +47,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

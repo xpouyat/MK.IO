@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -14,7 +14,7 @@ namespace MK.IO.Models
         {
         }
 
-        [JsonProperty("@odata.type")]
+        [JsonPropertyName("@odata.type")]
         internal override string OdataType => "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration";
     }
 }

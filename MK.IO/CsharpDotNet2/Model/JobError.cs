@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,35 +9,27 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class JobError
     {
         /// <summary>
         /// Gets or Sets Category
         /// </summary>
-        [DataMember(Name = "category", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "category")]
         public JobErrorCategoryType Category { get; set; }
 
         /// <summary>
         /// Gets or Sets Code
         /// </summary>
-        [DataMember(Name = "code", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "code")]
         public JobErrorCodeType Code { get; set; }
 
         /// <summary>
         /// Gets or Sets Message
         /// </summary>
-        [DataMember(Name = "message", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
         /// Gets or Sets Retry
         /// </summary>
-        [DataMember(Name = "retry", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "retry")]
         public JobErrorRetryType Retry { get; set; }
 
 
@@ -62,7 +55,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

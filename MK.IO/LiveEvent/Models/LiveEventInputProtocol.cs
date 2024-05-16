@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
@@ -12,19 +10,17 @@ namespace MK.IO.Models
     /// This is specified at creation time and cannot be updated.
     /// </summary>
     /// <value>Must be one of RTMP or SRT. fmp4 smooth input is not supported.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum LiveEventInputProtocol
     {
         /// <summary>
         /// Enum RTMP for value: RTMP
         /// </summary>
-        [EnumMember(Value = "RTMP")]
         RTMP,
 
         /// <summary>
         /// Enum SRT for value: SRT
         /// </summary>
-        [EnumMember(Value = "SRT")]
         SRT
     }
 }

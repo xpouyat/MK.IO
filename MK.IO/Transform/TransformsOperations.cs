@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using MK.IO.Models;
-using Newtonsoft.Json;
+
 using System.Net;
+using System.Text.Json;
 #if NET462
 using System.Net.Http;
 #endif
@@ -88,10 +89,16 @@ namespace MK.IO.Operations
 
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
 
-            dynamic responseObject = JsonConvert.DeserializeObject(responseContent);
-            string? nextPageLink = responseObject["@odata.nextLink"];
+            // next page            
+            JsonDocument responseObject = JsonSerializer.Deserialize<JsonDocument>(responseContent);
+            JsonElement nextPageLinkElement;
+            string nextLink = null;
+            if (responseObject.RootElement.TryGetProperty("@odata.nextLink", out nextPageLinkElement))
+            {
+                nextLink = nextPageLinkElement.ToString();
+            }
 
-            var objectToReturn = JsonConvert.DeserializeObject<TransformListResponseSchema>(responseContent, ConverterLE.Settings);
+            var objectToReturn = JsonSerializer.Deserialize<TransformListResponseSchema>(responseContent, ConverterLE.Settings);
             if (objectToReturn == null)
             {
                 throw new Exception($"Error with streaming policy list deserialization");
@@ -100,7 +107,7 @@ namespace MK.IO.Operations
             {
                 return new PagedResult<TransformSchema>
                 {
-                    NextPageLink = WebUtility.UrlDecode(nextPageLink),
+                    NextPageLink = WebUtility.UrlDecode(nextLink),
                     Results = objectToReturn.Value
                 };
             }
@@ -116,7 +123,7 @@ namespace MK.IO.Operations
         /// <inheritdoc/>
         public async Task<PagedResult<TransformSchema>> ListAsPageNextAsync(string? nextPageLink, CancellationToken cancellationToken = default)
         {
-            return await Client.ListAsPageNextGenericAsync<TransformSchema> (nextPageLink, typeof(TransformListResponseSchema), "transform", cancellationToken);
+            return await Client.ListAsPageNextGenericAsync<TransformSchema>(nextPageLink, typeof(TransformListResponseSchema), "transform", cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -133,7 +140,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with transform deserialization");
+            return JsonSerializer.Deserialize<TransformSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with transform deserialization");
         }
 
         /// <inheritdoc/>
@@ -154,7 +161,7 @@ namespace MK.IO.Operations
             var url = Client.GenerateApiUrl(_transformApiUrl, transformName);
             var content = new TransformSchema { Properties = properties };
             string responseContent = await Client.CreateObjectPutAsync(url, content.ToJson(), cancellationToken);
-            return JsonConvert.DeserializeObject<TransformSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with transform deserialization");
+            return JsonSerializer.Deserialize<TransformSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with transform deserialization");
         }
 
         /// <inheritdoc/>

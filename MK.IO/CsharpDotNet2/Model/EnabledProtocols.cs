@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+
+
 using System.Text;
+using System.Text.Json;
 
 namespace MK.IO.Models
 {
@@ -8,39 +9,31 @@ namespace MK.IO.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+
     public class EnabledProtocols
     {
         /// <summary>
         /// Enable Dash protocol
         /// </summary>
         /// <value>Enable Dash protocol</value>
-        [DataMember(Name = "dash", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "dash")]
         public bool? Dash { get; set; }
 
         /// <summary>
         /// Enable download protocol
         /// </summary>
         /// <value>Enable download protocol</value>
-        [DataMember(Name = "download", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "download")]
         public bool? Download { get; set; }
 
         /// <summary>
         /// Enable HLS protocol
         /// </summary>
         /// <value>Enable HLS protocol</value>
-        [DataMember(Name = "hls", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "hls")]
         public bool? Hls { get; set; }
 
         /// <summary>
         /// Smooth streaming is not supported and the value of this field is ignored.
         /// </summary>
         /// <value>Smooth streaming is not supported and the value of this field is ignored.</value>
-        [DataMember(Name = "smoothStreaming", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "smoothStreaming")]
         [Obsolete] public bool? SmoothStreaming { get; set; }
 
 
@@ -66,7 +59,7 @@ namespace MK.IO.Models
         /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this, ConverterLE.Settings);
+            return JsonSerializer.Serialize(this, ConverterLE.Settings);
         }
 
     }

@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using MK.IO.Models;
-using Newtonsoft.Json;
+
 using System.Net;
+using System.Text.Json;
 
 #if NET462
 using System.Net.Http;
@@ -170,7 +171,7 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_jobApiUrl, transformName, jobName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
-            return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
+            return JsonSerializer.Deserialize<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
         }
 
         /// <inheritdoc/>
@@ -203,7 +204,7 @@ namespace MK.IO.Operations
             var content = new JobSchema { Properties = properties };
 
             string responseContent = await func(url, content.ToJson(), cancellationToken);
-            return JsonConvert.DeserializeObject<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
+            return JsonSerializer.Deserialize<JobSchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with job deserialization");
         }
 
 #if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
