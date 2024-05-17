@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
-    [JsonConverter(typeof(JsonSubtypes))]
-    [JsonSubtypes.KnownSubType(typeof(BuiltInStandardEncoderPreset), "#Microsoft.Media.BuiltInStandardEncoderPreset")]
-    [JsonSubtypes.KnownSubType(typeof(AudioAnalyzerPreset), "#Microsoft.Media.AudioAnalyzerPreset")]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "@odata.type")]
+    [JsonDerivedType(typeof(BuiltInStandardEncoderPreset), typeDiscriminator: "#Microsoft.Media.BuiltInStandardEncoderPreset")]
+    [JsonDerivedType(typeof(AudioAnalyzerPreset), typeDiscriminator: "#Microsoft.Media.AudioAnalyzerPreset")]
 
     //
     // Summary:

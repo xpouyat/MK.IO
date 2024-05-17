@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using JsonSubTypes;
 using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
-    [JsonConverter(typeof(JsonSubtypes))]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyPlayReadyConfiguration), "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration")]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyWidevineConfiguration), "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration")]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyFairPlayConfiguration), "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration")]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyClearKeyConfiguration), "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration")]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyUnknownConfiguration), "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration")]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "@odata.type")]
+    [JsonDerivedType(typeof(ContentKeyPolicyPlayReadyConfiguration), typeDiscriminator: "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration")]
+    [JsonDerivedType(typeof(ContentKeyPolicyWidevineConfiguration), typeDiscriminator: "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration")]
+    [JsonDerivedType(typeof(ContentKeyPolicyFairPlayConfiguration), typeDiscriminator: "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration")]
+    [JsonDerivedType(typeof(ContentKeyPolicyClearKeyConfiguration), typeDiscriminator: "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration")]
+    [JsonDerivedType(typeof(ContentKeyPolicyUnknownConfiguration), typeDiscriminator: "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration")]
 
     //
     // Summary:

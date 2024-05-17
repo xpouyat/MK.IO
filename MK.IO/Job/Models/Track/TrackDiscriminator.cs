@@ -6,13 +6,13 @@ using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
-    [JsonConverter(typeof(JsonSubtypes))]
-    [JsonSubtypes.KnownSubType(typeof(AudioTrackDescriptor), "AudioTrackDescriptor")]
-    [JsonSubtypes.KnownSubType(typeof(SelectAudioTrackByAttribute), "SelectAudioTrackByAttribute")]
-    [JsonSubtypes.KnownSubType(typeof(SelectAudioTrackById), "SelectAudioTrackById")]
-    [JsonSubtypes.KnownSubType(typeof(SelectVideoTrackByAttribute), "SelectVideoTrackByAttribute")]
-    [JsonSubtypes.KnownSubType(typeof(SelectVideoTrackById), "SelectVideoTrackById")]
-    [JsonSubtypes.KnownSubType(typeof(VideoTrackDescriptor), "VideoTrackDescriptor")]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "@odata.type")]
+    [JsonDerivedType(typeof(AudioTrackDescriptor), typeDiscriminator: "AudioTrackDescriptor")]
+    [JsonDerivedType(typeof(SelectAudioTrackByAttribute), typeDiscriminator: "SelectAudioTrackByAttribute")]
+    [JsonDerivedType(typeof(SelectAudioTrackById), typeDiscriminator: "SelectAudioTrackById")]
+    [JsonDerivedType(typeof(SelectVideoTrackByAttribute), typeDiscriminator: "SelectVideoTrackByAttribute")]
+    [JsonDerivedType(typeof(SelectVideoTrackById), typeDiscriminator: "SelectVideoTrackById")]
+    [JsonDerivedType(typeof(VideoTrackDescriptor), typeDiscriminator: "VideoTrackDescriptor")]
 
     /// <summary>
     /// 

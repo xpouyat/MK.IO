@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
-    [JsonConverter(typeof(JsonSubtypes))]
-    [JsonSubtypes.KnownSubType(typeof(UtcClipTime), "#Microsoft.Media.UtcClipTime")]
-    [JsonSubtypes.KnownSubType(typeof(AbsoluteClipTime), "#Microsoft.Media.AbsoluteClipTime")]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "@odata.type")]
+    [JsonDerivedType(typeof(UtcClipTime), typeDiscriminator: "#Microsoft.Media.UtcClipTime")]
+    [JsonDerivedType(typeof(AbsoluteClipTime), typeDiscriminator: "#Microsoft.Media.AbsoluteClipTime")]
 
     //
     // Summary:

@@ -6,10 +6,10 @@ using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
-    [JsonConverter(typeof(JsonSubtypes))]
-    [JsonSubtypes.KnownSubType(typeof(FromEachInputFile), "FromEachInputFile")]
-    [JsonSubtypes.KnownSubType(typeof(FromAllInputFile), "FromAllInputFile")]
-    [JsonSubtypes.KnownSubType(typeof(InputFile), "InputFile")]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "@odata.type")]
+    [JsonDerivedType(typeof(FromEachInputFile), typeDiscriminator: "FromEachInputFile")]
+    [JsonDerivedType(typeof(FromAllInputFile), typeDiscriminator: "FromAllInputFile")]
+    [JsonDerivedType(typeof(InputFile), typeDiscriminator: "InputFile")]
 
     /// <summary>
     /// 

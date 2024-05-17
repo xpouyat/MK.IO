@@ -1,16 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using JsonSubTypes;
 using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
-
-    [JsonConverter(typeof(JsonSubtypes))]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyRsaTokenKey), "#Microsoft.Media.ContentKeyPolicyRsaTokenKey")]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicySymmetricTokenKey), "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey")]
-    [JsonSubtypes.KnownSubType(typeof(ContentKeyPolicyX509CertificateTokenKey), "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey")]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "@odata.type")]
+    [JsonDerivedType(typeof(ContentKeyPolicyRsaTokenKey), typeDiscriminator: "#Microsoft.Media.ContentKeyPolicyRsaTokenKey")]
+    [JsonDerivedType(typeof(ContentKeyPolicySymmetricTokenKey), typeDiscriminator: "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey")]
+    [JsonDerivedType(typeof(ContentKeyPolicyX509CertificateTokenKey), typeDiscriminator: "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey")]
 
     //
     // Summary:

@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace MK.IO.Models
 {
-    [JsonConverter(typeof(JsonSubtypes))]
-    [JsonSubtypes.KnownSubType(typeof(JobInputAsset), "#Microsoft.Media.JobInputAsset")]
-    [JsonSubtypes.KnownSubType(typeof(JobInputHttp), "#Microsoft.Media.JobInputHttp")]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "@odata.type")]
+    [JsonDerivedType(typeof(JobInputAsset), typeDiscriminator: "#Microsoft.Media.JobInputAsset")]
+    [JsonDerivedType(typeof(JobInputHttp), typeDiscriminator: "#Microsoft.Media.JobInputHttp")]
 
     //
     // Summary:

@@ -48,6 +48,9 @@ namespace SampleCore
             var currentLocation = locs.Where(l => l.Metadata.Id == sub.Spec.LocationId).FirstOrDefault();
             Console.WriteLine($"Connected to '{sub.Spec.Name}' MK.IO instance in region '{currentLocation.Metadata.Name}'.");
 
+            var cks = client.ContentKeyPolicies.List();
+
+
             // pause the command line
             Console.ReadLine();
         }
