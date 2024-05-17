@@ -4,6 +4,7 @@
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml;
 
 namespace MK.IO
 {
@@ -31,7 +32,9 @@ namespace MK.IO
             Converters = {
                 new JsonStringEnumConverter(),
                 new CustomDateTimeConverter(),
-            new CustomDateTimeNConverter()
+                new CustomDateTimeNConverter(),
+                new CustomTimeSpanConverter(),
+                new CustomTimeSpanNConverter()
             },
         };
     }
@@ -39,11 +42,6 @@ namespace MK.IO
 
     internal class CustomDateTimeNConverter : JsonConverter<DateTime?>
     {
-        public override bool CanConvert(Type objectType)
-        {
-            return (objectType == typeof(DateTime?));
-        }
-
         public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             DateTime dt;
@@ -51,7 +49,7 @@ namespace MK.IO
             {
                 return dt;
             }
-            return (DateTime?)null;
+            throw new JsonException();
             //return DateTime.Parse(reader.GetString());
         }
 
@@ -59,20 +57,22 @@ namespace MK.IO
         {
             if (dateTimeValue != null)
             {
-                DateTime dt = (DateTime)dateTimeValue;
-                // We need to reduce the precision. See issue https://github.com/xpouyat/MK.IO/issues/43
-                // We limit the conversion of DateTime to the format "yyyy-MM-ddTHH:mm:ss.ffZ"
-                writer.WriteStringValue(dt.ToString("yyyy-MM-ddTHH:mm:ss.ffZ", CultureInfo.InvariantCulture));
+                try
+                {
+                    // We need to reduce the precision. See issue https://github.com/xpouyat/MK.IO/issues/43
+                    // We limit the conversion of DateTime to the format "yyyy-MM-ddTHH:mm:ss.ffZ"
+                    writer.WriteStringValue(dateTimeValue.Value.ToString("yyyy-MM-ddTHH:mm:ss.ffZ", CultureInfo.InvariantCulture));
+                }
+                catch (Exception ex)
+                {
+                    throw new JsonException(ex.Message);
+                }
             }
         }
     }
 
     internal class CustomDateTimeConverter : JsonConverter<DateTime>
     {
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(DateTime);
-        }
 
         public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -81,18 +81,84 @@ namespace MK.IO
             {
                 return dt;
             }
-            return dt;
-            //return DateTime.Parse(reader.GetString());
+            throw new JsonException();
         }
 
         public override void Write(Utf8JsonWriter writer, DateTime dateTimeValue, JsonSerializerOptions options)
         {
-            if (writer != null)
+            try
             {
-
                 // We need to reduce the precision. See issue https://github.com/xpouyat/MK.IO/issues/43
                 // We limit the conversion of DateTime to the format "yyyy-MM-ddTHH:mm:ss.ffZ"
                 writer.WriteStringValue(dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss.ffZ", CultureInfo.InvariantCulture));
+            }
+            catch (Exception ex)
+            {
+                throw new JsonException(ex.Message);
+            }
+        }
+    }
+
+    internal class CustomTimeSpanConverter : JsonConverter<TimeSpan>
+    {
+        public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            try
+            {
+                return XmlConvert.ToTimeSpan(reader.GetString());
+            }
+            catch (Exception ex)
+            {
+                throw new JsonException(ex.Message);
+            }
+        }
+
+        public override void Write(Utf8JsonWriter writer, TimeSpan dateTimeValue, JsonSerializerOptions options)
+        {
+            try
+            {
+                writer.WriteStringValue(XmlConvert.ToString(dateTimeValue));
+            }
+            catch (Exception ex)
+            {
+                throw new JsonException(ex.Message);
+            }
+        }
+    }
+
+    internal class CustomTimeSpanNConverter : JsonConverter<TimeSpan?>
+    {
+        public override TimeSpan? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.GetString() != null)
+            {
+                try
+                {
+                    return XmlConvert.ToTimeSpan(reader.GetString());
+                }
+                catch (Exception ex)
+                {
+                    throw new JsonException(ex.Message);
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public override void Write(Utf8JsonWriter writer, TimeSpan? dateTimeValue, JsonSerializerOptions options)
+        {
+            if (dateTimeValue != null)
+            {
+                try
+                {
+                    writer.WriteStringValue(XmlConvert.ToString(dateTimeValue.Value));
+                }
+                catch (Exception ex)
+                {
+                    throw new JsonException(ex.Message);
+                }
             }
         }
     }
