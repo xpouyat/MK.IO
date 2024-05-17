@@ -131,7 +131,7 @@ namespace Sample
             }
 
             // list using pages of 10
-            var mkioSLocsResult = client.StreamingLocators.ListAsPage("properties/created desc", null, 10);
+            var mkioSLocsResult = client.StreamingLocators.ListAsPage("properties/created desc", null, 20);
             while (true)
             {
                 foreach (var a in mkioSLocsResult.Results)
@@ -156,7 +156,9 @@ namespace Sample
                new StreamingLocatorProperties
                {
                    AssetName = "ignite-truncated-out123-encodedmkio",
-                   StreamingPolicyName = PredefinedStreamingPolicy.ClearStreamingOnly
+                   StreamingPolicyName = PredefinedStreamingPolicy.ClearStreamingOnly,
+                   StartTime = DateTime.UtcNow,
+                   EndTime = DateTime.UtcNow.AddHours(2)
                });
 
             var pathsl = client.StreamingLocators.ListUrlPaths(mklocator2.Name);

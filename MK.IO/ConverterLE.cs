@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -24,53 +25,79 @@ namespace MK.IO
 
         public static readonly JsonSerializerOptions Settings = new JsonSerializerOptions
         {
-
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             WriteIndented = true,
             //IncludeFields = true,
-            Converters = { new JsonStringEnumConverter() },
-
-
+            Converters = {
+                new JsonStringEnumConverter(),
+                new CustomDateTimeConverter(),
+            new CustomDateTimeNConverter()
+            },
         };
     }
 
-    /*
-    internal class CustomDateTimeConverter : JsonConverter
+
+    internal class CustomDateTimeNConverter : JsonConverter<DateTime?>
     {
         public override bool CanConvert(Type objectType)
         {
-            return (objectType == typeof(DateTime)) || (objectType == typeof(DateTime?));
+            return (objectType == typeof(DateTime?));
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (objectType == typeof(DateTime?))
+            DateTime dt;
+            if (reader.TryGetDateTime(out dt))
             {
-                if (reader.Value == null)
-                {
-                    return (DateTime?)null;
-                }
-                return (DateTime?)reader.Value;
+                return dt;
             }
-            else if (objectType == typeof(DateTime))
-            {
-                return (DateTime)reader.Value;
-            }
-
-            return DateTime.Parse(reader.Value.ToString());
+            return (DateTime?)null;
+            //return DateTime.Parse(reader.GetString());
         }
 
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, DateTime? dateTimeValue, JsonSerializerOptions options)
         {
-            if (value is not null and DateTime)
+            if (dateTimeValue != null)
             {
+                DateTime dt = (DateTime)dateTimeValue;
                 // We need to reduce the precision. See issue https://github.com/xpouyat/MK.IO/issues/43
                 // We limit the conversion of DateTime to the format "yyyy-MM-ddTHH:mm:ss.ffZ"
-                writer.WriteValue(((DateTime)value).ToString("yyyy-MM-ddTHH:mm:ss.ffZ"));
+                writer.WriteStringValue(dt.ToString("yyyy-MM-ddTHH:mm:ss.ffZ", CultureInfo.InvariantCulture));
             }
         }
     }
 
+    internal class CustomDateTimeConverter : JsonConverter<DateTime>
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(DateTime);
+        }
+
+        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            DateTime dt;
+            if (reader.TryGetDateTime(out dt))
+            {
+                return dt;
+            }
+            return dt;
+            //return DateTime.Parse(reader.GetString());
+        }
+
+        public override void Write(Utf8JsonWriter writer, DateTime dateTimeValue, JsonSerializerOptions options)
+        {
+            if (writer != null)
+            {
+
+                // We need to reduce the precision. See issue https://github.com/xpouyat/MK.IO/issues/43
+                // We limit the conversion of DateTime to the format "yyyy-MM-ddTHH:mm:ss.ffZ"
+                writer.WriteStringValue(dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss.ffZ", CultureInfo.InvariantCulture));
+            }
+        }
+    }
+
+    /*
     internal class CustomTimeSpanConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
