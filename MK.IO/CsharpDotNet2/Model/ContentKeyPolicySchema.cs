@@ -30,6 +30,7 @@ namespace MK.IO.Models
         /// <summary>
         /// Gets or Sets Properties
         /// </summary>
+        [JsonInclude]
         public ContentKeyPolicyProperties Properties { get; set; }
 
         /// <summary>

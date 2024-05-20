@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json.Serialization;
+
 namespace MK.IO.Models
 {
     public class ContentKeyPolicyPlayReadyLicense
     {
-        public ContentKeyPolicyPlayReadyLicense(PlayReadyContentType contentType, PlayReadyLicenseType licenseType, PlayReadySecurityLevel securityLevel, bool allowTestDevices, ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader contentKeyLocation, ContentKeyPolicyPlayReadyPlayRight playRight)
+        
+        public ContentKeyPolicyPlayReadyLicense(PlayReadyContentType contentType, PlayReadyLicenseType licenseType, PlayReadySecurityLevel securityLevel, bool? allowTestDevices, PlayReadyContentKeyLocation contentKeyLocation, ContentKeyPolicyPlayReadyPlayRight playRight)
         {
             ContentType = contentType;
             LicenseType = licenseType;
@@ -14,7 +17,7 @@ namespace MK.IO.Models
             ContentKeyLocation = contentKeyLocation;
             PlayRight = playRight;
         }
-
+  
         /// <summary>
         /// A flag indicating whether test devices can use the license.
         /// </summary>

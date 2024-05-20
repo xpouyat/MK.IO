@@ -21,12 +21,14 @@ namespace MK.IO.Models
         /// The key delivery configuration.
         /// </summary>
         /// <value>The key delivery configuration.</value>
+        [JsonInclude]
         public ContentKeyPolicyConfiguration Configuration { get; set; }
 
         /// <summary>
         /// The Policy Option description.
         /// </summary>
         /// <value>The Policy Option description.</value>
+        [JsonInclude] 
         public string Name { get; set; }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace MK.IO.Models
         /// The requirements that must be met to deliver keys with this configuration
         /// </summary>
         /// <value>The requirements that must be met to deliver keys with this configuration</value>
+        [JsonInclude] 
         public ContentKeyPolicyRestriction Restriction { get; set; }
     }
 }

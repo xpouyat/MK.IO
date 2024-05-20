@@ -30,6 +30,7 @@ namespace MK.IO.Models
         /// A description for the Policy.
         /// </summary>
         /// <value>A description for the Policy.</value>
+        [JsonInclude] 
         public string Description { get; set; }
 
         /// <summary>
@@ -43,6 +44,7 @@ namespace MK.IO.Models
         /// The Key Policy options.
         /// </summary>
         /// <value>The Key Policy options.</value>
+        [JsonInclude]
         public List<ContentKeyPolicyOption> Options { get; set; }
 
         /// <summary>

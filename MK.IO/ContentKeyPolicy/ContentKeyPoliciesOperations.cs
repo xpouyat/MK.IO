@@ -112,6 +112,8 @@ namespace MK.IO.Operations
 
             var url = Client.GenerateApiUrl(_contentKeyPolicyApiUrl, contentKeyPolicyName);
             string responseContent = await Client.GetObjectContentAsync(url, cancellationToken);
+
+            //responseContent = 
             return JsonSerializer.Deserialize<ContentKeyPolicySchema>(responseContent, ConverterLE.Settings) ?? throw new Exception("Error with content key policy deserialization");
         }
 

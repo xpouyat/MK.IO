@@ -28,7 +28,8 @@ namespace MK.IO
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             WriteIndented = true,
-            //IncludeFields = true,
+            AllowOutOfOrderMetadataProperties = true,
+            
             Converters = {
                 new JsonStringEnumConverter(),
                 new CustomDateTimeConverter(),

@@ -22,6 +22,7 @@ namespace MK.IO.Models
         /// The key value of the key
         /// </summary>
         /// <value>The key value of the key</value>
+        [JsonInclude]
         public string KeyValue { get; set; }
     }
 }
