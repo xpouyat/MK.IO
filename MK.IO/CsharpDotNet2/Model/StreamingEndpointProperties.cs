@@ -92,14 +92,15 @@ namespace MK.IO.Models
         /// </summary>
         /// <value>The provisioning state of the streaming endpoint. Set by the system. One of InProgress,Succeeded,Failed.</value>
         [JsonInclude]
-        public StreamingEndpointProvisioningState ProvisioningState { get; private set; }
+        public StreamingEndpointProvisioningState? ProvisioningState { get; private set; }
 
         /// <summary>
         /// The runtime state of the streaming endpoint. Set by the system. One of Running,Stopped,Deleted,Creating,Starting,Stopping,Deleting,Scaling.
         /// </summary>
         /// <value>The runtime state of the streaming endpoint. Set by the system. One of Running,Stopped,Deleted,Creating,Starting,Stopping,Deleting,Scaling.</value>
-        [JsonInclude]
-        public StreamingEndpointResourceState ResourceState { get; private set; }
+        [DataMember(Name = "resourceState", EmitDefaultValue = false)]
+        [JsonProperty(PropertyName = "resourceState")]
+        public StreamingEndpointResourceState? ResourceState { get; private set; }
 
         /// <summary>
         /// The number of scale units for the streaming endpoint. This will determine your minimum scale. A value of 0 will result in the streaming endpoints using a Standard SKU.  A value greater than zero indicates that the 'Premium' SKUs will be provisioned.
