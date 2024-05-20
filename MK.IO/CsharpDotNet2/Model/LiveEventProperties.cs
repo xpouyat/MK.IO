@@ -76,8 +76,7 @@ namespace MK.IO.Models
         /// The current state of the resource. One of 'Stopped', 'Starting', 'Running', 'Stopping', or 'Deleting'.
         /// </summary>
         /// <value>The current state of the resource. One of 'Stopped', 'Starting', 'Running', 'Stopping', or 'Deleting'.</value>
-        [DataMember(Name = "resourceState", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "resourceState")]
+        [JsonInclude]
         public LiveEventResourceState? ResourceState { get; private set; }
 
         /// <summary>

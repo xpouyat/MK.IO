@@ -98,8 +98,7 @@ namespace MK.IO.Models
         /// The runtime state of the streaming endpoint. Set by the system. One of Running,Stopped,Deleted,Creating,Starting,Stopping,Deleting,Scaling.
         /// </summary>
         /// <value>The runtime state of the streaming endpoint. Set by the system. One of Running,Stopped,Deleted,Creating,Starting,Stopping,Deleting,Scaling.</value>
-        [DataMember(Name = "resourceState", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "resourceState")]
+        [JsonInclude]
         public StreamingEndpointResourceState? ResourceState { get; private set; }
 
         /// <summary>

@@ -73,8 +73,7 @@ namespace MK.IO.Models
         /// The resource state of the live output.
         /// </summary>
         /// <value>The resource state of the live output.</value>
-        [DataMember(Name = "resourceState", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "resourceState")]
+        [JsonInclude]
         public LiveOutputResourceState? ResourceState { get; private set; }
 
         /// <summary>
@@ -83,8 +82,7 @@ namespace MK.IO.Models
         /// This is the amount of time that the live output will be able to rewind.
         /// </summary>
         /// <value>Not supported.          ISO 8601 timespan duration of the rewind window length during live playback.          This is the amount of time that the live output will be able to rewind.</value>
-        [DataMember(Name = "rewindWindowLength", EmitDefaultValue = false)]
-        [JsonProperty(PropertyName = "rewindWindowLength")]
+        [JsonInclude]
         [Obsolete] public TimeSpan? RewindWindowLength { get; set; }
 
 

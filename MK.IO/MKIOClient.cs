@@ -285,7 +285,11 @@ namespace MK.IO
         {
             var status_ = (int)amsRequestResult.StatusCode;
 
-            var message = JsonSerializer.Deserialize<JsonDocument>(responseContent, ConverterLE.Settings);
+            JsonDocument? message = null;
+            if (!string.IsNullOrEmpty(responseContent))
+            {
+                message = JsonSerializer.Deserialize<JsonDocument>(responseContent, ConverterLE.Settings);
+            }
 
             if (amsRequestResult.IsSuccessStatusCode)
             {
