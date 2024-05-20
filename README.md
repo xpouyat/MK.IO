@@ -1,3 +1,7 @@
+# Repository has moved
+
+Please go to **https://github.com/microsoft/MK.IO**
+
 # MK.IO Client Library
 
 A client library for [MediaKind MK.IO](https://mk.io).
